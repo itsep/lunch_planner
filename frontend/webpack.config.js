@@ -12,7 +12,7 @@ const pages = {
 // generate a html page plugin
 const htmlWebPackPlugins = Object.keys(pages).map((pageName) => {
   return new HtmlWebPackPlugin({
-    chunks: [pageName],
+    chunks: ['common', pageName],
     template: `./src/pages/${pageName}/${pageName}.html`,
     filename: `./${pageName}.html`,
   })
@@ -24,6 +24,12 @@ module.exports = {
     entries[pageName] = `./src/pages/${pageName}/${pageName}`
     return entries
   }, {}),
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+      name: "common",
+    },
+  },
   module: {
     rules: [
       {
@@ -52,6 +58,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css"
-    })
+    }),
   ].concat(htmlWebPackPlugins)
 };
