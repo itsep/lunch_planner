@@ -4,7 +4,8 @@ import ReactDOM from "react-dom";
 const App = () => {
   return (
     <div>
-      <p>React here!</p>
+      <h1>About</h1>
+      <p>A I.T. Production</p>
     </div>
   );
 };
