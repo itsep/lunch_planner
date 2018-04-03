@@ -1,7 +1,35 @@
+const path = require('path')
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+// all available pages
+const pages = {
+  index: {/* config options */},
+  about: {/* config options */},
+  // *add a new page here*
+}
+
+// generate a html page plugin
+const htmlWebPackPlugins = Object.keys(pages).map((pageName) => {
+  return new HtmlWebPackPlugin({
+    chunks: ['common', pageName],
+    template: `./src/pages/${pageName}/${pageName}.html`,
+    filename: `./${pageName}.html`,
+  })
+})
+
 module.exports = {
+  entry: Object.keys(pages).reduce((entries, pageName) => {
+    // create an entry for each page
+    entries[pageName] = `./src/pages/${pageName}/${pageName}`
+    return entries
+  }, {}),
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+      name: "common",
+    },
+  },
   module: {
     rules: [
       {
@@ -27,13 +55,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebPackPlugin({
-      template: "./src/index.html",
-      filename: "./index.html"
-    }),
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[id].css"
-    })
-  ]
+    }),
+  ].concat(htmlWebPackPlugins)
 };
