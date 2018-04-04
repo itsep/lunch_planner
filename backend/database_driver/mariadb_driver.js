@@ -1,21 +1,44 @@
-const mysql = require('mysql')
+const mysql = require('mysql');
 
-//To be changed, als pool
+//User und passwort in extra Datei
 
 const pool = mysql.createPool({
     host: 'localhost',
-    user: 'me',
-    password: 'secret',
-    database: 'my_db'
+    user: 'root',
+    password: 'root',
+    database: 'lunch_planner'
 })
 
-const connection = pool.getConnection( err => {
-    if(err){
-        //Fehlermeldun, dass nicht connected wurde
+exports.connection = {
+    query: ()=> {
+        var queryArgs = Array.prototype.slice.call(arguments),
+            events = [],
+            eventNameIndex = {}
+
+        pool.getConnection((err, conn)=> {
+            if (err) {
+                if (eventNameIndex.error) {
+                    eventNameIndex.error()
+                }
+            }
+            if (conn) {
+                var q = conn.query.apply(conn, queryArgs)
+                q.on('end',()=> {
+                    conn.release()
+                });
+
+                events.forEach((args)=> {
+                    q.on.apply(q, args)
+                });
+            }
+        });
+
+        return {
+            on: (eventName, callback)=> {
+                events.push(Array.prototype.slice.call(arguments))
+                eventNameIndex[eventName] = callback
+                return this
+            }
+        }
     }
-})
-
-connection.query()
-//use connection with: connection.query('SQL anweisung')
-//After usage connection.release()
-//end pool: pool.end()
+}
