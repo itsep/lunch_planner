@@ -1,33 +1,33 @@
-const path = require('path')
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 // all available pages
 const pages = {
   index: {/* config options */},
   about: {/* config options */},
   // *add a new page here*
-}
+};
 
 // generate a html page plugin
-const htmlWebPackPlugins = Object.keys(pages).map((pageName) => {
-  return new HtmlWebPackPlugin({
-    chunks: ['common', pageName],
-    template: `./src/pages/${pageName}/${pageName}.html`,
-    filename: `./${pageName}.html`,
-  })
-})
+const htmlWebPackPlugins = Object.keys(pages).map(pageName => new HtmlWebPackPlugin({
+  chunks: ['common', pageName],
+  template: `./src/pages/${pageName}/${pageName}.html`,
+  filename: `./${pageName}.html`,
+}));
+
+const entries = {};
+Object.keys(pages).reduce((pageName) => {
+  // create an entry for each page
+  entries[pageName] = `./src/pages/${pageName}/${pageName}`;
+  return entries;
+}, {});
 
 module.exports = {
-  entry: Object.keys(pages).reduce((entries, pageName) => {
-    // create an entry for each page
-    entries[pageName] = `./src/pages/${pageName}/${pageName}`
-    return entries
-  }, {}),
+  entry: entries,
   optimization: {
     splitChunks: {
-      chunks: "all",
-      name: "common",
+      chunks: 'all',
+      name: 'common',
     },
   },
   module: {
@@ -36,39 +36,39 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
         },
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader",
+            loader: 'html-loader',
             options: { minimize: true },
-          }
-        ]
+          },
+        ],
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", 'sass-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: [
-          'file-loader'
-        ]
+          'file-loader',
+        ],
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: [
-          'file-loader'
-        ]
+          'file-loader',
+        ],
       },
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "[name].css",
+      filename: '[name].css',
     }),
   ].concat(htmlWebPackPlugins),
 };

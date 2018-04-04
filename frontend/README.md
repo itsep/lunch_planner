@@ -16,6 +16,16 @@ npm run start
 ```bash
 npm run build
 ```
+## Linting
+
+```bash
+npm run lint
+```
+
+# WebStorm Configuration
+## Plugins
+
+* install [ESLint](https://plugins.jetbrains.com/plugin/7494-eslint) and enable it in the settings
 
 # Webpack Configuration
 
