@@ -1,26 +1,26 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 // all available pages
 const pages = {
   index: {/* config options */},
   about: {/* config options */},
   // *add a new page here*
-};
+}
 
 // generate a html page plugin
 const htmlWebPackPlugins = Object.keys(pages).map(pageName => new HtmlWebPackPlugin({
   chunks: ['common', pageName],
   template: `./src/pages/${pageName}/${pageName}.html`,
   filename: `./${pageName}.html`,
-}));
+}))
 
-const entries = {};
+const entries = {}
 Object.keys(pages).reduce((pageName) => {
   // create an entry for each page
-  entries[pageName] = `./src/pages/${pageName}/${pageName}`;
-  return entries;
-}, {});
+  entries[pageName] = `./src/pages/${pageName}/${pageName}`
+  return entries
+}, {})
 
 module.exports = {
   entry: entries,
@@ -71,4 +71,4 @@ module.exports = {
       filename: '[name].css',
     }),
   ].concat(htmlWebPackPlugins),
-};
+}

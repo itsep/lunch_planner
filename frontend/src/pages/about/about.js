@@ -1,4 +1,4 @@
-import './AboutApp';
-import '../../style/main.scss';
-import './about.scss';
+import './AboutApp'
+import '../../style/main.scss'
+import './about.scss'
 
