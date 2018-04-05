@@ -8,5 +8,13 @@ module.exports = {
     "react/jsx-filename-extension": 0,
     // disallow semicolon at the end of the line
     "semi": ["error", "never"],
+    // requires a dangling comma
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "ignore",
+    }],
   }
 };

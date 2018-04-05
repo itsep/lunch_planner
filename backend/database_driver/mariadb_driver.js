@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql')
 
 // User und passwort in extra Datei
 
@@ -7,5 +7,5 @@ module.exports = mysql.createPool({
   user: 'sebi',
   password: 'sebi',
   database: 'lunch_planner',
-});
+})
 
