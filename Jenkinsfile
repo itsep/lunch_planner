@@ -8,20 +8,23 @@ pipeline {
     }
     stages {
         stage('Checkout') {
-            echo 'Getting source code...'
-            checkout scm
+            steps {
+                echo 'Getting source code...'
+                checkout scm
+            }
+            
         }
         // Frontend
         stage('Install') {
-            echo 'Installing dependencies...'
             steps {
+                echo 'Installing dependencies...'
                 // `npm install` but especially for continues integration.
                 sh 'npm ci --prefix=frontend'
             }
         }
         stage('Lint') { 
-            echo 'Linting...'
             steps {
+                echo 'Linting...'
                 sh 'npm run lint  --prefix=frontend' 
             }
         }
