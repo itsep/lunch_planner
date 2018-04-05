@@ -16,7 +16,8 @@ pipeline {
             steps {
                 echo 'Installing dependencies...'
                 // `npm install` but especially for continues integration.
-                sh 'npm ci --prefix=frontend'
+                // sh 'npm ci --prefix=frontend'
+                sh 'npm install --prefix=frontend'
             }
         }
         stage('Lint') { 
