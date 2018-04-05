@@ -2,6 +2,7 @@ module.exports = {
   "extends": "airbnb-base",
   "env": {
       "node": true,
+      "mocha": true,
   },
   "rules": {
     // disallow semicolon at the end of the line
