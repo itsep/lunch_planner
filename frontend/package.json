@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production",
-    "lint": "eslint src/** webpack.config.js"
+    "lint": "eslint src/** webpack.config.js",
+    "lint-fix": "eslint src/** webpack.config.js --fix"
   },
   "repository": {
     "type": "git",

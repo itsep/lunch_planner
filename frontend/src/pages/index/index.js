@@ -1,3 +1,3 @@
-import './IndexApp';
-import '../../style/main.scss';
-import './index.scss';
+import './IndexApp'
+import '../../style/main.scss'
+import './index.scss'

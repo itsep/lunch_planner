@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import teamImage from './assets/team.jpg';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import teamImage from './assets/team.jpg'
 
 const App = () => (
   <div>
@@ -9,8 +9,8 @@ const App = () => (
     <h2>Team</h2>
     <img src={teamImage} alt="I.t. Team" width="100%" />
   </div>
-);
+)
 
-export default App;
+export default App
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'))
