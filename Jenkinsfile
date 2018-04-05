@@ -33,12 +33,12 @@ pipeline {
             parallel {
                 stage('Lint Frontend') {
                     steps {
-                        sh 'npm lint --prefix=frontend'
+                        sh 'npm run lint --prefix=frontend'
                     }
                 }
                 stage('Lint Backend') {
                     steps {
-                        sh 'npm lint --prefix=backend'
+                        sh 'npm run lint --prefix=backend'
                     }
                 }
             }
