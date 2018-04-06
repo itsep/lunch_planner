@@ -16,10 +16,9 @@ const htmlWebPackPlugins = Object.keys(pages).map(pageName => new HtmlWebPackPlu
 }))
 
 const entries = {}
-Object.keys(pages).reduce((pageName) => {
+Object.keys(pages).forEach((pageName) => {
   // create an entry for each page
   entries[pageName] = `./src/pages/${pageName}/${pageName}`
-  return entries
 }, {})
 
 module.exports = {
