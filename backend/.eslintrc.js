@@ -15,5 +15,6 @@ module.exports = {
       "exports": "always-multiline",
       "functions": "ignore",
     }],
+    "linebreak-style": 0,
   }
 };
