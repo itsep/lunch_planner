@@ -2,6 +2,7 @@ module.exports = {
   "extends": "airbnb",
   "env": {
     "browser": true,
+    "jest": true
   },
   "rules": {
     // allow jsx in javascript files
