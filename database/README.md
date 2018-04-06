@@ -9,11 +9,16 @@ $ sudo apt-get install mariadb-server
 
 start on linux
 ```bash
-$ /etc/init.d/mysql start
+$ sudo /etc/init.d/mysql start
 ```
 monitor-mode of mariaDB on linux as root
 ```bash
 $ sudo mysql -u root -p -h localhost
+```
+
+monitor-mode of mariaDB on linux as user
+```bash
+$ sudo mysql -u USERNAME -p -h localhost
 ```
 
 create new user
@@ -26,12 +31,7 @@ give User all rights
 GRANT ALL PRIVILEGES ON * . * TO 'name'@'localhost';
 ```
 
-monitor-mode of mariaDB on linux as user
-```bash
-$ sudo mysql -u root -p -h localhost;
-```
-
 stop on linux
 ```bash
-$ /etc/init.d/mysql stop
+$ sudo /etc/init.d/mysql stop
 ```
