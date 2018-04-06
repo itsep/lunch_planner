@@ -4,13 +4,6 @@ pipeline {
         CI = 'true' 
     }
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Getting source code...'
-                checkout scm
-            }
-            
-        }
         stage('Install') {
             parallel {
                 stage('Install Frontend') {
@@ -41,6 +34,11 @@ pipeline {
                         sh 'npm run lint --prefix=backend'
                     }
                 }
+            }
+        }
+        stage('Build Frontend') {
+            steps {
+                sh 'npm run build --prefix=frontend'
             }
         }
     }
