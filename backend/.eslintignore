@@ -1,4 +1,4 @@
 # .eslintignore
 !.eslintrc.js
 /node_modules/**
-/dist/**
+/coverage/**
