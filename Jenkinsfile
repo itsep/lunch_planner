@@ -11,19 +11,36 @@ pipeline {
             }
             
         }
-        // Frontend
         stage('Install') {
-            steps {
-                echo 'Installing dependencies...'
-                // `npm install` but especially for continues integration.
-                // sh 'npm ci --prefix=frontend'
-                sh 'npm install --prefix=frontend'
+            parallel {
+                stage('Install Frontend') {
+                    steps {
+                        // `npm install` but especially for continues integration.
+                        // sh 'npm ci --prefix=frontend'
+                        sh 'npm install --prefix=frontend'
+                    }
+                }
+                stage('Install Backend') {
+                    steps {
+                        // `npm install` but especially for continues integration.
+                        // sh 'npm ci --prefix=backend'
+                        sh 'npm install --prefix=backend'
+                    }
+                }
             }
         }
-        stage('Lint') { 
-            steps {
-                echo 'Linting...'
-                sh 'npm run lint  --prefix=frontend' 
+        stage('Lint') {
+            parallel {
+                stage('Lint Frontend') {
+                    steps {
+                        sh 'npm run lint --prefix=frontend'
+                    }
+                }
+                stage('Lint Backend') {
+                    steps {
+                        sh 'npm run lint --prefix=backend'
+                    }
+                }
             }
         }
     }
