@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import teamImage from './assets/team.jpg'
 
 const App = () => (
@@ -12,5 +11,3 @@ const App = () => (
 )
 
 export default App
-
-ReactDOM.render(<App />, document.getElementById('app'))
