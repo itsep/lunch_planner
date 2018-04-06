@@ -1,20 +1,20 @@
 module.exports = {
-  "extends": "airbnb-base",
-  "env": {
-      "node": true,
-      "mocha": true,
+  extends: 'airbnb-base',
+  env: {
+    node: true,
+    mocha: true,
   },
-  "rules": {
+  rules: {
     // disallow semicolon at the end of the line
-    "semi": ["error", "never"],
+    semi: ['error', 'never'],
     // requires a dangling comma
-    "comma-dangle": ["error", {
-      "arrays": "always-multiline",
-      "objects": "always-multiline",
-      "imports": "always-multiline",
-      "exports": "always-multiline",
-      "functions": "ignore",
+    'comma-dangle': ['error', {
+      arrays: 'always-multiline',
+      objects: 'always-multiline',
+      imports: 'always-multiline',
+      exports: 'always-multiline',
+      functions: 'ignore',
     }],
-    "linebreak-style": 0,
-  }
-};
+    'linebreak-style': 0,
+  },
+}
