@@ -9,7 +9,7 @@ const sqlInit = fs.readFileSync('../database/schema.sql').toString()
 
 // eslint-disable-next-line import/newline-after-import
 app.use('/account', require('./routes/account').router)
-app.get('/*', indexModules.getSlashAll)
+app.get('/', indexModules.getSlashAll)
 
 
 app.listen(8081, indexModules.listen8080)

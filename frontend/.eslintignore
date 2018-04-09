@@ -2,3 +2,6 @@
 !.eslintrc.js
 /node_modules/**
 /dist/**
+
+# frontend coverage data
+/src/__coverage__/**

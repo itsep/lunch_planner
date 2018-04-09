@@ -23,6 +23,14 @@ Object.keys(pages).forEach((pageName) => {
 
 module.exports = {
   entry: entries,
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8081',
+        pathRewrite: { '^/api': '' },
+      },
+    },
+  },
   optimization: {
     splitChunks: {
       chunks: 'all',
