@@ -62,3 +62,6 @@ dist/
 
 # InteliJ
 .idea/
+
+# frontend coverage data
+/__tests__/coverage/**
