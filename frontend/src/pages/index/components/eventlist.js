@@ -14,19 +14,6 @@ function stateOfEventList() {
           title: 'Event Nr. 1',
           summary: 'Das erste und beste Event',
         },
-        {
-          id: cuid(),
-          title: 'Das zweite Event',
-          summary: 'Das zweite und bessere Event',
-        }, {
-          id: cuid(),
-          title: 'Event Nr. 3',
-          summary: 'Das dritte und gute Event',
-        }, {
-          id: cuid(),
-          title: 'Viertes Event',
-          summary: 'Das vierte und ein Event',
-        },
       ],
       title: 'Verfügbare Events',
       summary: 'Events denen du beitreten kannst aus deiner Nähe.',
