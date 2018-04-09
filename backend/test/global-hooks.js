@@ -1,9 +1,14 @@
-const { pool } = require('../lib/database')
+const { pool, createTestDatabase, dropDatabase } = require('../lib/database')
 
-// before(() => {
-//
-// })
+const schemaPath = '../database/schema.sql'
+
+let testDatabaseName
+before(async () => {
+  testDatabaseName = await createTestDatabase(schemaPath)
+  pool.changeDatabase(testDatabaseName)
+})
 
 after(async () => {
-  pool.end()
+  dropDatabase(testDatabaseName)
+  await pool.end()
 })
