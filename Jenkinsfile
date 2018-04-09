@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        CI = 'true' 
+        CI = 'true'
     }
     stages {
         stage('Install Backend') {
@@ -16,6 +16,20 @@ pipeline {
                 sh 'npm run lint --prefix=backend'
             }
         }
+        stage('Test Backend') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'it-sep-ci-mariadb', usernameVariable: 'DATABASE_USERNAME', passwordVariable: 'DATABASE_PASSWORD')]) {
+                    // available as an env variable, but will be masked if you try to print it out any which way
+                    // note: single quotes prevent Groovy interpolation; expansion is by Bourne Shell, which is what you want
+                    sh 'echo $DATABASE_PASSWORD'
+                    // also available as a Groovy variable
+                    echo DATABASE_USERNAME
+                    // or inside double quotes for string interpolation
+                    echo "username is $DATABASE_USERNAME"
+                    sh 'npm run test --prefix=backend'
+                }
+            }
+        }
         stage('Install Frontend') {
             steps {
                 // `npm install` but especially for continues integration.
@@ -26,6 +40,11 @@ pipeline {
         stage('Lint Frontend') {
             steps {
                 sh 'npm run lint --prefix=frontend'
+            }
+        }
+        stage('Test Frontend') {
+            steps {
+                sh 'npm run test --prefix=frontend'
             }
         }
         stage('Build Frontend') {
