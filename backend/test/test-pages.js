@@ -1,21 +1,21 @@
 const indexModules = require('../index_modules/index_modules')
-const { expect } = require('chai')
+const chai = require('chai')
+const sinonChai = require('sinon-chai')
 const { mockReq, mockRes } = require('sinon-express-mock')
 
-let request = {}
-let req
-let res
+chai.use(sinonChai)
+const { expect } = chai
 
 describe('Status and content', () => {
   describe('index_modules', () => {
     describe('index_modules', () => {
       describe('getSlashAll', () => {
         it('Hello World', async () => {
-          request = {}
-          req = mockReq(request)
-          res = mockRes()
+          const request = {}
+          const req = mockReq(request)
+          const res = mockRes()
           await indexModules.getSlashAll(req, res)
-          expect(res.send.args[0][0]).to.equal('Hello World!')
+          expect(res.send).to.be.calledWith('Hello World!')
         })
       })
     })
