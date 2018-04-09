@@ -20,7 +20,7 @@ createMultiStatementConnection().then((conn) => {
       console.error(err2)
     }
   })
-});
+})
 
 /*
 mariadb.dbPool.getConnection((err, connection) => {
