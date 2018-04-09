@@ -22,6 +22,12 @@ npm run build
 npm run lint
 ```
 
+## Testing
+
+```bash
+jest __tests__ --watch
+```
+
 # WebStorm Configuration
 ## Plugins
 

@@ -10,6 +10,10 @@
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
   },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "./src/__tests__/__coverage__"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/valentinogagliardi/webpack-4-quickstart.git"
