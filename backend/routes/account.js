@@ -8,9 +8,9 @@ async function accountCount(req, res) {
   const conn = await pool.getConnection()
   const query = conn.execute('SELECT COUNT(*) as count FROM account')
   conn.release()
-  const result = await query
+  const [result] = await query
   res.json({
-    count: result[0][0].count,
+    count: result[0].count,
   })
 }
 
