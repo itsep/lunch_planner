@@ -9,8 +9,10 @@ async function accountCount(req, res) {
   const query = conn.execute('SELECT COUNT(*) as count FROM account')
   conn.release()
   const [result] = await query
+  const { count } = result[0]
+  res.set({ 'content-type': 'application/json;charset=utf-8' })
   res.json({
-    count: result[0].count,
+    count,
   })
 }
 

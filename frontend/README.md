@@ -25,7 +25,7 @@ npm run lint
 ## Testing
 
 ```bash
-jest __tests__ --watch -u
+jest __tests__ --silent -u
 ```
 und
 ```bash

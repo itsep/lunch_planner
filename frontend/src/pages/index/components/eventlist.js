@@ -5,26 +5,16 @@ import cuid from 'cuid'
 import { fromJS } from 'immutable'
 import Event from './event'
 
-function stateOfEventList() {
-  return {
-    data: fromJS({
-      events: [
-        {
-          id: cuid(),
-          title: 'Event Nr. 1',
-          summary: 'Das erste und beste Event',
-        },
-      ],
-      title: 'Verfügbare Events',
-      summary: 'Events denen du beitreten kannst aus deiner Nähe.',
-    }),
-  }
-}
-
 export default class Eventlist extends Component {
   constructor(props) {
     super(props)
-    this.state = stateOfEventList()
+    this.state = {
+      events: [],
+      title: 'Available events',
+      summary: 'Events you can join!',
+      eventTitle: '',
+      eventSummary: '',
+    }
   }
   render() {
     const {
@@ -33,23 +23,22 @@ export default class Eventlist extends Component {
       summary,
       eventTitle,
       eventSummary,
-    } = this.state.data.toJS()
+    } = this.state
+
     const onClickAdd = () => {
-      this.state.data = this.state.data.update(
-        'events',
-        ev => ev.push(fromJS({
+      this.setState({
+        events: events.concat([{
           id: cuid(),
-          title: this.state.data.get('eventTitle'),
-          summary: this.state.data.get('eventSummary'),
-        }))
-      )
-      this.forceUpdate()
+          title: this.state.eventTitle,
+          summary: this.state.eventSummary,
+        }]),
+      })
     }
     const onChangeEventTitle = (change) => {
-      this.state.data = this.state.data.set('eventTitle', change.target.value)
+      this.setState({ eventTitle: change.target.value })
     }
     const onChangeEventSummary = (change) => {
-      this.state.data = this.state.data.set('eventSummary', change.target.value)
+      this.setState({ eventSummary: change.target.value })
     }
     return (
       <div>

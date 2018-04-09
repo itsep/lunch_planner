@@ -1,20 +1,34 @@
 /* eslint react/prop-types: 0 */
 /* eslint react/prefer-stateless-function: 0 */
 import React, { Component } from 'react'
+import 'isomorphic-fetch'
 
 function getRegisteredUserNumber() {
-  fetch('account/count').then(({ count }) => count)
+  fetch('/api/account/count').then((count) => {
+    console.log({ count })
+    return count
+  })
 }
 
 export default class Ruc extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      registeredUserNumber: getRegisteredUserNumber(),
+    }
+  }
   render() {
     const {
       registeredUserNumber,
-    } = { registeredUserNumber: getRegisteredUserNumber() }
+    } = { registeredUserNumber: this.state.registeredUserNumber }
     return (
       <div>
         <h3>Registered User Counter</h3>
-        <button onClick={() => this.forceUpdate()} >Refresh</button>
+        <button onClick={
+          () => this.setState({ registeredUserNumber: getRegisteredUserNumber() })
+        }
+        >Refresh
+        </button>
         <p>Registered User: {registeredUserNumber}</p>
       </div>
     )

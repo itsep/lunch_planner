@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <h1>
+    Lunch Planner
+  </h1>
+  <p>
+    This is our awesome Lunch Planer!
+  </p>
+  <h2>
+    Team 
+    <strong>
+      It
+    </strong>
+  </h2>
+  <div>
+    <h3>
+      Registered User Counter
+    </h3>
+    <button
+      onClick={[Function]}
+    >
+      Refresh
+    </button>
+    <p>
+      Registered User: 
+    </p>
+  </div>
+  <div>
+    <h2>
+      Available events
+    </h2>
+    <p>
+      Events you can join!
+    </p>
+    <div>
+      <input
+        onChange={[Function]}
+        placeholder="Title"
+        value=""
+      />
+      <input
+        onChange={[Function]}
+        placeholder="Summary"
+        value=""
+      />
+      <button
+        onClick={[Function]}
+      >
+        Add Event
+      </button>
+    </div>
+    <ul />
+  </div>
+</div>
+`;
