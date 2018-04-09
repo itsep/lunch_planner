@@ -13,7 +13,11 @@
   "jest": {
     "collectCoverage": true,
     "coverageDirectory": "./src/__tests__/__coverage__",
-    "coverageReporters": ["json", "lcov", "text"]
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text"
+    ]
   },
   "repository": {
     "type": "git",
