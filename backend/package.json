@@ -14,7 +14,8 @@
   "dependencies": {
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
-    "mysql": "^2.15.0"
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.3"
   },
   "devDependencies": {
     "assert": "^1.4.1",
