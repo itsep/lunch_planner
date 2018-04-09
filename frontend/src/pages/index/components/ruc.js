@@ -4,10 +4,12 @@ import React, { Component } from 'react'
 import 'isomorphic-fetch'
 
 function getRegisteredUserNumber() {
-  fetch('/api/account/count').then((count) => {
-    console.log({ count })
-    return count
-  })
+  fetch('/api/account/count')
+    .then(response => response.json())
+    .then(({ count }) => {
+      console.log(count)
+      return count
+    })
 }
 
 export default class Ruc extends Component {
