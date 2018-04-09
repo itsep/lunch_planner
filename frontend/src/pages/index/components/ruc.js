@@ -26,8 +26,8 @@ export default class Ruc extends Component {
     return (
       <div>
         <h3>Registered User Counter</h3>
+        <p>Registered User: <b>{registeredUserNumber}</b></p>
         <button onClick={this.getRegisteredUserNumber} >Refresh</button>
-        <p>Registered User: {registeredUserNumber}</p>
       </div>
     )
   }

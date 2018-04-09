@@ -10,9 +10,9 @@ exports[`renders correctly 1`] = `
   </p>
   <h2>
     Team 
-    <strong>
+    <b>
       It
-    </strong>
+    </b>
   </h2>
   <div>
     <h3>
@@ -25,6 +25,9 @@ exports[`renders correctly 1`] = `
     </button>
     <p>
       Registered User: 
+      <h3>
+        -
+      </h3>
     </p>
   </div>
   <div>
