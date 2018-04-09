@@ -4,6 +4,7 @@ const mysql = require('mysql2/promise')
 
 const path = '../database/schema.sql'
 
+
 function makeid() {
   let text = ''
   const possible = 'abcdefghijklmnopqrstuvwxyz0123456789'
