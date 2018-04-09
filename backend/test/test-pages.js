@@ -1,10 +1,5 @@
 const indexModules = require('../index_modules/index_modules')
-const chai = require('chai')
-const sinonChai = require('sinon-chai')
 const { mockReq, mockRes } = require('sinon-express-mock')
-
-chai.use(sinonChai)
-const { expect } = chai
 
 describe('Status and content', () => {
   describe('index_modules', () => {

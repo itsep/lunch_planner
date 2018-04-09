@@ -1,8 +1,8 @@
 const { pool } = require('../lib/database')
 
-before(() => {
-
-})
+// before(() => {
+//
+// })
 
 after(async () => {
   pool.end()

@@ -4,6 +4,9 @@ module.exports = {
     node: true,
     mocha: true,
   },
+  globals: {
+    expect: true,
+  },
   rules: {
     // disallow semicolon at the end of the line
     semi: ['error', 'never'],

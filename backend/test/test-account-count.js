@@ -1,10 +1,5 @@
 const account = require('../routes/account')
-const chai = require('chai')
-const sinonChai = require('sinon-chai')
 const { mockReq, mockRes } = require('sinon-express-mock')
-
-chai.use(sinonChai)
-const { expect } = chai
 
 describe('account', () => {
   describe('count', () => {
