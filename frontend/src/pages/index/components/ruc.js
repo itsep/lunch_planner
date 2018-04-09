@@ -3,34 +3,30 @@
 import React, { Component } from 'react'
 import 'isomorphic-fetch'
 
-function getRegisteredUserNumber() {
-  fetch('/api/account/count')
-    .then(response => response.json())
-    .then(({ count }) => {
-      console.log(count)
-      return count
-    })
-}
-
 export default class Ruc extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      registeredUserNumber: getRegisteredUserNumber(),
+      registeredUserNumber: '-',
     }
+    this.getRegisteredUserNumber = this.getRegisteredUserNumber.bind(this)
+    this.getRegisteredUserNumber()
+  }
+  getRegisteredUserNumber() {
+    fetch('/api/account/count')
+      .then(response => response.json())
+      .then(({ count }) => {
+        this.setState({ registeredUserNumber: count })
+      })
   }
   render() {
     const {
       registeredUserNumber,
-    } = { registeredUserNumber: this.state.registeredUserNumber }
+    } = this.state
     return (
       <div>
         <h3>Registered User Counter</h3>
-        <button onClick={
-          () => this.setState({ registeredUserNumber: getRegisteredUserNumber() })
-        }
-        >Refresh
-        </button>
+        <button onClick={this.getRegisteredUserNumber} >Refresh</button>
         <p>Registered User: {registeredUserNumber}</p>
       </div>
     )
