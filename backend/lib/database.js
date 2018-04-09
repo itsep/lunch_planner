@@ -6,18 +6,32 @@ if (!process.env.DATABASE_USERNAME || !process.env.DATABASE_PASSWORD) {
   process.exit(1)
 }
 
-module.exports = {}
-module.exports.pool = mysql.createPool({
+const pool = mysql.createPool({
   host: 'localhost',
   user: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME || 'lunch_planner',
 })
-module.exports.createMultiStatementConnection = () => mysql.createConnection({
-  host: 'localhost',
-  user: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME || 'lunch_planner',
-  multipleStatements: 'true',
-})
+/**
+ * changes the database for new connections! Call this function before you use the pool.
+ * @param dbName {String} - database name
+ */
+pool.changeDatabase = function changeDatabase(dbName) {
+  module.exports.pool.pool.config.connectionConfig.database = dbName
+}
+
+function createMultiStatementConnection() {
+  return mysql.createConnection({
+    host: 'localhost',
+    user: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME || 'lunch_planner',
+    multipleStatements: 'true',
+  })
+}
+
+module.exports = {
+  pool,
+  createMultiStatementConnection,
+}
 
