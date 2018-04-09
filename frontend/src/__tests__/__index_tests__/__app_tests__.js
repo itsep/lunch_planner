@@ -1,6 +1,6 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import App from '../../../pages/index/IndexApp'
+import App from '../../pages/index/components/app'
 
 it('renders correctly', () => {
   const tree = renderer
