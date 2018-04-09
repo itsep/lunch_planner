@@ -42,6 +42,11 @@ pipeline {
                 sh 'npm run lint --prefix=frontend'
             }
         }
+        stage('Test Frontend') {
+            steps {
+                sh 'npm run test --prefix=frontend'
+            }
+        }
         stage('Build Frontend') {
             steps {
                 sh 'npm run build --prefix=frontend'
