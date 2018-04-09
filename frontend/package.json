@@ -10,6 +10,11 @@
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
   },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "./src/__tests__/__coverage__",
+    "coverageReporters": ["json", "lcov", "text"]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/valentinogagliardi/webpack-4-quickstart.git"
@@ -43,9 +48,12 @@
     "webpack-dev-server": "^3.1.1"
   },
   "dependencies": {
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
     "jest": "^22.4.3",
+    "prop-types": "^15.6.1",
+    "react": "^16.3.1",
+    "immutable": "^3.8.2",
+    "cuid": "^2.1.1",
+    "react-dom": "^16.3.1",
     "react-test-renderer": "^16.3.1"
   }
 }

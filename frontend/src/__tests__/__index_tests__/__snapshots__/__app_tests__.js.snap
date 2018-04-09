@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <h1>
+    Lunch Planner
+  </h1>
+  <p>
+    This is our awesome Lunch Planer!
+  </p>
+  <h2>
+    Team 
+    <strong>
+      It
+    </strong>
+  </h2>
+  <div>
+    <h2>
+      Verfügbare Events
+    </h2>
+    <p>
+      Events denen du beitreten kannst aus deiner Nähe.
+    </p>
+    <div>
+      <input
+        onChange={[Function]}
+        placeholder="Title"
+        value={undefined}
+      />
+      <input
+        onChange={[Function]}
+        placeholder="Summary"
+        value={undefined}
+      />
+      <button
+        onClick={[Function]}
+      >
+        Add Event
+      </button>
+    </div>
+    <ul>
+      <div
+        id={undefined}
+      >
+        <h3>
+          Event Nr. 1
+        </h3>
+        <p>
+          Das erste und beste Event
+        </p>
+      </div>
+      <div
+        id={undefined}
+      >
+        <h3>
+          Das zweite Event
+        </h3>
+        <p>
+          Das zweite und bessere Event
+        </p>
+      </div>
+      <div
+        id={undefined}
+      >
+        <h3>
+          Event Nr. 3
+        </h3>
+        <p>
+          Das dritte und gute Event
+        </p>
+      </div>
+      <div
+        id={undefined}
+      >
+        <h3>
+          Viertes Event
+        </h3>
+        <p>
+          Das vierte und ein Event
+        </p>
+      </div>
+    </ul>
+  </div>
+</div>
+`;
