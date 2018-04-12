@@ -15,7 +15,7 @@ export default class Ruc extends Component {
     this.boundGetRegisteredUserNumber()
   }
   async getRegisteredUserNumber() {
-    const countRes = await fetch('http://localhost:8080/api/account/count')
+    const countRes = await fetch('/api/account/count')
     const { count } = await countRes.json()
     this.setState({ registeredUserNumber: count })
     return count
