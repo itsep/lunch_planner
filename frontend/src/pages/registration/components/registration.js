@@ -1,60 +1,78 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import TextField from 'material-ui/TextField'
 import Card, { CardActions, CardContent } from 'material-ui/Card'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 
-const styles = {
+const styles = theme => ({
   card: {
     minWidth: 275,
+    maxWidth: 400,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+  textField: {
+    width: '100%',
   },
-  title: {
-    marginBottom: 16,
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
+  actions: {
+    flexDirection: 'row-reverse',
+  }
+})
+
+class Registration extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+  handleChange(name) {
+    const that = this
+    return (event) => {
+      that.setState({
+        [name]: event.target.value,
+      })
+    }
+  }
+
+  render() {
+    const { classes } = this.props
+    return (
+      <div>
+        <Card className={classes.card}>
+          <CardContent>
+            <Typography className={classes.title} variant="title">
+              Registration
+            </Typography>
+            <form className={classes.container} noValidate autoComplete="off">
+              <TextField
+                id="email"
+                label="Email"
+                className={classes.textField}
+                margin="normal"
+              />
+              <TextField
+                id="password"
+                label="Password"
+                className={classes.textField}
+                type="password"
+                autoComplete="current-password"
+                margin="normal"
+              />
+            </form>
+          </CardContent>
+          <CardActions className={classes.actions}>
+            <Button size="large" color="primary">Register</Button>
+          </CardActions>
+        </Card>
+      </div>
+    )
+  }
 }
 
-function SimpleCard(props) {
-  const { classes } = props
-  const bull = <span className={classes.bullet}>•</span>
-
-  return (
-    <div>
-      <Card className={classes.card}>
-        <CardContent>
-          <Typography className={classes.title} color="textSecondary">
-            Word of the Day
-          </Typography>
-          <Typography variant="headline" component="h2">
-            be{bull}nev{bull}o{bull}lent
-          </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-            adjective
-          </Typography>
-          <Typography component="p">
-            well meaning and kindly.<br />
-            {'"a benevolent smile"'}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
-    </div>
-  )
-}
-
-SimpleCard.propTypes = {
+Registration.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(SimpleCard)
+export default withStyles(styles)(Registration)
+
