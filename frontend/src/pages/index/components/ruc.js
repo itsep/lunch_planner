@@ -1,6 +1,8 @@
 /* eslint react/prop-types: 0 */
 /* eslint react/prefer-stateless-function: 0 */
 import React, { Component } from 'react'
+import FlatButton from 'material-ui/FlatButton'
+import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card'
 import 'isomorphic-fetch'
 
 export default class Ruc extends Component {
@@ -9,26 +11,27 @@ export default class Ruc extends Component {
     this.state = {
       registeredUserNumber: '-',
     }
-    this.getRegisteredUserNumber = this.getRegisteredUserNumber.bind(this)
-    this.getRegisteredUserNumber()
+    this.boundGetRegisteredUserNumber = this.getRegisteredUserNumber.bind(this)
+    this.boundGetRegisteredUserNumber()
   }
-  getRegisteredUserNumber() {
-    fetch('/api/account/count')
-      .then(response => response.json())
-      .then(({ count }) => {
-        this.setState({ registeredUserNumber: count })
-      })
+  async getRegisteredUserNumber() {
+    const countRes = await fetch('/api/account/count')
+    const { count } = await countRes.json()
+    this.setState({ registeredUserNumber: count })
+    return count
   }
   render() {
     const {
       registeredUserNumber,
     } = this.state
     return (
-      <div>
-        <h3>Registered User Counter</h3>
-        <p>Registered User: <b>{registeredUserNumber}</b></p>
-        <button onClick={this.getRegisteredUserNumber} >Refresh</button>
-      </div>
+      <Card>
+        <CardHeader title="Registered User Counter" />
+        <CardText>Registered User: <b>{registeredUserNumber}</b></CardText>
+        <CardActions>
+          <FlatButton label="refresh" primary onClick={this.boundGetRegisteredUserNumber} />
+        </CardActions>
+      </Card>
     )
   }
 }

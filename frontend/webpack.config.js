@@ -4,7 +4,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // all available pages
 const pages = {
   index: {/* config options */},
-  about: {/* config options */},
   // *add a new page here*
 }
 
@@ -18,7 +17,10 @@ const htmlWebPackPlugins = Object.keys(pages).map(pageName => new HtmlWebPackPlu
 const entries = {}
 Object.keys(pages).forEach((pageName) => {
   // create an entry for each page
-  entries[pageName] = `./src/pages/${pageName}/${pageName}`
+  entries[pageName] = [
+    'babel-polyfill',
+    `./src/pages/${pageName}/${pageName}`,
+  ]
 }, {})
 
 module.exports = {
