@@ -1,2 +1,2 @@
-
-
+--require ./test/global_require.js
+./test/global_hooks.js

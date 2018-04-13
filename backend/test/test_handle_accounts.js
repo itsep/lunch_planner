@@ -19,9 +19,15 @@ describe('handle accounts', () => {
       const hashedPassword = await handleAccounts.getHashedPasswordWithEmail(testEmail)
       expect(await compare(testPassword, hashedPassword)).equal(true)
     })
+    it('should result undefined', async () => {
+      const result = await handleAccounts.getHashedPasswordWithEmail('no real email')
+      expect(result).to.equal(undefined)
+    })
   })
-  /*
   describe('login', () => {
-
-  }) */
+    it('should return a jwt', async () => {
+      const token = await handleAccounts.login(testEmail, testPassword)
+      expect(token).to.not.equal(false)
+    })
+  })
 })

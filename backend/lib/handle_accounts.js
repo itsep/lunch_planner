@@ -6,9 +6,12 @@ const { hash, compare } = require('../lib/password_hash')
 async function getHashedPasswordWithEmail(email) {
   const conn = await pool.getConnection()
   const [result] = await conn.execute('SELECT account_hashed_password as accountHashedPassword FROM account WHERE account_email = ?', [email])
-  const { accountHashedPassword } = result[0]
   conn.release()
-  return accountHashedPassword
+  if (result.length > 0) {
+    const { accountHashedPassword } = result[0]
+    return accountHashedPassword
+  }
+  return undefined
 }
 
 async function create(email, password) {
