@@ -20,19 +20,19 @@ describe('account', () => {
     })
   })
   describe('create account', () => {
-    it('should return no error', async () => {
+    it('should result 200', async () => {
       const request = { body: { email: 'niceemail@email.de', password: 'newPassword' } }
       const req = mockReq(request)
       const res = mockRes()
-      await account.receiveCreateAccount(req, res)
-      expect(res.json).to.be.calledWith({ error: undefined })
+      await account.receiveNewAccount(req, res)
+      expect(res.status.lastCall.lastArg).equal(200)
     })
-    it('should return already registered error.', async () => {
+    it('should result 500, second email use', async () => {
       const request = { body: { email: 'niceemail@email.de', password: 'newPassword' } }
       const req = mockReq(request)
       const res = mockRes()
-      await account.receiveCreateAccount(req, res)
-      expect(res.json).to.be.calledWith({ error: 'E-Mail is already registered.' })
+      await account.receiveNewAccount(req, res)
+      expect(res.status.lastCall.lastArg).equal(500)
     })
   })
 })

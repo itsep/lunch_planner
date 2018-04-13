@@ -20,28 +20,24 @@ async function accountCount(req, res) {
   })
 }
 
-async function receiveCreateAccount(req, res) {
+async function receiveNewAccount(req, res) {
   const { email, password } = req.body
   const hashedPassword = await bcrypt.hash(password, 13)
   const error = await accountHandler.createAccount(email, hashedPassword)
-  res.json({
-    error: undefined,
-  })
+  res.status(200)
   if (error) {
     if (error.code === 'ER_DUP_ENTRY') {
-      res.json({
-        error: 'E-Mail is already registered.',
-      })
+      res.status(500).send({ error: 'Email is already registered.' })
     } else throw error
   }
 }
 
 accountRouter.get('/count', asyncHandler(accountCount))
 
-accountRouter.post('/', asyncHandler(receiveCreateAccount))
+accountRouter.post('/', asyncHandler(receiveNewAccount))
 
 module.exports = {
   router: accountRouter,
   count: accountCount,
-  receiveCreateAccount,
+  receiveNewAccount,
 }
