@@ -32,7 +32,10 @@ async function login(email, password) {
   const hashedPassword = await getHashedPasswordWithEmail(email)
   if (compare(password, hashedPassword)) {
     return jwt.sign(
-      { auth: email },
+      {
+        auth: email,
+        test: 'hi David',
+      },
       process.env.JWT_SECRET,
       { expiresIn: '72h' }
     )
@@ -40,4 +43,8 @@ async function login(email, password) {
   return false
 }
 
-module.exports = { create, login, getHashedPasswordWithEmail }
+function verify(token) {
+  return jwt.verify(token, process.env.JWT_SECRET)
+}
+
+module.exports = { create, login, getHashedPasswordWithEmail, verify }

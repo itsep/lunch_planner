@@ -30,4 +30,11 @@ describe('handle accounts', () => {
       expect(token).to.not.equal(false)
     })
   })
+  describe('verify', () => {
+    it('should return decoded token', async () => {
+      const token = await handleAccounts.login(testEmail, testPassword)
+      const decodedToken = handleAccounts.verify(token)
+      expect(decodedToken.auth).to.equal(testEmail)
+    })
+  })
 })

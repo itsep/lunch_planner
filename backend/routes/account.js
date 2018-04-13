@@ -13,7 +13,6 @@ async function accountCount(req, res) {
   conn.release()
   const [result] = await query
   const { count } = result[0]
-  res.set({ 'content-type': 'application/json;charset=utf-8' })
   res.json({
     count,
   })
@@ -22,11 +21,12 @@ async function accountCount(req, res) {
 async function receiveNewAccount(req, res) {
   const { email, password } = req.body
   const error = await accountHandler.create(email, password)
-  res.status(200)
   if (error) {
     if (error.code === 'ER_DUP_ENTRY') {
       res.status(500).json({ error: 'Email is already registered.' })
     } else throw error
+  } else {
+    res.status(200)
   }
 }
 
