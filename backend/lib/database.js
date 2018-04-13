@@ -22,12 +22,12 @@ pool.changeDatabase = function changeDatabase(dbName) {
   module.exports.pool.pool.config.connectionConfig.database = dbName
 }
 
-function createMultiStatementConnection() {
+function createMultiStatementConnection(withoutDatabase) {
   return mysql.createConnection({
     host: 'localhost',
     user: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
-    database: 'lunch_planner',
+    database: withoutDatabase ? undefined : 'lunch_planner',
     multipleStatements: 'true',
   })
 }
