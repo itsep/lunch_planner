@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">62.5% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>5/8</span>
+        <span class='fraction'>10/10</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,21 +30,21 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">60% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/5</span>
+        <span class='fraction'>3/3</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">62.5% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>5/8</span>
+        <span class='fraction'>10/10</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -82,34 +82,36 @@
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -121,36 +123,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* eslint react/prop-types: 0 */
 /* eslint react/prefer-stateless-function: 0 */
 import React, { Component } from 'react'
+import FlatButton from 'material-ui/FlatButton'
+import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card'
 import 'isomorphic-fetch'
-&nbsp;
-function getRegisteredUserNumber() {
-  fetch('/api/account/count').then(<span class="fstat-no" title="function not covered" >(c</span>ount) =&gt; {
-<span class="cstat-no" title="statement not covered" >    console.log({ count })</span>
-<span class="cstat-no" title="statement not covered" >    return count</span>
-  })
-}
 &nbsp;
 export default class Ruc extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      registeredUserNumber: getRegisteredUserNumber(),
+      registeredUserNumber: '-',
     }
+    this.boundGetRegisteredUserNumber = this.getRegisteredUserNumber.bind(this)
+    this.boundGetRegisteredUserNumber()
+  }
+  async getRegisteredUserNumber() {
+    const countRes = await fetch('http://localhost:8080/api/account/count')
+    const { count } = await countRes.json()
+    this.setState({ registeredUserNumber: count })
+    return count
   }
   render() {
     const {
       registeredUserNumber,
-    } = { registeredUserNumber: this.state.registeredUserNumber }
+    } = this.state
     return (
-      &lt;div&gt;
-        &lt;h3&gt;Registered User Counter&lt;/h3&gt;
-        &lt;button onClick={
-<span class="fstat-no" title="function not covered" >          ()</span> =&gt; <span class="cstat-no" title="statement not covered" >this.setState({ registeredUserNumber: getRegisteredUserNumber() })</span>
-        }
-        &gt;Refresh
-        &lt;/button&gt;
-        &lt;p&gt;Registered User: {registeredUserNumber}&lt;/p&gt;
-      &lt;/div&gt;
+      &lt;Card&gt;
+        &lt;CardHeader title="Registered User Counter" /&gt;
+        &lt;CardText&gt;Registered User: &lt;b&gt;{registeredUserNumber}&lt;/b&gt;&lt;/CardText&gt;
+        &lt;CardActions&gt;
+          &lt;FlatButton label="refresh" primary onClick={this.boundGetRegisteredUserNumber} /&gt;
+        &lt;/CardActions&gt;
+      &lt;/Card&gt;
     )
   }
 }
@@ -160,7 +163,7 @@ export default class Ruc extends Component {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Apr 09 2018 17:48:11 GMT+0200 (CEST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Apr 12 2018 18:33:26 GMT+0200 (CEST)
 </div>
 </div>
 <script src="prettify.js"></script>

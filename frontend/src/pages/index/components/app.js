@@ -1,16 +1,19 @@
 import React from 'react'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import { Card, CardHeader } from 'material-ui/Card'
 import Ruc from './ruc'
 
 function App() {
   return (
-    <div>
-      <h1>Lunch Planner</h1>
-      <p>
-        This is our awesome Lunch Planer! <br />
-        Team <b>It</b>
-      </p>
-      <Ruc />
-    </div>
+    <MuiThemeProvider>
+      <Card>
+        <CardHeader
+          title="Lunch Planner"
+          subtitle="Team It"
+        />
+        <Ruc />
+      </Card>
+    </MuiThemeProvider>
   )
 }
 
