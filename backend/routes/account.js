@@ -1,7 +1,6 @@
 const { Router } = require('express')
 const asyncHandler = require('express-async-handler')
 const bodyParser = require('body-parser')
-const bcrypt = require('bcrypt')
 const { pool } = require('../lib/database')
 const accountHandler = require('../lib/handle_accounts')
 
@@ -22,8 +21,7 @@ async function accountCount(req, res) {
 
 async function receiveNewAccount(req, res) {
   const { email, password } = req.body
-  const hashedPassword = await bcrypt.hash(password, 13)
-  const error = await accountHandler.createAccount(email, hashedPassword)
+  const error = await accountHandler.create(email, password)
   res.status(200)
   if (error) {
     if (error.code === 'ER_DUP_ENTRY') {
@@ -32,12 +30,27 @@ async function receiveNewAccount(req, res) {
   }
 }
 
+async function accountAuthenticate(req, res) {
+  const { email, password } = req.body
+  const token = await accountHandler.login(email, password)
+  if (token) {
+    res.json({
+      token,
+    })
+  } else {
+    res.status(401).json({ error: `Password does not match with email: ${email}` })
+  }
+}
+
 accountRouter.get('/count', asyncHandler(accountCount))
 
 accountRouter.post('/', asyncHandler(receiveNewAccount))
+
+accountRouter.post('/login', asyncHandler(accountAuthenticate))
 
 module.exports = {
   router: accountRouter,
   count: accountCount,
   receiveNewAccount,
+  accountAuthenticate,
 }
