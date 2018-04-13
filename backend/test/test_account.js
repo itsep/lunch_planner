@@ -25,14 +25,14 @@ describe('account', () => {
       const req = mockReq(request)
       const res = mockRes()
       await account.receiveNewAccount(req, res)
-      expect(res.status.lastCall.lastArg).equal(200)
+      expect(res.status).to.be.calledWith(200)
     })
     it('should result 500, second email use', async () => {
       const request = { body: { email: 'niceemail@email.de', password: 'newPassword' } }
       const req = mockReq(request)
       const res = mockRes()
       await account.receiveNewAccount(req, res)
-      expect(res.status.lastCall.lastArg).equal(500)
+      expect(res.status).to.be.calledWith(500)
     })
   })
 })

@@ -27,7 +27,7 @@ async function receiveNewAccount(req, res) {
   res.status(200)
   if (error) {
     if (error.code === 'ER_DUP_ENTRY') {
-      res.status(500).send({ error: 'Email is already registered.' })
+      res.status(500).json({ error: 'Email is already registered.' })
     } else throw error
   }
 }
