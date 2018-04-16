@@ -1,6 +1,17 @@
 $font-stack: "Helvetica-Neue", Helvetica, sans-serif;
 
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font: 100% $font-stack;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
