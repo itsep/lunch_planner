@@ -1,8 +1,11 @@
-const { accountCount } = require('../../routes/middleware/count_account')
+const { accountCount } = require('../../routes/account/count_account')
 const { mockReq, mockRes } = require('../../lib/express_mock')
 const { pool } = require('../../lib/database')
 
 describe('count account', () => {
+  before(async () => {
+    await pool.execute('DELETE FROM account')
+  })
   it('should return 0', async () => {
     const req = mockReq()
     const res = mockRes()

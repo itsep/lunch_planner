@@ -23,7 +23,7 @@ async function registerAccount(req, res) {
       res.status(500).json({ error: 'Email is already registered.' })
     } else throw error
   } else {
-    res.status(200)
+    res.status(200).end()
   }
 }
 

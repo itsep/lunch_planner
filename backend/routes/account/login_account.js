@@ -16,12 +16,15 @@ async function getIdAndHashedPassword(email) {
   return undefined
 }
 
-async function login(email, password) {
+async function authenticate(email, password) {
   const account = await getIdAndHashedPassword(email)
   if (account && compare(password, account.hashedPassword)) {
     return jwt.sign(
       {
         auth: account.id,
+        perm: {
+          admin: true,
+        },
       },
       secret,
       { expiresIn: '72h' }
@@ -30,11 +33,15 @@ async function login(email, password) {
   return false
 }
 
-async function accountAuthenticate(req, res) {
+async function login(req, res) {
   const { email, password } = req.body
-  const token = await login(email, password)
+  const token = await authenticate(email, password)
   if (token) {
-    res.cookies.set('test')
+    res.cookie(
+      'lunch_planner_token',
+      { token }
+    )
+    res.status(200).end()
   } else {
     res.status(401).json({ error: `Password does not match with email: ${email}` })
   }
@@ -42,6 +49,6 @@ async function accountAuthenticate(req, res) {
 
 module.exports = {
   getIdAndHashedPassword,
+  authenticate,
   login,
-  accountAuthenticate,
 }

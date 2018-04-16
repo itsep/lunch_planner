@@ -28,9 +28,7 @@ const mockRes = (options = {}) => {
     append: sinon.stub().returns(ret),
     attachement: sinon.stub().returns(ret),
     clearCookie: sinon.stub().returns(ret),
-    cookies: {
-      set: sinon.stub().returns(ret),
-    },
+    cookie: sinon.stub().returns(ret),
     download: sinon.stub().returns(ret),
     end: sinon.stub().returns(ret),
     format: {},
