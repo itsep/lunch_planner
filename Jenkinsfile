@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         CI = 'true'
+        JWT_SECRET = 'most_secret_key'
     }
     stages {
         stage('Install Backend') {
