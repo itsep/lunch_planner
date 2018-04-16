@@ -1,4 +1,4 @@
-const { create, registerAccount } = require('../../routes/middleware/register_account')
+const { create, registerAccount } = require('../../routes/account/register_account')
 const { mockReq, mockRes } = require('../../lib/express_mock')
 
 const testEmail1 = 'test-register@email.com1'
