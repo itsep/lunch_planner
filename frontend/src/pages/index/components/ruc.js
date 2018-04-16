@@ -1,8 +1,9 @@
 /* eslint react/prop-types: 0 */
 /* eslint react/prefer-stateless-function: 0 */
 import React, { Component } from 'react'
-import FlatButton from 'material-ui/FlatButton'
-import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card'
+import Button from 'material-ui/Button'
+import Card, { CardContent, CardActions } from 'material-ui/Card'
+import Typography from 'material-ui/Typography'
 import 'isomorphic-fetch'
 
 export default class Ruc extends Component {
@@ -26,10 +27,12 @@ export default class Ruc extends Component {
     } = this.state
     return (
       <Card>
-        <CardHeader title="Registered User Counter" />
-        <CardText>Registered User: <b>{registeredUserNumber}</b></CardText>
+        <CardContent>
+          <Typography variant="title">Registered User Counter</Typography>
+          <Typography>Registered User: <b>{registeredUserNumber}</b></Typography>
+        </CardContent>
         <CardActions>
-          <FlatButton label="refresh" primary onClick={this.boundGetRegisteredUserNumber} />
+          <Button onClick={this.boundGetRegisteredUserNumber}>Refresh</Button>
         </CardActions>
       </Card>
     )

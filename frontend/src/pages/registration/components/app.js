@@ -1,9 +1,9 @@
 import React from 'react'
-import Ruc from './ruc'
+import Registration from './registration'
 
 function App() {
   return (
-    <Ruc />
+    <Registration />
   )
 }
 
