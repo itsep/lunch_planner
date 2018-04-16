@@ -55,7 +55,7 @@ class Registration extends React.Component {
       isLoading: true,
       error: null,
     })
-    fetch('/api/account/register', {
+    fetch('/api/account', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -75,7 +75,7 @@ class Registration extends React.Component {
     return (
       <div className={classes.registrationContainer}>
         <Card className={classes.card}>
-          <form className={classes.container} noValidate autoComplete="off">
+          <form className={classes.container}>
             <CardContent>
               <Typography className={classes.title} variant="title">
                 Registration
