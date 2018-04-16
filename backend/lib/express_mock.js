@@ -2,7 +2,7 @@ const sinon = require('sinon')
 
 // Returns a new mock request for use in testing.
 const mockReq = (options = {}) => {
-  const ret = {};
+  const ret = {}
   return Object.assign(ret, {
     accepts: sinon.stub().returns(ret),
     acceptsCharsets: sinon.stub().returns(ret),
@@ -23,7 +23,7 @@ const mockReq = (options = {}) => {
 
 // Returns a new mock response for use in testing.
 const mockRes = (options = {}) => {
-  const ret = {};
+  const ret = {}
   return Object.assign(ret, {
     append: sinon.stub().returns(ret),
     attachement: sinon.stub().returns(ret),

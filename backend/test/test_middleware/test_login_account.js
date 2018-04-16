@@ -38,6 +38,7 @@ describe('test login account', () => {
       const req = mockReq(request)
       const res = mockRes()
       await accountAuthenticate(req, res)
+      // eslint-disable-next-line no-unused-expressions
       expect(res.cookies.set).to.be.calledOnce
     })
     it('shouldn`t set a cookie', async () => {
