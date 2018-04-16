@@ -1,12 +1,19 @@
 const jwt = require('jsonwebtoken')
 
-function isTokenValid(token) {
-  return jwt.verify(token, process.env.JWT_SECRET)
+function tokenValidation(token) {
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET)
+  } catch (err) {
+    console.log(err)
+  }
+  return undefined
 }
 
 function verifyAccount(req, res, next) {
-  const cookie = req.cookies.lunch_planner_token.token
-  if (cookie && isTokenValid(cookie.token)) {
+  const cookie = req.cookies.lunch_planner_token
+  const user = tokenValidation(cookie.token)
+  if (cookie && user) {
+    req.account = user
     next()
     return
   }
@@ -14,5 +21,6 @@ function verifyAccount(req, res, next) {
 }
 
 module.exports = {
+  tokenValidation,
   verifyAccount,
 }
