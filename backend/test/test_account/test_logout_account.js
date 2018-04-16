@@ -6,6 +6,7 @@ describe('account login', () => {
     const req = mockReq()
     const res = mockRes()
     await logout(req, res)
-    expect(res.cookie).to.be.calledWith('lunch_planner_token')
+    // eslint-disable-next-line no-unused-expressions
+    expect(res.clearCookie).to.be.calledOnce
   })
 })
