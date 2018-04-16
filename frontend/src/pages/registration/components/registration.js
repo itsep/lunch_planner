@@ -70,7 +70,7 @@ class Registration extends React.Component {
           })
           return null
         }
-        return response.json().then(({ error }) => { throw new Error(error)})
+        return response.json().then(({ error }) => { throw new Error(error) })
       })
       .catch((error) => {
         this.setState({ error })
