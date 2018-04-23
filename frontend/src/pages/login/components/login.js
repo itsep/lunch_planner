@@ -39,7 +39,7 @@ class Login extends React.Component {
       registered: false,
     }
 
-    this.register = this.register.bind(this)
+    this.login = this.login.bind(this)
   }
   handleChange(name) {
     const that = this
@@ -49,7 +49,7 @@ class Login extends React.Component {
       })
     }
   }
-  register() {
+  login() {
     const { email, password } = this.state
     const data = { email, password }
     this.setState({
@@ -89,7 +89,7 @@ class Login extends React.Component {
             <form className={classes.container}>
               <CardContent>
                 <Typography className={classes.title} variant="title">
-                  Registration
+                  Login
                 </Typography>
                 <TextField
                   id="email"
@@ -118,7 +118,7 @@ class Login extends React.Component {
                 }
               </CardContent>
               <CardActions className={classes.actions}>
-                <Button size="large" type="submit" color="primary" onClick={this.register} disabled={this.state.isLoading}>
+                <Button size="large" type="submit" color="primary" onClick={this.login} disabled={this.state.isLoading}>
                   Register
                 </Button>
                 <Fade
