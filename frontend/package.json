@@ -4,8 +4,9 @@
   "description": "> Webpack 4 tutorial: All You Need to Know, from 0 Conf to Production Mode",
   "main": "index.js",
   "scripts": {
-    "test": "jest -u",
-    "test_with_coverage": "jest --collectCoverage -u",
+    "test": "jest",
+    "test-with-coverage": "jest --collectCoverage",
+    "test-update-snapshot": "jest -u",
     "start": "webpack-dev-server --mode development --open",
     "start-local-network": "webpack-dev-server --mode development --host 0.0.0.0",
     "build": "webpack --mode production",
@@ -13,6 +14,9 @@
     "lint-fix": "eslint . --fix"
   },
   "jest": {
+    "setupFiles": [
+      "./src/setupJest.js"
+    ],
     "collectCoverage": false,
     "coverageDirectory": "./src/__coverage__",
     "coverageReporters": [
@@ -56,10 +60,13 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "cuid": "^2.1.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "es6-promise": "^4.2.4",
+    "expect-enzyme": "^1.3.0",
     "immutable": "^3.8.2",
-    "isomorphic-fetch": "^2.2.1",
     "jest": "^22.4.3",
+    "jest-fetch-mock": "^1.5.0",
     "material-ui": "^1.0.0-beta.41",
     "prop-types": "^15.6.1",
     "react": "^16.3.1",
