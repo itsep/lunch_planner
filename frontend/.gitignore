@@ -64,4 +64,4 @@ dist/
 .idea/
 
 # frontend coverage data
-/src/__coverage__/**
+/src/__coverage__/
