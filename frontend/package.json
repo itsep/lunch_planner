@@ -4,8 +4,9 @@
   "description": "> Webpack 4 tutorial: All You Need to Know, from 0 Conf to Production Mode",
   "main": "index.js",
   "scripts": {
-    "test": "jest -u",
-    "test_with_coverage": "jest --collectCoverage -u",
+    "test": "jest",
+    "test-with-coverage": "jest --collectCoverage",
+    "test-update-snapshot": "jest -u",
     "start": "webpack-dev-server --mode development --open",
     "start-local-network": "webpack-dev-server --mode development --host 0.0.0.0",
     "build": "webpack --mode production",
