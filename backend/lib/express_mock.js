@@ -51,7 +51,12 @@ const mockRes = (options = {}) => {
   }, options)
 }
 
+function mockNext() {
+  return sinon.spy()
+}
+
 module.exports = {
   mockReq,
   mockRes,
+  mockNext,
 }
