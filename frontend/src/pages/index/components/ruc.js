@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import Button from 'material-ui/Button'
 import Card, { CardContent, CardActions } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
-import 'isomorphic-fetch'
 
 export default class Ruc extends Component {
   constructor(props) {
