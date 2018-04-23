@@ -30,6 +30,7 @@ describe('verify account', () => {
     const request = { cookies: { lunch_planner_token: { token: testToken } } }
     req = mockReq(request)
     // Mock cookie in request
+    // eslint-disable-next-line no-unused-expressions
     expect(verifyAccount(req, res2, () => true)).to.be.true
   })
 })

@@ -20,9 +20,9 @@ function verifyAccount(req, res, next) {
       req.account = user
       return next()
     }
-    next(new Error('User is not autorized'))
+    return next(new Error('User is not autorized'))
   }
-  next(new Error('Authentification error'))
+  return next(new Error('Authentification error'))
 }
 
 module.exports = {
