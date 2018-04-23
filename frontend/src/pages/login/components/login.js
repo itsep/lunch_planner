@@ -9,7 +9,7 @@ import Fade from 'material-ui/transitions/Fade'
 import { CircularProgress } from 'material-ui/Progress'
 
 const styles = () => ({
-  registrationContainer: {
+  loginContainer: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -36,7 +36,7 @@ class Login extends React.Component {
       password: '',
       isLoading: false,
       error: null,
-      registered: false,
+      loggedIn: false,
     }
 
     this.login = this.login.bind(this)
@@ -56,7 +56,7 @@ class Login extends React.Component {
       isLoading: true,
       error: null,
     })
-    fetch('/api/account', {
+    fetch('/api/account/login', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -66,7 +66,7 @@ class Login extends React.Component {
       .then((response) => {
         if (response.ok) {
           this.setState({
-            registered: true,
+            loggedIn: true,
           })
           return null
         }
@@ -83,9 +83,9 @@ class Login extends React.Component {
   render() {
     const { classes } = this.props
     return (
-      <div className={classes.registrationContainer}>
+      <div className={classes.loginContainer}>
         <Card className={classes.card}>
-          { !this.state.registered ?
+          { !this.state.loggedIn ?
             <form className={classes.container}>
               <CardContent>
                 <Typography className={classes.title} variant="title">
@@ -119,7 +119,7 @@ class Login extends React.Component {
               </CardContent>
               <CardActions className={classes.actions}>
                 <Button size="large" type="submit" color="primary" onClick={this.login} disabled={this.state.isLoading}>
-                  Register
+                  Login
                 </Button>
                 <Fade
                   in={this.state.isLoading}
@@ -132,7 +132,7 @@ class Login extends React.Component {
           :
             <CardContent>
               <Typography variant="title" color="primary">
-                {this.state.email} successful registered.
+                {this.state.email} successful logged in.
               </Typography>
             </CardContent>
           }

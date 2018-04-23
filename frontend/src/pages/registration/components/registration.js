@@ -36,7 +36,7 @@ class Registration extends React.Component {
       password: '',
       isLoading: false,
       error: null,
-      registered: false,
+      loggedIn: false,
     }
 
     this.register = this.register.bind(this)
@@ -66,7 +66,7 @@ class Registration extends React.Component {
       .then((response) => {
         if (response.ok) {
           this.setState({
-            registered: true,
+            loggedIn: true,
           })
           return null
         }
@@ -85,7 +85,7 @@ class Registration extends React.Component {
     return (
       <div className={classes.registrationContainer}>
         <Card className={classes.card}>
-          { !this.state.registered ?
+          { !this.state.loggedIn ?
             <form className={classes.container}>
               <CardContent>
                 <Typography className={classes.title} variant="title">
