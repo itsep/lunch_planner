@@ -1,10 +1,10 @@
 import React from 'react'
 import Registration from './registration'
 
-function App() {
+function Registration_app() {
   return (
     <Registration />
   )
 }
 
-export default App
+export default Registration_app

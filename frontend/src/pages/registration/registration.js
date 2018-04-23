@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import App from './components/app'
+import Registration_app from './components/registration_app'
 import '../../style/main.scss'
 
-render(<App />, document.getElementById('app'))
+render(<Registration_app />, document.getElementById('app'))
