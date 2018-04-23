@@ -9,7 +9,7 @@ import Fade from 'material-ui/transitions/Fade'
 import { CircularProgress } from 'material-ui/Progress'
 
 const styles = () => ({
-  registrationContainer: {
+  loginContainer: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -28,7 +28,7 @@ const styles = () => ({
   },
 })
 
-class Registration extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -39,7 +39,7 @@ class Registration extends React.Component {
       loggedIn: false,
     }
 
-    this.register = this.register.bind(this)
+    this.login = this.login.bind(this)
   }
   handleChange(name) {
     const that = this
@@ -49,18 +49,19 @@ class Registration extends React.Component {
       })
     }
   }
-  register() {
+  login() {
     const { email, password } = this.state
     const data = { email, password }
     this.setState({
       isLoading: true,
       error: null,
     })
-    fetch('/api/account', {
+    fetch('/api/account/login', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
+      credentials: 'same-origin',
       body: JSON.stringify(data),
     })
       .then((response) => {
@@ -83,13 +84,13 @@ class Registration extends React.Component {
   render() {
     const { classes } = this.props
     return (
-      <div className={classes.registrationContainer}>
+      <div className={classes.loginContainer}>
         <Card className={classes.card}>
           { !this.state.loggedIn ?
             <form className={classes.container}>
               <CardContent>
                 <Typography className={classes.title} variant="title">
-                  Registration
+                  Login
                 </Typography>
                 <TextField
                   id="email"
@@ -118,8 +119,8 @@ class Registration extends React.Component {
                 }
               </CardContent>
               <CardActions className={classes.actions}>
-                <Button size="large" type="submit" color="primary" onClick={this.register} disabled={this.state.isLoading}>
-                  Register
+                <Button size="large" type="submit" color="primary" onClick={this.login} disabled={this.state.isLoading}>
+                  Login
                 </Button>
                 <Fade
                   in={this.state.isLoading}
@@ -132,7 +133,7 @@ class Registration extends React.Component {
           :
             <CardContent>
               <Typography variant="title" color="primary">
-                {this.state.email} successful registered.
+                {this.state.email} successful logged in.
               </Typography>
             </CardContent>
           }
@@ -142,9 +143,9 @@ class Registration extends React.Component {
   }
 }
 
-Registration.propTypes = {
+Login.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(Registration)
+export default withStyles(styles)(Login)
 

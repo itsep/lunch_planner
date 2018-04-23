@@ -18,19 +18,24 @@ async function getIdAndHashedPassword(email) {
 
 async function authenticate(email, password) {
   const account = await getIdAndHashedPassword(email)
-  if (account && compare(password, account.hashedPassword)) {
-    return jwt.sign(
-      {
-        auth: account.id,
-        perm: {
-          admin: true,
-        },
-      },
-      secret,
-      { expiresIn: '72h' }
-    )
+  if (!account) {
+    return false
   }
-  return false
+  const correctEmailAndPassword = await compare(password, account.hashedPassword)
+  if (!correctEmailAndPassword) {
+    return false
+  }
+  const token = jwt.sign(
+    {
+      auth: account.id,
+      perm: {
+        admin: true,
+      },
+    },
+    secret,
+    { expiresIn: '72h' }
+  )
+  return token
 }
 
 async function login(req, res) {
@@ -39,7 +44,7 @@ async function login(req, res) {
   if (token) {
     res.cookie(
       'lunch_planner_token',
-      { token }
+      token,
     )
     res.status(200).end()
   } else {
