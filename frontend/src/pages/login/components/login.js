@@ -61,6 +61,7 @@ class Login extends React.Component {
       headers: {
         'content-type': 'application/json',
       },
+      credentials: 'same-origin',
       body: JSON.stringify(data),
     })
       .then((response) => {

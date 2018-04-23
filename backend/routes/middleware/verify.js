@@ -10,14 +10,18 @@ function tokenValidation(token) {
 }
 
 function verifyAccount(req, res, next) {
-  const cookie = req.cookies.lunch_planner_token
-  const user = tokenValidation(cookie.token)
-  if (cookie && user) {
-    req.account = user
-    next()
+  const token = req.cookies.lunch_planner_token
+  if (!token) {
+    next(new Error('no cookie token defined'))
     return
   }
-  next(new Error('Authentification error'))
+
+  const user = tokenValidation(token)
+  if (!user) {
+    next(new Error('token not valid'))
+  }
+  req.account = user
+  next()
 }
 
 module.exports = {

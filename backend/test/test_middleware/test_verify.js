@@ -22,7 +22,7 @@ describe('verify account', () => {
     await login(req, res2)
   })
   it('is token set', async () => {
-    testToken = tokenValidation(res2.cookie.firstCall.lastArg.token)
+    testToken = tokenValidation(res2.cookie.firstCall.lastArg)
     expect(testToken).to.have.property('perm')
   })
   it('is token verified', async () => {

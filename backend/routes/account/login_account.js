@@ -44,7 +44,7 @@ async function login(req, res) {
   if (token) {
     res.cookie(
       'lunch_planner_token',
-      { token }
+      token,
     )
     res.status(200).end()
   } else {
