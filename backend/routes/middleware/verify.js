@@ -9,13 +9,18 @@ function tokenValidation(token) {
   return undefined
 }
 
+function isAutorized(user) {
+  return (user.perm && user.perm.admin)
+}
+
 function verifyAccount(req, res, next) {
-  const cookie = req.cookies.lunch_planner_token
-  const user = tokenValidation(cookie.token)
-  if (cookie && user) {
-    req.account = user
-    next()
-    return
+  if (req.cookies && req.cookies.lunch_planner_token && req.cookies.lunch_planner_token.token) {
+    const user = tokenValidation(req.cookies.lunch_planner_token.token)
+    if (isAutorized(user)) {
+      req.account = user
+      return next()
+    }
+    next(new Error('User is not autorized'))
   }
   next(new Error('Authentification error'))
 }
