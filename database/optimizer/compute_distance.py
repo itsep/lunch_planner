@@ -32,7 +32,7 @@ def get_distance(member, time, location):
     try:
         saver.restore(sess, restore_path)
     except NotFoundError:
-        print('File to restore not found.')
+        print('New key value will be created.')
     return distance
 
 def train(member, time, location):
@@ -44,12 +44,12 @@ def train(member, time, location):
     try:
         saver.restore(sess, restore_path)
     except NotFoundError:
-        print('New variable save file will be created')
+        print('New key value will be created.')
 
     sess.run(train_step)
     saver.save(sess, restore_path)
 
-print(tf.reduce_sum(get_distance('seba', '1230', 'myHome')).eval(session=sess))
+print(tf.reduce_sum(get_distance('seb', '1230', 'myHome')).eval(session=sess))
 for _ in range(10):
-    train('seba', '1230', 'myHome')
-print(tf.reduce_sum(get_distance('seba', '1230', 'myHome')).eval(session=sess))
+    train('seb', '1230', 'myHome')
+print(tf.reduce_sum(get_distance('seb', '1230', 'myHome')).eval(session=sess))
