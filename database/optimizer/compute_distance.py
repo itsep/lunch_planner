@@ -49,8 +49,7 @@ def train(member, time, location):
     sess.run(train_step)
     saver.save(sess, restore_path)
 
-
+print(tf.reduce_sum(get_distance('seba', '1230', 'myHome')).eval(session=sess))
 for _ in range(10):
-    print(get_distance('sebi', '1230', 'myHome'))
-    train('sebi', '1230', 'myHome')
-print(get_distance('sebi', '1230', 'myHome'))
+    train('seba', '1230', 'myHome')
+print(tf.reduce_sum(get_distance('seba', '1230', 'myHome')).eval(session=sess))
