@@ -6,6 +6,7 @@ const pages = {
   index: {/* config options */},
   registration: {/* config options */},
   login: {/* config options */},
+  create_lunchspace: {/* config options */},
   // *add a new page here*
 }
 
