@@ -7,9 +7,12 @@ import TextField from 'material-ui/TextField'
 import { FormControl } from 'material-ui/Form'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
-import Avatar from 'material-ui/Avatar';
-import Chip from 'material-ui/Chip';
+import Avatar from 'material-ui/Avatar'
+import Chip from 'material-ui/Chip'
 import Typography from 'material-ui/Typography'
+import MiddleSection from './middle_section'
+
+import { escapeSubdomain } from '../../../lib/subdomain'
 
 const styles = theme => ({
   root: {
@@ -23,10 +26,6 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
   },
 })
-
-function getSteps() {
-  return ['Select campaign settings', 'Create an ad group', 'Create an ad']
-}
 
 class CreateLunchspace extends React.Component {
   constructor(props) {
@@ -55,6 +54,31 @@ class CreateLunchspace extends React.Component {
     this.handleBack = this.handleBack.bind(this)
     this.handleStep = this.handleStep.bind(this)
     this.handleReset = this.handleReset.bind(this)
+    this.handleLunchspaceNameChange = this.handleLunchspaceNameChange.bind(this)
+    this.handleSubdomainChange = this.handleSubdomainChange.bind(this)
+  }
+
+  handleLunchspaceNameChange(event) {
+    const lunchspaceName = event.target.value
+    if (!this.hasCustomSubdomainName()) {
+      this.setState({
+        subdomain: escapeSubdomain(lunchspaceName),
+      })
+    }
+    this.setState({
+      lunchspaceName,
+    })
+  }
+
+  handleSubdomainChange(event) {
+    const subdomain = event.target.value
+    this.setState({
+      subdomain: escapeSubdomain(subdomain),
+    })
+  }
+
+  hasCustomSubdomainName() {
+    return escapeSubdomain(this.state.lunchspaceName) !== this.state.subdomain
   }
 
   handleChange(name) {
@@ -94,17 +118,17 @@ class CreateLunchspace extends React.Component {
 
   render() {
     const { classes } = this.props
-    const steps = getSteps()
     const { activeStep } = this.state
+    const stepsCount = 3
 
     return (
-      <div className={classes.root}>
+      <MiddleSection className={classes.root}>
         <Stepper activeStep={activeStep} orientation="vertical" nonLinear>
           {/* You */}
           <Step key="lunchspace">
             <StepButton
               onClick={this.handleStep(0)}
-              completed={false}
+              completed={activeStep > 0}
             >
               Lunchspace
             </StepButton>
@@ -115,7 +139,7 @@ class CreateLunchspace extends React.Component {
                   label="Lunchspace Name"
                   className={classes.textField}
                   value={this.state.lunchspaceName}
-                  onChange={this.handleChange('lunchspaceName')}
+                  onChange={this.handleLunchspaceNameChange}
                   margin="normal"
                 />
               </div>
@@ -126,7 +150,7 @@ class CreateLunchspace extends React.Component {
                     id="subdomain"
                     placeholder="your-space-url"
                     value={this.state.subdomain}
-                    onChange={this.handleChange('subdomain')}
+                    onChange={this.handleSubdomainChange}
                     endAdornment={
                       <InputAdornment position="end">
                         .lunchspace.de
@@ -143,7 +167,7 @@ class CreateLunchspace extends React.Component {
                     onClick={this.handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    {activeStep === stepsCount - 1 ? 'Finish' : 'Next'}
                   </Button>
                 </div>
               </div>
@@ -153,7 +177,7 @@ class CreateLunchspace extends React.Component {
           <Step key="your-account">
             <StepButton
               onClick={this.handleStep(1)}
-              completed={false}
+              completed={activeStep > 1}
             >
               Your Account
             </StepButton>
@@ -208,7 +232,7 @@ class CreateLunchspace extends React.Component {
                     onClick={this.handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    {activeStep === stepsCount - 1 ? 'Finish' : 'Next'}
                   </Button>
                 </div>
               </div>
@@ -226,13 +250,13 @@ class CreateLunchspace extends React.Component {
               <Typography variant="title">
                 Lunchspace
               </Typography>
-              <Typography variant="Subheading">
+              <Typography variant="subheading">
                 Name
               </Typography>
               <Typography variant="body1">
                 {this.state.lunchspaceName}
               </Typography>
-              <Typography variant="Subheading">
+              <Typography variant="subheading">
                 Domain
               </Typography>
               <Typography variant="body1">
@@ -248,13 +272,13 @@ class CreateLunchspace extends React.Component {
                 label={`${this.state.firstName} ${this.state.lastName}`}
                 className={classes.chip}
               />
-              <Typography variant="Subheading">
+              <Typography variant="subheading">
                 Email
               </Typography>
               <Typography variant="body1">
                 {this.state.email}
               </Typography>
-              <Typography variant="Subheading">
+              <Typography variant="subheading">
                 Password
               </Typography>
               <Typography variant="body1">
@@ -274,7 +298,7 @@ class CreateLunchspace extends React.Component {
             </StepContent>
           </Step>
         </Stepper>
-        {activeStep === steps.length && (
+        {activeStep === stepsCount && (
           <Paper square elevation={0} className={classes.resetContainer}>
             <Typography>All steps completed - you&quot;re finished</Typography>
             <Button onClick={this.handleReset} className={classes.button}>
@@ -282,7 +306,7 @@ class CreateLunchspace extends React.Component {
             </Button>
           </Paper>
         )}
-      </div>
+      </MiddleSection>
     )
   }
 }
