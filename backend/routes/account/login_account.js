@@ -6,7 +6,7 @@ const secret = process.env.JWT_SECRET
 
 async function getIdAndHashedPassword(email) {
   const conn = await pool.getConnection()
-  const [result] = await conn.execute('SELECT account_id as accountId, account_hashed_password as accountHashedPassword FROM account WHERE account_email = ?', [email])
+  const [result] = await conn.execute('SELECT id as accountId, hashed_password as accountHashedPassword FROM account WHERE email = ?', [email])
   conn.release()
   if (result.length > 0) {
     const idAndPassword =
