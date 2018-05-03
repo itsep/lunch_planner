@@ -1,9 +1,10 @@
 import React from 'react'
-import Ruc from './ruc'
+import localizedStrings from '../../../localization'
 
 function App() {
+  localizedStrings.setLanguage('en')
   return (
-    <Ruc />
+    <h1>{localizedStrings.test}</h1>
   )
 }
 
