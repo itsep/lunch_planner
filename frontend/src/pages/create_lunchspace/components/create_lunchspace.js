@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Stepper, { Step, StepButton, StepContent } from 'material-ui/Stepper'
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input'
-import TextField from 'material-ui/TextField'
 import { FormControl, FormHelperText } from 'material-ui/Form'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
@@ -365,7 +364,7 @@ class CreateLunchspace extends React.Component {
 }
 
 CreateLunchspace.propTypes = {
-  classes: PropTypes.object,
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(CreateLunchspace)

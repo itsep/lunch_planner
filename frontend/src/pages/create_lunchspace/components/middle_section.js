@@ -19,22 +19,21 @@ const styles = theme => ({
 
 })
 
-class MiddleSection extends React.Component {
+function MiddleSection() {
+  const { classes } = this.props
 
-  render() {
-    const { classes } = this.props
-
-    return (
-      <div className={classes.root}>
-        {this.props.children}
-      </div>
-    )
-  }
+  return (
+    <div className={classes.root}>
+      {this.props.children}
+    </div>
+  )
 }
 
 MiddleSection.propTypes = {
-  classes: PropTypes.object,
-  children: PropTypes.array,
+  // eslint-disable-next-line react/no-unused-prop-types
+  classes: PropTypes.object.isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
+  children: PropTypes.any.isRequired,
 }
 
 export default withStyles(styles)(MiddleSection)
