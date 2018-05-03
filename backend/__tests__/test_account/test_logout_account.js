@@ -6,7 +6,6 @@ describe('account login', () => {
     const req = mockReq()
     const res = mockRes()
     await logout(req, res)
-    // eslint-disable-next-line no-unused-expressions
-    expect(res.clearCookie).to.be.calledOnce
+    expect(res.clearCookie.mock.calls.length).toBe(1)
   })
 })

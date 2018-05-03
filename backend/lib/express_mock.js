@@ -1,20 +1,18 @@
-const sinon = require('sinon')
-
 // Returns a new mock request for use in testing.
 const mockReq = (options = {}) => {
   const ret = {}
   return Object.assign(ret, {
-    accepts: sinon.stub().returns(ret),
-    acceptsCharsets: sinon.stub().returns(ret),
-    acceptsEncodings: sinon.stub().returns(ret),
-    acceptsLanguages: sinon.stub().returns(ret),
+    accepts: jest.fn(),
+    acceptsCharsets: jest.fn(),
+    acceptsEncodings: jest.fn(),
+    acceptsLanguages: jest.fn(),
     body: {},
     cookies: {
-      get: sinon.stub().returns(ret),
+      get: jest.fn(),
     },
-    flash: sinon.stub().returns(ret),
-    get: sinon.stub().returns(ret),
-    is: sinon.stub().returns(ret),
+    flash: jest.fn(),
+    get: jest.fn(),
+    is: jest.fn(),
     params: {},
     query: {},
     session: {},
@@ -23,36 +21,38 @@ const mockReq = (options = {}) => {
 
 // Returns a new mock response for use in testing.
 const mockRes = (options = {}) => {
-  const ret = {}
-  return Object.assign(ret, {
-    append: sinon.stub().returns(ret),
-    attachement: sinon.stub().returns(ret),
-    clearCookie: sinon.stub().returns(ret),
-    cookie: sinon.stub().returns(ret),
-    download: sinon.stub().returns(ret),
-    end: sinon.stub().returns(ret),
+  let ret = {}
+  ret = Object.assign(ret, {
+    append: jest.fn(),
+    attachement: jest.fn(),
+    clearCookie: jest.fn(),
+    cookie: jest.fn(),
+    download: jest.fn(),
+    end: jest.fn(),
     format: {},
-    get: sinon.stub().returns(ret),
-    headersSent: sinon.stub().returns(ret),
-    json: sinon.stub().returns(ret),
-    jsonp: sinon.stub().returns(ret),
-    links: sinon.stub().returns(ret),
+    get: jest.fn(),
+    headersSent: jest.fn(),
+    json: jest.fn(),
+    jsonp: jest.fn(),
+    links: jest.fn(),
     locals: {},
-    location: sinon.stub().returns(ret),
-    redirect: sinon.stub().returns(ret),
-    render: sinon.stub().returns(ret),
-    send: sinon.stub().returns(ret),
-    sendFile: sinon.stub().returns(ret),
-    sendStatus: sinon.stub().returns(ret),
-    set: sinon.stub().returns(ret),
-    status: sinon.stub().returns(ret),
-    type: sinon.stub().returns(ret),
-    vary: sinon.stub().returns(ret),
+    location: jest.fn(),
+    redirect: jest.fn(),
+    render: jest.fn(),
+    send: jest.fn(),
+    sendFile: jest.fn(),
+    sendStatus: jest.fn(),
+    set: jest.fn(),
+    status: jest.fn(),
+    type: jest.fn(),
+    vary: jest.fn(),
   }, options)
+  ret.status.mockImplementation(() => ret)
+  return ret
 }
 
 function mockNext() {
-  return sinon.spy()
+  return jest.fn()
 }
 
 module.exports = {

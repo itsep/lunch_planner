@@ -11,7 +11,7 @@ describe('verify account', () => {
   let res1
   let res2
   let testToken
-  before(async () => {
+  beforeAll(async () => {
     // Register
     const request = { body: { email: testEmail, password: testPassword } }
     req = mockReq(request)

@@ -3,12 +3,17 @@ const { pool, createTestDatabase, dropDatabase } = require('../lib/database')
 const schemaPath = '../database/schema.sql'
 
 let testDatabaseName
-before(async () => {
+async function createMockDatabase() {
   testDatabaseName = await createTestDatabase(schemaPath)
-  pool.changeDatabase(testDatabaseName)
-})
+  pool.changeDatabase(global.testDatabaseName)
+}
 
-after(async () => {
+async function dropMockDatabase() {
   dropDatabase(testDatabaseName)
   await pool.end()
-})
+}
+
+module.exports = {
+  createMockDatabase,
+  dropMockDatabase,
+}
