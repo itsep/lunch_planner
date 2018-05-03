@@ -6,7 +6,7 @@ module.exports = {
   },
   globals: {
     expect: true,
-    sinon: true,
+    jest: true,
   },
   rules: {
     // disallow semicolon at the end of the line
