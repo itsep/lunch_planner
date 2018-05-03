@@ -30,7 +30,10 @@ pool.useConnection = async function useConnection(consumer) {
  * @param dbName {String} - database name
  */
 pool.changeDatabase = function changeDatabase(dbName) {
-  module.exports.pool.pool.config.connectionConfig.database = dbName
+  console.log(dbName)
+  console.log(module.exports.pool.pool)
+  pool.pool.config.connectionConfig.database = dbName
+  console.log(module.exports.pool.pool)
 }
 
 function createMultiStatementConnection(withoutDatabase) {
@@ -80,7 +83,7 @@ async function createTestDatabaseRecursive(conn, schemaPath) {
 async function createTestDatabase(schemaPath) {
   const conn = await createMultiStatementConnectionWithoutSelectedDatabase()
   const dbName = await createTestDatabaseRecursive(conn, schemaPath)
-  conn.end()
+  await conn.end()
   return dbName
 }
 

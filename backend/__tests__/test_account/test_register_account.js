@@ -13,8 +13,8 @@ describe('register accounts', () => {
       expect(error).equal(true)
     })
     it('should throw an error', async () => {
-      //const error = await create(testEmail1, testPassword1)
-      //expect(error.code).equal('ER_DUP_ENTRY')
+      // const error = await create(testEmail1, testPassword1)
+      // expect(error.code).equal('ER_DUP_ENTRY')
     })
   })
   describe('registerAccount', () => {
