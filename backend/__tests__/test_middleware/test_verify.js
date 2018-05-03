@@ -25,7 +25,10 @@ describe('verify account', () => {
     await login(req, res2)
   })
   it('is token set', async () => {
-    testToken = res2.cookie.mock.calls[0][1]
+    const [firstCall] = res2.cookie.mock.calls
+    // eslint-disable-next-line prefer-destructuring
+    testToken = firstCall[1]
+
     const validatedToken = tokenValidation(testToken)
     expect(validatedToken.perm).toBeDefined()
   })
