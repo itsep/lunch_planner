@@ -16,8 +16,7 @@ describe('register accounts', () => {
       expect(error).toEqual(true)
     })
     it('should throw an error', async () => {
-      // const error = await create(testEmail1, testPassword1)
-      // expect(error.code).equal('ER_DUP_ENTRY')
+      expect(create(testEmail1, testPassword1)).rejects.toHaveProperty('code', 'ER_DUP_ENTRY')
     })
   })
   describe('registerAccount', () => {
