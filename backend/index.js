@@ -1,3 +1,4 @@
+require('./lib/promise_polyfill')
 const express = require('express')
 const cookieParser = require('cookie-parser')
 

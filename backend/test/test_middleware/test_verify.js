@@ -1,4 +1,4 @@
-const { tokenValidation, verifyAccount } = require('../../routes/middleware/verify')
+const { tokenValidation, authenticate } = require('../../routes/middleware/verify')
 const { registerAccount } = require('../../routes/account/register_account')
 const { mockReq, mockRes, mockNext } = require('../../lib/express_mock')
 const { login } = require('../../routes/account/login_account')
@@ -31,7 +31,7 @@ describe('verify account', () => {
     req = mockReq(request)
     // Mock cookie in request
     const next = mockNext()
-    verifyAccount(req, res2, next)
+    authenticate(req, res2, next)
     expect(next).to.not.be.calledWithMatch(sinon.match.instanceOf(Error))
   })
   it('is token invalid', async () => {
@@ -39,7 +39,7 @@ describe('verify account', () => {
     req = mockReq(request)
     // Mock cookie in request
     const next = mockNext()
-    verifyAccount(req, res2, next)
+    authenticate(req, res2, next)
     // eslint-disable-next-line no-unused-expressions
     expect(next).to.be.calledWithMatch(sinon.match.instanceOf(Error))
   })

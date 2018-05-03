@@ -3,27 +3,20 @@ const { hash } = require('../../lib/password_hash')
 
 async function create(email, password) {
   const hashedPassword = await hash(password)
-  const conn = await pool.getConnection()
-  try {
-    await conn.execute('INSERT INTO account (email, hashed_password) ' +
+  await pool.execute('INSERT INTO account (email, hashed_password) ' +
       'VALUES (?,?)', [email, hashedPassword])
-    return false
-  } catch (error) {
-    return error
-  } finally {
-    conn.release()
-  }
+  return true
 }
 
 async function registerAccount(req, res) {
   const { email, password } = req.body
-  const error = await create(email, password)
-  if (error) {
+  try {
+    await create(email, password)
+    res.status(200).end()
+  } catch (error) {
     if (error.code === 'ER_DUP_ENTRY') {
       res.status(500).json({ error: 'Email is already registered.' })
     } else throw error
-  } else {
-    res.status(200).end()
   }
 }
 
