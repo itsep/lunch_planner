@@ -4,20 +4,18 @@ import { withStyles } from 'material-ui/styles'
 import Stepper, { Step, StepButton, StepContent } from 'material-ui/Stepper'
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input'
 import TextField from 'material-ui/TextField'
-import { FormControl } from 'material-ui/Form'
+import { FormControl, FormHelperText } from 'material-ui/Form'
 import Button from 'material-ui/Button'
 import Paper from 'material-ui/Paper'
 import Avatar from 'material-ui/Avatar'
 import Chip from 'material-ui/Chip'
 import Typography from 'material-ui/Typography'
+import { TextValidator, ValidatorForm, ValidatorComponent } from 'react-material-ui-form-validator'
 import MiddleSection from './middle_section'
 
-import { escapeSubdomain } from '../../../lib/subdomain'
+import { escapeSubdomain, isValidSubdomain } from '../../../lib/subdomain'
 
 const styles = theme => ({
-  root: {
-    width: '90%',
-  },
   textField: {
     width: '280px',
   },
@@ -26,6 +24,29 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
   },
 })
+
+class FormControlInputValidator extends ValidatorComponent {
+  render() {
+    const {
+      inputLabel, className, errorMessages, validators,
+      requiredError, errorText, validatorListener, children, ...rest
+    } = this.props
+    const { isValid } = this.state
+
+    return (
+      <FormControl className={className} error={!isValid}>
+        {inputLabel}
+        <Input
+          ref={(r) => { this.input = r }}
+          {...rest}
+        />
+        <FormHelperText id="name-error-text">
+          {(!isValid && this.getErrorMessage()) || errorText}
+        </FormHelperText>
+      </FormControl>
+    )
+  }
+}
 
 class CreateLunchspace extends React.Component {
   constructor(props) {
@@ -41,7 +62,7 @@ class CreateLunchspace extends React.Component {
     // }
     // DEBUG
     this.state = {
-      activeStep: 2,
+      activeStep: 0,
       lunchspaceName: 'vsf experts Mannheim',
       subdomain: 'vsf-experts-ma',
       firstName: 'David',
@@ -56,6 +77,10 @@ class CreateLunchspace extends React.Component {
     this.handleReset = this.handleReset.bind(this)
     this.handleLunchspaceNameChange = this.handleLunchspaceNameChange.bind(this)
     this.handleSubdomainChange = this.handleSubdomainChange.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+  componentWillMount() {
+    ValidatorForm.addValidationRule('isValidSubdomain', isValidSubdomain)
   }
 
   handleLunchspaceNameChange(event) {
@@ -116,6 +141,11 @@ class CreateLunchspace extends React.Component {
     })
   }
 
+  handleSubmit() {
+    // your submit logic
+    console.log(this.state)
+  }
+
   render() {
     const { classes } = this.props
     const { activeStep } = this.state
@@ -123,7 +153,8 @@ class CreateLunchspace extends React.Component {
 
     return (
       <MiddleSection className={classes.root}>
-        <Stepper activeStep={activeStep} orientation="vertical" nonLinear>
+
+        <Stepper activeStep={activeStep} orientation="vertical">
           {/* You */}
           <Step key="lunchspace">
             <StepButton
@@ -133,44 +164,54 @@ class CreateLunchspace extends React.Component {
               Lunchspace
             </StepButton>
             <StepContent>
-              <div>
-                <TextField
-                  id="lunchspace-name"
-                  label="Lunchspace Name"
-                  className={classes.textField}
-                  value={this.state.lunchspaceName}
-                  onChange={this.handleLunchspaceNameChange}
-                  margin="normal"
-                />
-              </div>
-              <div>
-                <FormControl className={classes.textField}>
-                  <InputLabel htmlFor="input-with-icon-adornment" shrink>Subdomain to your Lunchspace</InputLabel>
-                  <Input
-                    id="subdomain"
+              <ValidatorForm
+                onSubmit={this.handleNext}
+              >
+                <div>
+                  <TextValidator
+                    name="lunchspace-name"
+                    label="Lunchspace Name"
+                    className={classes.textField}
+                    value={this.state.lunchspaceName}
+                    onChange={this.handleLunchspaceNameChange}
+                    validators={['required']}
+                    errorMessages={['this field is required']}
+                    margin="normal"
+                  />
+                </div>
+                <div>
+                  <FormControlInputValidator
+                    className={classes.textField}
+                    name="subdomain"
                     placeholder="your-space-url"
                     value={this.state.subdomain}
                     onChange={this.handleSubdomainChange}
+                    validators={['required', 'isValidSubdomain']}
+                    errorMessages={['this field is required', 'a subdomain may not contain a leading or trailing hyphen(-)']}
+                    inputLabel={
+                      <InputLabel htmlFor="input-with-icon-adornment" shrink>Subdomain to your Lunchspace</InputLabel>
+                    }
                     endAdornment={
                       <InputAdornment position="end">
                         .lunchspace.de
                       </InputAdornment>
                     }
+                    autoComplete="off"
                   />
-                </FormControl>
-              </div>
-              <div className={classes.actionsContainer}>
-                <div>
-                  <Button
-                    variant="raised"
-                    color="primary"
-                    onClick={this.handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === stepsCount - 1 ? 'Finish' : 'Next'}
-                  </Button>
                 </div>
-              </div>
+                <div className={classes.actionsContainer}>
+                  <div>
+                    <Button
+                      type="submit"
+                      variant="raised"
+                      color="primary"
+                      className={classes.button}
+                    >
+                      Next
+                    </Button>
+                  </div>
+                </div>
+              </ValidatorForm>
             </StepContent>
           </Step>
           {/* Your Account */}
@@ -182,60 +223,72 @@ class CreateLunchspace extends React.Component {
               Your Account
             </StepButton>
             <StepContent>
-              <div>
-                <TextField
-                  id="first-name"
-                  label="First Name"
-                  className={classes.textField}
-                  value={this.state.firstName}
-                  onChange={this.handleChange('firstName')}
-                  margin="normal"
-                />
-              </div>
-              <div>
-                <TextField
-                  id="last-name"
-                  label="Last Name"
-                  className={classes.textField}
-                  value={this.state.lastName}
-                  onChange={this.handleChange('lastName')}
-                  margin="normal"
-                />
-              </div>
-              <div>
-                <TextField
-                  id="email"
-                  label="Email"
-                  type="email"
-                  className={classes.textField}
-                  value={this.state.email}
-                  onChange={this.handleChange('email')}
-                  margin="normal"
-                />
-              </div>
-              <div>
-                <TextField
-                  id="password"
-                  label="Password"
-                  type="password"
-                  className={classes.textField}
-                  value={this.state.password}
-                  onChange={this.handleChange('password')}
-                  margin="normal"
-                />
-              </div>
-              <div className={classes.actionsContainer}>
+              <ValidatorForm
+                onSubmit={this.handleNext}
+              >
                 <div>
-                  <Button
-                    variant="raised"
-                    color="primary"
-                    onClick={this.handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === stepsCount - 1 ? 'Finish' : 'Next'}
-                  </Button>
+                  <TextValidator
+                    name="first-name"
+                    label="First Name"
+                    className={classes.textField}
+                    value={this.state.firstName}
+                    onChange={this.handleChange('firstName')}
+                    validators={['required']}
+                    errorMessages={['this field is required']}
+                    margin="normal"
+                  />
                 </div>
-              </div>
+                <div>
+                  <TextValidator
+                    name="last-name"
+                    label="Last Name"
+                    className={classes.textField}
+                    value={this.state.lastName}
+                    onChange={this.handleChange('lastName')}
+                    validators={['required']}
+                    errorMessages={['this field is required']}
+                    margin="normal"
+                  />
+                </div>
+                <div>
+                  <TextValidator
+                    name="email"
+                    label="Email"
+                    type="email"
+                    className={classes.textField}
+                    value={this.state.email}
+                    onChange={this.handleChange('email')}
+                    validators={['required', 'isEmail']}
+                    errorMessages={['this field is required', 'email is not valid']}
+                    margin="normal"
+                  />
+                </div>
+                <div>
+                  <TextValidator
+                    label="Password"
+                    onChange={this.handleChange('password')}
+                    name="password"
+                    type="password"
+                    validators={['required']}
+                    errorMessages={['this field is required']}
+                    value={this.state.password}
+                    className={classes.textField}
+                    margin="normal"
+                  />
+                </div>
+                <div className={classes.actionsContainer}>
+                  <div>
+                    <Button
+                      type="submit"
+                      variant="raised"
+                      color="primary"
+                      className={classes.button}
+                    >
+                      Next
+                    </Button>
+                  </div>
+                </div>
+              </ValidatorForm>
             </StepContent>
           </Step>
           {/* Summary */}
