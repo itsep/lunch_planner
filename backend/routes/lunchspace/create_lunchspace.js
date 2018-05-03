@@ -10,16 +10,8 @@ async function create(lunchspaceName, lunchspaeUrl) {
 }
 
 async function connect(userId, lunchspaceId, isAdmin) {
-  const conn = await pool.getConnection()
-  try {
-    await conn.execute('INSERT INTO member_of (user_id, lunchspace_id, is_admin) ' +
+  await pool.execute('INSERT INTO member_of (user_id, lunchspace_id, is_admin) ' +
       'VALUES (?,?)', [userId, lunchspaceId, isAdmin])
-    return false
-  } catch (error) {
-    throw error
-  } finally {
-    conn.release()
-  }
 }
 
 async function createLunchspace(req, res) {
@@ -27,8 +19,8 @@ async function createLunchspace(req, res) {
   if (valid.isValidSubdomain(lunchspaceUrl) && lunchspaceName !== '') {
     try {
       const lunchspaceId = await create(lunchspaceName, lunchspaceUrl)
-      const userId =
-      await connect()
+      const userId = req.user
+      await connect(userId, lunchspaceId, true)
       res.status(200).end()
     } catch (error) {
       if (error.code === 'ER_DUP_ENTRY') {
@@ -36,4 +28,10 @@ async function createLunchspace(req, res) {
       } else throw error
     }
   }
+}
+
+module.export = {
+  createLunchspace,
+  create,
+  connect,
 }
