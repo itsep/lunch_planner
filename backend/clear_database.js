@@ -12,7 +12,7 @@ async function clearDatabase() {
   await conn.query('DROP DATABASE IF EXISTS ??', [dbName])
   await conn.query('CREATE DATABASE ??', [dbName])
   await conn.query('USE ??', [dbName])
-  await conn.execute(dbSchema.toString())
+  await conn.query(dbSchema.toString())
   return conn
 }
 
