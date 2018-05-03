@@ -2,19 +2,14 @@ const { pool } = require('../../lib/database')
 const { valid } = require('../../lib/subdomain')
 
 async function create(lunchspaceName, lunchspaeUrl) {
-  const conn = await pool.getConnection()
-  try {
+  return pool.useConnection(async (conn) => {
     await conn.execute('INSERT INTO lunchspace (name, url) ' +
       'VALUES (?,?)', [lunchspaceName, lunchspaeUrl])
-    return await conn.execute('SELECT id FROM lunchspace WHERE url = ?', [lunchspaeUrl])
-  } catch (error) {
-    throw error
-  } finally {
-    conn.release()
-  }
+    return conn.execute('SELECT id FROM lunchspace WHERE url = ?', [lunchspaeUrl])
+  })
 }
 
-async function connect (userId, lunchspaceId, isAdmin) {
+async function connect(userId, lunchspaceId, isAdmin) {
   const conn = await pool.getConnection()
   try {
     await conn.execute('INSERT INTO member_of (user_id, lunchspace_id, is_admin) ' +

@@ -15,10 +15,15 @@ const pool = mysql.createPool({
   database: process.env.DATABASE_NAME || 'lunch_planner',
 })
 
-pool.execute = async function (...args) {
+pool.execute = async function execute(...args) {
   const conn = await this.getConnection()
-  return conn.execute.apply(conn, args)
+  return conn.execute(...args)
     .finally(() => conn.release())
+}
+
+pool.useConnection = async function useConnection(consumer) {
+  const conn = await this.getConnection()
+  return consumer(conn).finally(() => conn.release())
 }
 /**
  * changes the database for new connections! Call this function before you use the pool.

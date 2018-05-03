@@ -5,6 +5,7 @@ async function create(email, password) {
   const hashedPassword = await hash(password)
   await pool.execute('INSERT INTO account (email, hashed_password) ' +
       'VALUES (?,?)', [email, hashedPassword])
+  return true
 }
 
 async function registerAccount(req, res) {
