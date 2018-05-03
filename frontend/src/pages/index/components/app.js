@@ -1,9 +1,8 @@
 import React from 'react'
-import Ruc from './ruc'
 
 function App() {
   return (
-    <Ruc />
+    <h1>hi</h1>
   )
 }
 
