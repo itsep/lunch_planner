@@ -7,7 +7,7 @@ const testEmail = 'test-login@email.com'
 const testPassword = 'test-login-password'
 
 describe('test login account', () => {
-  before(async () => {
+  beforeAll(async () => {
     const testHashedPassword = await hash(testPassword)
     const user = [testEmail, testHashedPassword]
     await pool.execute('INSERT INTO account (email, hashed_password) VALUES (?, ?)', user)
