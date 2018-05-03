@@ -12,7 +12,7 @@ function isAutorized(user) {
   return (user && user.perm && user.perm.admin)
 }
 
-function verifyAccount(req, res, next) {
+function authenticate(req, res, next) {
   if (!req.cookies || !req.cookies.lunch_planner_token) {
     next(new Error('no cookie token defined'))
     return
@@ -23,11 +23,11 @@ function verifyAccount(req, res, next) {
     next(new Error('User is not autorized'))
   }
 
-  req.account = user
+  req.user = user
   next()
 }
 
 module.exports = {
   tokenValidation,
-  verifyAccount,
+  authenticate,
 }

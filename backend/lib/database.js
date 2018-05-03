@@ -14,6 +14,12 @@ const pool = mysql.createPool({
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME || 'lunch_planner',
 })
+
+pool.execute = async function (...args) {
+  const conn = await this.getConnection()
+  return conn.execute.apply(conn, args)
+    .finally(() => conn.release())
+}
 /**
  * changes the database for new connections! Call this function before you use the pool.
  * @param dbName {String} - database name
