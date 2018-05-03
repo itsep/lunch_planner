@@ -10,7 +10,7 @@ describe('test login account', () => {
   before(async () => {
     const testHashedPassword = await hash(testPassword)
     const user = [testEmail, testHashedPassword]
-    await pool.execute('INSERT INTO account (account_email, account_hashed_password) VALUES (?, ?)', user)
+    await pool.execute('INSERT INTO account (email, hashed_password) VALUES (?, ?)', user)
   })
   describe('get hashed password and id', () => {
     it('should return the right hashed password', async () => {
