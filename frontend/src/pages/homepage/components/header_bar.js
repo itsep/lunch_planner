@@ -34,15 +34,15 @@ function HeaderBar({ profile, lunchspace }) {
 }
 
 HeaderBar.propTypes = {
-  profile: PropTypes.objectOf(PropTypes.shape({
+  profile: PropTypes.shape({
     src: PropTypes.string,
     firstName: PropTypes.string,
     lastName: PropTypes.string,
-  }).isRequired).isRequired,
-  lunchspace: PropTypes.objectOf(PropTypes.shape({
+  }).isRequired,
+  lunchspace: PropTypes.shape({
     name: PropTypes.string.isRequired,
     subdomain: PropTypes.string.isRequired,
-  }).isRequired).isRequired,
+  }).isRequired,
 }
 
 export default connect(mapStateToProps)(HeaderBar)

@@ -1,21 +1,36 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Button } from 'material-ui'
+import { withStyles } from 'material-ui/styles'
 import LocationItem from './location_item'
 
 const mapStateToProps = state => ({
   locations: state.locations,
 })
 
-function LocationList({ locations }) {
+const styles = () => ({
+  locationList: {
+    margin: 0,
+    padding: 0,
+    listStyleType: 'none',
+  },
+  locationBorder: {
+    margin: 0,
+  },
+})
+
+function LocationList({ locations, classes }) {
   return (
     <div>
-      <ul>
+      <ul className={classes.locationList}>
         {locations.map((location => (
           <li key={location.id}>
             <LocationItem id={location.id} name={location.name} />
+            <hr className={classes.locationBorder} />
           </li>
         )))}
+        <li><Button>create location</Button></li>
       </ul>
     </div>
   )
@@ -26,6 +41,7 @@ LocationList.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired).isRequired,
+  classes: PropTypes.object.isRequired,
 }
 
-export default connect(mapStateToProps)(LocationList)
+export default withStyles(styles)(connect(mapStateToProps)(LocationList))

@@ -10,16 +10,16 @@ const defaultState = {
   },
   locations: [{
     id: 0,
-    name: 'Hello',
+    name: 'Dean and David',
   }, {
     id: 1,
-    name: 'Hi',
+    name: 'Metzgerei',
   }, {
     id: 2,
-    name: 'Hey',
+    name: 'Döner',
   }, {
     id: 3,
-    name: 'Hui',
+    name: 'vsf-diningroom',
   }],
   joinUpAt: [{
     userId: 0,
