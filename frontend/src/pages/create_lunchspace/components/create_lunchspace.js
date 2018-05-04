@@ -125,39 +125,38 @@ class CreateLunchspace extends React.Component {
           <ValidatorForm
             onSubmit={this.handleSubmit}
           >
-            <div>
-              <TextValidator
-                name="lunchspace-name"
-                label="Lunchspace Name"
-                className={classes.textField}
-                value={this.state.lunchspaceName}
-                onChange={this.handleLunchspaceNameChange}
-                validators={['required', 'maxStringLength:24']}
-                errorMessages={['this field is required', 'maximum 24 characters']}
-                margin="normal"
-                autoFocus
-              />
-            </div>
-            <div>
-              <FormControlInputValidator
-                className={classes.textField}
-                name="subdomain"
-                placeholder="your-space-url"
-                value={this.state.lunchspaceSubdomain}
-                onChange={this.handleSubdomainChange}
-                validators={['required', 'isValidSubdomain', 'maxStringLength:24']}
-                errorMessages={['this field is required', 'a subdomain may not contain a leading or trailing hyphen(-)', 'maximum 24 characters']}
-                inputLabel={
-                  <InputLabel htmlFor="input-with-icon-adornment" shrink>Subdomain to your Lunchspace</InputLabel>
-                }
-                endAdornment={
-                  <InputAdornment position="end">
-                    .lunchspace.de
-                  </InputAdornment>
-                }
-                autoComplete="off"
-              />
-            </div>
+            <Typography className={classes.title} variant="title">
+              Create Lunchspace
+            </Typography>
+            <TextValidator
+              name="lunchspace-name"
+              label="Lunchspace Name"
+              className={classes.textField}
+              value={this.state.lunchspaceName}
+              onChange={this.handleLunchspaceNameChange}
+              validators={['required', 'maxStringLength:24']}
+              errorMessages={['this field is required', 'maximum 24 characters']}
+              margin="normal"
+              autoFocus
+            />
+            <FormControlInputValidator
+              className={classes.textField}
+              name="subdomain"
+              placeholder="your-space-url"
+              value={this.state.lunchspaceSubdomain}
+              onChange={this.handleSubdomainChange}
+              validators={['required', 'isValidSubdomain', 'maxStringLength:24']}
+              errorMessages={['this field is required', 'a subdomain may not contain a leading or trailing hyphen(-)', 'maximum 24 characters']}
+              inputLabel={
+                <InputLabel htmlFor="input-with-icon-adornment" shrink>Subdomain to your Lunchspace</InputLabel>
+              }
+              endAdornment={
+                <InputAdornment position="end">
+                  .lunchspace.de
+                </InputAdornment>
+              }
+              autoComplete="off"
+            />
             <Collapse in={this.state.error}>
               <Typography color="error">
                 {this.state.lastErrorMessage}
