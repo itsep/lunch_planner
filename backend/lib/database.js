@@ -13,7 +13,7 @@ class MysqlPool {
     this.config = config
     this.openPool(config.database)
   }
-  async openPool(database) {
+  openPool(database) {
     this.pool = mysql.createPool(Object.assign({}, this.config, { database }))
   }
   async getConnection() {
@@ -33,8 +33,10 @@ class MysqlPool {
    * @param database {String} - database name
    */
   async changeDatabase(database) {
-    await this.pool.end()
-    await this.openPool(database)
+    const oldPool = this.pool
+    this.openPool(database)
+    oldPool.end()
+    console.log("change database to", database)
   }
 
   async end() {

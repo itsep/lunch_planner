@@ -1,11 +1,11 @@
 const { pool } = require('../../lib/database')
 const { valid } = require('../../lib/subdomain')
 
-async function create(lunchspaceName, lunchspaeUrl) {
+async function create(lunchspaceName, lunchspaceUrl) {
   return pool.useConnection(async (conn) => {
-    await conn.execute('INSERT INTO lunchspace (name, url) ' +
-      'VALUES (?,?)', [lunchspaceName, lunchspaeUrl])
-    return conn.execute('SELECT id FROM lunchspace WHERE url = ?', [lunchspaeUrl])
+    const [result] = await conn.execute('INSERT INTO lunchspace (name, url) ' +
+      'VALUES (?,?)', [lunchspaceName, lunchspaceUrl])
+    console.log('result: ', result[0])
   })
 }
 
@@ -30,7 +30,7 @@ async function createLunchspace(req, res) {
   }
 }
 
-module.export = {
+module.exports = {
   createLunchspace,
   create,
   connect,
