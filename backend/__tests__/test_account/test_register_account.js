@@ -12,11 +12,10 @@ describe('register accounts', () => {
   afterAll(dropMockDatabase)
   describe('create', async () => {
     it('should create a new account in DB, without error', async () => {
-      const error = await create(testEmail1, testPassword1)
-      expect(error).toEqual(true)
+      await expect(create(testEmail1, testPassword1)).resolves.not.toThrow()
     })
     it('should throw an error', async () => {
-      expect(create(testEmail1, testPassword1)).rejects.toHaveProperty('code', 'ER_DUP_ENTRY')
+      await expect(create(testEmail1, testPassword1)).rejects.toHaveProperty('code', 'ER_DUP_ENTRY')
     })
   })
   describe('registerAccount', () => {
