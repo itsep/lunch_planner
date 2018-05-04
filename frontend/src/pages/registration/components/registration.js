@@ -141,6 +141,74 @@ class Registration extends React.Component {
     )
   }
 }
+/*
+<ValidatorForm
+  onSubmit={this.handleNext}
+>
+  <div>
+    <TextValidator
+      name="first-name"
+      label="First Name"
+      className={classes.textField}
+      value={this.state.firstName}
+      onChange={this.handleChange('firstName')}
+      validators={['required']}
+      errorMessages={['this field is required']}
+      margin="normal"
+    />
+  </div>
+  <div>
+    <TextValidator
+      name="last-name"
+      label="Last Name"
+      className={classes.textField}
+      value={this.state.lastName}
+      onChange={this.handleChange('lastName')}
+      validators={['required']}
+      errorMessages={['this field is required']}
+      margin="normal"
+    />
+  </div>
+  <div>
+    <TextValidator
+      name="email"
+      label="Email"
+      type="email"
+      className={classes.textField}
+      value={this.state.email}
+      onChange={this.handleChange('email')}
+      validators={['required', 'isEmail']}
+      errorMessages={['this field is required', 'email is not valid']}
+      margin="normal"
+    />
+  </div>
+  <div>
+    <TextValidator
+      label="Password"
+      onChange={this.handleChange('password')}
+      name="password"
+      type="password"
+      validators={['required']}
+      errorMessages={['this field is required']}
+      value={this.state.password}
+      className={classes.textField}
+      margin="normal"
+    />
+  </div>
+  <div className={classes.actionsContainer}>
+    <div>
+      <Button
+        type="submit"
+        variant="raised"
+        color="primary"
+        className={classes.button}
+      >
+        Next
+      </Button>
+    </div>
+  </div>
+</ValidatorForm>
+ */
 
 Registration.propTypes = {
   classes: PropTypes.object.isRequired,

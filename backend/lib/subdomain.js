@@ -28,7 +28,7 @@ function escapeSubdomain(text) {
     .join('')
 }
 
-module.export = {
+module.exports = {
   isValidSubdomainChar,
   isValidSubdomain,
   escapeSubdomain,
