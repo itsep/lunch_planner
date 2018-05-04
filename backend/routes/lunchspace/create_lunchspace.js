@@ -1,9 +1,12 @@
 const { pool } = require('../../lib/database')
 const { isValidSubdomain } = require('../../lib/subdomain')
 
-async function create(lunchspaceName, lunchspaceUrl) {
+const minimumLength = 1
+const maximumLength = 24
+
+async function create(lunchspaceName, lunchspaceSubdomain) {
   const result = await pool.execute('INSERT INTO lunchspace (name, url) ' +
-      'VALUES (?,?)', [lunchspaceName, lunchspaceUrl])
+      'VALUES (?,?)', [lunchspaceName, lunchspaceSubdomain])
   return result[0].insertId
 }
 
@@ -13,19 +16,35 @@ async function connect(userId, lunchspaceId, isAdmin) {
 }
 
 async function createLunchspace(req, res) {
-  const { lunchspaceName, lunchspaceUrl } = req.body
-  if (isValidSubdomain(lunchspaceUrl) && lunchspaceName !== '') {
-    try {
-      const lunchspaceId = await create(lunchspaceName, lunchspaceUrl)
-      const userId = req.user
-      await connect(userId, lunchspaceId, true)
-      res.status(200).end()
-    } catch (error) {
-      if (error.code === 'ER_DUP_ENTRY') {
-        res.status(409).json({ error: 'Lunchspace URL already exists.' })
-      } else throw error
-    }
+  const { userId } = req.user
+  let { lunchspaceName, lunchspaceSubdomain } = req.body
+  if (typeof lunchspaceName === 'string') {
+    lunchspaceName = lunchspaceName.trim()
   }
+  lunchspaceSubdomain = typeof lunchspaceSubdomain === 'string' ?
+    lunchspaceSubdomain.trim() : ''
+  if (!isValidSubdomain(lunchspaceSubdomain)) {
+    return res.status(409).json({ error: 'Illegal Token in Subdomain.' })
+  }
+
+  if (lunchspaceSubdomain.length > maximumLength) {
+    return res.status(409).json({ error: 'Subdomain too long.' })
+  }
+  if (typeof lunchspaceName !== 'string' || lunchspaceName.length < minimumLength) {
+    return res.status(409).json({ error: 'Name too short.' })
+  }
+  if (lunchspaceName.length > maximumLength) {
+    return res.status(409).json({ error: 'Name too long.' })
+  }
+  try {
+    const lunchspaceId = await create(lunchspaceName, lunchspaceSubdomain)
+    await connect(userId, lunchspaceId, true)
+  } catch (error) {
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(409).json({ error: 'Lunchspace subdomain already exists.' })
+    } throw error
+  }
+  return res.status(200).end()
 }
 
 module.exports = {
