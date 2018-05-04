@@ -1,4 +1,4 @@
-const { tokenValidation, authenticate } = require('../../routes/middleware/verify')
+const { tokenValidation, authenticate } = require('../../middleware/verify')
 const { registerAccount } = require('../../routes/account/register_account')
 const { mockReq, mockRes, mockNext } = require('../../lib/express_mock')
 const { login } = require('../../routes/account/login_account')

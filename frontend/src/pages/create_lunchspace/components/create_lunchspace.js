@@ -11,7 +11,7 @@ import { escapeSubdomain, isValidSubdomain } from '../../../lib/subdomain'
 
 const styles = theme => ({
   textField: {
-    width: '280px',
+    width: '300px',
   },
   button: {
     marginTop: theme.spacing.unit,
@@ -117,8 +117,8 @@ class CreateLunchspace extends React.Component {
               className={classes.textField}
               value={this.state.lunchspaceName}
               onChange={this.handleLunchspaceNameChange}
-              validators={['required']}
-              errorMessages={['this field is required']}
+              validators={['required', 'maxStringLength:24']}
+              errorMessages={['this field is required', 'maximum 24 characters']}
               margin="normal"
             />
           </div>
@@ -129,8 +129,8 @@ class CreateLunchspace extends React.Component {
               placeholder="your-space-url"
               value={this.state.subdomain}
               onChange={this.handleSubdomainChange}
-              validators={['required', 'isValidSubdomain']}
-              errorMessages={['this field is required', 'a subdomain may not contain a leading or trailing hyphen(-)']}
+              validators={['required', 'isValidSubdomain', 'maxStringLength:24']}
+              errorMessages={['this field is required', 'a subdomain may not contain a leading or trailing hyphen(-)', 'maximum 24 characters']}
               inputLabel={
                 <InputLabel htmlFor="input-with-icon-adornment" shrink>Subdomain to your Lunchspace</InputLabel>
               }
