@@ -32,7 +32,8 @@ CREATE TABLE lunchspace
   id BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
   name VARCHAR(24) NOT NULL,
   url VARCHAR(16) NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  UNIQUE (url)
 ) ENGINE = InnoDB;
 
 -- Location Entity

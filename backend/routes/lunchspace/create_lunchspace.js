@@ -1,22 +1,20 @@
 const { pool } = require('../../lib/database')
-const { valid } = require('../../lib/subdomain')
+const { isValidSubdomain } = require('../../lib/subdomain')
 
 async function create(lunchspaceName, lunchspaceUrl) {
-  return pool.useConnection(async (conn) => {
-    const [result] = await conn.execute('INSERT INTO lunchspace (name, url) ' +
+  const result = await pool.execute('INSERT INTO lunchspace (name, url) ' +
       'VALUES (?,?)', [lunchspaceName, lunchspaceUrl])
-    console.log('result: ', result[0])
-  })
+  return result[0].insertId
 }
 
 async function connect(userId, lunchspaceId, isAdmin) {
   await pool.execute('INSERT INTO member_of (user_id, lunchspace_id, is_admin) ' +
-      'VALUES (?,?)', [userId, lunchspaceId, isAdmin])
+      'VALUES (?,?,?)', [userId, lunchspaceId, isAdmin])
 }
 
 async function createLunchspace(req, res) {
   const { lunchspaceName, lunchspaceUrl } = req.body
-  if (valid.isValidSubdomain(lunchspaceUrl) && lunchspaceName !== '') {
+  if (isValidSubdomain(lunchspaceUrl) && lunchspaceName !== '') {
     try {
       const lunchspaceId = await create(lunchspaceName, lunchspaceUrl)
       const userId = req.user
