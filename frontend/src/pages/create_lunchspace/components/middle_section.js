@@ -19,20 +19,18 @@ const styles = theme => ({
 
 })
 
-function MiddleSection() {
-  const { classes } = this.props
+function MiddleSection(props) {
+  const { classes } = props
 
   return (
     <div className={classes.root}>
-      {this.props.children}
+      {props.children}
     </div>
   )
 }
 
 MiddleSection.propTypes = {
-  // eslint-disable-next-line react/no-unused-prop-types
   classes: PropTypes.object.isRequired,
-  // eslint-disable-next-line react/no-unused-prop-types
   children: PropTypes.any.isRequired,
 }
 

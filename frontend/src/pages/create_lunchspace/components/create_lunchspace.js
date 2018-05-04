@@ -11,6 +11,7 @@ import Chip from 'material-ui/Chip'
 import Typography from 'material-ui/Typography'
 import { TextValidator, ValidatorForm, ValidatorComponent } from 'react-material-ui-form-validator'
 import MiddleSection from './middle_section'
+import RegisterOrLogin from './register_or_login'
 
 import { escapeSubdomain, isValidSubdomain } from '../../../lib/subdomain'
 
@@ -61,7 +62,7 @@ class CreateLunchspace extends React.Component {
     // }
     // DEBUG
     this.state = {
-      activeStep: 0,
+      activeStep: 1,
       lunchspaceName: 'vsf experts Mannheim',
       subdomain: 'vsf-experts-ma',
       firstName: 'David',
@@ -154,7 +155,7 @@ class CreateLunchspace extends React.Component {
       <MiddleSection className={classes.root}>
 
         <Stepper activeStep={activeStep} orientation="vertical">
-          {/* You */}
+          {/* Lunchspace */}
           <Step key="lunchspace">
             <StepButton
               onClick={this.handleStep(0)}
@@ -222,72 +223,73 @@ class CreateLunchspace extends React.Component {
               Your Account
             </StepButton>
             <StepContent>
-              <ValidatorForm
-                onSubmit={this.handleNext}
-              >
-                <div>
-                  <TextValidator
-                    name="first-name"
-                    label="First Name"
-                    className={classes.textField}
-                    value={this.state.firstName}
-                    onChange={this.handleChange('firstName')}
-                    validators={['required']}
-                    errorMessages={['this field is required']}
-                    margin="normal"
-                  />
-                </div>
-                <div>
-                  <TextValidator
-                    name="last-name"
-                    label="Last Name"
-                    className={classes.textField}
-                    value={this.state.lastName}
-                    onChange={this.handleChange('lastName')}
-                    validators={['required']}
-                    errorMessages={['this field is required']}
-                    margin="normal"
-                  />
-                </div>
-                <div>
-                  <TextValidator
-                    name="email"
-                    label="Email"
-                    type="email"
-                    className={classes.textField}
-                    value={this.state.email}
-                    onChange={this.handleChange('email')}
-                    validators={['required', 'isEmail']}
-                    errorMessages={['this field is required', 'email is not valid']}
-                    margin="normal"
-                  />
-                </div>
-                <div>
-                  <TextValidator
-                    label="Password"
-                    onChange={this.handleChange('password')}
-                    name="password"
-                    type="password"
-                    validators={['required']}
-                    errorMessages={['this field is required']}
-                    value={this.state.password}
-                    className={classes.textField}
-                    margin="normal"
-                  />
-                </div>
-                <div className={classes.actionsContainer}>
-                  <div>
-                    <Button
-                      type="submit"
-                      variant="raised"
-                      color="primary"
-                      className={classes.button}
-                    >
-                      Next
-                    </Button>
-                  </div>
-                </div>
-              </ValidatorForm>
+              <RegisterOrLogin/>
+              {/*<ValidatorForm*/}
+                {/*onSubmit={this.handleNext}*/}
+              {/*>*/}
+                {/*<div>*/}
+                  {/*<TextValidator*/}
+                    {/*name="first-name"*/}
+                    {/*label="First Name"*/}
+                    {/*className={classes.textField}*/}
+                    {/*value={this.state.firstName}*/}
+                    {/*onChange={this.handleChange('firstName')}*/}
+                    {/*validators={['required']}*/}
+                    {/*errorMessages={['this field is required']}*/}
+                    {/*margin="normal"*/}
+                  {/*/>*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                  {/*<TextValidator*/}
+                    {/*name="last-name"*/}
+                    {/*label="Last Name"*/}
+                    {/*className={classes.textField}*/}
+                    {/*value={this.state.lastName}*/}
+                    {/*onChange={this.handleChange('lastName')}*/}
+                    {/*validators={['required']}*/}
+                    {/*errorMessages={['this field is required']}*/}
+                    {/*margin="normal"*/}
+                  {/*/>*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                  {/*<TextValidator*/}
+                    {/*name="email"*/}
+                    {/*label="Email"*/}
+                    {/*type="email"*/}
+                    {/*className={classes.textField}*/}
+                    {/*value={this.state.email}*/}
+                    {/*onChange={this.handleChange('email')}*/}
+                    {/*validators={['required', 'isEmail']}*/}
+                    {/*errorMessages={['this field is required', 'email is not valid']}*/}
+                    {/*margin="normal"*/}
+                  {/*/>*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                  {/*<TextValidator*/}
+                    {/*label="Password"*/}
+                    {/*onChange={this.handleChange('password')}*/}
+                    {/*name="password"*/}
+                    {/*type="password"*/}
+                    {/*validators={['required']}*/}
+                    {/*errorMessages={['this field is required']}*/}
+                    {/*value={this.state.password}*/}
+                    {/*className={classes.textField}*/}
+                    {/*margin="normal"*/}
+                  {/*/>*/}
+                {/*</div>*/}
+                {/*<div className={classes.actionsContainer}>*/}
+                  {/*<div>*/}
+                    {/*<Button*/}
+                      {/*type="submit"*/}
+                      {/*variant="raised"*/}
+                      {/*color="primary"*/}
+                      {/*className={classes.button}*/}
+                    {/*>*/}
+                      {/*Next*/}
+                    {/*</Button>*/}
+                  {/*</div>*/}
+                {/*</div>*/}
+              {/*</ValidatorForm>*/}
             </StepContent>
           </Step>
           {/* Summary */}
