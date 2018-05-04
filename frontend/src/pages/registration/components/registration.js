@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import TextField from 'material-ui/TextField'
 import Collapse from 'material-ui/transitions/Collapse'
 import Fade from 'material-ui/transitions/Fade'
 import { CircularProgress } from 'material-ui/Progress'
@@ -27,6 +26,8 @@ class Registration extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       isLoading: false,
@@ -46,8 +47,12 @@ class Registration extends React.Component {
     }
   }
   handleSubmit() {
-    const { email, password } = this.state
-    const data = { email, password }
+    const {
+      email, password, firstName, lastName,
+    } = this.state
+    const data = {
+      firstName, lastName, email, password,
+    }
     this.setState({
       isLoading: true,
       error: null,
