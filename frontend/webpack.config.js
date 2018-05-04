@@ -6,6 +6,7 @@ const pages = {
   index: {/* config options */},
   registration: {/* config options */},
   login: {/* config options */},
+  homepage: {/* config options */},
   // *add a new page here*
 }
 
