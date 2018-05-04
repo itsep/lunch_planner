@@ -9,7 +9,7 @@ import Collapse from 'material-ui/transitions/Collapse'
 import Fade from 'material-ui/transitions/Fade'
 import { CircularProgress } from 'material-ui/Progress'
 import FormControlInputValidator from 'components/form_control_input_validator'
-import FormSection from './form_section'
+import FormSection from 'components/form_section'
 
 import { escapeSubdomain, isValidSubdomain } from '../../../lib/subdomain'
 
@@ -31,13 +31,13 @@ class CreateLunchspace extends React.Component {
     super(props)
     // this.state = {
     //   lunchspaceName: '',
-    //   subdomain: '',
+    //   lunchspaceSubdomain: '',
     // }
     // DEBUG
     this.state = {
       lunchspaceName: 'vsf experts Mannheim',
-      subdomain: 'vsf-experts-ma',
-      lunchspaceCreated: true,
+      lunchspaceSubdomain: 'vsf-experts-ma',
+      lunchspaceCreated: false,
       isLoading: false,
       error: undefined,
       lastErrorMessage: '',
@@ -56,7 +56,7 @@ class CreateLunchspace extends React.Component {
     const lunchspaceName = event.target.value
     if (!this.hasCustomSubdomainName()) {
       this.setState({
-        subdomain: escapeSubdomain(lunchspaceName),
+        lunchspaceSubdomain: escapeSubdomain(lunchspaceName),
       })
     }
     this.setState({
@@ -65,14 +65,14 @@ class CreateLunchspace extends React.Component {
   }
 
   handleSubdomainChange(event) {
-    const subdomain = event.target.value
+    const lunchspaceSubdomain = event.target.value
     this.setState({
-      subdomain: escapeSubdomain(subdomain),
+      lunchspaceSubdomain: escapeSubdomain(lunchspaceSubdomain),
     })
   }
 
   hasCustomSubdomainName() {
-    return escapeSubdomain(this.state.lunchspaceName) !== this.state.subdomain
+    return escapeSubdomain(this.state.lunchspaceName) !== this.state.lunchspaceSubdomain
   }
 
   handleChange(name) {
@@ -143,7 +143,7 @@ class CreateLunchspace extends React.Component {
                 className={classes.textField}
                 name="subdomain"
                 placeholder="your-space-url"
-                value={this.state.subdomain}
+                value={this.state.lunchspaceSubdomain}
                 onChange={this.handleSubdomainChange}
                 validators={['required', 'isValidSubdomain', 'maxStringLength:24']}
                 errorMessages={['this field is required', 'a subdomain may not contain a leading or trailing hyphen(-)', 'maximum 24 characters']}
@@ -166,6 +166,7 @@ class CreateLunchspace extends React.Component {
             <div className={classes.actionsContainer}>
               <Button
                 type="submit"
+                size="large"
                 variant="raised"
                 color="primary"
                 className={classes.button}
