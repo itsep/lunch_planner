@@ -6,20 +6,13 @@ const styles = theme => ({
   root: {
     marginLeft: 'auto',
     marginRight: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      maxWidth: theme.breakpoints.values.sm,
-    },
-    [theme.breakpoints.up('md')]: {
-      maxWidth: theme.breakpoints.values.md,
-    },
-    [theme.breakpoints.up('lg')]: {
-      maxWidth: theme.breakpoints.values.lg,
-    },
+    maxWidth: '400px',
+    padding: theme.spacing.unit * 2,
   },
 
 })
 
-function MiddleSection(props) {
+function FormSection(props) {
   const { classes } = props
 
   return (
@@ -29,9 +22,9 @@ function MiddleSection(props) {
   )
 }
 
-MiddleSection.propTypes = {
+FormSection.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.any.isRequired,
 }
 
-export default withStyles(styles)(MiddleSection)
+export default withStyles(styles)(FormSection)

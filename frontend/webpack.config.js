@@ -1,3 +1,4 @@
+const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -28,6 +29,12 @@ Object.keys(pages).forEach((pageName) => {
 
 module.exports = {
   entry: entries,
+  resolve: {
+    alias: {
+      lib: path.resolve(__dirname, 'src/lib'),
+      components: path.resolve(__dirname, 'src/components'),
+    },
+  },
   devServer: {
     proxy: {
       '/api': {

@@ -61,6 +61,7 @@ class Registration extends React.Component {
       headers: {
         'content-type': 'application/json',
       },
+      credentials: 'same-origin',
       body: JSON.stringify(data),
     })
       .then((response) => {
@@ -117,7 +118,7 @@ class Registration extends React.Component {
                   </Typography>
                 }
               </CardContent>
-              <CardActions className={classes.actions}>
+              <CardActions >
                 <Button size="large" type="submit" color="primary" onClick={this.register} disabled={this.state.isLoading}>
                   Register
                 </Button>
