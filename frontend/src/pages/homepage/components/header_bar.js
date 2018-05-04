@@ -1,55 +1,48 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
+import { connect } from 'react-redux'
 import { AppBar, Toolbar, Avatar, Typography, Button } from 'material-ui'
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  avatar: {
-  },
-  title: {
-  },
-  button: {
-    margin: theme.spacing.unit,
-  },
+const mapStateToProps = state => ({
+  profile: state.profile,
+  lunchspace: state.lunchspace,
 })
 
-function HeaderBar(props) {
-  const { classes } = props
-  function getInitials() {
-    return props.firstName.charAt(0) + props.lastName.charAt(0)
-  }
+function HeaderBar({ profile, lunchspace }) {
   return (
-    <div className={classes.root}>
+    <div>
       <AppBar position="static" color="default">
         <Toolbar>
           <Avatar
-            src={props.src}
-            className={classes.avatar}
+            src={profile.src}
           />
           <Typography color="inherit">
-            {getInitials()}
+            {profile.firstName}
+            {profile.lastName}
           </Typography>
-          <Typography variant="title" color="inherit" className={classes.title}>
-            {props.lunchspaceName}
+          <Typography variant="title" color="inherit">
+            {lunchspace.name}
           </Typography>
-          <Button variant="raised" color="secondary" className={classes.button}>
+          <Button variant="raised" color="secondary">
             logout
           </Button>
         </Toolbar>
       </AppBar>
+
     </div>
   )
 }
 
 HeaderBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  src: PropTypes.string.isRequired,
-  lunchspaceName: PropTypes.string.isRequired,
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
+  profile: PropTypes.objectOf(PropTypes.shape({
+    src: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+  }).isRequired).isRequired,
+  lunchspace: PropTypes.objectOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    subdomain: PropTypes.string.isRequired,
+  }).isRequired).isRequired,
 }
 
-export default withStyles(styles)(HeaderBar)
+export default connect(mapStateToProps)(HeaderBar)

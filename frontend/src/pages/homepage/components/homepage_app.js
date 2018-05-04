@@ -1,9 +1,14 @@
 import React from 'react'
-import Homepage from './homepage'
+import HeaderBar from './header_bar'
+import LocationList from './location_list'
+
 
 function HomepageApp() {
   return (
-    <Homepage />
+    <div>
+      <HeaderBar />
+      <LocationList />
+    </div>
   )
 }
 
