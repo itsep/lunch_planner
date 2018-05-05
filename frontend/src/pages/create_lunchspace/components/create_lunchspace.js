@@ -29,14 +29,9 @@ const styles = theme => ({
 class CreateLunchspace extends React.Component {
   constructor(props) {
     super(props)
-    // this.state = {
-    //   lunchspaceName: '',
-    //   lunchspaceSubdomain: '',
-    // }
-    // DEBUG
     this.state = {
-      lunchspaceName: 'vsf experts Mannheim',
-      lunchspaceSubdomain: 'vsf-experts-ma',
+      lunchspaceName: '',
+      lunchspaceSubdomain: '',
       lunchspaceCreated: false,
       isLoading: false,
       error: undefined,
@@ -137,6 +132,7 @@ class CreateLunchspace extends React.Component {
               validators={['required', 'maxStringLength:24']}
               errorMessages={['this field is required', 'maximum 24 characters']}
               margin="normal"
+              autocomplete="organization"
               autoFocus
             />
             <FormControlInputValidator
