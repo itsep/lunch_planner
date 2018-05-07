@@ -16,7 +16,7 @@ async function connect(userId, lunchspaceId, isAdmin) {
 }
 
 async function createLunchspace(req, res) {
-  const { userId } = req.user
+  const { userId } = req.token
   let { lunchspaceName, lunchspaceSubdomain } = req.body
   if (typeof lunchspaceName === 'string') {
     lunchspaceName = lunchspaceName.trim()
@@ -38,6 +38,7 @@ async function createLunchspace(req, res) {
   }
   try {
     const lunchspaceId = await create(lunchspaceName, lunchspaceSubdomain)
+    console.log(userId, lunchspaceId)
     await connect(userId, lunchspaceId, true)
   } catch (error) {
     if (error.code === 'ER_DUP_ENTRY') {

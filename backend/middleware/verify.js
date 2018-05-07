@@ -8,8 +8,8 @@ function tokenValidation(token) {
   }
 }
 
-function isAutorized(user) {
-  return (user && user.perm && user.perm.admin)
+function isAutorized(token) {
+  return (token && token.userId)
 }
 
 function authenticate(req, res, next) {
@@ -18,12 +18,12 @@ function authenticate(req, res, next) {
     return
   }
   const token = req.cookies.lunch_planner_token
-  const user = tokenValidation(token)
-  if (!isAutorized(user)) {
-    next(new Error('User is not autorized'))
+  const tokenData = tokenValidation(token)
+  if (!isAutorized(tokenData)) {
+    next(new Error('User is not authorized'))
   }
 
-  req.user = user
+  req.token = tokenData
   next()
 }
 

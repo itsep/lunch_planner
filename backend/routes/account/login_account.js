@@ -1,8 +1,6 @@
 const { pool } = require('../../lib/database')
 const { compare } = require('../../lib/password_hash')
-const jwt = require('jsonwebtoken')
-
-const secret = process.env.JWT_SECRET
+const { createToken } = require('../../lib/authenticate')
 
 async function getIdAndHashedPassword(email) {
   const conn = await pool.getConnection()
@@ -25,16 +23,7 @@ async function authenticate(email, password) {
   if (!correctEmailAndPassword) {
     return false
   }
-  const token = jwt.sign(
-    {
-      auth: user.id,
-      perm: {
-        admin: true,
-      },
-    },
-    secret,
-    { expiresIn: '72h' }
-  )
+  const token = createToken(user.id)
   return token
 }
 

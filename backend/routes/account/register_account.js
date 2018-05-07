@@ -1,8 +1,6 @@
 const { pool } = require('../../lib/database')
 const { hash } = require('../../lib/password_hash')
-const jwt = require('jsonwebtoken')
-
-const secret = process.env.JWT_SECRET
+const { createToken } = require('../../lib/authenticate')
 
 async function create(email, password, firstName, lastName) {
   const hashedPassword = await hash(password)
@@ -22,16 +20,7 @@ async function registerAccount(req, res) {
   } = req.body
   try {
     const userId = await create(email, password, firstName, lastName)
-    const token = jwt.sign(
-      {
-        auth: userId,
-        perm: {
-          admin: true,
-        },
-      },
-      secret,
-      { expiresIn: '72h' }
-    )
+    const token = createToken(userId)
     res.cookie(
       'lunch_planner_token',
       token,
