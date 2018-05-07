@@ -1,19 +1,29 @@
-const { tokenValidation, authenticate } = require('../../routes/middleware/verify')
+const { parseToken } = require('../../lib/authenticate')
+const { authenticate } = require('../../middleware/authenticate')
 const { registerAccount } = require('../../routes/account/register_account')
 const { mockReq, mockRes, mockNext } = require('../../lib/express_mock')
 const { login } = require('../../routes/account/login_account')
+const { createMockDatabase, dropMockDatabase } = require('../../lib/database_mock')
 
 const testEmail = 'test-verify@email.com'
 const testPassword = 'test-verify-password'
+const testFirstName = 'Max'
+const testLastName = 'Mustermann'
 
 describe('verify account', () => {
+  beforeAll(createMockDatabase)
+  afterAll(dropMockDatabase)
   let req
   let res1
   let res2
   let testToken
   beforeAll(async () => {
     // Register
-    const request = { body: { email: testEmail, password: testPassword } }
+    const request = {
+      body: {
+        email: testEmail, password: testPassword, firstName: testFirstName, lastName: testLastName,
+      },
+    }
     req = mockReq(request)
     res1 = mockRes()
     await registerAccount(req, res1)
@@ -22,9 +32,12 @@ describe('verify account', () => {
     await login(req, res2)
   })
   it('is token set', async () => {
-    testToken = res2.cookie.firstCall.lastArg
-    const validatedToken = tokenValidation(testToken)
-    expect(validatedToken).to.have.property('perm')
+    const [firstCall] = res2.cookie.mock.calls
+    // eslint-disable-next-line prefer-destructuring
+    testToken = firstCall[1]
+
+    const validatedToken = parseToken(testToken)
+    expect(validatedToken.userId).toBeDefined()
   })
   it('is token verified', async () => {
     const request = { cookies: { lunch_planner_token: testToken } }
@@ -32,7 +45,7 @@ describe('verify account', () => {
     // Mock cookie in request
     const next = mockNext()
     authenticate(req, res2, next)
-    expect(next).to.not.be.calledWithMatch(sinon.match.instanceOf(Error))
+    expect(next).not.toBeCalledWith(expect.any(Error))
   })
   it('is token invalid', async () => {
     const request = { cookies: { lunch_planner_token: 'invalid token' } }
@@ -41,6 +54,6 @@ describe('verify account', () => {
     const next = mockNext()
     authenticate(req, res2, next)
     // eslint-disable-next-line no-unused-expressions
-    expect(next).to.be.calledWithMatch(sinon.match.instanceOf(Error))
+    expect(next).toBeCalledWith(expect.any(Error))
   })
 })

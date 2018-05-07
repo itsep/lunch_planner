@@ -5,11 +5,11 @@ const schemaPath = '../database/schema.sql'
 let testDatabaseName
 async function createMockDatabase() {
   testDatabaseName = await createTestDatabase(schemaPath)
-  pool.changeDatabase(global.testDatabaseName)
+  await pool.changeDatabase(testDatabaseName)
 }
 
 async function dropMockDatabase() {
-  dropDatabase(testDatabaseName)
+  await dropDatabase(testDatabaseName)
   await pool.end()
 }
 

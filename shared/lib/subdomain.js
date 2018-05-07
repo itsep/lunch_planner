@@ -4,7 +4,7 @@ function isValidSubdomainChar(char) {
   return validCharactersRegex.test(char)
 }
 
-const validSubdomainRegex = /^[a-z0-9]([a-z0-9]|-[a-z0-9])*$/
+const validSubdomainRegex = /^([a-z0-9]([a-z0-9]|-[a-z0-9])*)?$/
 
 function isValidSubdomain(text) {
   return validSubdomainRegex.test(text)
@@ -28,8 +28,9 @@ function escapeSubdomain(text) {
     .join('')
 }
 
-module.export = {
+module.exports = {
   isValidSubdomainChar,
   isValidSubdomain,
   escapeSubdomain,
 }
+

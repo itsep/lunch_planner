@@ -1,4 +1,4 @@
-import { isValidSubdomainChar, isValidSubdomain, escapeSubdomain } from '../../lib/subdomain'
+const { isValidSubdomainChar, isValidSubdomain, escapeSubdomain } = require('./subdomain')
 
 describe('subdomain', () => {
   describe('isValidSubdomainCharacter()', () => {

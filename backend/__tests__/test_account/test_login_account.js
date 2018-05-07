@@ -1,3 +1,4 @@
+const { createMockDatabase, dropMockDatabase } = require('../../lib/database_mock')
 const { pool } = require('../../lib/database')
 const { hash, compare } = require('../../lib/password_hash')
 const { mockReq, mockRes } = require('../../lib/express_mock')
@@ -6,7 +7,10 @@ const { getIdAndHashedPassword, login, authenticate } = require('../../routes/ac
 const testEmail = 'test-login@email.com'
 const testPassword = 'test-login-password'
 
+
 describe('test login account', () => {
+  beforeAll(createMockDatabase)
+  afterAll(dropMockDatabase)
   beforeAll(async () => {
     const testHashedPassword = await hash(testPassword)
     const user = [testEmail, testHashedPassword]
@@ -22,30 +26,30 @@ describe('test login account', () => {
       expect(result).toEqual(undefined)
     })
   })
-  // describe('authenticate', () => {
-  //   it('should return a jwt', async () => {
-  //     const token = await authenticate(testEmail, testPassword)
-  //     expect(token).to.not.equal(false)
-  //   })
-  //   it('should return decoded token', async () => {
-  //     const token = await authenticate(testEmail, testPassword)
-  //     expect(token).to.not.equal(undefined)
-  //   })
-  // })
-  // describe('account login', () => {
-  //   it('should set a cookie', async () => {
-  //     const request = { body: { email: testEmail, password: testPassword } }
-  //     const req = mockReq(request)
-  //     const res = mockRes()
-  //     await login(req, res)
-  //     expect(res.cookie).to.be.calledWith('lunch_planner_token')
-  //   })
-  //   it('shouldn`t set a cookie', async () => {
-  //     const request = { body: { email: 'no email', password: 'no password' } }
-  //     const req = mockReq(request)
-  //     const res = mockRes()
-  //     await login(req, res)
-  //     expect(res.status).to.be.calledWith(401)
-  //   })
-  // })
+  describe('authenticate', () => {
+    it('should return a jwt', async () => {
+      const token = await authenticate(testEmail, testPassword)
+      expect(token).not.toEqual(false)
+    })
+    it('should return decoded token', async () => {
+      const token = await authenticate(testEmail, testPassword)
+      expect(token).not.toEqual(undefined)
+    })
+  })
+  describe('account login', () => {
+    it('should set a cookie', async () => {
+      const request = { body: { email: testEmail, password: testPassword } }
+      const req = mockReq(request)
+      const res = mockRes()
+      await login(req, res)
+      expect(res.cookie.mock.calls[0][0]).toEqual('lunch_planner_token')
+    })
+    it('shouldn`t set a cookie', async () => {
+      const request = { body: { email: 'no email', password: 'no password' } }
+      const req = mockReq(request)
+      const res = mockRes()
+      await login(req, res)
+      expect(res.status.mock.calls[0][0]).toEqual(401)
+    })
+  })
 })

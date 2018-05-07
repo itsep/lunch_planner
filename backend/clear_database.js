@@ -1,3 +1,4 @@
+require('dotenv').load()
 const { createMultiStatementConnection } = require('./lib/database')
 const fs = require('fs-nextra')
 

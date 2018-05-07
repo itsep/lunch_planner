@@ -1,4 +1,3 @@
-require('dotenv').load()
 const mysql = require('mysql2/promise')
 const fs = require('fs-nextra')
 const { makeId } = require('./makeId')
@@ -8,33 +7,47 @@ if (!process.env.DATABASE_USERNAME || !process.env.DATABASE_PASSWORD) {
   process.exit(1)
 }
 
-const pool = mysql.createPool({
+class MysqlPool {
+  constructor(config) {
+    this.config = config
+    this.openPool(config.database)
+  }
+  openPool(database) {
+    this.pool = mysql.createPool(Object.assign({}, this.config, { database }))
+  }
+  async getConnection() {
+    return this.pool.getConnection()
+  }
+  async execute(...args) {
+    const conn = await this.pool.getConnection()
+    return conn.execute(...args)
+      .finally(() => conn.release())
+  }
+  async useConnection(consumer) {
+    const conn = await this.pool.getConnection()
+    return consumer(conn).finally(() => conn.release())
+  }
+  /**
+   * changes the database for new connections. closes the current pool and create a new one
+   * @param database {String} - database name
+   */
+  async changeDatabase(database) {
+    const oldPool = this.pool
+    this.openPool(database)
+    await oldPool.end()
+  }
+
+  async end() {
+    return this.pool.end()
+  }
+}
+
+const pool = new MysqlPool({
   host: 'localhost',
   user: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME || 'lunch_planner',
 })
-
-pool.execute = async function execute(...args) {
-  const conn = await this.getConnection()
-  return conn.execute(...args)
-    .finally(() => conn.release())
-}
-
-pool.useConnection = async function useConnection(consumer) {
-  const conn = await this.getConnection()
-  return consumer(conn).finally(() => conn.release())
-}
-/**
- * changes the database for new connections! Call this function before you use the pool.
- * @param dbName {String} - database name
- */
-pool.changeDatabase = function changeDatabase(dbName) {
-  console.log(dbName)
-  console.log(module.exports.pool.pool)
-  pool.pool.config.connectionConfig.database = dbName
-  console.log(module.exports.pool.pool)
-}
 
 function createMultiStatementConnection(withoutDatabase) {
   return mysql.createConnection({

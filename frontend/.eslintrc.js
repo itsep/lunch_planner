@@ -20,4 +20,7 @@ module.exports = {
     'linebreak-style': 0,
     'react/forbid-prop-types': 0,
   },
+  settings: {
+    'import/resolver': 'webpack',
+  },
 }
