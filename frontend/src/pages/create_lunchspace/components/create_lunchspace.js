@@ -132,7 +132,7 @@ class CreateLunchspace extends React.Component {
               validators={['required', 'maxStringLength:24']}
               errorMessages={['this field is required', 'maximum 24 characters']}
               margin="normal"
-              autocomplete="organization"
+              autoComplete="organization"
               autoFocus
             />
             <FormControlInputValidator
