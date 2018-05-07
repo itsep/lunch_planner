@@ -102,7 +102,7 @@ class Registration extends React.Component {
               validators={['required']}
               errorMessages={['this field is required']}
               margin="normal"
-              autoComplete="give-name"
+              autoComplete="given-name"
               autoFocus
             />
             <TextValidator
@@ -140,7 +140,7 @@ class Registration extends React.Component {
               margin="normal"
               autoComplete="new-password"
             />
-            <Collapse in={this.state.error}>
+            <Collapse in={!!this.state.error}>
               <Typography color="error">
                 {this.state.lastErrorMessage}
               </Typography>
