@@ -28,7 +28,6 @@ function HeaderBar({ profile, lunchspace }) {
           </Button>
         </Toolbar>
       </AppBar>
-
     </div>
   )
 }
