@@ -1,4 +1,5 @@
 const { pool } = require('../../lib/database')
+const { validLength } =require('../../lib/authenti')
 
 async function create(name, coordinates, lunchspaceId) {
   await pool.execute('INSERT INTO location (name, coordinates, lunchspace_id) ' +
@@ -7,8 +8,7 @@ async function create(name, coordinates, lunchspaceId) {
 }
 
 async function createLocation(req, res) {
-  const { name, coordinates } = req.body
-  const lunchspaceId = 2
+  const { name, coordinates, lunchspaceId } = req.body
   try {
     await create(name, coordinates, lunchspaceId)
     res.status(200).end()
