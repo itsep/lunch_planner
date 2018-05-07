@@ -31,7 +31,6 @@ describe('create lunchspace', () => {
   })
   describe('create', async () => {
     it('should create a new lunchspace in DB and giving back its id', async () => {
-      // 1 may change to a different number with future tests
       await expect(create(testLunchspaceName1, testSubdomain1)).resolves.toEqual(expect.any(Number))
     })
     it('should throw an error', async () => {

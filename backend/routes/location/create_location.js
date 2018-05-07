@@ -19,7 +19,12 @@ async function createLocation(req, res) {
   }
   name = name.trim()
   try {
-    await pool.execute('SELECT FROM member_of WHERE')
+    await pool.execute('SELECT * FROM member_of WHERE user_id = ? AND lunchspace_id = ?', [userId, lunchspaceId])
+  } catch (error) {
+    console.log(error)
+    if (error.code === '') {
+      return res.status(401).json({ error: 'Not permitted to create location.' })
+    }
   }
   try {
     await create(name, coordinates, lunchspaceId)
