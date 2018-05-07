@@ -1,12 +1,12 @@
 const validCharactersRegex = /[a-z0-9]|-/
 
-export function isValidSubdomainChar(char) {
+function isValidSubdomainChar(char) {
   return validCharactersRegex.test(char)
 }
 
 const validSubdomainRegex = /^([a-z0-9]([a-z0-9]|-[a-z0-9])*)?$/
 
-export function isValidSubdomain(text) {
+function isValidSubdomain(text) {
   return validSubdomainRegex.test(text)
 }
 
@@ -14,7 +14,7 @@ const charMapping = {
   ' ': '-',
 }
 
-export function escapeSubdomain(text) {
+function escapeSubdomain(text) {
   if (!text) {
     return ''
   }
@@ -26,5 +26,11 @@ export function escapeSubdomain(text) {
     return charMapping[char] || ''
   })
     .join('')
+}
+
+module.exports = {
+  isValidSubdomainChar,
+  isValidSubdomain,
+  escapeSubdomain,
 }
 

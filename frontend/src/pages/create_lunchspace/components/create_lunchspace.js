@@ -11,7 +11,7 @@ import { CircularProgress } from 'material-ui/Progress'
 import FormControlInputValidator from 'components/form_control_input_validator'
 import FormSection from 'components/form_section'
 
-import { escapeSubdomain, isValidSubdomain } from '../../../lib/subdomain'
+import { escapeSubdomain, isValidSubdomain } from 'shared/lib/subdomain'
 
 const styles = theme => ({
   textField: {

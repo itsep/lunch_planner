@@ -5,6 +5,23 @@ pipeline {
         JWT_SECRET = 'most_secret_key'
     }
     stages {
+        stage('Install Shared') {
+            steps {
+                // `npm install` but especially for continues integration.
+                // sh 'npm ci --prefix=backend'
+                sh 'npm install --prefix=shared'
+            }
+        }
+        stage('Lint Shared') {
+            steps {
+                sh 'npm run lint --prefix=shared'
+            }
+        }
+        stage('Test Shared') {
+            steps {
+                sh 'npm run test --prefix=shared'
+            }
+        }
         stage('Install Backend') {
             steps {
                 // `npm install` but especially for continues integration.
