@@ -1,30 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import TextField from 'material-ui/TextField'
-import Card, { CardActions, CardContent } from 'material-ui/Card'
-import Button from 'material-ui/Button'
-import Typography from 'material-ui/Typography'
+import Collapse from 'material-ui/transitions/Collapse'
 import Fade from 'material-ui/transitions/Fade'
 import { CircularProgress } from 'material-ui/Progress'
+import Button from 'material-ui/Button'
+import Typography from 'material-ui/Typography'
+import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
+import FormSection from 'components/form_section'
 
-const styles = () => ({
-  registrationContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh',
-  },
-  card: {
-    minWidth: 275,
-    maxWidth: 400,
-  },
+const styles = theme => ({
   textField: {
     width: '100%',
   },
-  actions: {
+  actionsContainer: {
+    display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row-reverse',
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
 })
 
@@ -32,14 +26,17 @@ class Registration extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       isLoading: false,
       error: null,
+      lastErrorMessage: '',
       loggedIn: false,
     }
 
-    this.register = this.register.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleChange(name) {
     const that = this
@@ -49,9 +46,13 @@ class Registration extends React.Component {
       })
     }
   }
-  register() {
-    const { email, password } = this.state
-    const data = { email, password }
+  handleSubmit() {
+    const {
+      email, password, firstName, lastName,
+    } = this.state
+    const data = {
+      firstName, lastName, email, password,
+    }
     this.setState({
       isLoading: true,
       error: null,
@@ -61,6 +62,7 @@ class Registration extends React.Component {
       headers: {
         'content-type': 'application/json',
       },
+      credentials: 'same-origin',
       body: JSON.stringify(data),
     })
       .then((response) => {
@@ -73,7 +75,7 @@ class Registration extends React.Component {
         return response.json().then(({ error }) => { throw new Error(error) })
       })
       .catch((error) => {
-        this.setState({ error })
+        this.setState({ error, lastErrorMessage: error.message })
       })
       .finally(() => {
         this.setState({ isLoading: false })
@@ -83,61 +85,93 @@ class Registration extends React.Component {
   render() {
     const { classes } = this.props
     return (
-      <div className={classes.registrationContainer}>
-        <Card className={classes.card}>
-          { !this.state.loggedIn ?
-            <form className={classes.container}>
-              <CardContent>
-                <Typography className={classes.title} variant="title">
-                  Registration
-                </Typography>
-                <TextField
-                  id="email"
-                  label="Email"
-                  value={this.state.email}
-                  onChange={this.handleChange('email')}
-                  className={classes.textField}
-                  disabled={this.state.isLoading}
-                  margin="normal"
-                />
-                <TextField
-                  id="password"
-                  label="Password"
-                  value={this.state.password}
-                  onChange={this.handleChange('password')}
-                  className={classes.textField}
-                  disabled={this.state.isLoading}
-                  type="password"
-                  autoComplete="current-password"
-                  margin="normal"
-                />
-                {this.state.error &&
-                  <Typography>
-                    {this.state.error.message}
-                  </Typography>
-                }
-              </CardContent>
-              <CardActions className={classes.actions}>
-                <Button size="large" type="submit" color="primary" onClick={this.register} disabled={this.state.isLoading}>
-                  Register
-                </Button>
-                <Fade
-                  in={this.state.isLoading}
-                  unmountOnExit
-                >
-                  <CircularProgress />
-                </Fade>
-              </CardActions>
-            </form>
-          :
-            <CardContent>
-              <Typography variant="title" color="primary">
-                {this.state.email} successful registered.
+      <FormSection className={classes.root}>
+        <Collapse in={!this.state.loggedIn}>
+          <ValidatorForm
+            onSubmit={this.handleSubmit}
+          >
+            <Typography className={classes.title} variant="title">
+              Registration
+            </Typography>
+            <TextValidator
+              name="first-name"
+              label="First Name"
+              className={classes.textField}
+              value={this.state.firstName}
+              onChange={this.handleChange('firstName')}
+              validators={['required']}
+              errorMessages={['this field is required']}
+              margin="normal"
+              autoComplete="given-name"
+              autoFocus
+            />
+            <TextValidator
+              name="last-name"
+              label="Last Name"
+              className={classes.textField}
+              value={this.state.lastName}
+              onChange={this.handleChange('lastName')}
+              validators={['required']}
+              errorMessages={['this field is required']}
+              margin="normal"
+              autoComplete="family-name"
+            />
+            <TextValidator
+              name="email"
+              label="Email"
+              type="email"
+              className={classes.textField}
+              value={this.state.email}
+              onChange={this.handleChange('email')}
+              validators={['required', 'isEmail']}
+              errorMessages={['this field is required', 'email is not valid']}
+              margin="normal"
+              autoComplete="email"
+            />
+            <TextValidator
+              label="Password"
+              onChange={this.handleChange('password')}
+              name="password"
+              type="password"
+              validators={['required']}
+              errorMessages={['this field is required']}
+              value={this.state.password}
+              className={classes.textField}
+              margin="normal"
+              autoComplete="new-password"
+            />
+            <Collapse in={!!this.state.error}>
+              <Typography color="error">
+                {this.state.lastErrorMessage}
               </Typography>
-            </CardContent>
-          }
-        </Card>
-      </div>
+            </Collapse>
+
+            <div className={classes.actionsContainer}>
+              <Button
+                type="submit"
+                size="large"
+                variant="raised"
+                color="primary"
+                className={classes.button}
+                disabled={this.state.isLoading}
+              >
+                Register
+              </Button>
+              <Fade
+                in={this.state.isLoading}
+                unmountOnExit
+              >
+                <CircularProgress size="36px" />
+              </Fade>
+            </div>
+          </ValidatorForm>
+        </Collapse>
+        <Collapse in={this.state.loggedIn}>
+          <Typography variant="title" color="primary">
+            {this.state.email} successful registered.
+          </Typography>
+        </Collapse>
+      </FormSection>
     )
   }
 }

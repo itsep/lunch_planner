@@ -17,3 +17,6 @@ DATABASE_USERNAME = *your database username*
 DATABASE_PASSWORD = *your database your password*
 ```
 
+## Testing
+### [Jest](https://facebook.github.io/jest/)
+* [Expect](https://facebook.github.io/jest/docs/en/expect.html)
