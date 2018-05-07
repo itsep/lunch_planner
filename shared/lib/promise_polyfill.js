@@ -1,4 +1,5 @@
 // Add `finally()` to `Promise.prototype`
+// eslint-disable-next-line func-names
 global.Promise.prototype.finally = function (onFinally) {
   return this.then(
     /* onFulfilled */

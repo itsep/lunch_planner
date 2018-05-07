@@ -36,7 +36,7 @@ class MysqlPool {
     const oldPool = this.pool
     this.openPool(database)
     oldPool.end()
-    console.log("change database to", database)
+    console.log('change database to', database)
   }
 
   async end() {

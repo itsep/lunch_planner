@@ -1,1 +1,1 @@
-require('../lib/promise_polyfill')
+require('../../shared/lib/promise_polyfill')

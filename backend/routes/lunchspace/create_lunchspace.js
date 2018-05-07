@@ -1,5 +1,5 @@
 const { pool } = require('../../lib/database')
-const { isValidSubdomain } = require('../../lib/subdomain')
+const { isValidSubdomain } = require('../../../shared/lib/subdomain')
 
 const minimumLength = 1
 const maximumLength = 24
