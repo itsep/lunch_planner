@@ -96,7 +96,7 @@ class Login extends React.Component {
               validators={['required', 'isEmail']}
               errorMessages={['this field is required', 'email is not valid']}
               margin="normal"
-              autocomplete="email"
+              autoComplete="email"
             />
             <TextValidator
               label="Password"
@@ -108,7 +108,7 @@ class Login extends React.Component {
               value={this.state.password}
               className={classes.textField}
               margin="normal"
-              autocomplete="current-password"
+              autoComplete="current-password"
             />
             <Collapse in={this.state.error}>
               <Typography color="error">

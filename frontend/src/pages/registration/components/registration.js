@@ -102,7 +102,7 @@ class Registration extends React.Component {
               validators={['required']}
               errorMessages={['this field is required']}
               margin="normal"
-              autocomplete="give-name"
+              autoComplete="give-name"
               autoFocus
             />
             <TextValidator
@@ -114,7 +114,7 @@ class Registration extends React.Component {
               validators={['required']}
               errorMessages={['this field is required']}
               margin="normal"
-              autocomplete="family-name"
+              autoComplete="family-name"
             />
             <TextValidator
               name="email"
@@ -126,7 +126,7 @@ class Registration extends React.Component {
               validators={['required', 'isEmail']}
               errorMessages={['this field is required', 'email is not valid']}
               margin="normal"
-              autocomplete="email"
+              autoComplete="email"
             />
             <TextValidator
               label="Password"
@@ -138,7 +138,7 @@ class Registration extends React.Component {
               value={this.state.password}
               className={classes.textField}
               margin="normal"
-              autocomplete="new-password"
+              autoComplete="new-password"
             />
             <Collapse in={this.state.error}>
               <Typography color="error">
