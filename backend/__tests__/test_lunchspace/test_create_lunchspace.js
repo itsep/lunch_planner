@@ -32,7 +32,7 @@ describe('create lunchspace', () => {
   describe('create', async () => {
     it('should create a new lunchspace in DB and giving back its id', async () => {
       // 1 may change to a different number with future tests
-      await expect(create(testLunchspaceName1, testSubdomain1)).resolves.toEqual(1)
+      await expect(create(testLunchspaceName1, testSubdomain1)).resolves.toEqual(expect.any(Number))
     })
     it('should throw an error', async () => {
       await expect(create(testLunchspaceName1, testSubdomain1)).rejects.toHaveProperty('code', 'ER_DUP_ENTRY')
@@ -50,7 +50,7 @@ describe('create lunchspace', () => {
     const request =
       {
         body: { lunchspaceName: testLunchspaceName2, lunchspaceSubdomain: testSubdomain2 },
-        user: { userId: testUserId },
+        token: { userId: testUserId },
       }
     it('should create a new lunchspace', async () => {
       const req = mockReq(request)
@@ -67,7 +67,7 @@ describe('create lunchspace', () => {
     it('should reject to create a new lunchspace, because of subdomain is null', async () => {
       const request1 = {
         body: { lunchspaceName: testLunchspaceName2, lunchspaceSubdomain: null },
-        user: { userId: testUserId },
+        token: { userId: testUserId },
       }
       const req = mockReq(request1)
       const res = mockRes()
@@ -77,7 +77,7 @@ describe('create lunchspace', () => {
     it('should reject to create a new lunchspace, because of name is null', async () => {
       const request2 = {
         body: { lunchspaceName: null, lunchspaceSubdomain: testSubdomain2 },
-        user: { userId: testUserId },
+        token: { userId: testUserId },
       }
       const req = mockReq(request2)
       const res = mockRes()
@@ -87,7 +87,7 @@ describe('create lunchspace', () => {
     it('should reject to create a new lunchspace, because of subdomain is too long', async () => {
       const request3 = {
         body: { lunchspaceName: testLunchspaceName2, lunchspaceSubdomain: testSubdomain3 },
-        user: { userId: testUserId },
+        token: { userId: testUserId },
       }
       const req = mockReq(request3)
       const res = mockRes()
@@ -97,7 +97,7 @@ describe('create lunchspace', () => {
     it('should reject to create a new lunchspace, because of name is too long', async () => {
       const request4 = {
         body: { lunchspaceName: testLunchspaceName3, lunchspaceSubdomain: testSubdomain2 },
-        user: { userId: testUserId },
+        token: { userId: testUserId },
       }
       const req = mockReq(request4)
       const res = mockRes()
@@ -107,7 +107,7 @@ describe('create lunchspace', () => {
     it('should reject to create a new lunchspace, because of name is empty string', async () => {
       const request5 = {
         body: { lunchspaceName: '', lunchspaceSubdomain: testSubdomain2 },
-        user: { userId: testUserId },
+        token: { userId: testUserId },
       }
       const req = mockReq(request5)
       const res = mockRes()

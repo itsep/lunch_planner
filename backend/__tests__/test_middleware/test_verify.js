@@ -6,6 +6,8 @@ const { createMockDatabase, dropMockDatabase } = require('../../lib/database_moc
 
 const testEmail = 'test-verify@email.com'
 const testPassword = 'test-verify-password'
+const testFirstName = 'Max'
+const testLastName = 'Mustermann'
 
 describe('verify account', () => {
   beforeAll(createMockDatabase)
@@ -16,7 +18,11 @@ describe('verify account', () => {
   let testToken
   beforeAll(async () => {
     // Register
-    const request = { body: { email: testEmail, password: testPassword } }
+    const request = {
+      body: {
+        email: testEmail, password: testPassword, firstName: testFirstName, lastName: testLastName,
+      },
+    }
     req = mockReq(request)
     res1 = mockRes()
     await registerAccount(req, res1)
@@ -30,7 +36,7 @@ describe('verify account', () => {
     testToken = firstCall[1]
 
     const validatedToken = tokenValidation(testToken)
-    expect(validatedToken.perm).toBeDefined()
+    expect(validatedToken.userId).toBeDefined()
   })
   it('is token verified', async () => {
     const request = { cookies: { lunch_planner_token: testToken } }

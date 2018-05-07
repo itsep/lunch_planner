@@ -23,10 +23,13 @@ async function createLunchspace(req, res) {
   }
   lunchspaceSubdomain = typeof lunchspaceSubdomain === 'string' ?
     lunchspaceSubdomain.trim() : ''
+
   if (!isValidSubdomain(lunchspaceSubdomain)) {
     return res.status(409).json({ error: 'Illegal Token in Subdomain.' })
   }
-
+  if (lunchspaceSubdomain < minimumLength) {
+    return res.status(409).json({ error: 'Subdomain too short.' })
+  }
   if (lunchspaceSubdomain.length > maximumLength) {
     return res.status(409).json({ error: 'Subdomain too long.' })
   }
