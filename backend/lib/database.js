@@ -1,4 +1,3 @@
-require('dotenv').load()
 const mysql = require('mysql2/promise')
 const fs = require('fs-nextra')
 const { makeId } = require('./makeId')
@@ -35,8 +34,7 @@ class MysqlPool {
   async changeDatabase(database) {
     const oldPool = this.pool
     this.openPool(database)
-    oldPool.end()
-    console.log('change database to', database)
+    await oldPool.end()
   }
 
   async end() {

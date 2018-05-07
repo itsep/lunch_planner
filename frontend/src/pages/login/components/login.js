@@ -110,7 +110,7 @@ class Login extends React.Component {
               margin="normal"
               autoComplete="current-password"
             />
-            <Collapse in={this.state.error}>
+            <Collapse in={!!this.state.error}>
               <Typography color="error">
                 {this.state.lastErrorMessage}
               </Typography>

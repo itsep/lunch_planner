@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 const secret = process.env.JWT_SECRET
 
-async function createToken(userId) {
+async function stringifyToken(userId) {
   const token = jwt.sign(
     {
       userId,
@@ -13,6 +13,15 @@ async function createToken(userId) {
   return token
 }
 
+function parseToken(token) {
+  try {
+    return jwt.verify(token, secret)
+  } catch (err) {
+    return undefined
+  }
+}
+
 module.exports = {
-  createToken,
+  stringifyToken,
+  parseToken,
 }

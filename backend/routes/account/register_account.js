@@ -1,6 +1,6 @@
 const { pool } = require('../../lib/database')
 const { hash } = require('../../lib/password_hash')
-const { createToken } = require('../../lib/authenticate')
+const { stringifyToken } = require('../../lib/authenticate')
 const { validLength, validEmail } = require('../../lib/validation')
 
 const minimumLength = 1
@@ -34,7 +34,7 @@ async function registerAccount(req, res) {
   }
   try {
     const userId = await create(email, password, firstName, lastName)
-    const token = createToken(userId)
+    const token = stringifyToken(userId)
     res.cookie(
       'lunch_planner_token',
       token,

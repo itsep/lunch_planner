@@ -1,4 +1,5 @@
-const { tokenValidation, authenticate } = require('../../middleware/verify')
+const { parseToken } = require('../../lib/authenticate')
+const { authenticate } = require('../../middleware/authenticate')
 const { registerAccount } = require('../../routes/account/register_account')
 const { mockReq, mockRes, mockNext } = require('../../lib/express_mock')
 const { login } = require('../../routes/account/login_account')
@@ -35,7 +36,7 @@ describe('verify account', () => {
     // eslint-disable-next-line prefer-destructuring
     testToken = firstCall[1]
 
-    const validatedToken = tokenValidation(testToken)
+    const validatedToken = parseToken(testToken)
     expect(validatedToken.userId).toBeDefined()
   })
   it('is token verified', async () => {

@@ -1,6 +1,6 @@
 const { pool } = require('../../lib/database')
 const { compare } = require('../../lib/password_hash')
-const { createToken } = require('../../lib/authenticate')
+const { stringifyToken } = require('../../lib/authenticate')
 
 async function getIdAndHashedPassword(email) {
   const conn = await pool.getConnection()
@@ -23,7 +23,7 @@ async function authenticate(email, password) {
   if (!correctEmailAndPassword) {
     return false
   }
-  const token = createToken(user.id)
+  const token = stringifyToken(user.id)
   return token
 }
 

@@ -153,7 +153,7 @@ class CreateLunchspace extends React.Component {
               }
               autoComplete="off"
             />
-            <Collapse in={this.state.error}>
+            <Collapse in={!!this.state.error}>
               <Typography color="error">
                 {this.state.lastErrorMessage}
               </Typography>
@@ -180,7 +180,7 @@ class CreateLunchspace extends React.Component {
         </Collapse>
         <Collapse in={this.state.lunchspaceCreated}>
           <span>Lunchspace </span>
-          <a href={`${this.state.lunchspaceSubdomain}.lunchspace.de`}>
+          <a href={`//${this.state.lunchspaceSubdomain}.lunchspace.de`}>
             {this.state.lunchspaceName}
           </a>
           <span> successful created.</span>
