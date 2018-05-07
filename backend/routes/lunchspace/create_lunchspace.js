@@ -41,7 +41,6 @@ async function createLunchspace(req, res) {
   }
   try {
     const lunchspaceId = await create(lunchspaceName, lunchspaceSubdomain)
-    console.log(userId, lunchspaceId)
     await connect(userId, lunchspaceId, true)
   } catch (error) {
     if (error.code === 'ER_DUP_ENTRY') {
