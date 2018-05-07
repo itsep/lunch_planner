@@ -13,9 +13,9 @@ CREATE TABLE account
 CREATE TABLE user
 (
   id BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
-  user_first_name VARCHAR(100) NOT NULL,
-  user_last_name VARCHAR(100) NOT NULL,
-  user_image_url VARCHAR(2000),
+  first_name VARCHAR(100) NOT NULL,
+  last_name VARCHAR(100) NOT NULL,
+  image_url VARCHAR(2000),
   PRIMARY KEY (id)
 ) ENGINE = InnoDB;
 
@@ -30,8 +30,8 @@ ALTER TABLE account
 CREATE TABLE lunchspace
 (
   id BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
-  lunchspace_name VARCHAR(24) NOT NULL,
-  lunchspace_url VARCHAR(16) NOT NULL,
+  name VARCHAR(24) NOT NULL,
+  url VARCHAR(16) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE = InnoDB;
 
@@ -39,8 +39,8 @@ CREATE TABLE lunchspace
 CREATE TABLE location
 (
   id BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
-  location_name VARCHAR(64) NOT NULL,
-  location_coordinates POINT NOT NULL,
+  name VARCHAR(64) NOT NULL,
+  coordinates POINT NOT NULL,
   lunchspace_id BIGINT UNSIGNED NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE = InnoDB;
