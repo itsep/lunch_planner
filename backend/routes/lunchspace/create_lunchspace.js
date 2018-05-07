@@ -1,5 +1,6 @@
 const { pool } = require('../../lib/database')
 const { isValidSubdomain } = require('../../../shared/lib/subdomain')
+const { validLength } = require('../../lib/validation')
 
 const minimumLength = 1
 const maximumLength = 24
@@ -18,26 +19,16 @@ async function connect(userId, lunchspaceId, isAdmin) {
 async function createLunchspace(req, res) {
   const { userId } = req.token
   let { lunchspaceName, lunchspaceSubdomain } = req.body
-  if (typeof lunchspaceName === 'string') {
-    lunchspaceName = lunchspaceName.trim()
+  if (!validLength(lunchspaceName, maximumLength, minimumLength)) {
+    return res.status(409).json({ error: 'Length of lunchspace name must be between 1 and 24 characters.' })
   }
-  lunchspaceSubdomain = typeof lunchspaceSubdomain === 'string' ?
-    lunchspaceSubdomain.trim() : ''
-
+  if (!validLength(lunchspaceSubdomain, maximumLength, minimumLength)) {
+    return res.status(409).json({ error: 'Length of subdomain must be between 1 and 24 characters' })
+  }
+  lunchspaceSubdomain = lunchspaceSubdomain.trim()
+  lunchspaceName = lunchspaceName.trim()
   if (!isValidSubdomain(lunchspaceSubdomain)) {
     return res.status(409).json({ error: 'Illegal Token in Subdomain.' })
-  }
-  if (lunchspaceSubdomain < minimumLength) {
-    return res.status(409).json({ error: 'Subdomain too short.' })
-  }
-  if (lunchspaceSubdomain.length > maximumLength) {
-    return res.status(409).json({ error: 'Subdomain too long.' })
-  }
-  if (typeof lunchspaceName !== 'string' || lunchspaceName.length < minimumLength) {
-    return res.status(409).json({ error: 'Name too short.' })
-  }
-  if (lunchspaceName.length > maximumLength) {
-    return res.status(409).json({ error: 'Name too long.' })
   }
   try {
     const lunchspaceId = await create(lunchspaceName, lunchspaceSubdomain)
