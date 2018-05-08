@@ -1,3 +1,4 @@
+const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -7,6 +8,7 @@ const pages = {
   registration: {/* config options */},
   login: {/* config options */},
   homepage: {/* config options */},
+  create_lunchspace: {/* config options */},
   // *add a new page here*
 }
 
@@ -28,6 +30,13 @@ Object.keys(pages).forEach((pageName) => {
 
 module.exports = {
   entry: entries,
+  resolve: {
+    alias: {
+      shared: path.resolve(__dirname, '../shared'),
+      lib: path.resolve(__dirname, 'src/lib'),
+      components: path.resolve(__dirname, 'src/components'),
+    },
+  },
   devServer: {
     proxy: {
       '/api': {

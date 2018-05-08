@@ -1,40 +1,29 @@
 const { pool } = require('../../lib/database')
 const { compare } = require('../../lib/password_hash')
-const jwt = require('jsonwebtoken')
-
-const secret = process.env.JWT_SECRET
+const { stringifyToken } = require('../../lib/authenticate')
 
 async function getIdAndHashedPassword(email) {
   const conn = await pool.getConnection()
-  const [result] = await conn.execute('SELECT id as accountId, hashed_password as accountHashedPassword FROM account WHERE email = ?', [email])
+  const [result] = await conn.execute('SELECT user_id as userId, hashed_password as accountHashedPassword FROM account WHERE email = ?', [email])
   conn.release()
   if (result.length > 0) {
     const idAndPassword =
-      { id: result[0].accountId, hashedPassword: result[0].accountHashedPassword }
+      { id: result[0].userId, hashedPassword: result[0].accountHashedPassword }
     return idAndPassword
   }
   return undefined
 }
 
 async function authenticate(email, password) {
-  const account = await getIdAndHashedPassword(email)
-  if (!account) {
+  const user = await getIdAndHashedPassword(email)
+  if (!user) {
     return false
   }
-  const correctEmailAndPassword = await compare(password, account.hashedPassword)
+  const correctEmailAndPassword = await compare(password, user.hashedPassword)
   if (!correctEmailAndPassword) {
     return false
   }
-  const token = jwt.sign(
-    {
-      auth: account.id,
-      perm: {
-        admin: true,
-      },
-    },
-    secret,
-    { expiresIn: '72h' }
-  )
+  const token = stringifyToken(user.id)
   return token
 }
 
