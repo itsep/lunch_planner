@@ -1,6 +1,6 @@
 const mysql = require('mysql2/promise')
 const fs = require('fs-nextra')
-const { makeId } = require('./makeId')
+const { makeId } = require('../makeId')
 
 if (!process.env.DATABASE_USERNAME || !process.env.DATABASE_PASSWORD) {
   console.error('No database username or no database password given.')

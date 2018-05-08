@@ -1,4 +1,4 @@
-const { pool, createTestDatabase, dropDatabase } = require('../lib/database')
+const { pool, createTestDatabase, dropDatabase } = require('./index')
 
 const schemaPath = '../database/schema.sql'
 
