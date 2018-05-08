@@ -10,13 +10,19 @@ if (!process.env.DATABASE_USERNAME || !process.env.DATABASE_PASSWORD) {
 class MysqlPool {
   constructor(config) {
     this.config = config
-    this.openPool(config.database)
+    this.database = config.database
+    this.openPool(this.database)
   }
   openPool(database) {
     this.pool = mysql.createPool(Object.assign({}, this.config, { database }))
   }
   async getConnection() {
     return this.pool.getConnection()
+  }
+  async query(...args) {
+    const conn = await this.pool.getConnection()
+    return conn.query(...args)
+      .finally(() => conn.release())
   }
   async execute(...args) {
     const conn = await this.pool.getConnection()
@@ -32,6 +38,7 @@ class MysqlPool {
    * @param database {String} - database name
    */
   async changeDatabase(database) {
+    this.database = database
     const oldPool = this.pool
     this.openPool(database)
     await oldPool.end()
@@ -49,7 +56,7 @@ const pool = new MysqlPool({
   database: process.env.DATABASE_NAME || 'lunch_planner',
 })
 
-function createMultiStatementConnection(withoutDatabase) {
+async function createMultiStatementConnection(withoutDatabase) {
   return mysql.createConnection({
     host: 'localhost',
     user: process.env.DATABASE_USERNAME,

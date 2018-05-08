@@ -6,19 +6,25 @@ async function clearDatabase(conn, dbSchema, dbName) {
   await conn.query('CREATE DATABASE ??', [dbName])
   await conn.query('USE ??', [dbName])
   await conn.query(dbSchema.toString())
-  return conn
+}
+
+async function readDbSchema() {
+  return fs.readFile('../database/schema.sql')
+}
+
+async function readTestDataDump() {
+  return fs.readFile('../database/test_data_dump.sql')
 }
 
 async function importTestData(conn, testDataDump) {
   await conn.query(testDataDump.toString())
-  return conn
 }
 
 async function clearDatabaseAndImportTestDump(dbName) {
   const connPromise = createMultiStatementConnection(true)
-  const dbSchemaPromise = fs.readFile('../database/schema.sql')
-  const testDataDumpPromise = fs.readFile('../database/test_data_dump.sql')
-  connPromise.then(async (conn) => {
+  const dbSchemaPromise = readDbSchema()
+  const testDataDumpPromise = readTestDataDump()
+  await connPromise.then(async (conn) => {
     await clearDatabase(conn, await dbSchemaPromise, dbName)
     await importTestData(conn, await testDataDumpPromise)
   }).finally(() => connPromise.then(conn => conn.end()))
@@ -26,4 +32,8 @@ async function clearDatabaseAndImportTestDump(dbName) {
 
 module.exports = {
   clearDatabaseAndImportTestDump,
+  importTestData,
+  clearDatabase,
+  readDbSchema,
+  readTestDataDump,
 }

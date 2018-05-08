@@ -13,7 +13,12 @@ async function dropMockDatabase() {
   await pool.end()
 }
 
+function getDatabaseName() {
+  return pool.database
+}
+
 module.exports = {
   createMockDatabase,
   dropMockDatabase,
+  getDatabaseName,
 }
