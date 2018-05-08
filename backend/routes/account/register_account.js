@@ -9,9 +9,9 @@ const maximumLength = 24
 async function create(email, password, firstName, lastName) {
   const hashedPassword = await hash(password)
   return pool.useConnection(async (conn) => {
-    const result = await conn.execute('INSERT INTO user (first_name, last_name)' +
+    const [result] = await conn.execute('INSERT INTO user (first_name, last_name)' +
     'VALUES (?,?)', [firstName, lastName])
-    const userId = result[0].insertId
+    const userId = result.insertId
     await conn.execute('INSERT INTO account (email, hashed_password, user_id) ' +
       'VALUES (?,?,?)', [email, hashedPassword, userId])
     return userId
