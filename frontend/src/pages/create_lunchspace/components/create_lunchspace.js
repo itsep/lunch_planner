@@ -40,7 +40,6 @@ class CreateLunchspace extends React.Component {
 
     this.handleLunchspaceNameChange = this.handleLunchspaceNameChange.bind(this)
     this.handleSubdomainChange = this.handleSubdomainChange.bind(this)
-    this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentWillMount() {
@@ -70,15 +69,6 @@ class CreateLunchspace extends React.Component {
     return escapeSubdomain(this.state.lunchspaceName) !== this.state.lunchspaceSubdomain
   }
 
-  handleChange(name) {
-    const that = this
-    return (event) => {
-      that.setState({
-        [name]: event.target.value,
-      })
-    }
-  }
-
   handleSubmit() {
     const { lunchspaceName, lunchspaceSubdomain } = this.state
     const data = { lunchspaceName, lunchspaceSubdomain }
@@ -86,7 +76,7 @@ class CreateLunchspace extends React.Component {
       isLoading: true,
       error: null,
     })
-    fetch('/api/lunchspace', {
+    return fetch('/api/lunchspace', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
