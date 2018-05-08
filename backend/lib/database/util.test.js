@@ -1,7 +1,5 @@
 const { pool, createMultiStatementConnection } = require('./index')
-const {
-  clearDatabaseAndImportTestDump, clearDatabase, importTestData, readDbSchema, readTestDataDump,
-} = require('./util')
+const { clearDatabaseAndImportTestDump, clearDatabase, readDbSchema } = require('./util')
 const { createMockDatabase, dropMockDatabase, getDatabaseName } = require('./mock')
 
 const users = [
