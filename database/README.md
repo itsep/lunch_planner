@@ -1,37 +1,48 @@
 # Lunch Planer Web Database
 
-## Instalation of MariaDB
+## Installation of MariaDB
 
-install on linux
+### Installation on Linux
+
 ```bash
 $ sudo apt-get install mariadb-server
 ```
 
-start on linux
+#### Start on Linux
+
 ```bash
 $ sudo /etc/init.d/mysql start
 ```
-monitor-mode of mariaDB on linux as root
+#### Stop on Linux
+```bash
+$ sudo /etc/init.d/mysql stop
+```
+monitor-mode of MariaDB on linux as root
+
 ```bash
 $ sudo mysql -u root -p -h localhost
 ```
 
-monitor-mode of mariaDB on linux as user
+monitor-mode of MariaDB on linux as user
 ```bash
 $ sudo mysql -u USERNAME -p -h localhost
 ```
 
-create new user
-```bash
-MariaBD> CREATE USER 'name'@'localhost' IDENTIFIED BY 'password';
-```
+## Create a User
+Open a connection to your MariaDB instance and execute the following SQL command:
 
-give User all rights
-```bach
+```sql
+CREATE USER 'name'@'localhost' IDENTIFIED BY 'password';
+```
+After that, you need to give a user all rights:
+
+```sql
 GRANT ALL PRIVILEGES ON * . * TO 'name'@'localhost';
 ```
 
-stop on linux
+## Create a Database Dump
+Open the terminal and execute the following command: 
+
 ```bash
-$ sudo /etc/init.d/mysql stop
+mysqldump lunch_planner --no-create-info > test_data_dump.sql
 ```

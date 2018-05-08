@@ -6,6 +6,7 @@ const dbName = 'lunch_planner'
 
 const connPromise = createMultiStatementConnection(true)
 const dbSchemaPromise = fs.readFile('../database/schema.sql')
+const testDataDumpPromise = fs.readFile('../database/test_data_dump.sql')
 
 async function clearDatabase() {
   const [conn, dbSchema] = await Promise.all([connPromise, dbSchemaPromise])
@@ -17,7 +18,14 @@ async function clearDatabase() {
   return conn
 }
 
+async function importTestData() {
+  const [conn, testDataDump] = await Promise.all([connPromise, testDataDumpPromise])
+  await conn.query(testDataDump.toString())
+  return conn
+}
+
 clearDatabase()
+  .then(importTestData)
   .then(conn => conn.end())
   .catch((error) => {
     console.error(error)
