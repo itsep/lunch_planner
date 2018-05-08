@@ -1,23 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Typography } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
+import TimeStamp from './time_stamp'
 
-const styles = () => ({
-  timeStamp: {
-    margin: '5pt',
-  },
-})
-
-// TODO: change Time to our solution of time
 function createTimeStamps() {
   const timeStamps = []
-  const time = ':'
-  let i
-  for (i = 21; i < 36; i += 1) {
+  let timeInHours
+  for (timeInHours = 6; timeInHours < 20; timeInHours += 0.5) {
     const timeStamp = {
-      key: i,
-      time: Math.round(i / 2) + time + ((i % 2) * 30),
+      key: timeInHours * 2,
+      hour: Math.round(timeInHours),
+      minute: (timeInHours % 1) * 60,
+      userIDs: [],
     }
     timeStamps.push(timeStamp)
   }
@@ -26,17 +20,20 @@ function createTimeStamps() {
 
 const timeStamps = createTimeStamps()
 
+const styles = () => ({
+  container: {
+    display: 'flex',
+    overflowY: 'auto',
+  },
+})
+
 function LocationItem({ id, name, classes }) {
   return (
-    <div>
+    <div className={classes.container}>
       {id}
       {name}
       {timeStamps.map(timeStamp => (
-        <Button variant="fab" key={timeStamp.key} className={classes.timeStamp} >
-          <Typography variant="body1" gutterBottom align="center" >
-            {timeStamp.time}
-          </Typography>
-        </Button>
+        <TimeStamp key={timeStamp.key} timeStamp={timeStamp} />
       ))}
     </div>
   )
