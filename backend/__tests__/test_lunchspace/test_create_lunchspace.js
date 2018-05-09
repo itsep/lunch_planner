@@ -1,5 +1,5 @@
 const { createLunchspace, create, connect } = require('../../routes/lunchspace/create_lunchspace')
-const { createMockDatabase, dropMockDatabase } = require('../../lib/database_mock')
+const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
 const { pool } = require('../../lib/database')
 

@@ -1,4 +1,4 @@
-const { createMockDatabase, dropMockDatabase } = require('../../lib/database_mock')
+const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { pool } = require('../../lib/database')
 const { hash, compare } = require('../../lib/password_hash')
 const { mockReq, mockRes } = require('../../lib/express_mock')
