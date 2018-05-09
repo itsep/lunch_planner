@@ -16,18 +16,19 @@ class MysqlPool {
   openPool(database) {
     this.pool = mysql.createPool(Object.assign({}, this.config, { database }))
   }
+
+  get isClosed() {
+    // eslint-disable-next-line no-underscore-dangle
+    return this.pool.pool._closed
+  }
   async getConnection() {
     return this.pool.getConnection()
   }
   async query(...args) {
-    const conn = await this.pool.getConnection()
-    return conn.query(...args)
-      .finally(() => conn.release())
+    return this.pool.query(...args)
   }
   async execute(...args) {
-    const conn = await this.pool.getConnection()
-    return conn.execute(...args)
-      .finally(() => conn.release())
+    return this.pool.execute(...args)
   }
   async useConnection(consumer) {
     const conn = await this.pool.getConnection()
@@ -41,11 +42,18 @@ class MysqlPool {
     this.database = database
     const oldPool = this.pool
     this.openPool(database)
-    await oldPool.end()
+    // pool.end() should work if it is called multiple times but does not.
+    // as a workaround we check if the pool is already closed
+    // eslint-disable-next-line no-underscore-dangle
+    if (!oldPool.pool._closed) {
+      await oldPool.end()
+    }
   }
 
   async end() {
-    return this.pool.end()
+    if (!this.isClosed) {
+      await this.pool.end()
+    }
   }
 }
 
@@ -55,6 +63,7 @@ const pool = new MysqlPool({
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME || 'lunch_planner',
 })
+
 
 async function createMultiStatementConnection(withoutDatabase) {
   return mysql.createConnection({
@@ -66,7 +75,7 @@ async function createMultiStatementConnection(withoutDatabase) {
   })
 }
 
-function createMultiStatementConnectionWithoutSelectedDatabase() {
+async function createMultiStatementConnectionWithoutSelectedDatabase() {
   return mysql.createConnection({
     host: 'localhost',
     user: process.env.DATABASE_USERNAME,

@@ -10,7 +10,7 @@ async function createMockDatabase() {
 
 async function dropMockDatabase() {
   await dropDatabase(testDatabaseName)
-  await pool.end()
+  return pool.end()
 }
 
 function getDatabaseName() {

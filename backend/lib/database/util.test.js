@@ -1,5 +1,7 @@
 const { pool, createMultiStatementConnection } = require('./index')
-const { clearDatabaseAndImportTestDump, clearDatabase, readDbSchema } = require('./util')
+const {
+  clearDatabaseAndImportTestDump, clearDatabase, readDbSchema, useConnection,
+} = require('./util')
 const { createMockDatabase, dropMockDatabase, getDatabaseName } = require('./mock')
 
 const users = [
@@ -23,16 +25,15 @@ async function getUserCount() {
 describe('clear database and import test dump', () => {
   beforeEach(createMockDatabase)
   afterEach(dropMockDatabase)
-
   it('should drop the database and import the schema', async () => {
     expect(await getUserCount()).toEqual(0)
     await createUsers()
     expect(await getUserCount()).toEqual(users.length)
 
     const connPromise = createMultiStatementConnection(true)
-    await connPromise.then(async (conn) => {
+    await useConnection(connPromise, async (conn) => {
       await clearDatabase(conn, await readDbSchema(), getDatabaseName())
-    }).finally(() => connPromise.then(conn => conn.end()))
+    })
 
     expect(await getUserCount()).toEqual(0)
   })
@@ -44,6 +45,6 @@ describe('clear database and import test dump', () => {
 
     await clearDatabaseAndImportTestDump(getDatabaseName())
 
-    // expect(await getUserCount()).toEqual(7)
+    expect(await getUserCount()).toEqual(7)
   })
 })
