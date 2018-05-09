@@ -5,8 +5,13 @@ import { withStyles } from 'material-ui/styles'
 
 const styles = () => ({
   timeStamp: {
+    height: '70pt',
+    width: '70pt',
     flexShrink: 0,
-    margin: '5pt',
+    marginLeft: '5pt',
+    marginRight: '5pt',
+    marginTop: '25pt',
+    marginBottom: '25pt',
   },
 })
 

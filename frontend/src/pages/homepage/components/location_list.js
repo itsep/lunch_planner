@@ -18,9 +18,12 @@ const mapDispatchToProps = dispatch => ({
 
 const styles = () => ({
   locationList: {
+    marginTop: '60pt',
+    height: '100pt',
     margin: 0,
     padding: 0,
     listStyleType: 'none',
+    zIndex: 0,
   },
   locationBorder: {
     margin: 0,

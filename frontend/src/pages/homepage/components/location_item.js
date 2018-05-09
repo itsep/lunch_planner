@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import TimeStamp from './time_stamp'
 
+
 function createTimeStamps() {
   const timeStamps = []
   let timeInHours
@@ -31,7 +32,9 @@ function LocationItem({ id, name, classes }) {
   return (
     <div className={classes.container}>
       {id}
+      <br />
       {name}
+      <br />
       {timeStamps.map(timeStamp => (
         <TimeStamp key={timeStamp.key} timeStamp={timeStamp} />
       ))}

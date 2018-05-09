@@ -9,6 +9,10 @@ const styles = () => ({
     display: 'flex',
     justifyContent: 'space-between',
     backgroundColor: '#75a045',
+    position: 'fixed',
+    width: '100%',
+    top: 0,
+    zIndex: 9,
   },
   logo: {
     backgroundColor: 'grey',
@@ -22,18 +26,14 @@ const styles = () => ({
     flexShrink: 0,
   },
   avatar: {
-    // width: '15%',
   },
   profileName: {
-    marginLeft: '10px',
+    marginLeft: '10pt',
     color: 'black',
   },
   logout: {
     color: 'black',
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 20,
+    marginRight: '20pt',
   },
 })
 
@@ -47,7 +47,7 @@ function HeaderBar({ classes, profile, lunchspace }) {
     <div>
       <AppBar className={classes.appBar} position="static" color="default">
         <Toolbar className={classes.flexContainer}>
-          <Button className={classes.logo} variant="raised" color="secondary" float="right">
+          <Button className={classes.logo} variant="raised">
               LOGO VSF
           </Button>
           <Typography className={classes.lunchspace} variant="title" color="inherit">
