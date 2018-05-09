@@ -14,11 +14,10 @@ describe('create location', () => {
   beforeAll(createMockDatabase)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    const setUpRequest = {
+    const req = mockReq({
       body: { lunchspaceName: 'Test Space', lunchspaceSubdomain: 'test-space' },
       token: { userId: 1 },
-    }
-    const req = mockReq(setUpRequest)
+    })
     const res = mockRes()
     await pool.execute('INSERT INTO user (first_name, last_name)' +
       'VALUES (?, ?)', ['Max', 'Mustermann'])
@@ -30,32 +29,29 @@ describe('create location', () => {
     })
   })
   describe('createLocation', async () => {
-    const request1 = {
-      body: { name: testName, coordinates: testCoordinates },
-      lunchspace: { id: testLunchspaceId },
-    }
-    const request2 = {
-      body: { name: testName2, coordinates: testCoordinates },
-      lunchspace: { id: testLunchspaceId },
-    }
-    const request3 = {
-      body: { name: testName, coordinates: testCoordinates2 },
-      lunchspace: { id: testLunchspaceId },
-    }
     it('should create a new location in DB', async () => {
-      const req = mockReq(request1)
+      const req = mockReq({
+        body: { name: testName, coordinates: testCoordinates },
+        lunchspace: { id: testLunchspaceId },
+      })
       const res = mockRes()
       await createLocation(req, res)
       expect(res.status).lastCalledWith(200)
     })
     it('should fail (name too short)', async () => {
-      const req = mockReq(request2)
+      const req = mockReq({
+        body: { name: testName2, coordinates: testCoordinates },
+        lunchspace: { id: testLunchspaceId },
+      })
       const res = mockRes()
       await createLocation(req, res)
       expect(res.status).lastCalledWith(409)
     })
     it('should fail (illegal coordinates)', async () => {
-      const req = mockReq(request3)
+      const req = mockReq({
+        body: { name: testName, coordinates: testCoordinates2 },
+        lunchspace: { id: testLunchspaceId },
+      })
       const res = mockRes()
       await createLocation(req, res)
       expect(res.status).lastCalledWith(500)
