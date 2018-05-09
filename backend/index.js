@@ -10,5 +10,7 @@ app.use(cookieParser())
 app.use('/account', require('./routes/account').router)
 // eslint-disable-next-line import/newline-after-import
 app.use('/lunchspace', require('./routes/lunchspace').router)
+// eslint-disable-next-line import/newline-after-import
+app.use('/location', require('./routes/location').router)
 
 app.listen(8081)

@@ -37,30 +37,6 @@ describe('register accounts', () => {
         lastName: testLastName,
       },
     }
-    const request1 = {
-      body: {
-        email: testEmail2,
-        password: testPassword2,
-        firstName: testFirstName2,
-        lastName: testLastName,
-      },
-    }
-    const request2 = {
-      body: {
-        email: testEmail2,
-        password: testPassword2,
-        firstName: testFirstName,
-        lastName: testLastName2,
-      },
-    }
-    const request3 = {
-      body: {
-        email: testEmail3,
-        password: testPassword2,
-        firstName: testFirstName,
-        lastName: testLastName,
-      },
-    }
     it('should register a new account', async () => {
       const req = mockReq(request)
       const res = mockRes()
@@ -74,19 +50,40 @@ describe('register accounts', () => {
       expect(res.status).lastCalledWith(500)
     })
     it('should reject to register a new account (first name too short)', async () => {
-      const req = mockReq(request1)
+      const req = mockReq({
+        body: {
+          email: testEmail2,
+          password: testPassword2,
+          firstName: testFirstName2,
+          lastName: testLastName,
+        },
+      })
       const res = mockRes()
       await registerAccount(req, res)
       expect(res.status).lastCalledWith(409)
     })
     it('should reject to register a new account (last name too long)', async () => {
-      const req = mockReq(request2)
+      const req = mockReq({
+        body: {
+          email: testEmail2,
+          password: testPassword2,
+          firstName: testFirstName,
+          lastName: testLastName2,
+        },
+      })
       const res = mockRes()
       await registerAccount(req, res)
       expect(res.status).lastCalledWith(409)
     })
     it('should reject to register a new account (invalid email address', async () => {
-      const req = mockReq(request3)
+      const req = mockReq({
+        body: {
+          email: testEmail3,
+          password: testPassword2,
+          firstName: testFirstName,
+          lastName: testLastName,
+        },
+      })
       const res = mockRes()
       await registerAccount(req, res)
       expect(res.status).lastCalledWith(409)

@@ -6,7 +6,7 @@ const minimumLength = 1
 const maximumLength = 24
 
 async function create(lunchspaceName, lunchspaceSubdomain) {
-  const [result] = await pool.execute('INSERT INTO lunchspace (name, url) ' +
+  const [result] = await pool.execute('INSERT INTO lunchspace (name, subdomain) ' +
       'VALUES (?,?)', [lunchspaceName, lunchspaceSubdomain])
   return result.insertId
 }

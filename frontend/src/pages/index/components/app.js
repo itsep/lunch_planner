@@ -1,8 +1,10 @@
 import React from 'react'
+import localizedStrings from '../../../localization'
 
 function App() {
+  localizedStrings.setLanguage('en')
   return (
-    <h1>hi</h1>
+    <h1>{localizedStrings.test}</h1>
   )
 }
 
