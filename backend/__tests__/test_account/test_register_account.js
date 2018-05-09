@@ -1,5 +1,5 @@
 const { create, registerAccount } = require('../../routes/account/register_account')
-const { createMockDatabase, dropMockDatabase } = require('../../lib/database_mock')
+const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
 
 const testEmail1 = 'test-register1@gmail.com'

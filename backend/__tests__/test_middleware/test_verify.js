@@ -3,7 +3,7 @@ const { authenticate } = require('../../middleware/authenticate')
 const { registerAccount } = require('../../routes/account/register_account')
 const { mockReq, mockRes, mockNext } = require('../../lib/express_mock')
 const { login } = require('../../routes/account/login_account')
-const { createMockDatabase, dropMockDatabase } = require('../../lib/database_mock')
+const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 
 const testEmail = 'test-verify@email.com'
 const testPassword = 'test-verify-password'
