@@ -1,4 +1,4 @@
-const { createMockDatabase, dropMockDatabase } = require('../../lib/database_mock')
+const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { registerAccount } = require('../../routes/account/register_account')
 const { createLunchspace } = require('../../routes/lunchspace/create_lunchspace')
 const { mockReq, mockRes, mockNext } = require('../../lib/express_mock')
@@ -11,6 +11,7 @@ const testLastName = 'Mustermann'
 const testLunchspaceName = 'Testbude'
 const testSubdomain = 'buden-tester'
 const testUserId = 1
+const testUserId2 = 2
 
 describe('permission', () => {
   beforeAll(createMockDatabase)
@@ -29,18 +30,39 @@ describe('permission', () => {
     }
     const req = mockReq(setUpRequest)
     const res = mockRes()
-    registerAccount(req, res)
-    createLunchspace(req, res)
+    await registerAccount(req, res)
+    await createLunchspace(req, res)
   })
   const request = {
     body: { subdomain: testSubdomain },
     token: { userId: testUserId },
   }
-  it('has permission', () => {
+  const request2 = {
+    body: { subdomain: testSubdomain },
+    token: { userId: testUserId2 },
+  }
+  const request3 = {
+    body: { subdomain: testSubdomain },
+  }
+  it('has permission', async () => {
     const req = mockReq(request)
     const res = mockRes()
     const next = mockNext()
-    checkPermission(req, res, next)
+    await checkPermission(req, res, next)
     expect(next).not.toBeCalledWith(expect.any(Error))
+  })
+  it('has no permission permission', async () => {
+    const req = mockReq(request2)
+    const res = mockRes()
+    const next = mockNext()
+    await checkPermission(req, res, next)
+    expect(next).toBeCalledWith(expect.any(Error))
+  })
+  it('has no token', async () => {
+    const req = mockReq(request3)
+    const res = mockRes()
+    const next = mockNext()
+    await checkPermission(req, res, next)
+    expect(next).toBeCalledWith(expect.any(Error))
   })
 })

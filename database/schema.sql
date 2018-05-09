@@ -31,9 +31,9 @@ CREATE TABLE lunchspace
 (
   id BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
   name VARCHAR(24) NOT NULL,
-  url VARCHAR(24) NOT NULL,
+  subdomain VARCHAR(24) NOT NULL,
   PRIMARY KEY (id),
-  UNIQUE (url)
+  UNIQUE (subdomain)
 ) ENGINE = InnoDB;
 
 -- Location Entity

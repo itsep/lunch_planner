@@ -8,9 +8,11 @@ async function checkPermission(req, res, next) {
   const { userId } = req.token
   const { subdomain } = req.body
   const result = await pool.useConnection(async (conn) => {
-    const [lunchspace] = await conn.execute('SELECT id as id, name as name FROM lunchspace WHERE url = ?', [subdomain])
-    const permission = await conn.execute('SELECT * FROM member_of WHERE user_id = ? AND lunchspace_id = ?', [userId, lunchspace.id])
-    if (permission[0]) {
+    const [lunchspaces] = await conn.execute('SELECT id as id, name as name FROM lunchspace WHERE subdomain = ?', [subdomain])
+    const [lunchspace] = lunchspaces
+    const [members] = await conn.execute('SELECT * FROM member_of WHERE user_id = ? AND lunchspace_id = ?', [userId, lunchspace.id])
+    const [permission] = members
+    if (permission) {
       return lunchspace
     }
     return false

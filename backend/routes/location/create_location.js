@@ -17,6 +17,9 @@ async function createLocation(req, res) {
     return res.status(409).json({ error: 'Name must be between 1 and 64 characters long.' })
   }
   name = name.trim()
+  if (!coordinates.lat || !coordinates.long) {
+    return res.status(500).json({ error: 'Illegal coordinates.' })
+  }
   try {
     await create(name, coordinates, id)
   } catch (error) {
