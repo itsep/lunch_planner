@@ -18,13 +18,9 @@ async function createLocation(req, res) {
   }
   name = name.trim()
   if (!coordinates.lat || !coordinates.long) {
-    return res.status(500).json({ error: 'Illegal coordinates.' })
+    return res.status(409).json({ error: 'Illegal coordinates.' })
   }
-  try {
-    await create(name, coordinates, id)
-  } catch (error) {
-    return res.status(500).json({ error: 'Location could not be created.' })
-  }
+  await create(name, coordinates, id)
   return res.status(200).end()
 }
 
