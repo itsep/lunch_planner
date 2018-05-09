@@ -44,5 +44,5 @@ GRANT ALL PRIVILEGES ON * . * TO 'name'@'localhost';
 Open the terminal and execute the following command: 
 
 ```bash
-mysqldump lunch_planner --no-create-info > test_data_dump.sql
+mysqldump lunch_planner --no-create-info --skip-extended-insert --skip-dump-date > test_data_dump.sql
 ```
