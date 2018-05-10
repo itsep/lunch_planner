@@ -1,6 +1,7 @@
 const { getLocations } = require('../../routes/location/get_locations')
 const { createLocation } = require('../../routes/location/create_location')
 const { createLunchspace } = require('../../routes/lunchspace/create_lunchspace')
+const { registerAccount } = require('../../routes/account/register_account')
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
 
@@ -13,20 +14,23 @@ describe('get locations', () => {
   beforeAll(createMockDatabase)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    let req = mockReq({
-      body: { lunchspaceName: testSpaceName, lunchspaceSubdomain: testSpaceSubdomain },
-      token: { userId: 1 },
-    })
-    let res = mockRes()
-    await createLunchspace(req, res)
-    req = mockReq({
+    const req = mockReq({
       body: {
+        lunchspaceName: testSpaceName,
+        lunchspaceSubdomain: testSpaceSubdomain,
         coordinates: testLocationCoordinates,
         name: testLocationName,
+        firstName: 'Max',
+        lastName: 'Mustermann',
+        email: 'max.mustermann@gmail.com',
+        password: 'passwort',
       },
+      token: { userId: 1 },
       lunchspace: { id: 1 },
     })
-    res = mockRes()
+    const res = mockRes()
+    await registerAccount(req, res)
+    await createLunchspace(req, res)
     await createLocation(req, res)
   })
   it('should result Locations', () => {
