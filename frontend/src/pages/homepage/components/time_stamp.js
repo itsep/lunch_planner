@@ -8,10 +8,10 @@ const styles = () => ({
     height: '70pt',
     width: '70pt',
     flexShrink: 0,
-    marginLeft: '5pt',
-    marginRight: '5pt',
-    marginTop: '25pt',
-    marginBottom: '25pt',
+    marginLeft: '7pt',
+    marginRight: '7pt',
+    marginTop: '20pt',
+    marginBottom: '20pt',
   },
 })
 

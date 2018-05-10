@@ -17,23 +17,27 @@ const styles = () => ({
   logo: {
     backgroundColor: 'grey',
     color: 'black',
+    marginLeft: '5%',
   },
   lunchspace: {
+    testAlign: 'center',
     color: 'black',
   },
   user: {
     display: 'flex',
     flexShrink: 0,
+    marginRight: '5%',
   },
   avatar: {
+    height: '40pt',
+    width: '40pt',
   },
-  profileName: {
-    marginLeft: '10pt',
+  profileButton: {
     color: 'black',
-  },
-  logout: {
-    color: 'black',
-    marginRight: '20pt',
+    marginRight: '10%',
+    height: '50pt',
+    width: '30pt',
+    borderRadius: '50%',
   },
 })
 
@@ -48,13 +52,15 @@ function HeaderBar({ classes, profile, lunchspace }) {
       <AppBar className={classes.appBar} position="static" color="default">
         <Toolbar className={classes.flexContainer}>
           <Button className={classes.logo} variant="raised">
-              LOGO VSF
+            LOGO VSF
           </Button>
           <Typography className={classes.lunchspace} variant="title" color="inherit">
             {lunchspace.name}
+            <br />
+            VSF Experts GmbH
           </Typography>
           <div className={classes.user}>
-            <Button className={classes.logout} >
+            <Button className={classes.profileButton} >
               <Avatar alt="David Nadoba" className={classes.avatar} src={profile.src} />
             </Button>
           </div>

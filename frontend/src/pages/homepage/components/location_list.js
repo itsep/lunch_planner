@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
-import LocationItem from './location_item'
+import LocationItem from './location'
 import addLocationAction from './actions'
 
 const mapStateToProps = state => ({
@@ -26,23 +26,32 @@ const styles = () => ({
     zIndex: 0,
   },
   locationBorder: {
-    margin: 0,
+    marginLeft: '13%',
+    marginRight: '13%',
+  },
+  buttonLocation: {
+    marginLeft: '46%',
   },
 })
 
 function LocationList({ locations, addLocation, classes }) {
-  return (
-    <div>
-      <ul className={classes.locationList}>
-        {locations.map((location => (
-          <li key={location.id}>
-            <LocationItem id={location.id} name={location.name} />
-            <hr className={classes.locationBorder} />
-          </li>
-        )))}
-        <li><Button onClick={addLocation} >create location</Button></li>
-      </ul>
-    </div>
+  return (<div>
+    <ul className={classes.locationList}>
+      {locations.map((location => (
+        <li key={location.id}>
+          <LocationItem id={location.id} name={location.name} />
+          <hr className={classes.locationBorder} />
+        </li>
+      )))}
+      <li><Button
+        className={classes.buttonLocation}
+        onClick={addLocation}
+      >
+        create location
+          </Button>
+      </li>
+    </ul>
+          </div>
   )
 }
 
