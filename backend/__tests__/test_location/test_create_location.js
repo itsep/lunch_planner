@@ -25,7 +25,8 @@ describe('create location', () => {
   })
   describe('create', async () => {
     it('should create a location in DB', async () => {
-      await expect(create(testName, testCoordinates, testLunchspaceId)).resolves.not.toThrow()
+      await expect(create(testName, testCoordinates, testLunchspaceId))
+        .resolves.toEqual(expect.any(Number))
     })
   })
   describe('createLocation', async () => {
