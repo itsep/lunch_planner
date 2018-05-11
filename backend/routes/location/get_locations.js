@@ -12,7 +12,7 @@ async function getLocationsAndParticipants(id) {
 async function getLocations(req, res) {
   const { id } = req.lunchspace
   const result = await getLocationsAndParticipants(id)
-  res.status(200).json(result)
+  return res.status(200).json(result)
 }
 
 module.exports = {

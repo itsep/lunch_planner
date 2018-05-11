@@ -1,4 +1,4 @@
-const { getLocations } = require('../../routes/location/get_locations')
+const { getLocations, getLocationsAndParticipants } = require('../../routes/location/get_locations')
 const location = require('../../routes/location/create_location')
 const { createLunchspace } = require('../../routes/lunchspace/create_lunchspace')
 const account = require('../../routes/account/register_account')
@@ -27,13 +27,22 @@ describe('get locations', () => {
     testLocationId = await location
       .create(testLocationName, testLocationCoordinates, testLunchspaceId)
   })
-  it('should result Locations', async () => {
-  it('should result Locations with correct data', async () => {
+  it('should return locations and participants', async () => {
+    const { locations } = await getLocationsAndParticipants(testLunchspaceId)
+    const expected = expect.objectContaining({
+      id: testLocationId,
+      name: testLocationName,
+      coordinates: testLocationCoordinates,
+      lunchspace_id: testLunchspaceId,
+    })
+    expect(locations[0]).toEqual(expected)
+  })
+  it('should result with status 200', async () => {
     const req = mockReq({
       lunchspace: { id: testLunchspaceId },
     })
     const res = mockRes()
-    expect(await getLocations(req, res)).lastCalledWith(200)
+    expect(await getLocations(req, res))
   })
   it('should return error', async () => {
     console.log('INSERT TEST!')
