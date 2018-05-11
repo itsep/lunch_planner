@@ -8,6 +8,7 @@ const pages = {
   registration: {/* config options */},
   login: {/* config options */},
   create_lunchspace: {/* config options */},
+  create_location: {/* config options */},
   // *add a new page here*
 }
 
