@@ -8,7 +8,6 @@ async function getLocationsAndParticipants(id) {
       location.coordinates = { lat: location.coordinates.x, long: location.coordinates.y }
       return true
     })
-    console.log(locations[0].coordinates)
     const [participants] = await conn.execute('SELECT * FROM event_participants WHERE lunchspace_id = ?', [id])
     const result = { locations, participants }
     return result

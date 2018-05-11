@@ -14,7 +14,7 @@ const testLastName = 'Mustermann'
 const testEmail = 'max.mustermann@gmail.com'
 const testPassword = 'password'
 
-let testUserId
+// let testUserId
 let testLunchspaceId
 let testLocationId
 
@@ -22,11 +22,10 @@ describe('get locations', () => {
   beforeAll(createMockDatabase)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    testUserId = await account.create(testEmail, testPassword, testFirstName, testLastName)
+    await account.create(testEmail, testPassword, testFirstName, testLastName)
     testLunchspaceId = await createLunchspace(1, testSpaceName, testSpaceSubdomain)
     testLocationId = await location
       .create(testLocationName, testLocationCoordinates, testLunchspaceId)
-    //TODO: join account in location
   })
   it('should return locations and participants', async () => {
     const { locations } = await getLocationsAndParticipants(testLunchspaceId)
