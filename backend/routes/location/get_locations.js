@@ -1,21 +1,21 @@
 const { pool } = require('../../lib/database')
 
-async function getLocationsAndMembers(id) {
+async function getLocationsAndParticipants(id) {
   return pool.useConnection(async (conn) => {
     const [locations] = await conn.execute('SELECT * FROM location WHERE lunchspace_id = ?', [id])
-    const [members] = await conn.execute('SELECT * FROM location_member WHERE lunchspace_id = ?', [id])
-    const result = { locations, members }
+    const [participants] = await conn.execute('SELECT * FROM event_participants WHERE lunchspace_id = ?', [id])
+    const result = { locations, participants }
     return result
   })
 }
 
 async function getLocations(req, res) {
   const { id } = req.lunchspace
-  const result = await getLocationsAndMembers(id)
+  const result = await getLocationsAndParticipants(id)
   res.status(200).json(result)
 }
 
 module.exports = {
   getLocations,
-  getLocationsAndMembers,
+  getLocationsAndParticipants,
 }
