@@ -54,7 +54,7 @@ describe('create location', () => {
       })
       const res = mockRes()
       await createLocation(req, res)
-      expect(res.status).lastCalledWith(500)
+      expect(res.status).lastCalledWith(409)
     })
   })
 })

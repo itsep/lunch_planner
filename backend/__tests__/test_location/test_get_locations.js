@@ -12,7 +12,7 @@ const testLocationCoordinates = { lat: 20, long: 10 }
 
 describe('get locations', () => {
   beforeAll(createMockDatabase)
-  afterAll(dropMockDatabase)
+  //afterAll(dropMockDatabase)
   beforeAll(async () => {
     const req = mockReq({
       body: {
@@ -33,15 +33,15 @@ describe('get locations', () => {
     await createLunchspace(req, res)
     await createLocation(req, res)
   })
-  it('should result Locations', () => {
+  it('should result Locations',async () => {
     const req = mockReq({
-      lunchspace: 1,
+      lunchspace: { id: 1 },
     })
     const res = mockRes()
-    getLocations(req, res)
+    await getLocations(req, res)
     console.log('INSERT TEST!')
   })
-  it('should return error', () => {
+  it('should return error',async () => {
     console.log('INSERT TEST!')
   })
 })

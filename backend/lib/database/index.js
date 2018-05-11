@@ -87,6 +87,7 @@ async function createMultiStatementConnectionWithoutSelectedDatabase() {
 async function createDatabase(conn, databaseName) {
   await conn.query('CREATE DATABASE ??', [databaseName])
   await conn.query('USE ??', [databaseName])
+  console.log(databaseName)
 }
 
 async function importSchema(conn, schemaPath) {
