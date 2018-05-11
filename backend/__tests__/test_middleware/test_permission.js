@@ -1,6 +1,6 @@
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { registerAccount } = require('../../routes/account/register_account')
-const { createLunchspace } = require('../../routes/lunchspace/create_lunchspace')
+const { createLunchspaceAndJoin } = require('../../routes/lunchspace/create_lunchspace')
 const { mockReq, mockRes, mockNext } = require('../../lib/express_mock')
 const { checkPermission } = require('../../middleware/permission')
 
@@ -30,7 +30,7 @@ describe('permission', () => {
     })
     const res = mockRes()
     await registerAccount(req, res)
-    await createLunchspace(req, res)
+    await createLunchspaceAndJoin(req, res)
   })
   it('has permission', async () => {
     const req = mockReq({
