@@ -1,4 +1,5 @@
 const { pool } = require('../../lib/database')
+const { validDate, validTime } = require('../../lib/validation')
 
 async function create(userId, locationId, eventTime, eventDate) {
   await pool.execute('INSERT INTO join_up_at (user_id, location_id, event_time, event_date) ' +
@@ -13,19 +14,21 @@ function timeForSQL(time) {
 
 function dateForSQL(date) {
   const eventDateYear = date.year.toString()
-  const eventDateMonth = date.month.toString()
-  const eventDateDay = date.day.toString()
+  const eventDateMonth = date.month.toString().length === 2 ? date.month.minute : `0${date.month.minute}`
+  const eventDateDay = date.day.toString().length === 2 ? date.day.minute : `0${date.day.minute}`
   return `${eventDateYear}-${eventDateMonth}-${eventDateDay}`
 }
+
+//TODO: error for invalid inputs
 async function createJoinEvent(req, res) {
-  const {
-    userId,
-    locationId,
-  } = req.body
-  let {
-    eventTime,
-    eventDate,
-  } = req.body
+  const { userId, locationId } = req.body
+  let { eventTime, eventDate } = req.body
+  if (!validateDate(eventDate)){
+    res.status(500)
+  }
+  if (!validateTime(eventTime)){
+    res.status(500)
+  }
   eventTime = timeForSQL(eventTime)
   eventDate = dateForSQL(eventDate)
   await create(userId, locationId, eventTime, eventDate)
