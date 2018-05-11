@@ -26,6 +26,7 @@ describe('get locations', () => {
     testLunchspaceId = await createLunchspace(1, testSpaceName, testSpaceSubdomain)
     testLocationId = await location
       .create(testLocationName, testLocationCoordinates, testLunchspaceId)
+    //TODO: join account in location
   })
   it('should return locations and participants', async () => {
     const { locations } = await getLocationsAndParticipants(testLunchspaceId)
@@ -36,15 +37,14 @@ describe('get locations', () => {
       lunchspace_id: testLunchspaceId,
     })
     expect(locations[0]).toEqual(expected)
+    expect(locations.length).toEqual(1)
   })
   it('should result with status 200', async () => {
     const req = mockReq({
       lunchspace: { id: testLunchspaceId },
     })
     const res = mockRes()
-    expect(await getLocations(req, res))
-  })
-  it('should return error', async () => {
-    console.log('INSERT TEST!')
+    await getLocations(req, res)
+    expect(res.status).lastCalledWith(200)
   })
 })
