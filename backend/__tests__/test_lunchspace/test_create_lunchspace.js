@@ -1,4 +1,4 @@
-const { createLunchspace, create, connect } = require('../../routes/lunchspace/create_lunchspace')
+const { createLunchspaceAndJoin, create, connect } = require('../../routes/lunchspace/create_lunchspace')
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
 const { pool } = require('../../lib/database')
@@ -45,7 +45,7 @@ describe('create lunchspace', () => {
       await expect(connect(testUserId, testLunchspaceId, testIsAdmin)).rejects.toHaveProperty('code', 'ER_DUP_ENTRY')
     })
   })
-  describe('createLunchspace', () => {
+  describe('createLunchspaceAndJoin', () => {
     const request =
       {
         body: { lunchspaceName: testLunchspaceName2, lunchspaceSubdomain: testSubdomain2 },
@@ -54,13 +54,13 @@ describe('create lunchspace', () => {
     it('should create a new lunchspace', async () => {
       const req = mockReq(request)
       const res = mockRes()
-      await createLunchspace(req, res)
+      await createLunchspaceAndJoin(req, res)
       expect(res.status).lastCalledWith(200)
     })
     it('should reject to create a new lunchspace, because of already exists', async () => {
       const req = mockReq(request)
       const res = mockRes()
-      await createLunchspace(req, res)
+      await createLunchspaceAndJoin(req, res)
       expect(res.status).lastCalledWith(409)
     })
     it('should reject to create a new lunchspace, because of subdomain is null', async () => {
@@ -70,7 +70,7 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request1)
       const res = mockRes()
-      await createLunchspace(req, res)
+      await createLunchspaceAndJoin(req, res)
       expect(res.status).lastCalledWith(409)
     })
     it('should reject to create a new lunchspace, because of name is null', async () => {
@@ -80,7 +80,7 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request2)
       const res = mockRes()
-      await createLunchspace(req, res)
+      await createLunchspaceAndJoin(req, res)
       expect(res.status).lastCalledWith(409)
     })
     it('should reject to create a new lunchspace, because of subdomain is too long', async () => {
@@ -90,7 +90,7 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request3)
       const res = mockRes()
-      await createLunchspace(req, res)
+      await createLunchspaceAndJoin(req, res)
       expect(res.status).lastCalledWith(409)
     })
     it('should reject to create a new lunchspace, because of name is too long', async () => {
@@ -100,7 +100,7 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request4)
       const res = mockRes()
-      await createLunchspace(req, res)
+      await createLunchspaceAndJoin(req, res)
       expect(res.status).lastCalledWith(409)
     })
     it('should reject to create a new lunchspace, because of name is empty string', async () => {
@@ -110,7 +110,7 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request5)
       const res = mockRes()
-      await createLunchspace(req, res)
+      await createLunchspaceAndJoin(req, res)
       expect(res.status).lastCalledWith(409)
     })
   })

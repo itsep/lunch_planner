@@ -2,4 +2,4 @@
 !.eslintrc.js
 /node_modules/**
 /dist/**
-/__coverage__/**
+/coverage/**
