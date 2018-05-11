@@ -5,8 +5,9 @@ const minimumLength = 1
 const maximumLength = 64
 
 async function create(name, coordinates, lunchspaceId) {
-  await pool.execute('INSERT INTO location (name, coordinates, lunchspace_id) ' +
+  const [result] = await pool.execute('INSERT INTO location (name, coordinates, lunchspace_id) ' +
     'VALUES (?, POINT(?, ?), ?)', [name, coordinates.lat, coordinates.long, lunchspaceId])
+  return result.insertId
 }
 
 async function createLocation(req, res) {

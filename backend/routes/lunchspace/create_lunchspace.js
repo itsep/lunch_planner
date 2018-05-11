@@ -16,7 +16,13 @@ async function connect(userId, lunchspaceId, isAdmin) {
       'VALUES (?,?,?)', [userId, lunchspaceId, isAdmin])
 }
 
-async function createLunchspace(req, res) {
+async function createLunchspace(userId, lunchspaceName, lunchspaceSubdomain) {
+  const lunchspaceId = await create(lunchspaceName, lunchspaceSubdomain)
+  await connect(userId, lunchspaceId, true)
+  return lunchspaceId
+}
+
+async function createLunchspaceAndJoin(req, res) {
   const { userId } = req.token
   let { lunchspaceName, lunchspaceSubdomain } = req.body
   if (!validLength(lunchspaceName, maximumLength, minimumLength)) {
@@ -31,8 +37,7 @@ async function createLunchspace(req, res) {
     return res.status(409).json({ error: 'Illegal Token in Subdomain.' })
   }
   try {
-    const lunchspaceId = await create(lunchspaceName, lunchspaceSubdomain)
-    await connect(userId, lunchspaceId, true)
+    await createLunchspace(userId, lunchspaceName, lunchspaceSubdomain)
   } catch (error) {
     if (error.code === 'ER_DUP_ENTRY') {
       return res.status(409).json({ error: 'Lunchspace subdomain already exists.' })
@@ -42,6 +47,7 @@ async function createLunchspace(req, res) {
 }
 
 module.exports = {
+  createLunchspaceAndJoin,
   createLunchspace,
   create,
   connect,
