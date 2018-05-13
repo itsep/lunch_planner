@@ -2,6 +2,7 @@ const { createLunchspace, create, connect } = require('../../routes/lunchspace/c
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
 const { pool } = require('../../lib/database')
+const { InputValidationError } = require('../../lib/error')
 
 const testSubdomain1 = 'vsf-experts'
 const testLunchspaceName1 = 'vsf-experts'
@@ -60,8 +61,7 @@ describe('create lunchspace', () => {
     it('should reject to create a new lunchspace, because of already exists', async () => {
       const req = mockReq(request)
       const res = mockRes()
-      await createLunchspace(req, res)
-      expect(res.status).lastCalledWith(409)
+      await expect(createLunchspace(req, res)).rejects.toThrowError(InputValidationError)
     })
     it('should reject to create a new lunchspace, because of subdomain is null', async () => {
       const request1 = {
@@ -70,8 +70,7 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request1)
       const res = mockRes()
-      await createLunchspace(req, res)
-      expect(res.status).lastCalledWith(409)
+      await expect(createLunchspace(req, res)).rejects.toThrowError(InputValidationError)
     })
     it('should reject to create a new lunchspace, because of name is null', async () => {
       const request2 = {
@@ -80,8 +79,7 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request2)
       const res = mockRes()
-      await createLunchspace(req, res)
-      expect(res.status).lastCalledWith(409)
+      await expect(createLunchspace(req, res)).rejects.toThrowError(InputValidationError)
     })
     it('should reject to create a new lunchspace, because of subdomain is too long', async () => {
       const request3 = {
@@ -90,8 +88,7 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request3)
       const res = mockRes()
-      await createLunchspace(req, res)
-      expect(res.status).lastCalledWith(409)
+      await expect(createLunchspace(req, res)).rejects.toThrowError(InputValidationError)
     })
     it('should reject to create a new lunchspace, because of name is too long', async () => {
       const request4 = {
@@ -100,8 +97,7 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request4)
       const res = mockRes()
-      await createLunchspace(req, res)
-      expect(res.status).lastCalledWith(409)
+      await expect(createLunchspace(req, res)).rejects.toThrowError(InputValidationError)
     })
     it('should reject to create a new lunchspace, because of name is empty string', async () => {
       const request5 = {
@@ -110,8 +106,7 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request5)
       const res = mockRes()
-      await createLunchspace(req, res)
-      expect(res.status).lastCalledWith(409)
+      await expect(createLunchspace(req, res)).rejects.toThrowError(InputValidationError)
     })
   })
 })
