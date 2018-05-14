@@ -8,10 +8,10 @@ async function getLocationsAndParticipants(id) {
       location.coordinates = { lat: location.coordinates.x, long: location.coordinates.y }
       return true
     })
-    const [participants] = await conn.execute('SELECT user_id as userId, location_id as locationId,' +
-      ' event_time as eventTime, event_date as eventDate,' +
-      ' first_name as firstName, last_name as lastName, image_url as imageUrl' +
-      ' FROM event_participants WHERE lunchspace_id = ?', [id])
+    const [participants] = await conn.execute(`SELECT user_id as userId, location_id as locationId,
+event_time as eventTime, event_date as eventDate,
+first_name as firstName, last_name as lastName, image_url as imageUrl
+FROM event_participants WHERE lunchspace_id = ?`, [id])
     const result = { locations, participants }
     return result
   })
