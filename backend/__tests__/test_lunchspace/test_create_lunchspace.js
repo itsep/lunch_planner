@@ -61,7 +61,9 @@ describe('create lunchspace', () => {
     it('should reject to create a new lunchspace, because of already exists', async () => {
       const req = mockReq(request)
       const res = mockRes()
-      await expect(createLunchspaceAndJoin(req, res)).rejects.toThrowError(InputValidationError)
+      const createLunchspaceAndJoinPromise = createLunchspaceAndJoin(req, res)
+      await expect(createLunchspaceAndJoinPromise).rejects.toThrowError(InputValidationError)
+      await expect(createLunchspaceAndJoinPromise).rejects.toHaveProperty('property', 'lunchspaceSubdomain')
     })
     it('should reject to create a new lunchspace, because of subdomain is null', async () => {
       const request1 = {
@@ -70,7 +72,9 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request1)
       const res = mockRes()
-      await expect(createLunchspaceAndJoin(req, res)).rejects.toThrowError(InputValidationError)
+      const createLunchspaceAndJoinPromise = createLunchspaceAndJoin(req, res)
+      await expect(createLunchspaceAndJoinPromise).rejects.toThrowError(InputValidationError)
+      await expect(createLunchspaceAndJoinPromise).rejects.toHaveProperty('property', 'lunchspaceSubdomain')
     })
     it('should reject to create a new lunchspace, because of name is null', async () => {
       const request2 = {
@@ -88,7 +92,9 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request3)
       const res = mockRes()
-      await expect(createLunchspaceAndJoin(req, res)).rejects.toThrowError(InputValidationError)
+      const createLunchspaceAndJoinPromise = createLunchspaceAndJoin(req, res)
+      await expect(createLunchspaceAndJoinPromise).rejects.toThrowError(InputValidationError)
+      await expect(createLunchspaceAndJoinPromise).rejects.toHaveProperty('property', 'lunchspaceSubdomain')
     })
     it('should reject to create a new lunchspace, because of name is too long', async () => {
       const request4 = {
@@ -97,7 +103,9 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request4)
       const res = mockRes()
-      await expect(createLunchspaceAndJoin(req, res)).rejects.toThrowError(InputValidationError)
+      const createLunchspaceAndJoinPromise = createLunchspaceAndJoin(req, res)
+      await expect(createLunchspaceAndJoinPromise).rejects.toThrowError(InputValidationError)
+      await expect(createLunchspaceAndJoinPromise).rejects.toHaveProperty('property', 'lunchspaceName')
     })
     it('should reject to create a new lunchspace, because of name is empty string', async () => {
       const request5 = {
@@ -106,7 +114,9 @@ describe('create lunchspace', () => {
       }
       const req = mockReq(request5)
       const res = mockRes()
-      await expect(createLunchspaceAndJoin(req, res)).rejects.toThrowError(InputValidationError)
+      const createLunchspaceAndJoinPromise = createLunchspaceAndJoin(req, res)
+      await expect(createLunchspaceAndJoinPromise).rejects.toThrowError(InputValidationError)
+      await expect(createLunchspaceAndJoinPromise).rejects.toHaveProperty('property', 'lunchspaceName')
     })
   })
 })
