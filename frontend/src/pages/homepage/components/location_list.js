@@ -18,40 +18,43 @@ const mapDispatchToProps = dispatch => ({
 
 const styles = () => ({
   locationList: {
-    marginTop: '60pt',
+    marginTop: '5pt',
     height: '100pt',
     margin: 0,
     padding: 0,
     listStyleType: 'none',
     zIndex: 0,
   },
-  locationBorder: {
-    marginLeft: '13%',
-    marginRight: '13%',
-  },
   buttonLocation: {
+    marginTop: '10pt',
+    borderRadius: '25%',
+    borderStyle: 'solid',
     marginLeft: '46%',
+    color: '#75a045',
+    fontWeight: 'bolder',
+    borderWidth: '4px',
+    backgroundColor: 'white',
   },
 })
 
 function LocationList({ locations, addLocation, classes }) {
-  return (<div>
-    <ul className={classes.locationList}>
-      {locations.map((location => (
-        <li key={location.id}>
-          <LocationItem id={location.id} name={location.name} />
-          <hr className={classes.locationBorder} />
-        </li>
-      )))}
-      <li><Button
-        className={classes.buttonLocation}
-        onClick={addLocation}
-      >
+  return (
+    <div>
+      <ul className={classes.locationList}>
+        {locations.map((location => (
+          <li key={location.id}>
+            <LocationItem id={location.id} name={location.name} />
+          </li>
+          )))}
+        <li><Button
+          className={classes.buttonLocation}
+          onClick={addLocation}
+        >
         create location
-          </Button>
-      </li>
-    </ul>
-          </div>
+        </Button>
+        </li>
+      </ul>
+    </div>
   )
 }
 

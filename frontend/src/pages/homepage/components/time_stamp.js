@@ -5,13 +5,18 @@ import { withStyles } from 'material-ui/styles'
 
 const styles = () => ({
   timeStamp: {
-    height: '70pt',
-    width: '70pt',
+    backgroundColor: 'white',
+    height: '60pt',
+    width: '60pt',
     flexShrink: 0,
-    marginLeft: '7pt',
-    marginRight: '7pt',
-    marginTop: '20pt',
+    marginLeft: '8pt',
+    marginRight: '8pt',
+    marginTop: '15pt',
     marginBottom: '20pt',
+    color: '#75a045',
+  },
+  clock: {
+    fontSize: 'large',
   },
 })
 
@@ -20,7 +25,7 @@ function TimeStamp({ timeStamp, classes }) {
   const minute = timeStamp.minute === 0 ? '00' : timeStamp.minute
   return (
     <Button variant="fab" className={classes.timeStamp}>
-      <Typography variant="body1" gutterBottom align="center" >
+      <Typography variant="body1" gutterBottom align="center" className={classes.clock}>
         {hour}:{minute}
       </Typography>
     </Button>

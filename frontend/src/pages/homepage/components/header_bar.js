@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { AppBar, Toolbar, Avatar, Typography, Button } from 'material-ui'
+import { AppBar, Toolbar, Avatar, Button } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 
 const styles = () => ({
@@ -15,29 +15,20 @@ const styles = () => ({
     zIndex: 9,
   },
   logo: {
-    backgroundColor: 'grey',
-    color: 'black',
-    marginLeft: '5%',
+    backgroundColor: 'black',
+    color: 'white',
+    marginLeft: '0%',
   },
   lunchspace: {
+    fontWeight: 'bold',
     testAlign: 'center',
-    color: 'black',
-  },
-  user: {
-    display: 'flex',
-    flexShrink: 0,
-    marginRight: '5%',
+    backgroundColor: 'black',
+    color: 'white',
   },
   avatar: {
+    marginRight: '3%',
     height: '40pt',
     width: '40pt',
-  },
-  profileButton: {
-    color: 'black',
-    marginRight: '10%',
-    height: '50pt',
-    width: '30pt',
-    borderRadius: '50%',
   },
 })
 
@@ -54,16 +45,12 @@ function HeaderBar({ classes, profile, lunchspace }) {
           <Button className={classes.logo} variant="raised">
             LOGO VSF
           </Button>
-          <Typography className={classes.lunchspace} variant="title" color="inherit">
-            {lunchspace.name}
-            <br />
-            VSF Experts GmbH
-          </Typography>
-          <div className={classes.user}>
-            <Button className={classes.profileButton} >
-              <Avatar alt="David Nadoba" className={classes.avatar} src={profile.src} />
+          <div className={classes.lunchspace}>
+            <Button className={classes.lunchspace} variant="raised">
+              {lunchspace.name}
             </Button>
           </div>
+          <Avatar alt="David Nadoba" className={classes.avatar} src={profile.src} />
         </Toolbar>
       </AppBar>
     </div>
