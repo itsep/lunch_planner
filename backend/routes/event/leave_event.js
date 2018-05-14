@@ -1,6 +1,7 @@
 const { pool } = require('../../lib/database')
 const { validDate, validTime } = require('../../lib/validation')
 const { timeForSQL, dateForSQL } = require('../../lib/formatation')
+const { InputValidationError } = require('../../lib/error')
 
 async function leave(userId, locationId, eventTime, eventDate) {
   await pool.execute(
@@ -14,10 +15,10 @@ async function leaveEvent(req, res) {
   const { locationId } = req.body
   let { eventTime, eventDate } = req.body
   if (!validDate(eventDate)) {
-    res.status(500)
+    throw new InputValidationError('eventDate', 'Date must be of type date.')
   }
   if (!validTime(eventTime)) {
-    res.status(500)
+    throw new InputValidationError('eventDate', 'Date must be of type time.')
   }
   eventTime = timeForSQL(eventTime)
   eventDate = dateForSQL(eventDate)
