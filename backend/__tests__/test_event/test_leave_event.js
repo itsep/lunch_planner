@@ -32,7 +32,7 @@ describe('leave event', () => {
   })
   describe('leave', async () => {
     it('should delete a join_up_at entry in DB', async () => {
-      await leave(testUserId, testLocationId, testTime, testDate)
+      await expect(leave(testUserId, testLocationId, testTime, testDate)).resolves.not.toThrow()
     })
   })
 })

@@ -30,7 +30,7 @@ describe('create join event', () => {
   })
   describe('create', async () => {
     it('should create a location in DB', async () => {
-      await create(testUserId, testLocationId, testTime, testDate)
+      await expect(create(testUserId, testLocationId, testTime, testDate)).resolves.not.toThrow
     })
   })
 })

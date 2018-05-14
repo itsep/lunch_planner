@@ -7,7 +7,7 @@ async function create(userId, locationId, eventTime, eventDate) {
     'VALUES (?, ?, ?, ?)', [userId, locationId, eventTime, eventDate])
 }
 
-//TODO: error for invalid inputs
+// TODO: error for invalid inputs
 async function createJoinEvent(req, res) {
   const { userId } = req.token
   const { locationId } = req.body
