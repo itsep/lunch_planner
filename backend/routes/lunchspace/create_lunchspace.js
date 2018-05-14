@@ -1,6 +1,7 @@
 const { pool } = require('../../lib/database')
 const { isValidSubdomain } = require('../../../shared/lib/subdomain')
 const { validLength } = require('../../lib/validation')
+const { InputValidationError } = require('../../lib/error')
 
 const minimumLength = 1
 const maximumLength = 24
@@ -26,22 +27,23 @@ async function createLunchspaceAndJoin(req, res) {
   const { userId } = req.token
   let { lunchspaceName, lunchspaceSubdomain } = req.body
   if (!validLength(lunchspaceName, maximumLength, minimumLength)) {
-    return res.status(409).json({ error: 'Length of lunchspace name must be between 1 and 24 characters.' })
+    throw new InputValidationError('lunchspaceName', 'Length of lunchspace name must be between 1 and 24 characters.')
   }
   if (!validLength(lunchspaceSubdomain, maximumLength, minimumLength)) {
-    return res.status(409).json({ error: 'Length of subdomain must be between 1 and 24 characters' })
+    throw new InputValidationError('lunchspaceSubdomain', 'Length of subdomain must be between 1 and 24 characters')
   }
   lunchspaceSubdomain = lunchspaceSubdomain.trim()
   lunchspaceName = lunchspaceName.trim()
   if (!isValidSubdomain(lunchspaceSubdomain)) {
-    return res.status(409).json({ error: 'Illegal Token in Subdomain.' })
+    throw new InputValidationError('lunchspaceSubdomain', 'Illegal Token in Subdomain.')
   }
   try {
     await createLunchspace(userId, lunchspaceName, lunchspaceSubdomain)
   } catch (error) {
     if (error.code === 'ER_DUP_ENTRY') {
-      return res.status(409).json({ error: 'Lunchspace subdomain already exists.' })
-    } throw error
+      throw new InputValidationError('lunchspaceSubdomain', 'Lunchspace subdomain already exists.')
+    }
+    throw error
   }
   return res.status(200).end()
 }

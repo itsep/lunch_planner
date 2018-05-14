@@ -1,7 +1,7 @@
 const fs = require('fs-nextra')
 const { createMultiStatementConnection } = require('./index')
 
-async function useConnection(connPromise, consumer) {
+async function consumeConnection(connPromise, consumer) {
   const conn = await connPromise
   return consumer(conn).finally(() => conn.end())
 }
@@ -29,7 +29,7 @@ async function clearDatabaseAndImportTestDump(dbName) {
   const connPromise = createMultiStatementConnection(true)
   const dbSchemaPromise = readDbSchema()
   const testDataDumpPromise = readTestDataDump()
-  return useConnection(connPromise, async (conn) => {
+  return consumeConnection(connPromise, async (conn) => {
     await clearDatabase(conn, await dbSchemaPromise, dbName)
     await importTestData(conn, await testDataDumpPromise)
   })
@@ -41,5 +41,5 @@ module.exports = {
   clearDatabase,
   readDbSchema,
   readTestDataDump,
-  useConnection,
+  consumeConnection,
 }
