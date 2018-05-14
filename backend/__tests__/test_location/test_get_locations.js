@@ -33,7 +33,6 @@ describe('get locations', () => {
       id: testLocationId,
       name: testLocationName,
       coordinates: testLocationCoordinates,
-      lunchspace_id: testLunchspaceId,
     })
     expect(locations[0]).toEqual(expected)
     expect(locations.length).toEqual(1)
