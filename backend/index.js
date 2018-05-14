@@ -13,6 +13,6 @@ app.use('/lunchspace', require('./routes/lunchspace').router)
 // eslint-disable-next-line import/newline-after-import
 app.use('/location', require('./routes/location').router)
 // eslint-disable-next-line import/newline-after-import
-app.use('/join_event', require('./routes/join_event').router)
+app.use('/event', require('./routes/event').router)
 
 app.listen(8081)

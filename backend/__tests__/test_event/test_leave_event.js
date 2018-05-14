@@ -1,4 +1,5 @@
-const { create } = require('../../routes/join_event/create_join_event')
+const { leave } = require('../../routes/event/leave_event')
+const { create } = require('../../routes/event/join_event')
 const location = require('../../routes/location/create_location')
 const account = require('../../routes/account/register_account')
 const { createLunchspace } = require('../../routes/lunchspace/create_lunchspace')
@@ -19,7 +20,7 @@ let testUserId
 let testLunchspaceId
 let testLocationId
 
-describe('create join event', () => {
+describe('leave event', () => {
   beforeAll(createMockDatabase)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
@@ -27,10 +28,11 @@ describe('create join event', () => {
     testLunchspaceId = await createLunchspace(testUserId, testSpaceName, testSpaceSubdomain)
     testLocationId = await location
       .create(testLocationName, testLocationCoordinates, testLunchspaceId)
+    await create(testUserId, testLocationId, testTime, testDate)
   })
-  describe('create', async () => {
-    it('should create a location in DB', async () => {
-      await create(testUserId, testLocationId, testTime, testDate)
+  describe('leave', async () => {
+    it('should delete a join_up_at entry in DB', async () => {
+      await leave(testUserId, testLocationId, testTime, testDate)
     })
   })
 })
