@@ -96,3 +96,9 @@ ALTER TABLE join_up_at
 	ON DELETE CASCADE
 	ON UPDATE CASCADE;
 
+-- View on the member data of a location
+CREATE VIEW event_participants AS
+SELECT join_up_at.*, user.*, location.coordinates, location.name, location.lunchspace_id
+FROM join_up_at
+LEFT JOIN user ON join_up_at.user_id = user.id
+LEFT JOIN location ON join_up_at.location_id = location.id;
