@@ -100,7 +100,7 @@ class CreateLunchspace extends React.Component {
         this.setState({ isLoading: false })
       })
   }
-
+  
   render() {
     const { classes } = this.props
 
