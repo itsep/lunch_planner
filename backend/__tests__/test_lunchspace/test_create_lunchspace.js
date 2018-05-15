@@ -31,7 +31,7 @@ describe('joinEvent lunchspace', () => {
     testUserId = testUserId[0].insertId
   })
   describe('create', async () => {
-    it('should joinEvent a new lunchspace in DB and giving back its id', async () => {
+    it('should create a new lunchspace in DB and giving back its id', async () => {
       await expect(create(testLunchspaceName1, testSubdomain1)).resolves.toEqual(expect.any(Number))
     })
     it('should throw an error', async () => {
@@ -52,20 +52,20 @@ describe('joinEvent lunchspace', () => {
         body: { lunchspaceName: testLunchspaceName2, lunchspaceSubdomain: testSubdomain2 },
         token: { userId: testUserId },
       }
-    it('should joinEvent a new lunchspace', async () => {
+    it('should create a new lunchspace', async () => {
       const req = mockReq(request)
       const res = mockRes()
       await createLunchspaceAndJoin(req, res)
       expect(res.status).lastCalledWith(200)
     })
-    it('should reject to joinEvent a new lunchspace, because of already exists', async () => {
+    it('should reject to create a new lunchspace, because of already exists', async () => {
       const req = mockReq(request)
       const res = mockRes()
       const createLunchspaceAndJoinPromise = createLunchspaceAndJoin(req, res)
       await expect(createLunchspaceAndJoinPromise).rejects.toThrowError(InputValidationError)
       await expect(createLunchspaceAndJoinPromise).rejects.toHaveProperty('property', 'lunchspaceSubdomain')
     })
-    it('should reject to joinEvent a new lunchspace, because of subdomain is null', async () => {
+    it('should reject to create a new lunchspace, because of subdomain is null', async () => {
       const request1 = {
         body: { lunchspaceName: testLunchspaceName2, lunchspaceSubdomain: null },
         token: { userId: testUserId },
@@ -76,7 +76,7 @@ describe('joinEvent lunchspace', () => {
       await expect(createLunchspaceAndJoinPromise).rejects.toThrowError(InputValidationError)
       await expect(createLunchspaceAndJoinPromise).rejects.toHaveProperty('property', 'lunchspaceSubdomain')
     })
-    it('should reject to joinEvent a new lunchspace, because of name is null', async () => {
+    it('should reject to create a new lunchspace, because of name is null', async () => {
       const request2 = {
         body: { lunchspaceName: null, lunchspaceSubdomain: testSubdomain2 },
         token: { userId: testUserId },
@@ -85,7 +85,7 @@ describe('joinEvent lunchspace', () => {
       const res = mockRes()
       await expect(createLunchspaceAndJoin(req, res)).rejects.toThrowError(InputValidationError)
     })
-    it('should reject to joinEvent a new lunchspace, because of subdomain is too long', async () => {
+    it('should reject to create a new lunchspace, because of subdomain is too long', async () => {
       const request3 = {
         body: { lunchspaceName: testLunchspaceName2, lunchspaceSubdomain: testSubdomain3 },
         token: { userId: testUserId },
@@ -96,7 +96,7 @@ describe('joinEvent lunchspace', () => {
       await expect(createLunchspaceAndJoinPromise).rejects.toThrowError(InputValidationError)
       await expect(createLunchspaceAndJoinPromise).rejects.toHaveProperty('property', 'lunchspaceSubdomain')
     })
-    it('should reject to joinEvent a new lunchspace, because of name is too long', async () => {
+    it('should reject to create a new lunchspace, because of name is too long', async () => {
       const request4 = {
         body: { lunchspaceName: testLunchspaceName3, lunchspaceSubdomain: testSubdomain2 },
         token: { userId: testUserId },
@@ -107,7 +107,7 @@ describe('joinEvent lunchspace', () => {
       await expect(createLunchspaceAndJoinPromise).rejects.toThrowError(InputValidationError)
       await expect(createLunchspaceAndJoinPromise).rejects.toHaveProperty('property', 'lunchspaceName')
     })
-    it('should reject to joinEvent a new lunchspace, because of name is empty string', async () => {
+    it('should reject to create a new lunchspace, because of name is empty string', async () => {
       const request5 = {
         body: { lunchspaceName: '', lunchspaceSubdomain: testSubdomain2 },
         token: { userId: testUserId },

@@ -15,7 +15,7 @@ function testResponse(error) {
 }
 
 /**
- * Function to joinEvent a new `LocalizableError`
+ * Function to create a new `LocalizableError`
  *
  * @callback createLocalizableError
  * @async
@@ -27,7 +27,7 @@ function testResponse(error) {
  * @param {createLocalizableError} createLocalizableError
  */
 function addAllLocalizableErrorTestsToCurrentSuite(createLocalizableError) {
-  it('should joinEvent a valid response object', async () => {
+  it('should create a valid response object', async () => {
     const error = await createLocalizableError()
     testResponse(error)
   })

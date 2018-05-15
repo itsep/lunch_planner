@@ -38,7 +38,7 @@ class MysqlPool {
     return consumer(conn).finally(() => conn.release())
   }
   /**
-   * changes the database for new connections. closes the current pool and joinEvent a new one
+   * changes the database for new connections. closes the current pool and create a new one
    * @param database {String} - database name
    */
   async changeDatabase(database) {
