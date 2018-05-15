@@ -24,35 +24,7 @@ const initialState = {
         })
     }
  */
-  locations: [{
-    id: 0,
-    name: 'dean & david',
-    timeStamps: [],
-  },
-  {
-    id: 1,
-    name: 'Metzgerei',
-    userIds: [],
-    timeStamps: [],
-  },
-  {
-    id: 2,
-    name: 'Pizzeria',
-    userIds: [],
-    timeStamps: [],
-  },
-  {
-    id: 3,
-    name: 'McDonalds',
-    userIds: [],
-    timeStamps: [],
-  },
-  {
-    id: 4,
-    name: 'VSF-dining room',
-    userIds: [],
-    timeStamps: [],
-  }],
+  locations: [],
   /*
   joinUpAt is an array of the relation between user
   and location and a single object has the shape of:

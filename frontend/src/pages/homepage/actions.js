@@ -1,6 +1,29 @@
-export default function addLocation() {
+export function addLocation() {
   return {
     type: 'ADD_LOCATION',
+  }
+}
+
+function createTimeStamps() {
+  const timeStamps = []
+  let timeInHours
+  for (timeInHours = 6; timeInHours < 20; timeInHours += 0.5) {
+    const timeStamp = {
+      key: timeInHours * 2,
+      hour: Math.floor(timeInHours),
+      minute: (timeInHours % 1) * 60,
+      userIDs: [],
+    }
+    timeStamps.push(timeStamp)
+  }
+  return timeStamps
+}
+
+export function addTimeStamps(id) {
+  return {
+    type: 'ADD_TIMESTAMPS',
+    timeStamps: createTimeStamps(),
+    locationID: id,
   }
 }
 

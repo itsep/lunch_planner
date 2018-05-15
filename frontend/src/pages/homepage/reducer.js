@@ -20,6 +20,10 @@ export default function (state = initialState, action) {
         locations: action.data.locations,
         participants: action.data.participants,
       })
+    case 'ADD_TIMESTAMPS':
+      return {
+        ...state,
+      }
     default: return state
   }
 }

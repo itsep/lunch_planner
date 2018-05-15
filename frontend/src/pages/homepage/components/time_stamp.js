@@ -3,13 +3,6 @@ import PropTypes from 'prop-types'
 import { Button, Typography } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
-import addLocationAction from './actions'
-
-const mapDispatchToProps = dispatch => ({
-  addLocation: () => {
-    dispatch(addLocationAction())
-  },
-})
 
 const styles = () => ({
   timeStampWithoutJoin: {
