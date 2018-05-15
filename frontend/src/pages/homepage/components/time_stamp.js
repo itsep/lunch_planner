@@ -8,6 +8,11 @@ const mapDispatchToProps = dispatch => ({
 
 })
 
+function currentUser(userID) {
+  const t = userID === 0 ? false : false
+  return t
+}
+
 
 const styles = () => ({
   timeStampDiv: {
@@ -23,6 +28,9 @@ const styles = () => ({
   timeStampWithJoin: {
     transform: 'scale(1.3)',
   },
+  timeStampWithUser: {
+    backgroundColor: 'green',
+  },
   clock: {
     fontSize: 'large',
     fontWeight: 'bolder',
@@ -30,9 +38,16 @@ const styles = () => ({
 })
 
 function TimeStamp({ classes, timeStamp }) {
+  let timeStampClass = classes.timeStamp
+  if (timeStamp.userIDs.length > 0) {
+    timeStampClass = `${timeStampClass} ${classes.timeStampWithJoin}`
+  }
+  timeStamp.userIDs.forEach((userID) => {
+    if (currentUser(userID)) timeStampClass = `${timeStampClass} ${classes.timeStampWithUser}`
+  })
   return (
     <div className={classes.timeStampDiv}>
-      <Button variant="fab" className={classes.timeStamp}>
+      <Button variant="fab" className={timeStampClass}>
         <Typography variant="body1" gutterBottom align="center" className={classes.clock}>
           {timeStamp.hour}:
           {timeStamp.minute.toString().length === 2 ?

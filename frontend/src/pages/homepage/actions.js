@@ -13,21 +13,6 @@ function defaultTimeStamps() {
   return timeStamps
 }
 
-/*
-  locations is an array of many locations. One location has the shape of:
-    {
-      id: number,
-      name: string,
-      timeStamps: arrayOf({
-        key: number,
-        hour: number,
-        minute: number,
-        userIDs: arrayOf({
-          id: number,
-        })
-    }
- */
-
 function createLocation(name, id) {
   return {
     id,
@@ -78,6 +63,7 @@ export function fetchPageData(lunchspaceSubdomain) {
       }
       return response.json().then(({ error }) => { throw new Error(error) })
     }).then((data) => {
+      console.log(data)
       dispatch(receivePageData(lunchspaceSubdomain, data))
     })
       .catch(error => console.error(error))
