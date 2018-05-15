@@ -47,12 +47,13 @@ function LocationList({ locations, addLocation, classes }) {
             <LocationItem id={location.id} name={location.name} />
           </li>
           )))}
-        <li><Button
-          className={classes.buttonLocation}
-          onClick={addLocation}
-        >
-        create location
-        </Button>
+        <li>
+          <Button
+            className={classes.buttonLocation}
+            onClick={addLocation}
+          >
+          create location
+          </Button>
         </li>
       </ul>
     </div>
