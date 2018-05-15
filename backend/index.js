@@ -13,6 +13,8 @@ app.use('/account', require('./routes/account').router)
 app.use('/lunchspace', require('./routes/lunchspace').router)
 // eslint-disable-next-line import/newline-after-import
 app.use('/location', require('./routes/location').router)
+// eslint-disable-next-line import/newline-after-import
+app.use('/event', require('./routes/event').router)
 
 app.use(convertRawSQLErrorToLocalizableSQLError)
 app.use(handleError)
