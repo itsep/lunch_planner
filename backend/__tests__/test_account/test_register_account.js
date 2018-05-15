@@ -16,7 +16,7 @@ describe('register accounts', () => {
   beforeAll(createMockDatabase)
   afterAll(dropMockDatabase)
   describe('create', async () => {
-    it('should create a new account in DB, without error', async () => {
+    it('should joinEvent a new account in DB, without error', async () => {
       await expect(create(
         testEmail1,
         testPassword1,

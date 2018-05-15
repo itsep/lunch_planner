@@ -11,7 +11,7 @@ const testCoordinates = { lat: 20, long: 10 }
 const testCoordinates2 = 'test'
 const testLunchspaceId = 1
 
-describe('create location', () => {
+describe('joinEvent location', () => {
   beforeAll(createMockDatabase)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
@@ -25,13 +25,13 @@ describe('create location', () => {
     await createLunchspaceAndJoin(req, res)
   })
   describe('create', async () => {
-    it('should create a location in DB', async () => {
+    it('should joinEvent a location in DB', async () => {
       await expect(create(testName, testCoordinates, testLunchspaceId))
         .resolves.toEqual(expect.any(Number))
     })
   })
   describe('createLocation', async () => {
-    it('should create a new location in DB', async () => {
+    it('should joinEvent a new location in DB', async () => {
       const req = mockReq({
         body: { name: testName, coordinates: testCoordinates },
         lunchspace: { id: testLunchspaceId },

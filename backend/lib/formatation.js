@@ -6,8 +6,8 @@ function timeForSQL(time) {
 
 function dateForSQL(date) {
   const eventDateYear = date.year.toString()
-  const eventDateMonth = date.month.toString().length === 2 ? date.month.minute : `0${date.month.minute}`
-  const eventDateDay = date.day.toString().length === 2 ? date.day.minute : `0${date.day.minute}`
+  const eventDateMonth = date.month.toString().length === 2 ? date.month : `0${date.month}`
+  const eventDateDay = date.day.toString().length === 2 ? date.day : `0${date.day}`
   return `${eventDateYear}-${eventDateMonth}-${eventDateDay}`
 }
 

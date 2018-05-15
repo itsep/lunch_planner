@@ -18,19 +18,24 @@ function validEmail(email) {
   return (validLength(email, 120, 5) && re.test(email))
 }
 
+function isNumber(potentialNumber) {
+  return typeof potentialNumber === 'number'
+}
+
+function isBetween(number, min, max) {
+  return (number <= max && number >= min)
+}
+
 function validTime(time) {
-  if (!time.hour && !time.minute && !time.hour.isNumber() && !time.minute.isNumber()) {
-    return false
-  }
-  return true
+  return (time.hour !== undefined && time.minute !== undefined
+    && isNumber(time.hour) && isNumber(time.minute)
+  && isBetween(time.hour, 0, 23) && isBetween(time.minute, 0, 59))
 }
 
 function validDate(date) {
-  if (!date.year && !date.month && !date.day
-    && !date.year.isNumber() && !date.month.isNumber() && !date.year.isNumber()) {
-    return false
-  }
-  return true
+  return (date.year && date.month && date.day
+    && isNumber(date.year) && isNumber(date.month) && isNumber(date.day)
+  && isBetween(date.year, 2000, 9999) && isBetween(date.month, 1, 12) && isBetween(date.day, 1, 31))
 }
 
 module.exports = {
