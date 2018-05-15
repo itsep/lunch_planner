@@ -10,16 +10,19 @@ if (!process.env.DATABASE_USERNAME || !process.env.DATABASE_PASSWORD) {
 class MysqlPool {
   constructor(config) {
     this.config = config
-    this.database = config.database
     this.openPool(this.database)
   }
   openPool(database) {
-    this.pool = mysql.createPool(Object.assign({}, this.config, { database }))
+    this.config.database = database
+    this.pool = mysql.createPool(this.config)
   }
 
   get isClosed() {
     // eslint-disable-next-line no-underscore-dangle
     return this.pool.pool._closed
+  }
+  get database() {
+    return this.config.database
   }
   async getConnection() {
     return this.pool.getConnection()
@@ -39,7 +42,6 @@ class MysqlPool {
    * @param database {String} - database name
    */
   async changeDatabase(database) {
-    this.database = database
     const oldPool = this.pool
     this.openPool(database)
     // pool.end() should work if it is called multiple times but does not.
