@@ -20,7 +20,7 @@ function defaultTimeStamps() {
   const timeStamps = []
   let timeInHours
   let counter = 0
-  for (timeInHours = 6; timeInHours < 20; timeInHours += 0.5) {
+  for (timeInHours = 10; timeInHours < 18; timeInHours += 0.5) {
     const timeStamp = {
       id: counter,
       key: timeInHours * 2,
@@ -31,6 +31,24 @@ function defaultTimeStamps() {
     timeStamps.push(timeStamp)
     counter += 1
   }
+  return timeStamps
+}
+
+function initialTimeStamps(locationID, participants) {
+  let timeStamps = defaultTimeStamps()
+  participants.forEach((participant) => {
+    if (locationID === participant.locationId) {
+      timeStamps = timeStamps.map((timeStamp) => {
+        if (timeStamp && `${timeStamp.hour}:${timeStamp.minute}:00` === participant.eventTime) {
+          return {
+            ...timeStamp,
+            userIDs: [participant.userId, ...timeStamp.userIDs],
+          }
+        }
+        return timeStamp
+      })
+    }
+  })
   return timeStamps
 }
 
@@ -60,7 +78,7 @@ export function receivePageData(lunchspaceSubdomain, response) {
   const data = response
   data.locations = data.locations.map(location => ({
     ...location,
-    timeStamps: defaultTimeStamps(),
+    timeStamps: initialTimeStamps(location.id, data.participants),
   }))
   return {
     type: 'RECEIVE_PAGE_DATA',

@@ -37,6 +37,14 @@ UNLOCK TABLES;
 
 LOCK TABLES `join_up_at` WRITE;
 /*!40000 ALTER TABLE `join_up_at` DISABLE KEYS */;
+INSERT INTO `join_up_at` VALUES (2, 1, '12:30', '16.05.2018');
+INSERT INTO `join_up_at` VALUES (3, 1, '13:00', '16.05.2018');
+INSERT INTO `join_up_at` VALUES (4, 1, '14:30', '16.05.2018');
+INSERT INTO `join_up_at` VALUES (1, 2, '12:00', '16.05.2018');
+INSERT INTO `join_up_at` VALUES (8, 2, '12:30', '16.05.2018');
+INSERT INTO `join_up_at` VALUES (5, 3, '13:00', '16.05.2018');
+INSERT INTO `join_up_at` VALUES (6, 4, '14:30', '16.05.2018');
+INSERT INTO `join_up_at` VALUES (7, 4, '15:00', '16.05.2018');
 /*!40000 ALTER TABLE `join_up_at` ENABLE KEYS */;
 UNLOCK TABLES;
 

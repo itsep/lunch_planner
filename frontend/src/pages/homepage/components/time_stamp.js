@@ -49,7 +49,7 @@ const styles = () => ({
     flexShrink: 0,
   },
   timeStampWithJoin: {
-    transform: 'scale(1.3)',
+    transform: 'scale(1.5)',
   },
   timeStampWithUser: {
     backgroundColor: 'green',
