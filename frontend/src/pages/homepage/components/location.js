@@ -38,13 +38,14 @@ const styles = () => ({
     borderStyle: 'solid',
     color: '#75a045',
     fontWeight: 'bolder',
+    width: '20%',
   },
 })
 
 function LocationItem({ id, name, classes }) {
   return (
     <div className={classes.wrapper}>
-      <div className={classes.locationTitleDiv}>
+      <div>
         <Button className={classes.locationTitle} variant="raised">Dean & David</Button>
       </div>
       <div className={classes.container}>

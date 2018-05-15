@@ -16,8 +16,8 @@ const styles = () => ({
     color: '#75a045',
   },
   timeStampWithOneJoin: {
-    height: '80pt',
-    width: '80pt',
+    height: '70pt',
+    width: '70pt',
   },
   clock: {
     fontSize: 'large',
