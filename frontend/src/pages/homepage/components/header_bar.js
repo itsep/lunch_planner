@@ -8,28 +8,34 @@ const styles = () => ({
   flexContainer: {
     display: 'flex',
     justifyContent: 'space-between',
-    backgroundColor: '#75a045',
+    backgroundColor: 'white',
     position: 'fixed',
     width: '100%',
     top: 0,
     zIndex: 9,
+    boxShadow: '0px 5px 10px grey',
   },
   logo: {
     backgroundColor: 'white',
     color: '#75a045',
     marginLeft: '0%',
     fontWeight: 'bolder',
+    height: '11%',
+    width: '11%',
   },
   lunchspace: {
+    height: '5%',
+    width: '5%',
     fontWeight: 'bold',
     testAlign: 'center',
-    backgroundColor: 'white',
-    color: '#75a045',
+    backgroundColor: '#75a045',
+    color: 'white',
+    marginRight: '8%',
   },
   avatar: {
     marginRight: '3%',
-    height: '40pt',
-    width: '40pt',
+    height: '3.5%',
+    width: '3.5%',
   },
 })
 
@@ -43,9 +49,7 @@ function HeaderBar({ classes, profile, lunchspace }) {
     <div>
       <AppBar className={classes.appBar} position="static" color="default">
         <Toolbar className={classes.flexContainer}>
-          <Button className={classes.logo} variant="raised">
-            LOGO VSF
-          </Button>
+          <img className={classes.logo} alt="Daniel" src="http://vsf-experts.de/images/neu_vsf_logo_convert.png?crc=3930813411" />
           <div className={classes.lunchspace}>
             <Button className={classes.lunchspace} variant="raised">
               {lunchspace.name}

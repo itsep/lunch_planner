@@ -15,13 +15,43 @@ const initialState = {
     {
       id: number,
       name: string,
-      userIds: arrayOf({ id: number,}),
+      timeStamps: arrayOf({
+        key: number,
+        hour: number,
+        minute: number,
+        userIDs: arrayOf({
+          id: number,
+        })
     }
  */
   locations: [{
     id: 0,
-    name: 'Test Location',
+    name: 'dean & david',
+    timeStamps: [],
+  },
+  {
+    id: 1,
+    name: 'Metzgerei',
     userIds: [],
+    timeStamps: [],
+  },
+  {
+    id: 2,
+    name: 'Pizzeria',
+    userIds: [],
+    timeStamps: [],
+  },
+  {
+    id: 3,
+    name: 'McDonalds',
+    userIds: [],
+    timeStamps: [],
+  },
+  {
+    id: 4,
+    name: 'VSF-dining room',
+    userIds: [],
+    timeStamps: [],
   }],
   /*
   joinUpAt is an array of the relation between user

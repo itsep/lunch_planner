@@ -14,14 +14,17 @@ const styles = () => ({
     justifyContent: 'space-between',
   },
   flexItem: {
-    background: 'white',
+    background: '#75a045',
     padding: '5px',
     width: '100%',
     height: '20px',
     marginTop: '70px',
+    marginLeft: '1%',
+    marginRight: '1%',
 
+    borderRadius: '8px',
     lineHeight: '20px',
-    color: '#75a045',
+    color: 'white',
     fontWeight: 'bolder',
   },
 })

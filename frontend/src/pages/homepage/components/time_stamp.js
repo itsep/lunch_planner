@@ -2,6 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Typography } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
+import { connect } from 'react-redux'
+import addLocationAction from './actions'
+
+const mapDispatchToProps = dispatch => ({
+  addLocation: () => {
+    dispatch(addLocationAction())
+  },
+})
 
 const styles = () => ({
   timeStampWithoutJoin: {
@@ -11,52 +19,42 @@ const styles = () => ({
     flexShrink: 0,
     marginLeft: '1%',
     marginRight: '1%',
-    marginTop: '2%',
-    marginBottom: '2%',
-    color: '#75a045',
   },
   timeStampWithOneJoin: {
-    height: '70pt',
-    width: '70pt',
+    transform: 'scale(1.3)',
   },
   clock: {
     fontSize: 'large',
+    fontWeight: 'bolder',
   },
 })
 
-class TimeStamp extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      joined: false,
+function changeButton() {
+  this.setState((oldState) => {
+    const newState = {
+      joined: !oldState.joined,
     }
-    this.changeButton = this.changeButton.bind(this)
-  }
-  changeButton() {
-    this.setState((oldState) => {
-      const newState = {
-        joined: !oldState.joined,
-      }
-      return newState
-    })
-  }
+    return newState
+  })
+}
 
-  render() {
-    const { timeStamp, classes } = this.props
-    const { hour } = timeStamp
-    const minute = timeStamp.minute === 0 ? '00' : timeStamp.minute
-    const buttonClasses = [classes.timeStampWithoutJoin]
-    if (this.state.joined) {
-      buttonClasses.push(classes.timeStampWithOneJoin)
-    }
-    return (
-      <Button variant="fab" className={buttonClasses} onClick={this.changeButton}>
+function TimeStamp({ classes, timeStamp }) {
+  const {
+    timeStampClass,
+    hour,
+    minute,
+    userIDs,
+  } = { timeStamp }
+  return (
+    <div>
+      <Button variant="fab" className={timeStampClass} onClick={changeButton}>
         <Typography variant="body1" gutterBottom align="center" className={classes.clock}>
           {hour}:{minute}
         </Typography>
       </Button>
-    )
-  }
+      {userIDs.map(userID => <Button>{userID}</Button>)}
+    </div>
+  )
 }
 
 TimeStamp.propTypes = {
@@ -71,4 +69,4 @@ TimeStamp.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(TimeStamp)
+export default withStyles(styles)(connect(mapDispatchToProps)(TimeStamp))
