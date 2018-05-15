@@ -28,6 +28,7 @@ const styles = () => ({
     overflowY: 'auto',
   },
   locationTitle: {
+    fontSize: 'large',
     backgroundColor: 'white',
     marginTop: '10pt',
     marginBottom: '5pt',

@@ -26,6 +26,7 @@ const styles = () => ({
     zIndex: 0,
   },
   buttonLocation: {
+    fontSize: 'medium',
     marginTop: '10pt',
     borderRadius: '25%',
     borderStyle: 'solid',

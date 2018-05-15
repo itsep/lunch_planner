@@ -2,7 +2,7 @@
 
 const initialState = {
   lunchspace: {
-    name: 'lunchspace-name',
+    name: 'Ferhat',
     subdomain: 'test-subdomain/',
   },
   profile: {
