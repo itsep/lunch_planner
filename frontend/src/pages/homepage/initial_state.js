@@ -15,6 +15,7 @@ const initialState = {
     {
       id: number,
       name: string,
+      coordiantes: { long: number, lat: number },
       timeStamps: arrayOf({
         key: number,
         hour: number,

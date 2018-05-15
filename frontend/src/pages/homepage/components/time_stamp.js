@@ -20,7 +20,7 @@ const styles = () => ({
     width: '60pt',
     flexShrink: 0,
   },
-  timeStampWithOneJoin: {
+  timeStampWithJoin: {
     transform: 'scale(1.3)',
   },
   clock: {

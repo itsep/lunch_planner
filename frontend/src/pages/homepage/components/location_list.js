@@ -50,7 +50,6 @@ function LocationList({ locations, addLocationAction, classes }) {
         <li>
           <Button
             className={classes.buttonLocation}
-            onClick={() => addLocationAction('test location', locations.length)}
           >
           create location
           </Button>
@@ -59,6 +58,11 @@ function LocationList({ locations, addLocationAction, classes }) {
     </div>
   )
 }
+
+/*
+  in button to create new Event
+  onClick={() => addLocationAction('test location', locations.length + 1)}
+  */
 
 LocationList.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.shape({

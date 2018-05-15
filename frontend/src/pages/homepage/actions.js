@@ -50,7 +50,12 @@ export function requestPageData(lunchspaceSubdomain) {
   }
 }
 
-export function receivePageData(lunchspaceSubdomain, data) {
+export function receivePageData(lunchspaceSubdomain, response) {
+  const data = response
+  data.locations = data.locations.map(location => ({
+    ...location,
+    timeStamps: defaultTimeStamps(),
+  }))
   return {
     type: 'RECEIVE_PAGE_DATA',
     lunchspaceSubdomain,
@@ -72,8 +77,9 @@ export function fetchPageData(lunchspaceSubdomain) {
         return response.json()
       }
       return response.json().then(({ error }) => { throw new Error(error) })
-    }).then(data => dispatch(receivePageData(lunchspaceSubdomain, data)))
+    }).then((data) => {
+      dispatch(receivePageData(lunchspaceSubdomain, data))
+    })
       .catch(error => console.error(error))
   }
 }
-
