@@ -36,7 +36,7 @@ describe('joinEvent', () => {
   })
   describe('create', async () => {
     it('should joinEvent a location in DB', async () => {
-      await expect(joinEvent(testUserId, testLocationId, testTime, testDate)).resolves.not.toThrow
+      await expect(joinEvent(testUserId, testLocationId, testTime, testDate)).resolves.not.toThrow()
     })
   })
   describe('joinEventRoute', async () => {

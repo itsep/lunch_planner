@@ -21,7 +21,7 @@ const testLunchspaceId = 1
 const testIsAdmin = true
 
 
-describe('joinEvent lunchspace', () => {
+describe('create lunchspace', () => {
   beforeAll(createMockDatabase)
   afterAll(dropMockDatabase)
   // Create a Test User in User to prevent foreign key constraints
@@ -39,7 +39,7 @@ describe('joinEvent lunchspace', () => {
     })
   })
   describe('connect', async () => {
-    it('should joinEvent a member_of in DB, without throwing an error', async () => {
+    it('should create a member_of in DB, without throwing an error', async () => {
       await expect(connect(testUserId, testLunchspaceId, testIsAdmin)).resolves.not.toThrow()
     })
     it('should throw an error', async () => {
