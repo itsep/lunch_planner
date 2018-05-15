@@ -11,7 +11,7 @@ function createTimeStamps() {
   for (timeInHours = 6; timeInHours < 20; timeInHours += 0.5) {
     const timeStamp = {
       key: timeInHours * 2,
-      hour: Math.round(timeInHours),
+      hour: Math.floor(timeInHours),
       minute: (timeInHours % 1) * 60,
       userIDs: [],
     }

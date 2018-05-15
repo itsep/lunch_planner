@@ -28,7 +28,7 @@ const styles = () => ({
   buttonLocation: {
     fontSize: 'medium',
     marginTop: '10pt',
-    borderRadius: '25%',
+    borderRadius: '8px',
     borderStyle: 'solid',
     marginLeft: '46%',
     color: '#75a045',

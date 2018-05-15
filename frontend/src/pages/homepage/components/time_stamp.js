@@ -4,32 +4,59 @@ import { Button, Typography } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 
 const styles = () => ({
-  timeStamp: {
+  timeStampWithoutJoin: {
     backgroundColor: 'white',
     height: '60pt',
     width: '60pt',
     flexShrink: 0,
-    marginLeft: '8pt',
-    marginRight: '8pt',
-    marginTop: '15pt',
-    marginBottom: '20pt',
+    marginLeft: '1%',
+    marginRight: '1%',
+    marginTop: '2%',
+    marginBottom: '2%',
     color: '#75a045',
+  },
+  timeStampWithOneJoin: {
+    height: '80pt',
+    width: '80pt',
   },
   clock: {
     fontSize: 'large',
   },
 })
 
-function TimeStamp({ timeStamp, classes }) {
-  const { hour } = timeStamp
-  const minute = timeStamp.minute === 0 ? '00' : timeStamp.minute
-  return (
-    <Button variant="fab" className={classes.timeStamp}>
-      <Typography variant="body1" gutterBottom align="center" className={classes.clock}>
-        {hour}:{minute}
-      </Typography>
-    </Button>
-  )
+class TimeStamp extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      joined: false,
+    }
+    this.changeButton = this.changeButton.bind(this)
+  }
+  changeButton() {
+    this.setState((oldState) => {
+      const newState = {
+        joined: !oldState.joined,
+      }
+      return newState
+    })
+  }
+
+  render() {
+    const { timeStamp, classes } = this.props
+    const { hour } = timeStamp
+    const minute = timeStamp.minute === 0 ? '00' : timeStamp.minute
+    const buttonClasses = [classes.timeStampWithoutJoin]
+    if (this.state.joined) {
+      buttonClasses.push(classes.timeStampWithOneJoin)
+    }
+    return (
+      <Button variant="fab" className={buttonClasses} onClick={this.changeButton}>
+        <Typography variant="body1" gutterBottom align="center" className={classes.clock}>
+          {hour}:{minute}
+        </Typography>
+      </Button>
+    )
+  }
 }
 
 TimeStamp.propTypes = {

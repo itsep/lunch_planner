@@ -15,15 +15,16 @@ const styles = () => ({
     zIndex: 9,
   },
   logo: {
-    backgroundColor: 'black',
-    color: 'white',
+    backgroundColor: 'white',
+    color: '#75a045',
     marginLeft: '0%',
+    fontWeight: 'bolder',
   },
   lunchspace: {
     fontWeight: 'bold',
     testAlign: 'center',
-    backgroundColor: 'black',
-    color: 'white',
+    backgroundColor: 'white',
+    color: '#75a045',
   },
   avatar: {
     marginRight: '3%',

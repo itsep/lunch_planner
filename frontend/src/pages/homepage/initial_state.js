@@ -2,7 +2,7 @@
 
 const initialState = {
   lunchspace: {
-    name: 'Ferhat',
+    name: 'VSF Experts',
     subdomain: 'test-subdomain/',
   },
   profile: {
