@@ -1,14 +1,35 @@
+export function addUser(timeStampID, locationID, userID) {
+  return {
+    type: 'ADD_USER',
+    timeStampID,
+    locationID,
+    userID,
+  }
+}
+
+export function deleteUser(timeStampID, locationID, userID) {
+  return {
+    type: 'DELETE_USER',
+    timeStampID,
+    locationID,
+    userID,
+  }
+}
+
 function defaultTimeStamps() {
   const timeStamps = []
   let timeInHours
+  let counter = 0
   for (timeInHours = 6; timeInHours < 20; timeInHours += 0.5) {
     const timeStamp = {
+      id: counter,
       key: timeInHours * 2,
       hour: Math.floor(timeInHours),
       minute: (timeInHours % 1) * 60,
       userIDs: [],
     }
     timeStamps.push(timeStamp)
+    counter += 1
   }
   return timeStamps
 }
@@ -63,7 +84,6 @@ export function fetchPageData(lunchspaceSubdomain) {
       }
       return response.json().then(({ error }) => { throw new Error(error) })
     }).then((data) => {
-      console.log(data)
       dispatch(receivePageData(lunchspaceSubdomain, data))
     })
       .catch(error => console.error(error))

@@ -56,7 +56,7 @@ function LocationItem({
       </div>
       <div className={classes.container}>
         {timeStamps.map(timeStamp => (
-          <TimeStamp key={timeStamp.key} timeStamp={timeStamp} />
+          <TimeStamp key={timeStamp.key} locationID={id} timeStamp={timeStamp} />
       ))}
       </div>
     </div>

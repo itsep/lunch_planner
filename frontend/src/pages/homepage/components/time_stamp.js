@@ -3,16 +3,39 @@ import PropTypes from 'prop-types'
 import { Button, Typography } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
+import { addUser, deleteUser } from '../actions'
+
+const PREV_USER_ID = 0
+
+const mapStateToProps = state => (state)
 
 const mapDispatchToProps = dispatch => ({
-
+  addUserAction: (timeStampID, locationID, userID) => {
+    dispatch(addUser(timeStampID, locationID, userID))
+  },
+  deleteUserAction: (timeStampID, locationID, userID) => {
+    dispatch(deleteUser(timeStampID, locationID, userID))
+  },
 })
 
 function currentUser(userID) {
-  const t = userID === 0 ? false : false
-  return t
+  return userID === PREV_USER_ID
 }
 
+function getTimeStampClass(classes, timeStamp) {
+  let timeStampClass = classes.timeStamp
+  if (timeStamp.userIDs.length > 0) {
+    timeStampClass = `${timeStampClass} ${classes.timeStampWithJoin}`
+  }
+  timeStamp.userIDs.forEach((userID) => {
+    if (currentUser(userID)) timeStampClass = `${timeStampClass} ${classes.timeStampWithUser}`
+  })
+  return timeStampClass
+}
+
+function isUserJoined(userID, userIDs) {
+  return userIDs.indexOf(userID) !== -1
+}
 
 const styles = () => ({
   timeStampDiv: {
@@ -37,24 +60,26 @@ const styles = () => ({
   },
 })
 
-function TimeStamp({ classes, timeStamp }) {
-  let timeStampClass = classes.timeStamp
-  if (timeStamp.userIDs.length > 0) {
-    timeStampClass = `${timeStampClass} ${classes.timeStampWithJoin}`
-  }
-  timeStamp.userIDs.forEach((userID) => {
-    if (currentUser(userID)) timeStampClass = `${timeStampClass} ${classes.timeStampWithUser}`
-  })
+function TimeStamp({
+  classes, timeStamp, locationID, addUserAction, deleteUserAction,
+}) {
   return (
     <div className={classes.timeStampDiv}>
-      <Button variant="fab" className={timeStampClass}>
+      <Button
+        variant="fab"
+        className={getTimeStampClass(classes, timeStamp)}
+        onClick={() => {
+          if (!isUserJoined(PREV_USER_ID, timeStamp.userIDs)) {
+            addUserAction(timeStamp.id, locationID, PREV_USER_ID)
+          } else { deleteUserAction(timeStamp.id, locationID, PREV_USER_ID) }
+        }}
+      >
         <Typography variant="body1" gutterBottom align="center" className={classes.clock}>
           {timeStamp.hour}:
           {timeStamp.minute.toString().length === 2 ?
             timeStamp.minute : `0${timeStamp.minute}`}
         </Typography>
       </Button>
-      {timeStamp.userIDs.map(userID => <Button>{userID}</Button>)}
     </div>
   )
 }
@@ -64,11 +89,12 @@ TimeStamp.propTypes = {
     key: PropTypes.number.isRequired,
     hour: PropTypes.number.isRequired,
     minute: PropTypes.number.isRequired,
-    userIDs: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    }).isRequired),
+    userIDs: PropTypes.array.isRequired,
   }).isRequired,
+  locationID: PropTypes.number.isRequired,
+  deleteUserAction: PropTypes.func.isRequired,
+  addUserAction: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(connect(mapDispatchToProps)(TimeStamp))
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(TimeStamp))
