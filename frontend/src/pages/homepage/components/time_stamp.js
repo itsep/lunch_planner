@@ -4,14 +4,21 @@ import { Button, Typography } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 
+const mapDispatchToProps = dispatch => ({
+
+})
+
+
 const styles = () => ({
-  timeStampWithoutJoin: {
+  timeStampDiv: {
+    marginLeft: '1%',
+    marginRight: '1%',
+  },
+  timeStamp: {
     backgroundColor: 'white',
     height: '60pt',
     width: '60pt',
     flexShrink: 0,
-    marginLeft: '1%',
-    marginRight: '1%',
   },
   timeStampWithOneJoin: {
     transform: 'scale(1.3)',
@@ -22,30 +29,17 @@ const styles = () => ({
   },
 })
 
-function changeButton() {
-  this.setState((oldState) => {
-    const newState = {
-      joined: !oldState.joined,
-    }
-    return newState
-  })
-}
-
 function TimeStamp({ classes, timeStamp }) {
-  const {
-    timeStampClass,
-    hour,
-    minute,
-    userIDs,
-  } = { timeStamp }
   return (
-    <div>
-      <Button variant="fab" className={timeStampClass} onClick={changeButton}>
+    <div className={classes.timeStampDiv}>
+      <Button variant="fab" className={classes.timeStamp}>
         <Typography variant="body1" gutterBottom align="center" className={classes.clock}>
-          {hour}:{minute}
+          {timeStamp.hour}:
+          {timeStamp.minute.toString().length === 2 ?
+            timeStamp.minute : `0${timeStamp.minute}`}
         </Typography>
       </Button>
-      {userIDs.map(userID => <Button>{userID}</Button>)}
+      {timeStamp.userIDs.map(userID => <Button>{userID}</Button>)}
     </div>
   )
 }

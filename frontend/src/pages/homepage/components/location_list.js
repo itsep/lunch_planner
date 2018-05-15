@@ -4,15 +4,15 @@ import { connect } from 'react-redux'
 import { Button } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import LocationItem from './location'
-import addLocationAction from '../actions'
+import { addLocation } from '../actions'
 
 const mapStateToProps = state => ({
   locations: state.locations,
 })
 
 const mapDispatchToProps = dispatch => ({
-  addLocation: () => {
-    dispatch(addLocationAction())
+  addLocationAction: (name, id) => {
+    dispatch(addLocation(name, id))
   },
 })
 
@@ -38,19 +38,19 @@ const styles = () => ({
   },
 })
 
-function LocationList({ locations, addLocation, classes }) {
+function LocationList({ locations, addLocationAction, classes }) {
   return (
     <div>
       <ul className={classes.locationList}>
         {locations.map((location => (
           <li key={location.id}>
-            <LocationItem id={location.id} name={location.name} />
+            <LocationItem id={location.id} name={location.name} timeStamps={location.timeStamps} />
           </li>
           )))}
         <li>
           <Button
             className={classes.buttonLocation}
-            onClick={addLocation}
+            onClick={() => addLocationAction('test location', locations.length)}
           >
           create location
           </Button>
@@ -65,7 +65,7 @@ LocationList.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired).isRequired,
-  addLocation: PropTypes.func.isRequired,
+  addLocationAction: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 }
 

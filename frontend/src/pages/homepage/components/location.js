@@ -5,12 +5,10 @@ import { Avatar, Button, Typography } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 import TimeStamp from './time_stamp'
-import { addTimeStamps } from '../actions'
+import {  } from '../actions'
 
 const mapDispatchToProps = dispatch => ({
-  timeStampAdder: (id) => {
-    dispatch(addTimeStamps(id))
-  },
+
 })
 
 const styles = () => ({
@@ -49,9 +47,8 @@ const styles = () => ({
 })
 
 function LocationItem({
-  id, name, timeStamps, classes, timeStampAdder,
+  id, name, timeStamps, classes,
 }) {
-  timeStampAdder(id)
   return (
     <div className={classes.wrapper}>
       <div>
@@ -71,7 +68,6 @@ LocationItem.propTypes = {
   name: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   timeStamps: PropTypes.array.isRequired,
-  timeStampAdder: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(connect(mapDispatchToProps)(LocationItem))

@@ -1,10 +1,4 @@
-export function addLocation() {
-  return {
-    type: 'ADD_LOCATION',
-  }
-}
-
-function createTimeStamps() {
+function defaultTimeStamps() {
   const timeStamps = []
   let timeInHours
   for (timeInHours = 6; timeInHours < 20; timeInHours += 0.5) {
@@ -19,11 +13,33 @@ function createTimeStamps() {
   return timeStamps
 }
 
-export function addTimeStamps(id) {
+/*
+  locations is an array of many locations. One location has the shape of:
+    {
+      id: number,
+      name: string,
+      timeStamps: arrayOf({
+        key: number,
+        hour: number,
+        minute: number,
+        userIDs: arrayOf({
+          id: number,
+        })
+    }
+ */
+
+function createLocation(name, id) {
   return {
-    type: 'ADD_TIMESTAMPS',
-    timeStamps: createTimeStamps(),
-    locationID: id,
+    id,
+    name,
+    timeStamps: defaultTimeStamps(),
+  }
+}
+
+export function addLocation(locationName, locationID) {
+  return {
+    type: 'ADD_LOCATION',
+    location: createLocation(locationName, locationID),
   }
 }
 

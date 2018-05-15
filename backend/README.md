@@ -13,8 +13,9 @@ npm install
 ## Use MariaDB User
 create .env File in form:
 ```bash
-DATABASE_USERNAME = *your database username*
-DATABASE_PASSWORD = *your database your password*
+DATABASE_USERNAME=*your database username*
+DATABASE_PASSWORD=*your database your password*
+SECRET=*your jasonwebtoken secret*
 ```
 
 ## Testing
