@@ -10,6 +10,16 @@ export default function (state = initialState, action) {
           userIds: [],
         }]),
       })
+    case 'REQUEST_PAGE_DATA':
+      return Object.assign({}, state, {
+        isLoading: true,
+      })
+    case 'RECEIVE_PAGE_DATA':
+      return Object.assign({}, state, {
+        isLoading: false,
+        locations: action.data.locations,
+        participants: action.data.participants,
+      })
     default: return state
   }
 }

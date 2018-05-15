@@ -21,13 +21,13 @@ export function receivePageData(lunchspaceSubdomain, data) {
 
 export function fetchPageData(lunchspaceSubdomain) {
   return (dispatch) => {
-    dispatch(receivePageData(lunchspaceSubdomain))
-    return fetch('/api/locations', {
+    dispatch(requestPageData(lunchspaceSubdomain))
+    return fetch('/api/location', {
       headers: {
         'content-type': 'application/json',
+        subdomain: lunchspaceSubdomain,
       },
       credentials: 'same-origin',
-      body: JSON.stringify({ lunchspaceSubdomain }),
     }).then((response) => {
       if (response.ok) {
         return response.json()
