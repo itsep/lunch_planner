@@ -2,6 +2,6 @@
 
 exports[`Homepage_app renders correctly 1`] = `
 <h1>
-  hi
+  test
 </h1>
 `;
