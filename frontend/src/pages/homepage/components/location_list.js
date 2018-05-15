@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Button } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import LocationItem from './location'
-import addLocationAction from './actions'
+import addLocationAction from '../actions'
 
 const mapStateToProps = state => ({
   locations: state.locations,
