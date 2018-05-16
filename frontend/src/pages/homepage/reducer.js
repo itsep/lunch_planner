@@ -8,6 +8,12 @@ so its easier to search for an statechange
 /*
 where do function come in?
  */
+
+/*
+there is something to do
+when the state gets changed by some functions, there should be an call,
+to send requests to the backend and thend get the current state of the db again
+ */
 export default function (state = initialState, action) {
   switch (action.type) {
     case 'ADD_LOCATION':
