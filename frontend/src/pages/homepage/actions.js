@@ -1,6 +1,8 @@
+import actionTypes from './action_types'
+
 export function addUser(timeStampID, locationID, userID) {
   return {
-    type: 'ADD_USER',
+    type: actionTypes.ADD_USER,
     timeStampID,
     locationID,
     userID,
@@ -9,7 +11,7 @@ export function addUser(timeStampID, locationID, userID) {
 
 export function deleteUser(timeStampID, locationID, userID) {
   return {
-    type: 'DELETE_USER',
+    type: actionTypes.DELETE_USER,
     timeStampID,
     locationID,
     userID,
@@ -80,14 +82,14 @@ function createLocation(name, id) {
 
 export function addLocation(locationName, locationID) {
   return {
-    type: 'ADD_LOCATION',
+    type: actionTypes.ADD_LOCATION,
     location: createLocation(locationName, locationID),
   }
 }
 
 export function requestPageData(lunchspaceSubdomain) {
   return {
-    type: 'REQUEST_PAGE_DATA',
+    type: actionTypes.REQUEST_PAGE_DATA,
     lunchspaceSubdomain,
   }
 }
@@ -99,7 +101,7 @@ export function receivePageData(lunchspaceSubdomain, response) {
     timeStamps: initialTimeStamps(location.id, data.participants),
   }))
   return {
-    type: 'RECEIVE_PAGE_DATA',
+    type: actionTypes.RECEIVE_PAGE_DATA,
     lunchspaceSubdomain,
     data,
   }
