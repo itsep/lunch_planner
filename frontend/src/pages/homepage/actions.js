@@ -39,12 +39,14 @@ function defaultTimeStamps() {
 
 /*
 should insert participants into correct timestamps
+is not working perfectly right now
  */
 function initialTimeStamps(locationID, participants) {
   let timeStamps = defaultTimeStamps()
   participants.forEach((participant) => {
     if (locationID === participant.locationId) {
       timeStamps = timeStamps.map((timeStamp) => {
+        //sometimes timestamp is undefined??
         if (timeStamp && `${timeStamp.hour}:${timeStamp.minute}:00` === participant.eventTime) {
           return {
             ...timeStamp,
