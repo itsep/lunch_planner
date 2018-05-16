@@ -38,7 +38,7 @@ const styles = () => ({
   },
 })
 
-function LocationList({ locations, addLocationAction, classes }) {
+function LocationList({ locations, classes }) {
   return (
     <div>
       <ul className={classes.locationList}>
@@ -69,7 +69,6 @@ LocationList.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired).isRequired,
-  addLocationAction: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 }
 

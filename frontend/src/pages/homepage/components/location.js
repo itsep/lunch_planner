@@ -5,7 +5,7 @@ import { Avatar, Button, Typography } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 import TimeStamp from './time_stamp'
-import {  } from '../actions'
+import {} from '../actions'
 
 /*
 no dispatch to props without state to props possible
