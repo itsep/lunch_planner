@@ -37,6 +37,12 @@ function defaultTimeStamps() {
   return timeStamps
 }
 
+function toEventTime(timeStamp) {
+  const hours = timeStamp.hour < 10 ? `0${timeStamp.hour}` : `${timeStamp.hour}`
+  const minutes = timeStamp.minute < 10 ? `0${timeStamp.minute}` : `${timeStamp.minute}`
+  return `${hours}:${minutes}:00`
+}
+
 /*
 should insert participants into correct timestamps
 is not working perfectly right now
@@ -46,8 +52,12 @@ function initialTimeStamps(locationID, participants) {
   participants.forEach((participant) => {
     if (locationID === participant.locationId) {
       timeStamps = timeStamps.map((timeStamp) => {
-        //sometimes timestamp is undefined??
-        if (timeStamp && `${timeStamp.hour}:${timeStamp.minute}:00` === participant.eventTime) {
+        // sometimes timestamp is undefined??
+        if (!timeStamp) {
+          return timeStamp
+        }
+        const eventTime = toEventTime(timeStamp)
+        if (eventTime === participant.eventTime) {
           return {
             ...timeStamp,
             userIDs: [participant.userId, ...timeStamp.userIDs],
