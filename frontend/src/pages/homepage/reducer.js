@@ -49,7 +49,8 @@ export default function (state = initialState, action) {
               if (timeStamp.id === action.timeStampID) {
                 const newTimeStamp = timeStamp
                 // array like old userIDs just with the new one added
-                newTimeStamp.userIDs = [action.userID, ...timeStamp.userIDs]
+                newTimeStamp.userIDs = [...timeStamp.userIDs, action.user.userId]
+                newTimeStamp.participants = [...timeStamp.participants, action.user]
                 return newTimeStamp
               }
               return timeStamp
@@ -76,7 +77,8 @@ export default function (state = initialState, action) {
                 array like old userIDs just whenever an userID is like the one that should get
                 deleted, it gets deleted out of the array
                 */
-                newTimeStamp.userIDs = timeStamp.userIDs.filter(userID => userID !== action.userID)
+                newTimeStamp.userIDs = timeStamp.userIDs.filter(userID => userID !== action.user.userId)
+                newTimeStamp.participants = timeStamp.participants.filter(user => user.userId !== action.user.userId)
                 return newTimeStamp
               }
               return timeStamp

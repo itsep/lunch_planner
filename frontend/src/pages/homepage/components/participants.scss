@@ -1,0 +1,117 @@
+$item-count: 8;
+$circle-size: 80px;
+
+.time-stamp {
+  transition: 400ms transform;
+  &.participant-count-1 {
+    transform: scale(1.1);
+  }
+  &.participant-count-2 {
+    transform: scale(1.2);
+  }
+  &.participant-count-3 {
+    transform: scale(1.3);
+  }
+  &.participant-count-4 {
+    transform: scale(1.4);
+  }
+  &.participant-count-5 {
+    transform: scale(1.5);
+  }
+  &.participant-count-6 {
+    transform: scale(1.6);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@mixin rotate($radius, $angle) {
+  transform:
+          rotate($angle * 1deg)
+          translate($radius)
+          rotate($angle * -1deg);
+}
+.participants {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  .avatar-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: 400ms transform;
+    div{
+      margin: -50%;
+      margin: -50%;
+      animation: 400ms fade-in;
+    }
+  }
+  $bottom-angle: 90;
+  $top-angle: -90;
+  $radius: $circle-size/2;
+  &.participant-count-1 .avatar-container{
+    &:nth-of-type(1) {
+      @include rotate($circle-size/2, 90);
+    }
+  }
+  &.participant-count-2 .avatar-container{
+    &:nth-of-type(1) {
+      @include rotate($radius, $bottom-angle + 20);
+    }
+    &:nth-of-type(2) {
+      @include rotate($radius, $bottom-angle - 20);
+    }
+  }
+  &.participant-count-3,
+  &.participant-count-4,
+  &.participant-count-5,
+  &.participant-count-6 {
+    .avatar-container{
+      &:nth-of-type(1) {
+        @include rotate($radius, $bottom-angle + 35);
+      }
+      &:nth-of-type(2) {
+        @include rotate($radius, $bottom-angle);
+      }
+      &:nth-of-type(3) {
+        @include rotate($radius, $bottom-angle - 35);
+      }
+    }
+  }
+
+  &.participant-count-4 .avatar-container{
+    &:nth-of-type(4) {
+      @include rotate($radius, $top-angle);
+    }
+  }
+  &.participant-count-5 .avatar-container{
+    &:nth-of-type(4) {
+      @include rotate($radius, $top-angle - 20);
+    }
+    &:nth-of-type(5) {
+      @include rotate($radius, $top-angle + 20);
+    }
+  }
+  &.participant-count-6 .avatar-container{
+    &:nth-of-type(4) {
+      @include rotate($radius, $top-angle - 35);
+    }
+    &:nth-of-type(5) {
+      @include rotate($radius, $top-angle);
+    }
+    &:nth-of-type(6) {
+      @include rotate($radius, $top-angle + 35);
+    }
+  }
+}

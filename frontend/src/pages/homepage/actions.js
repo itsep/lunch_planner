@@ -1,20 +1,20 @@
 import actionTypes from './action_types'
 
-export function addUser(timeStampID, locationID, userID) {
+export function addUser(timeStampID, locationID, user) {
   return {
     type: actionTypes.ADD_USER,
     timeStampID,
     locationID,
-    userID,
+    user,
   }
 }
 
-export function deleteUser(timeStampID, locationID, userID) {
+export function deleteUser(timeStampID, locationID, user) {
   return {
     type: actionTypes.DELETE_USER,
     timeStampID,
     locationID,
-    userID,
+    user,
   }
 }
 
@@ -32,6 +32,7 @@ function defaultTimeStamps() {
       hour: Math.floor(timeInHours),
       minute: (timeInHours % 1) * 60,
       userIDs: [],
+      participants: [],
     }
     timeStamps.push(timeStamp)
     counter += 1
@@ -63,6 +64,7 @@ function initialTimeStamps(locationID, participants) {
           return {
             ...timeStamp,
             userIDs: [participant.userId, ...timeStamp.userIDs],
+            participants: [participant, ...timeStamp.participants],
           }
         }
         return timeStamp

@@ -3,24 +3,30 @@ import PropTypes from 'prop-types'
 import { Button, Typography } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
+import UserAvatar from './user_avatar'
 import { addUser, deleteUser } from '../actions'
+import './participants.scss'
 
-const PREV_USER_ID = 0
+const myUser = {
+  userId: 1,
+  firstName: 'David',
+  lastName: 'Nadoba',
+}
 
 // allway need mapstate to props, maybe some kind of default mapstate?
 const mapStateToProps = state => (state)
 
 const mapDispatchToProps = dispatch => ({
-  addUserAction: (timeStampID, locationID, userID) => {
-    dispatch(addUser(timeStampID, locationID, userID))
+  addUserAction: (timeStampID, locationID, user) => {
+    dispatch(addUser(timeStampID, locationID, user))
   },
-  deleteUserAction: (timeStampID, locationID, userID) => {
-    dispatch(deleteUser(timeStampID, locationID, userID))
+  deleteUserAction: (timeStampID, locationID, user) => {
+    dispatch(deleteUser(timeStampID, locationID, user))
   },
 })
 
 function currentUser(userID) {
-  return userID === PREV_USER_ID
+  return userID === myUser.userId
 }
 
 /*
@@ -46,8 +52,7 @@ function isUserJoined(userID, userIDs) {
 
 const styles = () => ({
   timeStampDiv: {
-    marginLeft: '1%',
-    marginRight: '1%',
+    margin: '24px 16px',
   },
   timeStamp: {
     backgroundColor: 'white',
@@ -56,7 +61,7 @@ const styles = () => ({
     flexShrink: 0,
   },
   timeStampWithJoin: {
-    transform: 'scale(1.5)',
+    // transform: 'scale(1.5)',
   },
   timeStampWithUser: {
     backgroundColor: 'green',
@@ -71,14 +76,14 @@ function TimeStamp({
   classes, timeStamp, locationID, addUserAction, deleteUserAction,
 }) {
   return (
-    <div className={classes.timeStampDiv}>
+    <div className={`${classes.timeStampDiv} time-stamp participant-count-${timeStamp.participants.length}`}>
       <Button
         variant="fab"
         className={getTimeStampClass(classes, timeStamp)}
         onClick={() => {
-          if (!isUserJoined(PREV_USER_ID, timeStamp.userIDs)) {
-            addUserAction(timeStamp.id, locationID, PREV_USER_ID)
-          } else { deleteUserAction(timeStamp.id, locationID, PREV_USER_ID) }
+          if (!isUserJoined(myUser.userId, timeStamp.userIDs)) {
+            addUserAction(timeStamp.id, locationID, myUser)
+          } else { deleteUserAction(timeStamp.id, locationID, myUser) }
         }}
       >
         <Typography variant="body1" gutterBottom align="center" className={classes.clock}>
@@ -86,6 +91,9 @@ function TimeStamp({
           {timeStamp.minute.toString().length === 2 ?
             timeStamp.minute : `0${timeStamp.minute}`}
         </Typography>
+        <div className={`participants participant-count-${timeStamp.participants.length}`}>
+          {timeStamp.participants.map(user => <div className="avatar-container"><UserAvatar user={user} /></div>)}
+        </div>
       </Button>
     </div>
   )

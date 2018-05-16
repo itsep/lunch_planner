@@ -23,11 +23,11 @@ const styles = () => ({
   container: {
     padding: '2%',
     display: 'flex',
-    overflowY: 'auto',
+    overflowY: 'hidden',
+    overflowX: 'auto',
     '&::-webkit-scrollbar': {
       height: '10px',
-      backgroundColor: '#75a045',
-      borderRadius: '10px',
+      backgroundColor: 'transparent',
     },
     '&::-webkit-scrollbar-thumb': {
       background: 'black',
@@ -45,7 +45,6 @@ const styles = () => ({
     borderStyle: 'solid',
     color: '#75a045',
     fontWeight: 'bolder',
-    width: '15%',
   },
 })
 
