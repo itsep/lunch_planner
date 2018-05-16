@@ -27,7 +27,6 @@ INSERT INTO `account` VALUES (4,'1622019@stud.hs-mannheim.de','$2b$13$s1/sOos9GP
 INSERT INTO `account` VALUES (5,'1529702@stud.hs-mannheim.de','$2b$13$opJdGxl0na0PjELj7IJ4cuENdX9z/MFeGVGMjR8FtH.w.3w7zMzrK',5);
 INSERT INTO `account` VALUES (6,'ortega_marcel@yahoo.de','$2b$13$oWXw2UKkjnfn4AH12ylvFe6Hyi4.mwL.JBvDd4fycKpD0q7KDM7mu',6);
 INSERT INTO `account` VALUES (7,'LuShanty@freenet.de','$2b$13$Lqwe0Cbo57P/aP5IskPDjO9RRp9PO.53VMpfiXefhv1/vwh4vlGf2',7);
-INSERT INTO `account` VALUES (8,'test-login@email.com','$2b$13$HYHYcDqYFULG/PDYOAMpWO.UUn2ekrP28Jgpotm1jxZQ/TDqg4VWC',NULL);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,7 +58,6 @@ INSERT INTO `join_up_at` VALUES (3, 1, '13:00', '16.05.2018');
 INSERT INTO `join_up_at` VALUES (4, 1, '13:00', '16.05.2018');
 INSERT INTO `join_up_at` VALUES (4, 1, '14:30', '16.05.2018');
 INSERT INTO `join_up_at` VALUES (1, 2, '12:00', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (8, 2, '12:30', '16.05.2018');
 INSERT INTO `join_up_at` VALUES (5, 3, '13:00', '16.05.2018');
 INSERT INTO `join_up_at` VALUES (6, 4, '14:30', '16.05.2018');
 INSERT INTO `join_up_at` VALUES (7, 4, '15:00', '16.05.2018');
