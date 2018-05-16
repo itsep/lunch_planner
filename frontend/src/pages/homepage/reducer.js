@@ -47,6 +47,7 @@ export default function (state = initialState, action) {
             newLocation.timeStamps = newLocation.timeStamps.map((timeStamp) => {
               if (timeStamp.id === action.timeStampID) {
                 const newTimeStamp = timeStamp
+                // array like old userIDs just with the new one added
                 newTimeStamp.userIDs = [action.userID, ...timeStamp.userIDs]
                 return newTimeStamp
               }
@@ -70,6 +71,10 @@ export default function (state = initialState, action) {
             newLocation.timeStamps = newLocation.timeStamps.map((timeStamp) => {
               if (timeStamp.id === action.timeStampID) {
                 const newTimeStamp = timeStamp
+                /*
+                array like old userIDs just whenever an userID is like the one that should get
+                deleted, it gets deleted out of the array
+                */
                 newTimeStamp.userIDs = timeStamp.userIDs.filter(userID => userID !== action.userID)
                 return newTimeStamp
               }
