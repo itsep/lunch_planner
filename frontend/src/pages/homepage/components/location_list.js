@@ -61,7 +61,7 @@ function LocationList({ locations, addLocationAction, classes }) {
 
 /*
   in button to create new Event
-  onClick={() => addLocationAction('test location', locations.length + 1)}
+  onClick={() => addLocationAction(newLocationName, newLocationID)}
   */
 
 LocationList.propTypes = {

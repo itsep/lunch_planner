@@ -7,6 +7,7 @@ import { addUser, deleteUser } from '../actions'
 
 const PREV_USER_ID = 0
 
+// allway need mapstate to props, maybe some kind of default mapstate?
 const mapStateToProps = state => (state)
 
 const mapDispatchToProps = dispatch => ({
@@ -22,17 +23,23 @@ function currentUser(userID) {
   return userID === PREV_USER_ID
 }
 
+/*
+return string of concatitantion of all classes the timestamp has
+ */
 function getTimeStampClass(classes, timeStamp) {
   let timeStampClass = classes.timeStamp
+  // if he has users in the timestamp, he should get bigger
   if (timeStamp.userIDs.length > 0) {
     timeStampClass = `${timeStampClass} ${classes.timeStampWithJoin}`
   }
+  // if current User is in timestamp, it should get green
   timeStamp.userIDs.forEach((userID) => {
     if (currentUser(userID)) timeStampClass = `${timeStampClass} ${classes.timeStampWithUser}`
   })
   return timeStampClass
 }
 
+// is current userID in the array of users
 function isUserJoined(userID, userIDs) {
   return userIDs.indexOf(userID) !== -1
 }

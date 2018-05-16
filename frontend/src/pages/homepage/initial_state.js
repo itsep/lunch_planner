@@ -1,4 +1,4 @@
-// TODO: initial state aus DB holen
+// TODO: everything should be empty
 
 const initialState = {
   lunchspace: {

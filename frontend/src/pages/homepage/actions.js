@@ -16,6 +16,9 @@ export function deleteUser(timeStampID, locationID, userID) {
   }
 }
 
+/*
+creates array with empty timestamps
+ */
 function defaultTimeStamps() {
   const timeStamps = []
   let timeInHours
@@ -34,6 +37,9 @@ function defaultTimeStamps() {
   return timeStamps
 }
 
+/*
+should insert participants into correct timestamps
+ */
 function initialTimeStamps(locationID, participants) {
   let timeStamps = defaultTimeStamps()
   participants.forEach((participant) => {
@@ -87,6 +93,9 @@ export function receivePageData(lunchspaceSubdomain, response) {
   }
 }
 
+/*
+gets data of backend and change state with dispatch
+ */
 export function fetchPageData(lunchspaceSubdomain) {
   return (dispatch) => {
     dispatch(requestPageData(lunchspaceSubdomain))

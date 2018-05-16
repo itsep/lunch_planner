@@ -7,6 +7,9 @@ import { connect } from 'react-redux'
 import TimeStamp from './time_stamp'
 import {  } from '../actions'
 
+/*
+no dispatch to props without state to props possible
+ */
 const mapDispatchToProps = dispatch => ({
 
 })
