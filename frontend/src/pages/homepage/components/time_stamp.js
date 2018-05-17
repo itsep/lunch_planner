@@ -77,7 +77,6 @@ function TimeStamp({
         variant="fab"
         className={getTimeStampClass(classes, timeStamp, user)}
         onClick={() => {
-          console.log('click', isUserJoined(user.id, timeStamp.userIDs))
           if (!isUserJoined(user.id, timeStamp.userIDs)) {
             addUserAction(timeStamp.id, locationID, user)
           } else { deleteUserAction(timeStamp.id, locationID, user) }
