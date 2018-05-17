@@ -25,16 +25,20 @@ const styles = () => ({
     listStyleType: 'none',
     zIndex: 0,
   },
+  createButtonBox: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   buttonLocation: {
-    fontSize: 'medium',
+    fontSize: 'large',
     marginTop: '10pt',
-    borderRadius: '8px',
+    marginBottom: '2pt',
+    marginLeft: '1%',
+    borderRadius: '100px',
+    borderWidth: '1px',
     borderStyle: 'solid',
-    marginLeft: '46%',
     color: '#75a045',
-    fontWeight: 'bolder',
-    borderWidth: '4px',
-    backgroundColor: 'white',
   },
 })
 
@@ -48,11 +52,13 @@ function LocationList({ locations, classes }) {
           </li>
           )))}
         <li>
-          <Button
-            className={classes.buttonLocation}
-          >
-          create location
-          </Button>
+          <div className={classes.createButtonBox}>
+            <Button
+              className={classes.buttonLocation}
+            >
+              create location
+            </Button>
+          </div>
         </li>
       </ul>
     </div>

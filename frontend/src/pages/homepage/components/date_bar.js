@@ -10,20 +10,17 @@ const styles = () => ({
     padding: 0,
     margin: 0,
     listStyle: 'none',
+    height: '25px',
+    backgroundColor: 'grey',
     display: 'flex',
     justifyContent: 'space-between',
   },
   flexItem: {
-    background: '#75a045',
-    padding: '5px',
+    padding: 0,
+    margin: 0,
     width: '100%',
-    height: '20px',
-    marginTop: '70px',
-    marginLeft: '1%',
-    marginRight: '1%',
-
-    borderRadius: '8px',
-    lineHeight: '20px',
+    minHeight: 0,
+    borderRadius: 0,
     color: 'white',
     fontWeight: 'bolder',
   },
@@ -35,17 +32,19 @@ const mapStateToProps = state => ({
 })
 
 function DateBar({ classes }) {
+  const nextDay = '>'
+  const previosDay = '<'
   return (
     <div>
       <ul className={classes.flexContainer}>
-        <Button variant="raised" className={classes.flexItem}>
-            yesterday
+        <Button color="default" className={classes.flexItem}>
+          {previosDay}
         </Button>
-        <Button variant="raised" className={classes.flexItem}>
+        <Button color="default" className={classes.flexItem}>
             today
         </Button>
-        <Button variant="raised" className={classes.flexItem}>
-            tomorrow
+        <Button color="default" className={classes.flexItem}>
+          {nextDay}
         </Button>
       </ul>
     </div>
