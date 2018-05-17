@@ -7,9 +7,8 @@ import { connect } from 'react-redux'
 import TimeStamp from './time_stamp'
 import {} from '../actions'
 
-/*
-no dispatch to props without state to props possible
- */
+const mapStateToProps = null
+
 const mapDispatchToProps = dispatch => ({
 
 })
@@ -72,4 +71,4 @@ LocationItem.propTypes = {
   timeStamps: PropTypes.array.isRequired,
 }
 
-export default withStyles(styles)(connect(mapDispatchToProps)(LocationItem))
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(LocationItem))
