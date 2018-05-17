@@ -22,10 +22,10 @@ describe('event', () => {
   })
   describe('toEventTimeId', () => {
     it('should create a valid event time id', () => {
-      expect(toEventTimeId({hour: 0, minute: 0})).toEqual('00:00:00')
-      expect(toEventTimeId({hour: 24, minute: 60})).toEqual('24:60:00')
-      expect(toEventTimeId({hour: 9, minute: 9})).toEqual('09:09:00')
-      expect(toEventTimeId({hour: 10, minute: 10})).toEqual('10:10:00')
+      expect(toEventTimeId({ hour: 0, minute: 0 })).toEqual('00:00:00')
+      expect(toEventTimeId({ hour: 24, minute: 60 })).toEqual('24:60:00')
+      expect(toEventTimeId({ hour: 9, minute: 9 })).toEqual('09:09:00')
+      expect(toEventTimeId({ hour: 10, minute: 10 })).toEqual('10:10:00')
     })
   })
 })

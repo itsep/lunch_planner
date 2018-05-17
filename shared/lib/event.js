@@ -6,7 +6,7 @@ function toEventTimeId(eventTime) {
 }
 
 function toEventDate(date) {
-  return  {
+  return {
     day: date.getDate(),
     month: date.getMonth() + 1,
     year: date.getFullYear(),
