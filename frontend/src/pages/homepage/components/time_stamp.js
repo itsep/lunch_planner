@@ -65,14 +65,15 @@ const styles = () => ({
   },
   timeStamp: {
     backgroundColor: 'white',
-    height: '60pt',
-    width: '60pt',
+    height: '80px',
+    width: '80px',
     flexShrink: 0,
-  },
-  timeStampWithUser: {
-    transform: 'scale(1.1)',
+    transition: '400ms border-color',
     borderStyle: 'solid',
     borderWidth: '4px',
+    borderColor: 'transparent',
+  },
+  timeStampWithUser: {
     borderColor: '#75A045',
   },
   clock: {
