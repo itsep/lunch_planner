@@ -1,6 +1,5 @@
 import initialState from './initial_state'
 import actionTypes from './action_types'
-import { toEventTimeId} from 'shared/lib/event'
 
 /*
 reducer should get split to multiple reducer and then with combine(reducerList) combined in the end
