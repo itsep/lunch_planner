@@ -28,7 +28,7 @@ describe('get locations', () => {
       .create(testLocationName, testLocationCoordinates, testLunchspaceId)
   })
   it('should return locations and participants', async () => {
-    const { locations } = await getLocationsAndParticipants(testLunchspaceId)
+    const { locations } = await getLocationsAndParticipants(testLunchspaceId, '12:30')
     const expected = expect.objectContaining({
       id: testLocationId,
       name: testLocationName,
