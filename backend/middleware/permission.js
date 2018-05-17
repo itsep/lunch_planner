@@ -33,5 +33,6 @@ async function checkPermission(req) {
 }
 
 module.exports = {
+  asyncCheckPermission: checkPermission,
   checkPermission: asyncMiddleware(checkPermission),
 }

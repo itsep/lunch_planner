@@ -2,7 +2,7 @@ const { asyncMiddleware } = require('../lib/asyncMiddleware')
 const { AuthenticationError } = require('../lib/error')
 const { pool } = require('../lib/database')
 
-async function getUser(req) {
+async function asyncGetUser(req) {
   if (!req.token) {
     throw new AuthenticationError('No token in request. The authentication middleware must be before the getUser middleware.')
   }
@@ -20,5 +20,6 @@ WHERE user.id = ?`, [userId])
 }
 
 module.exports = {
-  getUser: asyncMiddleware(getUser),
+  asyncGetUser,
+  getUser: asyncMiddleware(asyncGetUser),
 }

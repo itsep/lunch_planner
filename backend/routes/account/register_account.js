@@ -9,12 +9,13 @@ const maximumLength = 24
 async function create(email, password, firstName, lastName) {
   const hashedPassword = await hash(password)
   return pool.useConnection(async (conn) => {
-    const [result] = await conn.execute('INSERT INTO user (first_name, last_name)' +
+    const [userCreateResult] = await conn.execute('INSERT INTO user (first_name, last_name)' +
     'VALUES (?,?)', [firstName, lastName])
-    const userId = result.insertId
-    await conn.execute('INSERT INTO account (email, hashed_password, user_id) ' +
+    const userId = userCreateResult.insertId
+    const [accountCreateResult] = await conn.execute('INSERT INTO account (email, hashed_password, user_id) ' +
       'VALUES (?,?,?)', [email, hashedPassword, userId])
-    return userId
+    const accountId = accountCreateResult.insertId
+    return { userId, accountId }
   })
 }
 
@@ -33,7 +34,7 @@ async function registerAccount(req, res) {
     return res.status(409).json({ error: 'Invalid email address' })
   }
   try {
-    const userId = await create(email, password, firstName, lastName)
+    const { userId } = await create(email, password, firstName, lastName)
     const token = stringifyToken(userId)
     res.cookie(
       'lunch_planner_token',

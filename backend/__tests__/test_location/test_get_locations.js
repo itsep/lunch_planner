@@ -22,19 +22,18 @@ describe('get locations', () => {
   beforeAll(createMockDatabase)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    await account.create(testEmail, testPassword, testFirstName, testLastName)
-    testLunchspaceId = await createLunchspace(1, testSpaceName, testSpaceSubdomain)
+    const { userId } = await account.create(testEmail, testPassword, testFirstName, testLastName)
+    testLunchspaceId = await createLunchspace(userId, testSpaceName, testSpaceSubdomain)
     testLocationId = await location
       .create(testLocationName, testLocationCoordinates, testLunchspaceId)
   })
   it('should return locations and participants', async () => {
     const { locations } = await getLocationsAndParticipants(testLunchspaceId)
-    const expected = expect.objectContaining({
+    expect(locations[0]).toMatchObject({
       id: testLocationId,
       name: testLocationName,
       coordinates: testLocationCoordinates,
     })
-    expect(locations[0]).toEqual(expected)
     expect(locations.length).toEqual(1)
   })
   it('should result with status 200', async () => {
