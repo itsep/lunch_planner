@@ -56,11 +56,11 @@ const styles = () => ({
     width: '60pt',
     flexShrink: 0,
   },
-  timeStampWithJoin: {
-    // transform: 'scale(1.5)',
-  },
   timeStampWithUser: {
-    backgroundColor: 'green',
+    transform: 'scale(1.1)',
+    borderStyle: 'solid',
+    borderWidth: '4px',
+    borderColor: '#75A045',
   },
   clock: {
     fontSize: 'large',
