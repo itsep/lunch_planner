@@ -7,31 +7,28 @@ import UserAvatar from './user_avatar'
 import { addUser, deleteUser } from '../actions'
 import './participants.scss'
 
-const myUser = {
-  userId: 1,
-  firstName: 'David',
-  lastName: 'Nadoba',
+function participantFrom(user) {
+  return {
+    ...user,
+    userId: user.id,
+  }
 }
 
-const mapStateToProps = null
+const mapStateToProps = state => ({ user: state.user })
 
 const mapDispatchToProps = dispatch => ({
   addUserAction: (timeStampID, locationID, user) => {
-    dispatch(addUser(timeStampID, locationID, user))
+    dispatch(addUser(timeStampID, locationID, participantFrom(user)))
   },
   deleteUserAction: (timeStampID, locationID, user) => {
-    dispatch(deleteUser(timeStampID, locationID, user))
+    dispatch(deleteUser(timeStampID, locationID, participantFrom(user)))
   },
 })
-
-function currentUser(userID) {
-  return userID === myUser.userId
-}
 
 /*
 return string of concatitantion of all classes the timestamp has
  */
-function getTimeStampClass(classes, timeStamp) {
+function getTimeStampClass(classes, timeStamp, user) {
   let timeStampClass = classes.timeStamp
   // if he has users in the timestamp, he should get bigger
   if (timeStamp.userIDs.length > 0) {
@@ -39,7 +36,7 @@ function getTimeStampClass(classes, timeStamp) {
   }
   // if current User is in timestamp, it should get green
   timeStamp.userIDs.forEach((userID) => {
-    if (currentUser(userID)) timeStampClass = `${timeStampClass} ${classes.timeStampWithUser}`
+    if (userID === user.id) timeStampClass = `${timeStampClass} ${classes.timeStampWithUser}`
   })
   return timeStampClass
 }
@@ -72,17 +69,18 @@ const styles = () => ({
 })
 
 function TimeStamp({
-  classes, timeStamp, locationID, addUserAction, deleteUserAction,
+  classes, timeStamp, locationID, addUserAction, deleteUserAction, user,
 }) {
   return (
     <div className={`${classes.timeStampDiv} time-stamp participant-count-${timeStamp.participants.length}`}>
       <Button
         variant="fab"
-        className={getTimeStampClass(classes, timeStamp)}
+        className={getTimeStampClass(classes, timeStamp, user)}
         onClick={() => {
-          if (!isUserJoined(myUser.userId, timeStamp.userIDs)) {
-            addUserAction(timeStamp.id, locationID, myUser)
-          } else { deleteUserAction(timeStamp.id, locationID, myUser) }
+          console.log('click', isUserJoined(user.id, timeStamp.userIDs))
+          if (!isUserJoined(user.id, timeStamp.userIDs)) {
+            addUserAction(timeStamp.id, locationID, user)
+          } else { deleteUserAction(timeStamp.id, locationID, user) }
         }}
       >
         <Typography variant="body1" gutterBottom align="center" className={classes.clock}>
@@ -91,7 +89,7 @@ function TimeStamp({
             timeStamp.minute : `0${timeStamp.minute}`}
         </Typography>
         <div className={`participants participant-count-${timeStamp.participants.length}`}>
-          {timeStamp.participants.map(user => <div className="avatar-container"><UserAvatar user={user} /></div>)}
+          {timeStamp.participants.map(participant => <div className="avatar-container" key={participant.userId}><UserAvatar user={participant} /></div>)}
         </div>
       </Button>
     </div>
@@ -109,6 +107,7 @@ TimeStamp.propTypes = {
   deleteUserAction: PropTypes.func.isRequired,
   addUserAction: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(TimeStamp))
