@@ -2,7 +2,7 @@
 
 const initialState = {
   lunchspace: {
-    name: 'VSF Experts',
+    name: 'vsf experts - lunchspace',
     subdomain: 'test-subdomain/',
   },
   currentDate: new Date(),
