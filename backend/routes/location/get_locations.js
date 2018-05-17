@@ -20,6 +20,7 @@ FROM event_participants WHERE lunchspace_id = ?`, [id])
 async function getLocations(req, res) {
   const { id } = req.lunchspace
   const result = await getLocationsAndParticipants(id)
+  result.user = await req.userPromise
   return res.status(200).json(result)
 }
 

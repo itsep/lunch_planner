@@ -100,5 +100,5 @@ ALTER TABLE join_up_at
 CREATE VIEW event_participants AS
 SELECT join_up_at.*, user.*, location.lunchspace_id
 FROM join_up_at
-LEFT JOIN user ON join_up_at.user_id = user.id
-LEFT JOIN location ON join_up_at.location_id = location.id;
+JOIN user ON join_up_at.user_id = user.id
+JOIN location ON join_up_at.location_id = location.id;
