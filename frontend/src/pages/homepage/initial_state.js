@@ -5,6 +5,7 @@ const initialState = {
     name: 'vsf experts - lunchspace',
     subdomain: 'test-subdomain/',
   },
+  currentDate: new Date(),
   user: {
     id: 1,
     email: 'dnadoba@gmail.com',

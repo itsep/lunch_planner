@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import { Button, Typography } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
+import { toEventDate } from 'shared/lib/event'
 import UserAvatar from './user_avatar'
-import { addUser, deleteUser } from '../actions'
+import { joinEvent, leaveEvent } from '../actions'
 import './participants.scss'
 
 function participantFrom(user) {
@@ -14,14 +15,26 @@ function participantFrom(user) {
   }
 }
 
-const mapStateToProps = state => ({ user: state.user })
+const mapStateToProps = state => ({ user: state.user, currentDate: state.currentDate })
 
 const mapDispatchToProps = dispatch => ({
-  addUserAction: (timeStampID, locationID, user) => {
-    dispatch(addUser(timeStampID, locationID, participantFrom(user)))
+  addUserAction: (timeStampID, locationID, eventTime, eventDate, user) => {
+    dispatch(joinEvent(
+      'vsf-experts-ma',
+      locationID,
+      eventTime,
+      eventDate,
+      participantFrom(user)
+    ))
   },
-  deleteUserAction: (timeStampID, locationID, user) => {
-    dispatch(deleteUser(timeStampID, locationID, participantFrom(user)))
+  deleteUserAction: (timeStampID, locationID, eventTime, eventDate, user) => {
+    dispatch(leaveEvent(
+      'vsf-experts-ma',
+      locationID,
+      eventTime,
+      eventDate,
+      participantFrom(user)
+    ))
   },
 })
 
@@ -52,14 +65,15 @@ const styles = () => ({
   },
   timeStamp: {
     backgroundColor: 'white',
-    height: '60pt',
-    width: '60pt',
+    height: '80px',
+    width: '80px',
     flexShrink: 0,
-  },
-  timeStampWithUser: {
-    transform: 'scale(1.1)',
+    transition: '400ms border-color',
     borderStyle: 'solid',
     borderWidth: '4px',
+    borderColor: 'transparent',
+  },
+  timeStampWithUser: {
     borderColor: '#75A045',
   },
   clock: {
@@ -69,7 +83,7 @@ const styles = () => ({
 })
 
 function TimeStamp({
-  classes, timeStamp, locationID, addUserAction, deleteUserAction, user,
+  classes, timeStamp, locationID, addUserAction, deleteUserAction, user, currentDate,
 }) {
   return (
     <div className={`${classes.timeStampDiv} time-stamp participant-count-${timeStamp.participants.length}`}>
@@ -78,8 +92,22 @@ function TimeStamp({
         className={getTimeStampClass(classes, timeStamp, user)}
         onClick={() => {
           if (!isUserJoined(user.id, timeStamp.userIDs)) {
-            addUserAction(timeStamp.id, locationID, user)
-          } else { deleteUserAction(timeStamp.id, locationID, user) }
+            addUserAction(
+              timeStamp.id,
+              locationID,
+              { hour: timeStamp.hour, minute: timeStamp.minute },
+              toEventDate(currentDate),
+              user
+            )
+          } else {
+            deleteUserAction(
+              timeStamp.id,
+              locationID,
+              { hour: timeStamp.hour, minute: timeStamp.minute },
+              toEventDate(currentDate),
+              user
+            )
+          }
         }}
       >
         <Typography variant="body1" gutterBottom align="center" className={classes.clock}>
@@ -113,6 +141,7 @@ TimeStamp.propTypes = {
     lastName: PropTypes.string,
     imageUrl: PropTypes.string,
   }).isRequired,
+  currentDate: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(TimeStamp))

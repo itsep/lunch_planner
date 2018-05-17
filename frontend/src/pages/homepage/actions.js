@@ -1,18 +1,18 @@
 import actionTypes from './action_types'
 
-export function addUser(timeStampID, locationID, user) {
+export function addUser(eventTime, locationID, user) {
   return {
     type: actionTypes.ADD_USER,
-    timeStampID,
+    eventTime,
     locationID,
     user,
   }
 }
 
-export function deleteUser(timeStampID, locationID, user) {
+export function deleteUser(eventTime, locationID, user) {
   return {
     type: actionTypes.DELETE_USER,
-    timeStampID,
+    eventTime,
     locationID,
     user,
   }
@@ -132,3 +132,39 @@ export function fetchPageData(lunchspaceSubdomain) {
       .catch(error => console.error(error))
   }
 }
+
+export function joinEvent(lunchspaceSubdomain, locationId, eventTime, eventDate, participant) {
+  return (dispatch) => {
+    fetch('/api/event', {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+        subdomain: lunchspaceSubdomain,
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        locationId,
+        eventTime,
+        eventDate,
+      }),
+    }).then(() => dispatch(addUser(eventTime, locationId, participant)))
+  }
+}
+export function leaveEvent(lunchspaceSubdomain, locationId, eventTime, eventDate, participant) {
+  return (dispatch) => {
+    fetch('/api/event', {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json',
+        subdomain: lunchspaceSubdomain,
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        locationId,
+        eventTime,
+        eventDate,
+      }),
+    }).then(() => dispatch(deleteUser(eventTime, locationId, participant)))
+  }
+}
+
