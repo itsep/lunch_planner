@@ -30,7 +30,8 @@ describe('leave_event', () => {
   beforeAll(createMockDatabase)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    testUserId = await account.create(testEmail, testPassword, testFirstName, testLastName)
+    const { userId } = await account.create(testEmail, testPassword, testFirstName, testLastName)
+    testUserId = userId
     testLunchspaceId = await createLunchspace(testUserId, testSpaceName, testSpaceSubdomain)
     testLocationId = await location
       .create(testLocationName, testLocationCoordinates, testLunchspaceId)

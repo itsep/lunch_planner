@@ -51,6 +51,7 @@ async function getLocations(req, res) {
   const { date } = req.params
   const { id } = req.lunchspace
   const result = await getLocationsAndParticipants(id, date)
+  result.user = await req.userPromise
   return res.status(200).json(result)
 }
 
