@@ -42,6 +42,4 @@ const initialState = {
   joinUpAt: [],
 }
 
-console.log(initialState.currentDate)
-
 export default initialState
