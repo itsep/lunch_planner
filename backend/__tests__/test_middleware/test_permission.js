@@ -1,7 +1,7 @@
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { registerAccount } = require('../../routes/account/register_account')
 const { createLunchspaceAndJoin } = require('../../routes/lunchspace/create_lunchspace')
-const { mockReq, mockRes, mockNext } = require('../../lib/express_mock')
+const { mockReq, mockRes } = require('../../lib/express_mock')
 const { asyncCheckPermission } = require('../../middleware/permission')
 
 const testEmail = 'max.mustermann@gmail.com'

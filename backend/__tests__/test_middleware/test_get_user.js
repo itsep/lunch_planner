@@ -1,5 +1,5 @@
 const { create } = require('../../routes/account/register_account')
-const { mockReq, mockRes, mockNext } = require('../../lib/express_mock')
+const { mockReq, mockRes } = require('../../lib/express_mock')
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { asyncGetUser } = require('../../middleware/get_user')
 
