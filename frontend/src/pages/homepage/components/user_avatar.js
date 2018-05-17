@@ -16,6 +16,7 @@ function initialsOf(user) {
 
 const styles = () => ({
   container: {
+    position: 'relative',
     width: '24px',
     height: '24px',
     flexShrink: 0,
@@ -29,6 +30,11 @@ const styles = () => ({
     fontSize: '12px',
   },
   image: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     width: '100%',
     height: '100%',
     borderRadius: '50%',
@@ -38,15 +44,16 @@ const styles = () => ({
 function UserAvatar({
   classes, user,
 }) {
-  if (user.imageUrl) {
-    return (
-      <div className={classes.container}>
-        <img src={user.imageUrl} alt={`${user.firstName} ${user.lastName}`} className={classes.image} />
-      </div>
-    )
-  }
   return (
     <div className={classes.container}>
+      { user.imageUrl &&
+        <img
+          src={user.imageUrl}
+          alt={`${user.firstName} ${user.lastName}`}
+          className={classes.image}
+          onError={(e) => { e.target.style.display = 'none' }}
+        />
+      }
       <span className={classes.initials}>{initialsOf(user)}</span>
     </div>
   )
