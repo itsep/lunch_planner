@@ -4,6 +4,7 @@ const { createLunchspace } = require('../../routes/lunchspace/create_lunchspace'
 const account = require('../../routes/account/register_account')
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
+const { joinEvent } = require('../../routes/event/join_event.js')
 
 const testSpaceName = 'testspace'
 const testSpaceSubdomain = 'test-space-subdomain'
@@ -26,9 +27,10 @@ describe('get locations', () => {
     testLunchspaceId = await createLunchspace(userId, testSpaceName, testSpaceSubdomain)
     testLocationId = await location
       .create(testLocationName, testLocationCoordinates, testLunchspaceId)
+    await joinEvent(userId, testLocationId, '12:30', '2018-05-16')
   })
   it('should return locations and participants', async () => {
-    const { locations } = await getLocationsAndParticipants(testLunchspaceId)
+    const { locations } = await getLocationsAndParticipants(testLunchspaceId, '2018-05-18')
     expect(locations[0]).toMatchObject({
       id: testLocationId,
       name: testLocationName,
