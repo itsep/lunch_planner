@@ -5,6 +5,7 @@ const initialState = {
     name: 'VSF Experts',
     subdomain: 'test-subdomain/',
   },
+  currentDate: new Date(),
   user: {
     id: 1,
     email: 'dnadoba@gmail.com',
@@ -40,5 +41,7 @@ const initialState = {
   */
   joinUpAt: [],
 }
+
+console.log(initialState.currentDate)
 
 export default initialState

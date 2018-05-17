@@ -1,5 +1,6 @@
 import initialState from './initial_state'
 import actionTypes from './action_types'
+import { toEventTimeId} from 'shared/lib/event'
 
 /*
 reducer should get split to multiple reducer and then with combine(reducerList) combined in the end
@@ -38,7 +39,7 @@ export default function (state = initialState, action) {
     case actionTypes.ADD_USER:
       /*
       searches for location, that is getting changed, action.locationID
-      in location for timestamp with action.timeStampID
+      in location for timestamp with action.eventTime
       then adds User to User list of timeStampID
        */
       return {
@@ -47,7 +48,8 @@ export default function (state = initialState, action) {
           if (location.id === action.locationID) {
             const newLocation = location
             newLocation.timeStamps = newLocation.timeStamps.map((timeStamp) => {
-              if (timeStamp.id === action.timeStampID) {
+              if (timeStamp.minute === action.eventTime.minute &&
+                 timeStamp.hour === action.eventTime.hour) {
                 return {
                   ...timeStamp,
                   // array like old userIDs just with the new one added
@@ -73,7 +75,8 @@ export default function (state = initialState, action) {
           if (location.id === action.locationID) {
             const newLocation = location
             newLocation.timeStamps = newLocation.timeStamps.map((timeStamp) => {
-              if (timeStamp.id === action.timeStampID) {
+              if (timeStamp.minute === action.eventTime.minute &&
+                timeStamp.hour === action.eventTime.hour) {
                 return {
                   ...timeStamp,
                   /*
