@@ -13,8 +13,7 @@ const myUser = {
   lastName: 'Nadoba',
 }
 
-// allway need mapstate to props, maybe some kind of default mapstate?
-const mapStateToProps = state => (state)
+const mapStateToProps = null
 
 const mapDispatchToProps = dispatch => ({
   addUserAction: (timeStampID, locationID, user) => {
