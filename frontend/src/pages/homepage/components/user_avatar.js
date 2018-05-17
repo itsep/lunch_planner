@@ -28,6 +28,11 @@ const styles = () => ({
   initials: {
     fontSize: '12px',
   },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: '50%',
+  }
 })
 
 function UserAvatar({
@@ -36,7 +41,7 @@ function UserAvatar({
   if (user.imageUrl) {
     return (
       <div className={classes.container}>
-        <img src={user.imageUrl} alt={`${user.firstName} ${user.lastName}`} />
+        <img src={user.imageUrl} alt={`${user.firstName} ${user.lastName}`} className={classes.image} />
       </div>
     )
   }

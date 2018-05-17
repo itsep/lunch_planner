@@ -1,5 +1,5 @@
 const { pool } = require('../lib/database')
-const { asyncMiddleware } = require('../lib/asyncMiddleware')
+const { asyncMiddleware } = require('../lib/async_middleware')
 const { InputValidationError } = require('../lib/error')
 
 async function checkPermission(req) {

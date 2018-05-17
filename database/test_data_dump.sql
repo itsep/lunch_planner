@@ -125,7 +125,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'David','Nadoba',NULL);
+INSERT INTO `user` VALUES (1,'David','Nadoba','https://pbs.twimg.com/profile_images/845411989589504000/af0aKVig_400x400.jpg');
 INSERT INTO `user` VALUES (2,'Alesia','Albrecht',NULL);
 INSERT INTO `user` VALUES (3,'Ferhat','Ayaydin',NULL);
 INSERT INTO `user` VALUES (4,'Marc','Mehrer',NULL);

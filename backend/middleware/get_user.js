@@ -1,4 +1,4 @@
-const { asyncMiddleware } = require('../lib/asyncMiddleware')
+const { asyncMiddleware } = require('../lib/async_middleware')
 const { AuthenticationError } = require('../lib/error')
 const { pool } = require('../lib/database')
 

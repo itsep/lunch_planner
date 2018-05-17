@@ -1,6 +1,6 @@
 function asyncMiddleware(middleware) {
   return (req, res, next) => {
-    middleware(req, res).then(next).catch(next)
+    middleware(req, res).then(next, next)
   }
 }
 

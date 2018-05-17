@@ -5,8 +5,10 @@ const initialState = {
     name: 'VSF Experts',
     subdomain: 'test-subdomain/',
   },
-  profile: {
-    src: 'https://pbs.twimg.com/profile_images/845411989589504000/af0aKVig_400x400.jpg',
+  user: {
+    id: 1,
+    email: 'dnadoba@gmail.com',
+    imageUrl: 'https://pbs.twimg.com/profile_images/845411989589504000/af0aKVig_400x400.jpg',
     firstName: 'David',
     lastName: 'Nadoba',
   },
@@ -37,16 +39,6 @@ const initialState = {
     }
   */
   joinUpAt: [],
-  /*
-   user is an array of user and a single object has the shape of:
-    {
-      id: number,
-      src: string,
-      firstName: string,
-      lastName: string,
-    }
-   */
-  user: [],
 }
 
 export default initialState

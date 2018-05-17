@@ -106,7 +106,13 @@ TimeStamp.propTypes = {
   deleteUserAction: PropTypes.func.isRequired,
   addUserAction: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    email: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    imageUrl: PropTypes.string,
+  }).isRequired,
 }
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(TimeStamp))

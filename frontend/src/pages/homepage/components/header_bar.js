@@ -40,11 +40,11 @@ const styles = () => ({
 })
 
 const mapStateToProps = state => ({
-  profile: state.profile,
+  user: state.user,
   lunchspace: state.lunchspace,
 })
 
-function HeaderBar({ classes, profile, lunchspace }) {
+function HeaderBar({ classes, user, lunchspace }) {
   return (
     <div>
       <AppBar className={classes.appBar} position="static" color="default">
@@ -55,7 +55,7 @@ function HeaderBar({ classes, profile, lunchspace }) {
               {lunchspace.name}
             </Button>
           </div>
-          <Avatar alt="David Nadoba" className={classes.avatar} src={profile.src} />
+          <Avatar alt={`${user.firstName} ${user.lastName}`} src={user.imageUrl} className={classes.avatar} />
         </Toolbar>
       </AppBar>
     </div>
@@ -63,7 +63,7 @@ function HeaderBar({ classes, profile, lunchspace }) {
 }
 
 HeaderBar.propTypes = {
-  profile: PropTypes.shape({
+  user: PropTypes.shape({
     src: PropTypes.string,
     firstName: PropTypes.string,
     lastName: PropTypes.string,

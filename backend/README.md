@@ -15,7 +15,7 @@ create .env File in form:
 ```bash
 DATABASE_USERNAME=*your database username*
 DATABASE_PASSWORD=*your database your password*
-SECRET=*your jasonwebtoken secret*
+JWT_SECRET=*your jasonwebtoken secret*
 ```
 
 ## Testing
