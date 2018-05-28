@@ -1,8 +1,9 @@
 const { createLocation, create } = require('../../routes/location/create_location')
-const { createLunchspace } = require('../../routes/lunchspace/create_lunchspace')
+const { createLunchspaceAndJoin } = require('../../routes/lunchspace/create_lunchspace')
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
 const { pool } = require('../../lib/database')
+const { InputValidationError } = require('../../lib/error')
 
 const testName = 'McBurger'
 const testName2 = ''
@@ -21,11 +22,12 @@ describe('create location', () => {
     const res = mockRes()
     await pool.execute('INSERT INTO user (first_name, last_name)' +
       'VALUES (?, ?)', ['Max', 'Mustermann'])
-    await createLunchspace(req, res)
+    await createLunchspaceAndJoin(req, res)
   })
   describe('create', async () => {
     it('should create a location in DB', async () => {
-      await expect(create(testName, testCoordinates, testLunchspaceId)).resolves.not.toThrow()
+      await expect(create(testName, testCoordinates, testLunchspaceId))
+        .resolves.toEqual(expect.any(Number))
     })
   })
   describe('createLocation', async () => {
@@ -44,8 +46,9 @@ describe('create location', () => {
         lunchspace: { id: testLunchspaceId },
       })
       const res = mockRes()
-      await createLocation(req, res)
-      expect(res.status).lastCalledWith(409)
+      const createLocationPromise = createLocation(req, res)
+      await expect(createLocationPromise).rejects.toThrowError(InputValidationError)
+      await expect(createLocationPromise).rejects.toHaveProperty('property', 'name')
     })
     it('should fail (illegal coordinates)', async () => {
       const req = mockReq({
@@ -53,8 +56,9 @@ describe('create location', () => {
         lunchspace: { id: testLunchspaceId },
       })
       const res = mockRes()
-      await createLocation(req, res)
-      expect(res.status).lastCalledWith(500)
+      const createLocationPromise = createLocation(req, res)
+      await expect(createLocationPromise).rejects.toThrowError(InputValidationError)
+      await expect(createLocationPromise).rejects.toHaveProperty('property', 'coordinates')
     })
   })
 })

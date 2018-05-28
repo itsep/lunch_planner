@@ -1,8 +1,8 @@
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { registerAccount } = require('../../routes/account/register_account')
-const { createLunchspace } = require('../../routes/lunchspace/create_lunchspace')
-const { mockReq, mockRes, mockNext } = require('../../lib/express_mock')
-const { checkPermission } = require('../../middleware/permission')
+const { createLunchspaceAndJoin } = require('../../routes/lunchspace/create_lunchspace')
+const { mockReq, mockRes } = require('../../lib/express_mock')
+const { asyncCheckPermission } = require('../../middleware/permission')
 
 const testEmail = 'max.mustermann@gmail.com'
 const testPassword = 'passwort'
@@ -30,17 +30,15 @@ describe('permission', () => {
     })
     const res = mockRes()
     await registerAccount(req, res)
-    await createLunchspace(req, res)
+    await createLunchspaceAndJoin(req, res)
   })
   it('has permission', async () => {
     const req = mockReq({
-      body: { subdomain: testSubdomain },
+      headers: { subdomain: testSubdomain },
       token: { userId: testUserId },
     })
     const res = mockRes()
-    const next = mockNext()
-    await checkPermission(req, res, next)
-    expect(next).not.toBeCalledWith(expect.any(Error))
+    await asyncCheckPermission(req, res)
   })
   it('has no permission permission', async () => {
     const req = mockReq({
@@ -48,17 +46,13 @@ describe('permission', () => {
       token: { userId: testUserId2 },
     })
     const res = mockRes()
-    const next = mockNext()
-    await checkPermission(req, res, next)
-    expect(next).toBeCalledWith(expect.any(Error))
+    await expect(asyncCheckPermission(req, res)).rejects.toThrow()
   })
   it('has no token', async () => {
     const req = mockReq({
       body: { subdomain: testSubdomain },
     })
     const res = mockRes()
-    const next = mockNext()
-    await checkPermission(req, res, next)
-    expect(next).toBeCalledWith(expect.any(Error))
+    await expect(asyncCheckPermission(req, res)).rejects.toThrow()
   })
 })

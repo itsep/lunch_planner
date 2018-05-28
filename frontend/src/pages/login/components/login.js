@@ -8,6 +8,7 @@ import { CircularProgress } from 'material-ui/Progress'
 import Collapse from 'material-ui/transitions/Collapse'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
+import routeLocations from '../../route_locations'
 
 const styles = theme => ({
   textField: {
@@ -63,6 +64,7 @@ class Login extends React.Component {
           this.setState({
             loggedIn: true,
           })
+          window.location = routeLocations.HOMEPAGE
           return null
         }
         return response.json().then(({ error }) => { throw new Error(error) })

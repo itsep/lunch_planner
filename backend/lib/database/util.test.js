@@ -1,6 +1,6 @@
 const { pool, createMultiStatementConnection } = require('./index')
 const {
-  clearDatabaseAndImportTestDump, clearDatabase, readDbSchema, useConnection,
+  clearDatabaseAndImportTestDump, clearDatabase, readDbSchema, consumeConnection,
 } = require('./util')
 const { createMockDatabase, dropMockDatabase, getDatabaseName } = require('./mock')
 
@@ -31,7 +31,7 @@ describe('clear database and import test dump', () => {
     expect(await getUserCount()).toEqual(users.length)
 
     const connPromise = createMultiStatementConnection(true)
-    await useConnection(connPromise, async (conn) => {
+    await consumeConnection(connPromise, async (conn) => {
       await clearDatabase(conn, await readDbSchema(), getDatabaseName())
     })
 
@@ -45,6 +45,6 @@ describe('clear database and import test dump', () => {
 
     await clearDatabaseAndImportTestDump(getDatabaseName())
 
-    expect(await getUserCount()).toEqual(7)
+    expect(await getUserCount()).toEqual(8)
   })
 })

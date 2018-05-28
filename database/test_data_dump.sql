@@ -1,13 +1,13 @@
--- MySQL dump 10.16  Distrib 10.2.12-MariaDB, for osx10.13 (x86_64)
+-- MySQL dump 10.15  Distrib 10.0.34-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: lunch_planner
 -- ------------------------------------------------------
--- Server version	10.2.12-MariaDB
+-- Server version	10.0.34-MariaDB-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
@@ -27,7 +27,7 @@ INSERT INTO `account` VALUES (4,'1622019@stud.hs-mannheim.de','$2b$13$s1/sOos9GP
 INSERT INTO `account` VALUES (5,'1529702@stud.hs-mannheim.de','$2b$13$opJdGxl0na0PjELj7IJ4cuENdX9z/MFeGVGMjR8FtH.w.3w7zMzrK',5);
 INSERT INTO `account` VALUES (6,'ortega_marcel@yahoo.de','$2b$13$oWXw2UKkjnfn4AH12ylvFe6Hyi4.mwL.JBvDd4fycKpD0q7KDM7mu',6);
 INSERT INTO `account` VALUES (7,'LuShanty@freenet.de','$2b$13$Lqwe0Cbo57P/aP5IskPDjO9RRp9PO.53VMpfiXefhv1/vwh4vlGf2',7);
-INSERT INTO `account` VALUES (8,'test-login@email.com','$2b$13$HYHYcDqYFULG/PDYOAMpWO.UUn2ekrP28Jgpotm1jxZQ/TDqg4VWC',NULL);
+INSERT INTO `account` VALUES (8,'sebastian1210@web.de','$2b$13$Lqwe0Cbo57P/aP5IskPDjO9RRp9PO.53VMpfiXefhv1/vwh4vlGf2',8);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -37,6 +37,34 @@ UNLOCK TABLES;
 
 LOCK TABLES `join_up_at` WRITE;
 /*!40000 ALTER TABLE `join_up_at` DISABLE KEYS */;
+INSERT INTO `join_up_at` VALUES (1,1,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (1,2,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (1,3,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (1,4,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (1,4,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (2,2,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (2,3,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (2,4,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (3,1,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (3,3,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (3,4,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (4,2,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (4,3,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (4,4,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (4,4,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (5,1,'13:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (5,2,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (6,1,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (6,2,'12:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (6,4,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (7,2,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (7,3,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (7,4,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (8,1,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (8,2,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (8,3,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (8,4,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (8,4,'13:30:00','2018-05-18');
 /*!40000 ALTER TABLE `join_up_at` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -46,6 +74,10 @@ UNLOCK TABLES;
 
 LOCK TABLES `location` WRITE;
 /*!40000 ALTER TABLE `location` DISABLE KEYS */;
+INSERT INTO `location` VALUES (1,'Dean & David','\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',1);
+INSERT INTO `location` VALUES (2,'Pizzeria','\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',1);
+INSERT INTO `location` VALUES (3,'Metzgerei','\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',1);
+INSERT INTO `location` VALUES (4,'vsf-dining-room','\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',1);
 /*!40000 ALTER TABLE `location` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,6 +120,9 @@ INSERT INTO `member_of` VALUES (6,3,0);
 INSERT INTO `member_of` VALUES (7,1,0);
 INSERT INTO `member_of` VALUES (7,2,0);
 INSERT INTO `member_of` VALUES (7,3,0);
+INSERT INTO `member_of` VALUES (8,1,0);
+INSERT INTO `member_of` VALUES (8,2,0);
+INSERT INTO `member_of` VALUES (8,3,0);
 /*!40000 ALTER TABLE `member_of` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,13 +132,14 @@ UNLOCK TABLES;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'David','Nadoba',NULL);
+INSERT INTO `user` VALUES (1,'David','Nadoba','https://pbs.twimg.com/profile_images/845411989589504000/af0aKVig_400x400.jpg');
 INSERT INTO `user` VALUES (2,'Alesia','Albrecht',NULL);
-INSERT INTO `user` VALUES (3,'Ferhat','Ayaydin',NULL);
-INSERT INTO `user` VALUES (4,'Marc','Mehrer',NULL);
-INSERT INTO `user` VALUES (5,'Fabian','Munzinger',NULL);
+INSERT INTO `user` VALUES (3,'Ferhat','Ayaydin','https://avatars3.githubusercontent.com/u/24521977?s=400&v=4');
+INSERT INTO `user` VALUES (4,'Marc','Mehrer','https://avatars2.githubusercontent.com/u/26874205?s=400&v=4');
+INSERT INTO `user` VALUES (5,'Fabian','Munzinger','https://avatars2.githubusercontent.com/u/22883071?s=400&v=4');
 INSERT INTO `user` VALUES (6,'Marcel','Ortega',NULL);
-INSERT INTO `user` VALUES (7,'Luisa','Müller',NULL);
+INSERT INTO `user` VALUES (7,'Luisa','M�ller',NULL);
+INSERT INTO `user` VALUES (8,'Sebastian','Vogt','https://avatars2.githubusercontent.com/u/26856272?s=400&v=4');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

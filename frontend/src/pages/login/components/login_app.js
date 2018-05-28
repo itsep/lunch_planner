@@ -1,9 +1,9 @@
 import React from 'react'
-import Registration from './login'
+import Login from './login'
 
 function LoginApp() {
   return (
-    <Registration />
+    <Login />
   )
 }
 

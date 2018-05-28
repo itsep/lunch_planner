@@ -22,7 +22,10 @@ describe('register accounts', () => {
         testPassword1,
         testFirstName,
         testLastName
-      )).resolves.toEqual(expect.any(Number))
+      )).resolves.toMatchObject({
+        userId: expect.any(Number),
+        accountId: expect.any(Number),
+      })
     })
     it('should throw an error', async () => {
       await expect(create(testEmail1, testPassword1, testFirstName, testLastName)).rejects.toHaveProperty('code', 'ER_DUP_ENTRY')

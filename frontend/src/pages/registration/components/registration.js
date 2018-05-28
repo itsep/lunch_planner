@@ -8,6 +8,7 @@ import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
+import routeLocations from '../../route_locations'
 
 const styles = theme => ({
   textField: {
@@ -70,6 +71,7 @@ class Registration extends React.Component {
           this.setState({
             loggedIn: true,
           })
+          window.location = routeLocations.HOMEPAGE
           return null
         }
         return response.json().then(({ error }) => { throw new Error(error) })
