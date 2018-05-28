@@ -38,7 +38,13 @@ class LocalizableError extends Error {
     return response
   }
   toLocalizedString(localizableStrings) {
-    return localizableStrings.formatString(this.localizationKey, this.localizationValues)
+    if (!this.localizationKey) {
+      return this.message || this.name
+    }
+    return localizableStrings.formatString(
+      localizableStrings[this.localizationKey],
+      this.localizationValues
+    )
   }
 }
 
