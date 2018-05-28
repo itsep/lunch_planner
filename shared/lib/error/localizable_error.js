@@ -3,7 +3,8 @@
  */
 class LocalizableError extends Error {
   /**
-   * creates a new localizable error from and a plain javascript object (probably send from the server)
+   * creates a new localizable error from and a plain javascript object
+   * (probably send from the server)
    * @param errorObject {Object}
    * @returns {LocalizableError}
    */
