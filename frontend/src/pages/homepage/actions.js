@@ -1,4 +1,5 @@
 import actionTypes from './action_types'
+import routeLocations from '../route_locations'
 
 export function addUser(eventTime, locationID, user) {
   return {
@@ -16,6 +17,24 @@ export function deleteUser(eventTime, locationID, user) {
     locationID,
     user,
   }
+}
+
+export function fetchLogout() {
+  return () => fetch('/api/account/logout', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    credentials: 'same-origin',
+  }).then((response) => {
+    if (response.ok) {
+      window.location = routeLocations.LOGIN
+      return response.json()
+    }
+    return response.json().then(({ error }) => {
+      throw new Error(error)
+    })
+  }).catch(error => console.error(error))
 }
 
 /*

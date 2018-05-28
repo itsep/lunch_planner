@@ -7,11 +7,11 @@ const initialState = {
   },
   currentDate: new Date(),
   user: {
-    id: 1,
-    email: 'dnadoba@gmail.com',
-    imageUrl: 'https://pbs.twimg.com/profile_images/845411989589504000/af0aKVig_400x400.jpg',
-    firstName: 'David',
-    lastName: 'Nadoba',
+    id: -1,
+    email: '',
+    imageUrl: '',
+    firstName: '',
+    lastName: '',
   },
   /*
   locations is an array of many locations. One location has the shape of:
