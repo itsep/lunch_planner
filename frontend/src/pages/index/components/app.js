@@ -1,11 +1,15 @@
-import React from 'react'
-import localizedStrings from '../../../localization'
+import React, { Component } from 'react'
+import routeLocations from '../../route_locations'
 
-function App() {
-  localizedStrings.setLanguage('en')
-  return (
-    <h1>{localizedStrings.test}</h1>
-  )
+class App extends Component {
+  componentWillMount() {
+    if (!document.cookie) {
+      window.location = routeLocations.LOGIN
+    } else window.location = routeLocations.HOMEPAGE
+  }
+  render() {
+    return <div />
+  }
 }
 
 export default App
