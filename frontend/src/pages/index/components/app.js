@@ -5,7 +5,9 @@ class App extends Component {
   componentWillMount() {
     if (!document.cookie) {
       window.location = routeLocations.LOGIN
-    } else window.location = routeLocations.HOMEPAGE
+    } else {
+      window.location = routeLocations.HOMEPAGE
+    }
   }
   render() {
     return <div />
