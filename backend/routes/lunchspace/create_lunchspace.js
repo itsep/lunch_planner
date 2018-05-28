@@ -45,7 +45,7 @@ async function createLunchspaceAndJoin(req, res) {
     }
     throw error
   }
-  return res.status(200).end()
+  return res.status(200).json({})
 }
 
 module.exports = {

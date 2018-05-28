@@ -23,7 +23,7 @@ async function createLocation(req, res) {
     throw new InputValidationError('coordinates', 'Illegal coordinates.')
   }
   await create(name, coordinates, id)
-  return res.status(200).end()
+  return res.status(200).json({})
 }
 
 module.exports = {

@@ -21,7 +21,7 @@ async function joinEventRoute(req, res) {
   const eventDateSQL = dateForSQL(eventDate)
   await joinEvent(userId, locationId, eventTimeSQL, eventDateSQL)
 
-  return res.status(200).end()
+  return res.status(200).json({})
 }
 
 module.exports = {

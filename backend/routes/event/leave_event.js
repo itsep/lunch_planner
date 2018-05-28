@@ -22,7 +22,7 @@ async function leaveEventRoute(req, res) {
   const eventTimeSQL = timeForSQL(eventTime)
   const eventDateSQL = dateForSQL(eventDate)
   await leaveEvent(userId, locationId, eventTimeSQL, eventDateSQL)
-  return res.status(200).end()
+  return res.status(200).json({})
 }
 
 module.exports = {
