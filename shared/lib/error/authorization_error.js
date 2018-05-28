@@ -6,7 +6,7 @@ class AuthorizationError extends LocalizableError {
     this.name = AuthorizationError.name
     this.status = 403
     this.code = 'AUTHORIZATION_ERROR'
-    this.localisationKey = 'AUTHORIZATION_ERROR'
+    this.localizationKey = 'AUTHORIZATION_ERROR'
   }
 }
 

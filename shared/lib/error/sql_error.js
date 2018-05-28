@@ -19,7 +19,7 @@ class SQLError extends LocalizableError {
     this.sql = rawSqlError.sql
     this.sqlState = rawSqlError.sqlState
     this.sqlMessage = rawSqlError.sqlMessage
-    this.localisationKey = 'UNEXPECTED_DATABASE_ERROR'
+    this.localizationKey = 'UNEXPECTED_DATABASE_ERROR'
   }
 }
 

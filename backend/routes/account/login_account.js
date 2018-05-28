@@ -38,7 +38,10 @@ async function login(req, res) {
     )
     res.status(200).json({})
   } else {
-    throw new InputValidationError('password', `Password does not match with email: ${email}`)
+    throw new InputValidationError(
+      'password', `Password does not match with email: ${email}`,
+      'passwordAndEmailDoesNotMatch', { email }
+      )
   }
 }
 
