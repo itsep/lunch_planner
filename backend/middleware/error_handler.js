@@ -1,3 +1,4 @@
+const config = require('config')
 const { SQLError, UnknownError } = require('../../shared/lib/error')
 
 function convertRawSQLErrorToLocalizableSQLError(err, req, res, next) {
@@ -12,7 +13,7 @@ function handleError(err, req, res, next) {
   console.error(localizedError)
   res
     .status(localizedError.status)
-    .json(localizedError.toResponse())
+    .json(localizedError.toResponse(config.get('debug')))
 }
 
 module.exports = {

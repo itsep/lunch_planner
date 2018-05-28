@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise')
 const fs = require('fs-nextra')
+const config = require('config')
 const { makeId } = require('../makeId')
 
 if (!process.env.DATABASE_USERNAME || !process.env.DATABASE_PASSWORD) {
@@ -8,8 +9,8 @@ if (!process.env.DATABASE_USERNAME || !process.env.DATABASE_PASSWORD) {
 }
 
 class MysqlPool {
-  constructor(config) {
-    this.config = config
+  constructor(databaseConfig) {
+    this.config = databaseConfig
     this.openPool(this.database)
   }
   openPool(database) {
@@ -63,7 +64,7 @@ const pool = new MysqlPool({
   host: 'localhost',
   user: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME || 'lunch_planner',
+  database: config.get('database.name'),
 })
 
 
@@ -72,7 +73,7 @@ async function createMultiStatementConnection(withoutDatabase) {
     host: 'localhost',
     user: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
-    database: withoutDatabase ? undefined : 'lunch_planner',
+    database: withoutDatabase ? undefined : config.get('database.name'),
     multipleStatements: 'true',
   })
 }

@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const { convertRawSQLErrorToLocalizableSQLError, handleError } = require('./middleware/error_handler')
 
 const app = express()
+app.config
 
 app.use(cookieParser())
 // eslint-disable-next-line import/newline-after-import
