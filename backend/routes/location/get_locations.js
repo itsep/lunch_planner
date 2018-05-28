@@ -12,7 +12,6 @@ async function getLocationsAndParticipants(id, eventDate) {
 event_time as eventTime,
 first_name as firstName, last_name as lastName, image_url as imageUrl
 FROM event_participants WHERE lunchspace_id = ? AND event_date = ?`, [id, eventDate])
-    console.log(participants)
     const participantsAtLocation = {}
     const locationsInLunchspace = []
     await participants.forEach((participant) => {
@@ -23,12 +22,11 @@ FROM event_participants WHERE lunchspace_id = ? AND event_date = ?`, [id, eventD
         participantsAtLocation[participant.locationId] = [participant]
       }
     })
-    console.log(participantsAtLocation)
     const result = {}
-    locations.forEach((location) => {
+    await locations.forEach((location) => {
       const participantsAtTimestamp = {}
       if (locationsInLunchspace.indexOf(location.id) > -1) {
-        participantsAtLocation.location.id.forEach((participant) => {
+        participantsAtLocation[location.id].forEach((participant) => {
           participantsAtTimestamp[participant.eventTime] = {
             firstName: participant.firstName,
             lastName: participant.lastName,
