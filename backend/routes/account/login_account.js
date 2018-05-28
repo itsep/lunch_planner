@@ -41,7 +41,7 @@ async function login(req, res) {
     throw new InputValidationError(
       'password', `Password does not match with email: ${email}`,
       'passwordAndEmailDoesNotMatch', { email }
-      )
+    )
   }
 }
 
