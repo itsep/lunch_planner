@@ -1,6 +1,6 @@
 const { pool } = require('../lib/database')
 const { asyncMiddleware } = require('../lib/async_middleware')
-const { InputValidationError } = require('../lib/error')
+const { InputValidationError } = require('../../shared/lib/error')
 
 async function checkPermission(req) {
   if (!req.token) {

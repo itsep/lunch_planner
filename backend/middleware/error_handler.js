@@ -1,5 +1,4 @@
-const { SQLError } = require('../lib/error/sql_error')
-const { UnknownError } = require('../lib/error/unknown_error')
+const { SQLError, UnknownError } = require('../../shared/lib/error')
 
 function convertRawSQLErrorToLocalizableSQLError(err, req, res, next) {
   next(SQLError.convertIfNeeded(err))

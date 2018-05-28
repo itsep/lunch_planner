@@ -1,7 +1,7 @@
 const { pool } = require('../../lib/database')
 const { validDate, validTime } = require('../../lib/validation')
 const { timeForSQL, dateForSQL } = require('../../lib/formatation')
-const { InputValidationError } = require('../../lib/error')
+const { InputValidationError } = require('../../../shared/lib/error')
 
 async function joinEvent(userId, locationId, eventTime, eventDate) {
   await pool.execute('INSERT INTO join_up_at (user_id, location_id, event_time, event_date) ' +

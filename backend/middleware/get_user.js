@@ -1,5 +1,5 @@
 const { asyncMiddleware } = require('../lib/async_middleware')
-const { AuthenticationError } = require('../lib/error')
+const { AuthenticationError } = require('../../shared/lib/error')
 const { pool } = require('../lib/database')
 
 async function asyncGetUser(req) {

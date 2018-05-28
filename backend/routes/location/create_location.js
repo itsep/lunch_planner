@@ -1,6 +1,6 @@
 const { pool } = require('../../lib/database')
 const { validLength } = require('../../lib/validation')
-const { InputValidationError } = require('../../lib/error')
+const { InputValidationError } = require('../../../shared/lib/error')
 
 const minimumLength = 1
 const maximumLength = 64
