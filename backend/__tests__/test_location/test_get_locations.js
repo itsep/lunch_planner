@@ -34,27 +34,29 @@ describe('get locations', () => {
   it('should return locations and participants', async () => {
     const locations = await getLocationsAndParticipants(testLunchspaceId, '2018-05-16')
     expect(locations).toMatchObject({
-      [testLocationId]:
+      locations: {
+        [testLocationId]:
         {
           id: testLocationId,
           name: testLocationName,
           coordinates: testLocationCoordinates,
           participantsAtTimestamp: {
             '12:30:00':
-              {
+              [{
                 firstName: testFirstName,
                 lastName: testLastName,
                 imageUrl: null,
                 userId: testUserId,
-              },
+              }],
           },
         },
+      },
     })
   })
   it('should result with status 200', async () => {
     const req = mockReq({
       lunchspace: { id: testLunchspaceId },
-      params: { date: '2018-05-18' },
+      query: { date: '2018-05-18' },
     })
     const res = mockRes()
     await getLocations(req, res)

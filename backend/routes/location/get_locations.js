@@ -22,32 +22,36 @@ FROM event_participants WHERE lunchspace_id = ? AND event_date = ?`, [id, eventD
         participantsAtLocation[participant.locationId] = [participant]
       }
     })
-    const result = {}
+    const locationMap = {}
     await locations.forEach((location) => {
       const participantsAtTimestamp = {}
       if (locationsInLunchspace.indexOf(location.id) > -1) {
         participantsAtLocation[location.id].forEach((participant) => {
-          participantsAtTimestamp[participant.eventTime] = {
+          participantsAtTimestamp[participant.eventTime] =
+            participantsAtTimestamp[participant.eventTime] || []
+          participantsAtTimestamp[participant.eventTime].push({
             firstName: participant.firstName,
             lastName: participant.lastName,
             imageUrl: participant.imageUrl,
             userId: participant.userId,
-          }
+          })
         })
       }
-      result[location.id] = {
+      locationMap[location.id] = {
         id: location.id,
         name: location.name,
         coordinates: location.coordinates,
         participantsAtTimestamp,
       }
     })
-    return result
+    return {
+      locations: locationMap,
+    }
   })
 }
 
 async function getLocations(req, res) {
-  const { date } = req.params
+  const { date } = req.query
   const { id } = req.lunchspace
   const result = await getLocationsAndParticipants(id, date)
   result.user = await req.userPromise

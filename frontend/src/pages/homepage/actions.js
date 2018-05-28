@@ -1,6 +1,8 @@
 import actionTypes from './action_types'
 import routeLocations from '../route_locations'
 
+const withQuery = require('with-query');
+
 export function addUser(eventTime, locationID, user) {
   return {
     type: actionTypes.ADD_USER,
@@ -131,10 +133,10 @@ export function receivePageData(lunchspaceSubdomain, response) {
 /*
 gets data of backend and change state with dispatch
  */
-export function fetchPageData(lunchspaceSubdomain) {
+export function fetchPageData(lunchspaceSubdomain, date) {
   return (dispatch) => {
     dispatch(requestPageData(lunchspaceSubdomain))
-    return fetch('/api/location', {
+    return fetch(withQuery('/api/location/', { date: date.toISOString().substring(0, 10) }), {
       headers: {
         'content-type': 'application/json',
         subdomain: lunchspaceSubdomain,
