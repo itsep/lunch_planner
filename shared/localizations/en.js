@@ -6,7 +6,7 @@ const content = {
   // Localizable Errors
   authenticationError: 'Not authenticated. Please login.',
   authorizationError: 'Not authorized. You do not have enough rights to for this action.',
-  unexpectedDatabaseError: 'Unexpected Database error.',
+  unexpectedDatabaseError: 'Unexpected Database error. Please try again later.',
 
   passwordAndEmailDoesNotMatch: 'Password does not match with email {email}.',
 }
