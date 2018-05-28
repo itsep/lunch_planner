@@ -35,7 +35,7 @@ async function login(req, res) {
       'lunch_planner_token',
       token,
     )
-    res.status(200).end()
+    res.status(200).json({})
   } else {
     res.status(401).json({ error: `Password does not match with email: ${email}` })
   }
