@@ -8,6 +8,9 @@ import { CircularProgress } from 'material-ui/Progress'
 import Collapse from 'material-ui/transitions/Collapse'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
+import { toLocalizableError } from 'shared/lib/error'
+import localizedStrings from '../../../localization'
+import apiFetch from '../../../lib/api_fetch'
 
 const styles = theme => ({
   textField: {
@@ -50,25 +53,17 @@ class Login extends React.Component {
       isLoading: true,
       error: null,
     })
-    fetch('/api/account/login', {
+    apiFetch('/api/account/login', {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      credentials: 'same-origin',
-      body: JSON.stringify(data),
+      body: data,
     })
-      .then((response) => {
-        if (response.ok) {
-          this.setState({
-            loggedIn: true,
-          })
-          return null
-        }
-        return response.json().then(({ error }) => { throw new Error(error) })
+      .then(() => {
+        this.setState({
+          loggedIn: true,
+        })
       })
       .catch((error) => {
-        this.setState({ error })
+        this.setState({ error, lastError: error })
       })
       .finally(() => {
         this.setState({ isLoading: false })
@@ -112,7 +107,7 @@ class Login extends React.Component {
             />
             <Collapse in={!!this.state.error}>
               <Typography color="error">
-                {this.state.lastErrorMessage}
+                {this.state.lastError && this.state.lastError.toLocalizedString(localizedStrings)}
               </Typography>
             </Collapse>
             <div className={classes.actionsContainer}>
