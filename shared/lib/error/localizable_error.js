@@ -20,16 +20,25 @@ class LocalizableError extends Error {
     this.code = LocalizableError.code.DEFAULT
     this.name = LocalizableError.name
     this.status = 500
-    this.localisationKey = ''
-    this.localisationValues = undefined
+    this.localizationKey = ''
+    this.localizationValues = undefined
   }
 
-  toResponse() {
-    return {
+  toResponse(debug) {
+    const response = {
       name: this.name,
-      localisationKey: this.localisationKey,
-      localisationValues: this.localisationValues,
+      localizationKey: this.localizationKey,
+      localizationValues: this.localizationValues,
     }
+    if (debug) {
+      response.code = this.code
+      response.status = this.status
+      response.message = this.message
+    }
+    return response
+  }
+  toLocalizedString(localizableStrings) {
+    return localizableStrings.formatString(this.localizationKey, this.localizationValues)
   }
 }
 
