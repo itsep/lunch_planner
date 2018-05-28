@@ -1,16 +1,23 @@
-import React from 'react'
+import React, { Component } from 'react'
 import HeaderBar from './header_bar'
-import DateBar from './date_bar'
 import LocationList from './location_list'
+import routeLocations from '../../route_locations'
 
-function HomepageApp() {
-  return (
-    <div>
-      <HeaderBar />
-      <DateBar />
-      <LocationList />
-    </div>
-  )
+class HomepageApp extends Component {
+  componentWillMount() {
+    if (!document.cookie) {
+      window.location = routeLocations.LOGIN
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <HeaderBar />
+        <LocationList />
+      </div>
+    )
+  }
 }
 
 export default HomepageApp

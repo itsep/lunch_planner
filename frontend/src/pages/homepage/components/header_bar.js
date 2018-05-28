@@ -1,41 +1,53 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { AppBar, Toolbar, Avatar, Button } from 'material-ui'
+import { AppBar, Avatar, Button } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
+import DateBar from './date_bar'
+import combineStyleClasses from './../../../lib/combineStyleClassses'
+import { fetchLogout } from '../actions'
 
 const styles = () => ({
-  flexContainer: {
+  appBar: {
+    color: '#404040',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    backgroundColor: '#75A045',
+    top: 0,
+  },
+  flexBoxItem: {
+    flex: '1 1 0',
+    margin: 'auto',
+  },
+  infoBar: {
+    padding: '5px',
+  },
+  flexBoxContainer: {
     display: 'flex',
     justifyContent: 'space-between',
-    backgroundColor: 'white',
-    position: 'fixed',
-    width: '100%',
-    top: 0,
-    zIndex: 9,
-    boxShadow: '0px 5px 10px grey',
+  },
+  profile: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  title: {
+    textAlign: 'center',
+  },
+  userName: {
+    textAlign: 'right',
   },
   logo: {
-    backgroundColor: 'white',
-    color: '#75a045',
-    marginLeft: '0%',
     fontWeight: 'bolder',
-    height: '11%',
-    width: '11%',
   },
   lunchspace: {
-    height: '5%',
-    width: '5%',
     fontWeight: 'bold',
-    testAlign: 'center',
     backgroundColor: '#75a045',
     color: 'white',
-    marginRight: '8%',
   },
   avatar: {
-    marginRight: '3%',
-    height: '3.5%',
-    width: '3.5%',
+    float: 'right',
+    margin: '5px',
+    height: '60px',
+    width: '60px',
   },
 })
 
@@ -44,19 +56,36 @@ const mapStateToProps = state => ({
   lunchspace: state.lunchspace,
 })
 
-function HeaderBar({ classes, user, lunchspace }) {
+const mapDispatchToProps = dispatch => ({
+  fetchLogoutAction: () => {
+    dispatch(fetchLogout())
+  },
+})
+
+function HeaderBar({
+  classes, user, lunchspace, fetchLogoutAction,
+}) {
   return (
     <div>
       <AppBar className={classes.appBar} position="static" color="default">
-        <Toolbar className={classes.flexContainer}>
-          <img className={classes.logo} alt="Daniel" src="http://vsf-experts.de/images/neu_vsf_logo_convert.png?crc=3930813411" />
-          <div className={classes.lunchspace}>
-            <Button className={classes.lunchspace} variant="raised">
+        <div className={combineStyleClasses(classes.infoBar, classes.flexBoxContainer)}>
+          <div className={classes.flexBoxItem} />
+          <div className={classes.flexBoxItem}>
+            <h2 className={classes.title}>
               {lunchspace.name}
-            </Button>
+            </h2>
           </div>
-          <Avatar alt={`${user.firstName} ${user.lastName}`} src={user.imageUrl} className={classes.avatar} />
-        </Toolbar>
+          <div className={combineStyleClasses(classes.flexBoxItem, classes.profile)}>
+            <p className={combineStyleClasses(classes.userName, classes.flexBoxItem)}>
+              {user.firstName} {user.lastName}
+            </p>
+            <Avatar alt={`${user.firstName} ${user.lastName}`} src={user.imageUrl} className={combineStyleClasses(classes.avatar)} />
+            <Button onClick={fetchLogoutAction}>Logout</Button>
+          </div>
+        </div>
+        <div className={classes.dateBar}>
+          <DateBar />
+        </div>
       </AppBar>
     </div>
   )
@@ -72,7 +101,8 @@ HeaderBar.propTypes = {
     name: PropTypes.string.isRequired,
     subdomain: PropTypes.string.isRequired,
   }).isRequired,
+  fetchLogoutAction: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(connect(mapStateToProps)(HeaderBar))
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(HeaderBar))

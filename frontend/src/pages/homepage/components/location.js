@@ -14,8 +14,6 @@ const mapDispatchToProps = dispatch => ({
 
 const styles = () => ({
   wrapper: {
-    boxShadow: '0px 5px 10px grey',
-    borderRadius: '5px',
     marginTop: '5px',
   },
   container: {
@@ -25,24 +23,26 @@ const styles = () => ({
     overflowX: 'auto',
     '&::-webkit-scrollbar': {
       height: '10px',
+      background: 'grey',
       backgroundColor: 'transparent',
     },
     '&::-webkit-scrollbar-thumb': {
+      background: 'grey',
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      background: '#467117',
+    },
+    '&::-webkit-scrollbar-track': {
       background: 'black',
-      borderRadius: '10px',
     },
   },
   locationTitle: {
     fontSize: 'large',
-    backgroundColor: 'white',
-    marginTop: '10pt',
-    marginBottom: '2pt',
-    marginLeft: '1%',
-    borderRadius: '14px',
-    borderWidth: '4px',
+    marginLeft: '5px',
+    borderRadius: '100px',
+    borderWidth: '1px',
     borderStyle: 'solid',
     color: '#75a045',
-    fontWeight: 'bolder',
   },
 })
 
@@ -52,7 +52,7 @@ function LocationItem({
   return (
     <div className={classes.wrapper}>
       <div>
-        <Button className={classes.locationTitle} variant="raised">{name}</Button>
+        <Button className={classes.locationTitle}>{name}</Button>
       </div>
       <div className={classes.container}>
         {timeStamps.map(timeStamp => (
