@@ -1,6 +1,6 @@
 const languageKey = 'de'
 const content = {
-  test: 'hi',
+  test: 'test',
   welcome: 'Hallo {name}',
   welcome2: 'Hallo {lastName} {firstName}',
 }
