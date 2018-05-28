@@ -1,13 +1,13 @@
--- MySQL dump 10.16  Distrib 10.2.14-MariaDB, for osx10.13 (x86_64)
+-- MySQL dump 10.15  Distrib 10.0.34-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: lunch_planner
 -- ------------------------------------------------------
--- Server version	10.2.14-MariaDB
+-- Server version	10.0.34-MariaDB-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
@@ -37,24 +37,34 @@ UNLOCK TABLES;
 
 LOCK TABLES `join_up_at` WRITE;
 /*!40000 ALTER TABLE `join_up_at` DISABLE KEYS */;
-INSERT INTO `join_up_at` VALUES (1, 1, '12:00', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (2, 2, '12:30', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (3, 3, '11:30', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (4, 4, '11:30', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (5, 1, '12:30', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (6, 2, '12:30', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (7, 2, '11:30', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (8, 1, '12:00', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (1, 4, '12:00', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (2, 4, '12:30', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (3, 4, '12:00', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (4, 4, '12:30', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (5, 4, '12:00', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (1, 4, '12:30', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (2, 4, '12:00', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (3, 4, '12:30', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (4, 4, '12:00', '16.05.2018');
-INSERT INTO `join_up_at` VALUES (5, 4, '12:30', '16.05.2018');
+INSERT INTO `join_up_at` VALUES (1,1,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (1,2,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (1,3,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (1,4,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (1,4,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (2,2,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (2,3,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (2,4,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (3,1,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (3,3,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (3,4,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (4,2,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (4,3,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (4,4,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (4,4,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (5,1,'13:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (5,2,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (6,1,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (6,2,'12:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (6,4,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (7,2,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (7,3,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (7,4,'12:30:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (8,1,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (8,2,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (8,3,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (8,4,'13:00:00','2018-05-18');
+INSERT INTO `join_up_at` VALUES (8,4,'13:30:00','2018-05-18');
 /*!40000 ALTER TABLE `join_up_at` ENABLE KEYS */;
 UNLOCK TABLES;
 
