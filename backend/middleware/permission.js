@@ -1,10 +1,10 @@
 const { pool } = require('../lib/database')
 const { asyncMiddleware } = require('../lib/async_middleware')
-const { InputValidationError } = require('../../shared/lib/error')
+const { InputValidationError, AuthenticationError, AuthorizationError } = require('../../shared/lib/error')
 
 async function checkPermission(req) {
   if (!req.token) {
-    throw new Error('no cookie token defined')
+    throw new AuthenticationError('no cookie token defined')
   }
   const { userId } = req.token
   const { subdomain } = req.headers
@@ -28,7 +28,7 @@ async function checkPermission(req) {
       subdomain,
     }
   } else {
-    throw new Error('User is not authorized')
+    throw new AuthorizationError(`User is not authorized for lunchspace ${subdomain}`)
   }
 }
 
