@@ -1,3 +1,5 @@
+import { escapeSubdomain, isValidSubdomain } from 'shared/lib/subdomain'
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
@@ -11,8 +13,6 @@ import { CircularProgress } from 'material-ui/Progress'
 import FormControlInputValidator from 'components/form_control_input_validator'
 import FormSection from 'components/form_section'
 import localizedStrings from '../../../localization'
-
-import { escapeSubdomain, isValidSubdomain } from 'shared/lib/subdomain'
 
 const styles = theme => ({
   textField: {
