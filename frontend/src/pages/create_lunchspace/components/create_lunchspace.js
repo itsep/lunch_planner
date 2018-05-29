@@ -1,3 +1,5 @@
+import { escapeSubdomain, isValidSubdomain } from 'shared/lib/subdomain'
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
@@ -10,8 +12,7 @@ import Fade from 'material-ui/transitions/Fade'
 import { CircularProgress } from 'material-ui/Progress'
 import FormControlInputValidator from 'components/form_control_input_validator'
 import FormSection from 'components/form_section'
-
-import { escapeSubdomain, isValidSubdomain } from 'shared/lib/subdomain'
+import localizedStrings from '../../../localization'
 
 const styles = theme => ({
   textField: {
@@ -120,7 +121,8 @@ class CreateLunchspace extends React.Component {
               value={this.state.lunchspaceName}
               onChange={this.handleLunchspaceNameChange}
               validators={['required', 'maxStringLength:24']}
-              errorMessages={['this field is required', 'maximum 24 characters']}
+              errorMessages={[localizedStrings.fieldRequired,
+                localizedStrings.inputTooLong24]}
               margin="normal"
               autoComplete="organization"
               autoFocus
@@ -132,7 +134,9 @@ class CreateLunchspace extends React.Component {
               value={this.state.lunchspaceSubdomain}
               onChange={this.handleSubdomainChange}
               validators={['required', 'isValidSubdomain', 'maxStringLength:24']}
-              errorMessages={['this field is required', 'a subdomain may not contain a leading or trailing hyphen(-)', 'maximum 24 characters']}
+              errorMessages={[localizedStrings.fieldRequired,
+                localizedStrings.illegalHyphen,
+                localizedStrings.inputTooLong24]}
               inputLabel={
                 <InputLabel htmlFor="input-with-icon-adornment" shrink>Subdomain to your Lunchspace</InputLabel>
               }
@@ -157,7 +161,7 @@ class CreateLunchspace extends React.Component {
                 className={classes.button}
                 disabled={this.state.isLoading}
               >
-                Create Workspace
+                {localizedStrings.createLunchspace}
               </Button>
               <Fade
                 in={this.state.isLoading}

@@ -5,6 +5,7 @@ import { Button } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import LocationItem from './location'
 import CreateLocation from './create_location'
+import localizedStrings from '../../../localization'
 
 const mapStateToProps = state => ({
   locations: state.locations,
@@ -69,7 +70,7 @@ class LocationList extends Component {
                 className={this.props.classes.buttonLocation}
                 onClick={() => this.setState({ showLocation: true })}
               >
-                create location
+                {localizedStrings.createLocation}
               </Button>
             </div>
           </li>

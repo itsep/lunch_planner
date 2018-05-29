@@ -10,7 +10,11 @@ class SQLError extends LocalizableError {
     }
     return error
   }
+  static fromErrorObject(errorObject) {
+    return new this(errorObject)
+  }
   constructor(rawSqlError) {
+    console.log(rawSqlError)
     super(rawSqlError.message)
     this.name = SQLError.name
     this.status = 500
@@ -19,7 +23,25 @@ class SQLError extends LocalizableError {
     this.sql = rawSqlError.sql
     this.sqlState = rawSqlError.sqlState
     this.sqlMessage = rawSqlError.sqlMessage
-    this.localisationKey = 'UNEXPECTED_DATABASE_ERROR'
+    this.localizationKey = 'unexpectedDatabaseError'
+  }
+
+  toResponse(debug) {
+    const response = super.toResponse(debug)
+    if (debug) {
+      response.sql = this.sql
+      response.sqlState = this.sqlState
+      response.sqlMessage = this.sqlMessage
+    }
+    return response
+  }
+  toLocalizedString(localizableStrings) {
+    let localizedString = super.toLocalizedString(localizableStrings)
+    localizedString += `
+SQL: ${this.sql}
+SQL State: ${this.sqlState}
+SQLMessage: ${this.sqlMessage}`
+    return localizedString
   }
 }
 

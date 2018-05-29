@@ -1,6 +1,7 @@
 const { pool } = require('../../lib/database')
 const { compare } = require('../../lib/password_hash')
 const { stringifyToken } = require('../../lib/authenticate')
+const { InputValidationError } = require('../../../shared/lib/error')
 
 async function getIdAndHashedPassword(email) {
   const conn = await pool.getConnection()
@@ -35,9 +36,12 @@ async function login(req, res) {
       'lunch_planner_token',
       token,
     )
-    res.status(200).end()
+    res.status(200).json({})
   } else {
-    res.status(401).json({ error: `Password does not match with email: ${email}` })
+    throw new InputValidationError(
+      'password', `Password does not match with email: ${email}`,
+      'passwordAndEmailDoesNotMatch', { email }
+    )
   }
 }
 

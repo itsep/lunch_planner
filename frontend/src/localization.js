@@ -1,10 +1,4 @@
 import LocalizedStrings from 'react-localization'
+import { languageKeyToLocalisationMap } from 'shared/localizations'
 
-export default new LocalizedStrings({
-  en: {
-    test: 'test',
-  },
-  de: {
-    test: 'Test',
-  },
-})
+export default new LocalizedStrings(languageKeyToLocalisationMap)

@@ -3,6 +3,7 @@ const { pool } = require('../../lib/database')
 const { hash, compare } = require('../../lib/password_hash')
 const { mockReq, mockRes } = require('../../lib/express_mock')
 const { getIdAndHashedPassword, login, authenticate } = require('../../routes/account/login_account')
+const { InputValidationError } = require('../../../shared/lib/error/index')
 
 const testEmail = 'test-login@email.com'
 const testPassword = 'test-login-password'
@@ -48,8 +49,7 @@ describe('test login account', () => {
       const request = { body: { email: 'no email', password: 'no password' } }
       const req = mockReq(request)
       const res = mockRes()
-      await login(req, res)
-      expect(res.status.mock.calls[0][0]).toEqual(401)
+      await expect(login(req, res)).rejects.toThrowError(InputValidationError)
     })
   })
 })

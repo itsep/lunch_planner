@@ -4,7 +4,7 @@ const account = require('../../routes/account/register_account')
 const { createLunchspace } = require('../../routes/lunchspace/create_lunchspace')
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
-const { InputValidationError } = require('../../lib/error')
+const { InputValidationError } = require('../../../shared/lib/error')
 
 const testSpaceName = 'testspace'
 const testSpaceSubdomain = 'test-space-subdomain'
