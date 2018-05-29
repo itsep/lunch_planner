@@ -133,7 +133,10 @@ class Login extends React.Component {
                 size="large"
                 variant="raised"
                 color="secondary"
-                onClick={() => window.location = routeLocations.REGISTRATION}
+                onClick={() => {
+                  window.location = routeLocations.REGISTRATION
+                  return true
+                }}
                 className={classes.button}
                 disabled={this.state.isLoading}
               >

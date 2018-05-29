@@ -11,9 +11,8 @@ import FormSection from 'components/form_section'
 import { fetchCreateLocation } from '../actions'
 
 const mapDispatchToProps = dispatch => ({
-  fetchCreateLocationAction: (locationName, lunchspace) => {
-    return dispatch(fetchCreateLocation(locationName, lunchspace))
-  },
+  fetchCreateLocationAction: (locationName, lunchspace) =>
+    dispatch(fetchCreateLocation(locationName, lunchspace)),
 })
 
 const mapStateToProps = state => ({
