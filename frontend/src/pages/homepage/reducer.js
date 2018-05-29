@@ -20,12 +20,22 @@ export default function (state = initialState, action) {
     case actionTypes.ADD_LOCATION:
       return {
         ...state,
-        locations: [action.location, ...state.locations],
+        locations: [...state.locations, action.location],
       }
     case actionTypes.REQUEST_PAGE_DATA:
       return {
         ...state,
         isLoading: true,
+      }
+    case actionTypes.SET_ERROR:
+      return {
+        ...state,
+        error: action.error,
+      }
+    case actionTypes.RESET_ERROR:
+      return {
+        ...state,
+        error: null,
       }
     case actionTypes.RECEIVE_PAGE_DATA:
       return {

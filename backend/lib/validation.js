@@ -47,4 +47,5 @@ module.exports = {
   validDate,
   validLength,
   validEmail,
+  isNumber,
 }

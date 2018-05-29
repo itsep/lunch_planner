@@ -3,7 +3,7 @@ const { createLunchspaceAndJoin } = require('../../routes/lunchspace/create_lunc
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
 const { pool } = require('../../lib/database')
-const { InputValidationError } = require('../../lib/error')
+const { InputValidationError } = require('../../../shared/lib/error')
 
 const testName = 'McBurger'
 const testName2 = ''

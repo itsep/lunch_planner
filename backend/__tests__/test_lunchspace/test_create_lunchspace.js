@@ -2,7 +2,7 @@ const { createLunchspaceAndJoin, create, connect } = require('../../routes/lunch
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
 const { pool } = require('../../lib/database')
-const { InputValidationError } = require('../../lib/error')
+const { InputValidationError } = require('../../../shared/lib/error')
 
 const testSubdomain1 = 'vsf-experts'
 const testLunchspaceName1 = 'vsf-experts'

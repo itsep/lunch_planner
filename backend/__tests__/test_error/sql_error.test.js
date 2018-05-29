@@ -1,8 +1,8 @@
 const { to } = require('await-to-js')
-const { pool } = require('../database')
-const { createMockDatabase, dropMockDatabase } = require('../database/mock')
-const { SQLError } = require('./sql_error')
-const { addAllLocalizableErrorTestsToCurrentSuite } = require('./localizable_error_test_suite')
+const { pool } = require('../../lib/database/index')
+const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
+const { SQLError } = require('../../../shared/lib/error/sql_error')
+const { addAllLocalizableErrorTestsToCurrentSuite } = require('../../../shared/lib/error/localizable_error_test_suite')
 
 describe('sql error', () => {
   beforeAll(createMockDatabase)

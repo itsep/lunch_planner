@@ -17,6 +17,7 @@
     "await-to-js": "^2.0.1",
     "bcrypt": "^2.0.0",
     "body-parser": "^1.18.2",
+    "config": "^1.30.0",
     "cookie-parser": "^1.4.3",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",

@@ -9,6 +9,8 @@ import Collapse from 'material-ui/transitions/Collapse'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
 import routeLocations from '../../route_locations'
+import localizedStrings from '../../../localization'
+import apiFetch from '../../../lib/api_fetch'
 
 const styles = theme => ({
   textField: {
@@ -51,13 +53,9 @@ class Login extends React.Component {
       isLoading: true,
       error: null,
     })
-    fetch('/api/account/login', {
+    apiFetch('/api/account/login', {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      credentials: 'same-origin',
-      body: JSON.stringify(data),
+      body: data,
     })
       .then((response) => {
         if (response.ok) {
@@ -70,7 +68,7 @@ class Login extends React.Component {
         return response.json().then(({ error }) => { throw new Error(error) })
       })
       .catch((error) => {
-        this.setState({ error })
+        this.setState({ error, lastError: error })
       })
       .finally(() => {
         this.setState({ isLoading: false })
@@ -96,7 +94,7 @@ class Login extends React.Component {
               value={this.state.email}
               onChange={this.handleChange('email')}
               validators={['required', 'isEmail']}
-              errorMessages={['this field is required', 'email is not valid']}
+              errorMessages={[localizedStrings.fieldRequired, localizedStrings.invalidEmail]}
               margin="normal"
               autoComplete="email"
             />
@@ -106,7 +104,7 @@ class Login extends React.Component {
               name="password"
               type="password"
               validators={['required']}
-              errorMessages={['this field is required']}
+              errorMessages={[localizedStrings.fieldRequired]}
               value={this.state.password}
               className={classes.textField}
               margin="normal"
@@ -114,7 +112,7 @@ class Login extends React.Component {
             />
             <Collapse in={!!this.state.error}>
               <Typography color="error">
-                {this.state.lastErrorMessage}
+                {this.state.lastError && this.state.lastError.toLocalizedString(localizedStrings)}
               </Typography>
             </Collapse>
             <div className={classes.actionsContainer}>
@@ -126,7 +124,18 @@ class Login extends React.Component {
                 className={classes.button}
                 disabled={this.state.isLoading}
               >
-                Login
+                {localizedStrings.login}
+              </Button>
+              <Button
+                type="button"
+                size="large"
+                variant="raised"
+                color="secondary"
+                className={classes.button}
+                disabled={this.state.isLoading}
+                href={routeLocations.REGISTRATION}
+              >
+                sign up
               </Button>
               <Fade
                 in={this.state.isLoading}

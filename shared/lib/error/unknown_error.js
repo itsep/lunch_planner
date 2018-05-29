@@ -29,7 +29,7 @@ class UnknownError extends LocalizableError {
     this.name = UnknownError.name
     this.status = 500
     this.code = 'UNKNOWN_ERROR'
-    this.localisationKey = 'UNKNOWN_ERROR'
+    this.localizationKey = 'UNKNOWN_ERROR'
   }
 }
 

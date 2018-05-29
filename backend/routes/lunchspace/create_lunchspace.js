@@ -1,7 +1,7 @@
 const { pool } = require('../../lib/database')
 const { isValidSubdomain } = require('../../../shared/lib/subdomain')
 const { validLength } = require('../../lib/validation')
-const { InputValidationError } = require('../../lib/error')
+const { InputValidationError } = require('../../../shared/lib/error')
 
 const minimumLength = 1
 const maximumLength = 24
@@ -35,17 +35,23 @@ async function createLunchspaceAndJoin(req, res) {
   lunchspaceSubdomain = lunchspaceSubdomain.trim()
   lunchspaceName = lunchspaceName.trim()
   if (!isValidSubdomain(lunchspaceSubdomain)) {
-    throw new InputValidationError('lunchspaceSubdomain', 'Illegal Token in Subdomain.')
+    throw new InputValidationError(
+      'lunchspaceSubdomain', `Illegal Token in Subdomain. (${lunchspaceSubdomain})`,
+      'illegalSubdomain', { lunchspaceSubdomain },
+    )
   }
   try {
     await createLunchspace(userId, lunchspaceName, lunchspaceSubdomain)
   } catch (error) {
     if (error.code === 'ER_DUP_ENTRY') {
-      throw new InputValidationError('lunchspaceSubdomain', 'Lunchspace subdomain already exists.')
+      throw new InputValidationError(
+        'lunchspaceSubdomain', `Lunchspace subdomain already exists. (${lunchspaceSubdomain})`,
+        'subdomainAlreadyExists', { lunchspaceSubdomain },
+      )
     }
     throw error
   }
-  return res.status(200).end()
+  return res.status(200).json({})
 }
 
 module.exports = {

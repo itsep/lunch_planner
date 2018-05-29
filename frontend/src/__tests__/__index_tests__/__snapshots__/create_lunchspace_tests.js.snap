@@ -162,7 +162,7 @@ exports[`Create Lunchspace renders correctly 1`] = `
               <span
                 className="MuiButton-label-69"
               >
-                Create Workspace
+                Create Lunchspace
               </span>
               <span
                 className="MuiTouchRipple-root-86"

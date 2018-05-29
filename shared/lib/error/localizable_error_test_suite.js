@@ -11,7 +11,7 @@ function testResponse(error) {
   const response = error.toResponse()
   expect(response).toBeDefined()
   expect(response.name).toEqual(expect.any(String))
-  expect(response.localisationKey).toEqual(expect.any(String))
+  expect(response.localizationKey).toEqual(expect.any(String))
 }
 
 /**

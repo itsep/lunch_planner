@@ -12,33 +12,6 @@ export function addUser(eventTime, locationID, user) {
   }
 }
 
-export function deleteUser(eventTime, locationID, user) {
-  return {
-    type: actionTypes.DELETE_USER,
-    eventTime,
-    locationID,
-    user,
-  }
-}
-
-export function fetchLogout() {
-  return () => fetch('/api/account/logout', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-    },
-    credentials: 'same-origin',
-  }).then((response) => {
-    if (response.ok) {
-      window.location = routeLocations.LOGIN
-      return response.json()
-    }
-    return response.json().then(({ error }) => {
-      throw new Error(error)
-    })
-  }).catch(error => console.error(error))
-}
-
 /*
 creates array with empty timestamps
  */
@@ -59,6 +32,86 @@ function defaultTimeStamps() {
     counter += 1
   }
   return timeStamps
+}
+
+function createLocation(name, id) {
+  return {
+    id,
+    name,
+    timeStamps: defaultTimeStamps(),
+  }
+}
+
+export function addLocation(locationName, locationID) {
+  return {
+    type: actionTypes.ADD_LOCATION,
+    location: createLocation(locationName, locationID),
+  }
+}
+
+export function setError(error) {
+  return {
+    type: actionTypes.SET_ERROR,
+    error,
+  }
+}
+
+export function resetError() {
+  return {
+    type: actionTypes.RESET_ERROR,
+  }
+}
+
+export function deleteUser(eventTime, locationID, user) {
+  return {
+    type: actionTypes.DELETE_USER,
+    eventTime,
+    locationID,
+    user,
+  }
+}
+
+export function fetchCreateLocation(locationName, lunchspace) {
+  return dispatch => fetch('/api/location/', {
+    method: 'POST',
+    headers: {
+      subdomain: lunchspace.subdomain,
+      'content-type': 'application/json',
+    },
+    credentials: 'same-origin',
+    body: JSON.stringify({
+      name: locationName,
+      coordinates: { lat: 0, long: 0 },
+      lunchspace,
+    }),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json().then((data) => {
+        dispatch(addLocation(locationName, data.locationId))
+      })
+    }
+    return response.json().then(({ error }) => {
+      dispatch(setError(error))
+    })
+  }).catch(error => console.error(error))
+}
+
+export function fetchLogout() {
+  return () => fetch('/api/account/logout', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    credentials: 'same-origin',
+  }).then((response) => {
+    if (response.ok) {
+      window.location = routeLocations.LOGIN
+      return response.json()
+    }
+    return response.json().then(({ error }) => {
+      throw new Error(error)
+    })
+  }).catch(error => console.error(error))
 }
 
 function toEventTime(timeStamp) {
@@ -93,21 +146,6 @@ function initialTimeStamps(locationID, participants) {
     }
   })
   return timeStamps
-}
-
-function createLocation(name, id) {
-  return {
-    id,
-    name,
-    timeStamps: defaultTimeStamps(),
-  }
-}
-
-export function addLocation(locationName, locationID) {
-  return {
-    type: actionTypes.ADD_LOCATION,
-    location: createLocation(locationName, locationID),
-  }
 }
 
 export function requestPageData(lunchspaceSubdomain) {
