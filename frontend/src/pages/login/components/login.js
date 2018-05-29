@@ -135,10 +135,9 @@ class Login extends React.Component {
                 color="secondary"
                 className={classes.button}
                 disabled={this.state.isLoading}
+                href={routeLocations.REGISTRATION}
               >
-                <a href="/registration.html">
-                  sign up
-                </a>
+                sign up
               </Button>
               <Fade
                 in={this.state.isLoading}
