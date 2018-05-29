@@ -35,7 +35,7 @@ class Registration extends React.Component {
       password: '',
       isLoading: false,
       error: null,
-      lastError: '',
+      lastError: null,
       loggedIn: false,
     }
 
