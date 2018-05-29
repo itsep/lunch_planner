@@ -133,14 +133,12 @@ class Login extends React.Component {
                 size="large"
                 variant="raised"
                 color="secondary"
-                onClick={() => {
-                  window.location = routeLocations.REGISTRATION
-                  return true
-                }}
                 className={classes.button}
                 disabled={this.state.isLoading}
               >
-                sign up
+                <a href="/registration.html">
+                  sign up
+                </a>
               </Button>
               <Fade
                 in={this.state.isLoading}
