@@ -8,7 +8,6 @@ import { CircularProgress } from 'material-ui/Progress'
 import Collapse from 'material-ui/transitions/Collapse'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
-import { toLocalizableError } from 'shared/lib/error'
 import localizedStrings from '../../../localization'
 import apiFetch from '../../../lib/api_fetch'
 
