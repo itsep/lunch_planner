@@ -88,7 +88,7 @@ class CreateLunchspace extends React.Component {
         })
       })
       .catch((error) => {
-        this.setState({ error, lastError: error.message })
+        this.setState({ error, lastError: error })
       })
       .finally(() => {
         this.setState({ isLoading: false })
