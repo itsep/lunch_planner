@@ -20,7 +20,7 @@ export default function apiFetch(url, config = {}) {
       init.body = JSON.stringify(config.body)
     }
     return fetch(url, init).then((response) => {
-      // everthing okay
+      // everything okay
       if (response.ok) {
         return response.json().then(data => ({ data, response }))
       }

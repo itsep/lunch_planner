@@ -8,6 +8,7 @@ import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
+import localizedStrings from '../../../localization'
 
 const styles = theme => ({
   textField: {
@@ -100,7 +101,7 @@ class Registration extends React.Component {
               value={this.state.firstName}
               onChange={this.handleChange('firstName')}
               validators={['required']}
-              errorMessages={['this field is required']}
+              errorMessages={[localizedStrings.fieldRequired]}
               margin="normal"
               autoComplete="given-name"
               autoFocus
@@ -112,7 +113,7 @@ class Registration extends React.Component {
               value={this.state.lastName}
               onChange={this.handleChange('lastName')}
               validators={['required']}
-              errorMessages={['this field is required']}
+              errorMessages={[localizedStrings.fieldRequired]}
               margin="normal"
               autoComplete="family-name"
             />
@@ -124,7 +125,7 @@ class Registration extends React.Component {
               value={this.state.email}
               onChange={this.handleChange('email')}
               validators={['required', 'isEmail']}
-              errorMessages={['this field is required', 'email is not valid']}
+              errorMessages={[localizedStrings.fieldRequired, localizedStrings.invalidEmail]}
               margin="normal"
               autoComplete="email"
             />
@@ -134,7 +135,7 @@ class Registration extends React.Component {
               name="password"
               type="password"
               validators={['required']}
-              errorMessages={['this field is required']}
+              errorMessages={[localizedStrings.fieldRequired]}
               value={this.state.password}
               className={classes.textField}
               margin="normal"
@@ -155,7 +156,7 @@ class Registration extends React.Component {
                 className={classes.button}
                 disabled={this.state.isLoading}
               >
-                Register
+                {localizedStrings.signUp}
               </Button>
               <Fade
                 in={this.state.isLoading}

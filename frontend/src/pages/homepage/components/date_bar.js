@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Button from 'material-ui/es/Button/Button'
 import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
+import localizedStrings from '../../../localization'
 
 
 const styles = () => ({
@@ -41,7 +42,7 @@ function DateBar({ classes }) {
           {previosDay}
         </Button>
         <Button color="default" className={classes.flexItem}>
-            today
+          {localizedStrings.today}
         </Button>
         <Button color="default" className={classes.flexItem}>
           {nextDay}

@@ -88,7 +88,7 @@ class Login extends React.Component {
               value={this.state.email}
               onChange={this.handleChange('email')}
               validators={['required', 'isEmail']}
-              errorMessages={['this field is required', 'email is not valid']}
+              errorMessages={[localizedStrings.fieldRequired, localizedStrings.invalidEmail]}
               margin="normal"
               autoComplete="email"
             />
@@ -98,7 +98,7 @@ class Login extends React.Component {
               name="password"
               type="password"
               validators={['required']}
-              errorMessages={['this field is required']}
+              errorMessages={[localizedStrings.fieldRequired]}
               value={this.state.password}
               className={classes.textField}
               margin="normal"
@@ -118,7 +118,7 @@ class Login extends React.Component {
                 className={classes.button}
                 disabled={this.state.isLoading}
               >
-                Login
+                {localizedStrings.login}
               </Button>
               <Fade
                 in={this.state.isLoading}

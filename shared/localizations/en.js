@@ -13,6 +13,16 @@ const content = {
   illegalLengthLocationName: 'The name of a location must be between 1 and 64 characters long.',
   illegalSubdomain: 'The given subdomain ({lunchspaceSubdomain}) contains illegal characters.',
   subdomainAlreadyExists: 'The given Subdomain ({lunchspaceSubdomain}) is already in use.',
+  fieldRequired: 'This field is required.',
+  invalidEmail: 'Please enter a valid email address.',
+  illegalHyphen: 'A subdomain may not contain a leading or trailing hyphen(-).',
+  inputTooLong24: 'max 24 characters',
+
+  createLunchspace: 'Create Lunchspace',
+  createLocation: 'Create Location',
+  login: 'Login',
+  today: 'Today',
+  signUp: 'Sign Up',
 }
 module.exports = {
   languageKey,

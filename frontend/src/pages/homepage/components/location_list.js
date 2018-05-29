@@ -5,6 +5,7 @@ import { Button } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import LocationItem from './location'
 import { addLocation } from '../actions'
+import localizedStrings from '../../../localization'
 
 const mapStateToProps = state => ({
   locations: state.locations,
@@ -56,7 +57,7 @@ function LocationList({ locations, classes }) {
             <Button
               className={classes.buttonLocation}
             >
-              create location
+              {localizedStrings.createLocation}
             </Button>
           </div>
         </li>
