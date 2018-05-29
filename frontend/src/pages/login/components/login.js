@@ -57,15 +57,10 @@ class Login extends React.Component {
       method: 'POST',
       body: data,
     })
-      .then((response) => {
-        if (response.ok) {
-          this.setState({
-            loggedIn: true,
-          })
-          window.location = routeLocations.HOMEPAGE
-          return null
-        }
-        return response.json().then(({ error }) => { throw new Error(error) })
+      .then(() => {
+        this.setState({
+          loggedIn: true,
+        })
       })
       .catch((error) => {
         this.setState({ error, lastError: error })
@@ -126,6 +121,12 @@ class Login extends React.Component {
               >
                 {localizedStrings.login}
               </Button>
+              <Fade
+                in={this.state.isLoading}
+                unmountOnExit
+              >
+                <CircularProgress size="36px" />
+              </Fade>
               <Button
                 type="button"
                 size="large"
@@ -137,12 +138,6 @@ class Login extends React.Component {
               >
                 sign up
               </Button>
-              <Fade
-                in={this.state.isLoading}
-                unmountOnExit
-              >
-                <CircularProgress size="36px" />
-              </Fade>
             </div>
           </ValidatorForm>
         </Collapse>
