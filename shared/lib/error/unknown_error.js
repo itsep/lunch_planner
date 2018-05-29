@@ -37,8 +37,6 @@ class UnknownError extends LocalizableError {
     } else {
       this.localizationKey = 'unknownError'
     }
-
-
   }
 }
 
