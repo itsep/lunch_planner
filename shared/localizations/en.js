@@ -7,6 +7,8 @@ const content = {
   authenticationError: 'Not authenticated. Please login.',
   authorizationError: 'Not authorized. You do not have the rights to perform this action.',
   unexpectedDatabaseError: 'Unexpected Database error. Please try again later.',
+  unknownError: 'Unknown error. Please try again later.',
+  unknownErrorWithMessage: 'Unexpected error: {message}',
 
   passwordAndEmailDoesNotMatch: 'Password does not match with email {email}.',
   illegalInput: 'Upps, something went wrong. Please try again.',
