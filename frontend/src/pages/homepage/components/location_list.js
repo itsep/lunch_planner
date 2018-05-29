@@ -70,7 +70,7 @@ class LocationList extends Component {
                 className={this.props.classes.buttonLocation}
                 onClick={() => this.setState({ showLocation: true })}
               >
-    {localizedStrings.createLocation}
+                {localizedStrings.createLocation}
               </Button>
             </div>
           </li>

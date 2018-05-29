@@ -124,7 +124,7 @@ class Login extends React.Component {
                 className={classes.button}
                 disabled={this.state.isLoading}
               >
-    {localizedStrings.login}
+                {localizedStrings.login}
               </Button>
               <Button
                 type="button"
