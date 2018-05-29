@@ -6,7 +6,6 @@ const { nameToTypeMap } = require('./types')
 function toLocalizableError(errorObject) {
   // errorObject is not of type object
   if (errorObject === null || typeof errorObject !== 'object') {
-    console.error('`toLocalizableError` called with error which is not of type object. Was called with:', errorObject)
     if (typeof errorObject === 'string') {
       return new UnknownError(errorObject)
     }
@@ -30,7 +29,6 @@ function toLocalizableError(errorObject) {
   }
 
   // something unknown, needs investigation
-  console.error('unknown object given to `toLocalizableError`, needs investigation:', errorObject)
   if (typeof errorObject.message === 'string') {
     return new UnknownError(errorObject.message)
   }
