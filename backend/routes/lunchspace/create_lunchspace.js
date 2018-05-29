@@ -35,13 +35,19 @@ async function createLunchspaceAndJoin(req, res) {
   lunchspaceSubdomain = lunchspaceSubdomain.trim()
   lunchspaceName = lunchspaceName.trim()
   if (!isValidSubdomain(lunchspaceSubdomain)) {
-    throw new InputValidationError('lunchspaceSubdomain', 'Illegal Token in Subdomain.')
+    throw new InputValidationError(
+      'lunchspaceSubdomain', `Illegal Token in Subdomain. (${lunchspaceSubdomain})`,
+      'illegalSubdomain', { lunchspaceSubdomain },
+    )
   }
   try {
     await createLunchspace(userId, lunchspaceName, lunchspaceSubdomain)
   } catch (error) {
     if (error.code === 'ER_DUP_ENTRY') {
-      throw new InputValidationError('lunchspaceSubdomain', 'Lunchspace subdomain already exists.')
+      throw new InputValidationError(
+        'lunchspaceSubdomain', `Lunchspace subdomain already exists. (${lunchspaceSubdomain})`,
+        'subdomainAlreadyExists', { lunchspaceSubdomain },
+      )
     }
     throw error
   }

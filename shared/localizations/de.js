@@ -9,6 +9,10 @@ const content = {
   unexpectedDatabaseError: 'Unerwarteter Datenbankfehler. Bitte versuchen sie es später erneut.',
 
   passwordAndEmailDoesNotMatch: 'Passwort und Email {email} stimmen nicht überein.',
+  illegalInput: 'Upps, es ist ein Fehler aufgetreten. Bitte versuche es erneut.',
+  illegalLengthLocationName: 'Der Name einer Location muss zwischen 1 and 64 Zeichen lang sein.',
+  illegalSubdomain: 'Die angegebene Subdomain ({lunchspaceSubdomain}) enthält ungültige Zeichen.',
+  subdomainAlreadyExists: 'Die angegebene Subdomain ({lunchspaceSubdomain}) ist bereits vergeben.',
 }
 module.exports = {
   languageKey,

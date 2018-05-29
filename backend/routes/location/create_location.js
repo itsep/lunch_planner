@@ -16,11 +16,17 @@ async function createLocation(req, res) {
   let { name } = req.body
   const { id } = req.lunchspace
   if (!validLength(name, maximumLength, minimumLength)) {
-    throw new InputValidationError('name', 'Name must be between 1 and 64 characters long.')
+    throw new InputValidationError(
+      'name', `Name must be between 1 and 64 characters long. (${name})`,
+      'illegalLengthLocationName', { name },
+    )
   }
   name = name.trim()
   if (!coordinates.lat || !coordinates.long) {
-    throw new InputValidationError('coordinates', 'Illegal coordinates.')
+    throw new InputValidationError(
+      'coordinates', `Illegal coordinates. (${coordinates})`,
+      'illegalInput', { coordinates },
+    )
   }
   await create(name, coordinates, id)
   return res.status(200).json({})

@@ -13,7 +13,7 @@ LEFT JOIN account ON account.user_id = user.id
 WHERE user.id = ?`, [userId])
     .then(([result]) => {
       if (result.length === 0) {
-        throw new AuthenticationError('Could not find a user in the database for user id found in token.')
+        throw new AuthenticationError('User id in token does not match with any user found in the database.')
       }
       return result[0]
     })
