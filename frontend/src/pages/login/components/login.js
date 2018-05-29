@@ -128,6 +128,17 @@ class Login extends React.Component {
               >
                 Login
               </Button>
+              <Button
+                type="button"
+                size="large"
+                variant="raised"
+                color="secondary"
+                className={classes.button}
+                disabled={this.state.isLoading}
+                href={routeLocations.REGISTRATION}
+              >
+                sign up
+              </Button>
               <Fade
                 in={this.state.isLoading}
                 unmountOnExit
