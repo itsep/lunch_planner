@@ -1,9 +1,8 @@
-// TODO: everything should be empty
-
 const initialState = {
   lunchspace: {
-    name: 'vsf experts - lunchspace',
-    subdomain: 'test-subdomain/',
+    id: 1,
+    name: 'VSF Experts Mannheim',
+    subdomain: 'vsf-experts-ma',
   },
   currentDate: new Date(),
   user: {
@@ -40,6 +39,7 @@ const initialState = {
     }
   */
   joinUpAt: [],
+  error: null,
 }
 
 export default initialState

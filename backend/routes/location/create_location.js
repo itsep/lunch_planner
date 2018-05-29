@@ -1,5 +1,5 @@
 const { pool } = require('../../lib/database')
-const { validLength } = require('../../lib/validation')
+const { validLength, isNumber } = require('../../lib/validation')
 const { InputValidationError } = require('../../lib/error')
 
 const minimumLength = 1
@@ -19,11 +19,11 @@ async function createLocation(req, res) {
     throw new InputValidationError('name', 'Name must be between 1 and 64 characters long.')
   }
   name = name.trim()
-  if (!coordinates.lat || !coordinates.long) {
+  if (!isNumber(coordinates.lat) || !isNumber(coordinates.long)) {
     throw new InputValidationError('coordinates', 'Illegal coordinates.')
   }
-  await create(name, coordinates, id)
-  return res.status(200).end()
+  const locationId = await create(name, coordinates, id)
+  return res.status(200).json({ locationId })
 }
 
 module.exports = {
