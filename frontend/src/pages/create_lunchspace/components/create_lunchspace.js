@@ -12,6 +12,7 @@ import Fade from 'material-ui/transitions/Fade'
 import { CircularProgress } from 'material-ui/Progress'
 import FormControlInputValidator from 'components/form_control_input_validator'
 import FormSection from 'components/form_section'
+import apiFetch from '../../../lib/api_fetch'
 import localizedStrings from '../../../localization'
 
 const styles = theme => ({
@@ -36,7 +37,7 @@ class CreateLunchspace extends React.Component {
       lunchspaceCreated: false,
       isLoading: false,
       error: undefined,
-      lastErrorMessage: '',
+      lastError: null,
     }
 
     this.handleLunchspaceNameChange = this.handleLunchspaceNameChange.bind(this)
@@ -77,25 +78,17 @@ class CreateLunchspace extends React.Component {
       isLoading: true,
       error: null,
     })
-    return fetch('/api/lunchspace', {
+    return apiFetch('/api/lunchspace', {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      credentials: 'same-origin',
-      body: JSON.stringify(data),
+      body: data,
     })
-      .then((response) => {
-        if (response.ok) {
-          this.setState({
-            lunchspaceCreated: true,
-          })
-          return null
-        }
-        return response.json().then(({ error }) => { throw new Error(error) })
+      .then(() => {
+        this.setState({
+          lunchspaceCreated: true,
+        })
       })
       .catch((error) => {
-        this.setState({ error, lastErrorMessage: error.message })
+        this.setState({ error, lastError: error.message })
       })
       .finally(() => {
         this.setState({ isLoading: false })
@@ -149,7 +142,7 @@ class CreateLunchspace extends React.Component {
             />
             <Collapse in={!!this.state.error}>
               <Typography color="error">
-                {this.state.lastErrorMessage}
+                {this.state.lastError && this.state.lastError.toLocalizedString(localizedStrings)}
               </Typography>
             </Collapse>
             <div className={classes.actionsContainer}>
