@@ -71,7 +71,6 @@ describe('create lunchspace', () => {
     expect(createLunchspace.state('error')).toBeInstanceOf(LocalizableError)
     expect(createLunchspace.state('lastError')).toBeDefined()
     expect(createLunchspace.state('lastError')).toEqual(createLunchspace.state('error'))
-
   })
 })
 
