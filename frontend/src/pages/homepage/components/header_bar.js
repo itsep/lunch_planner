@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { AppBar, Avatar } from 'material-ui'
+import { AppBar, Avatar, Button } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import DateBar from './date_bar'
 import combineStyleClasses from './../../../lib/combineStyleClassses'
+import { fetchLogout } from '../actions'
 
 const styles = () => ({
   appBar: {
@@ -55,7 +56,15 @@ const mapStateToProps = state => ({
   lunchspace: state.lunchspace,
 })
 
-function HeaderBar({ classes, user, lunchspace }) {
+const mapDispatchToProps = dispatch => ({
+  fetchLogoutAction: () => {
+    dispatch(fetchLogout())
+  },
+})
+
+function HeaderBar({
+  classes, user, lunchspace, fetchLogoutAction,
+}) {
   return (
     <div>
       <AppBar className={classes.appBar} position="static" color="default">
@@ -71,6 +80,7 @@ function HeaderBar({ classes, user, lunchspace }) {
               {user.firstName} {user.lastName}
             </p>
             <Avatar alt={`${user.firstName} ${user.lastName}`} src={user.imageUrl} className={combineStyleClasses(classes.avatar)} />
+            <Button onClick={fetchLogoutAction}>Logout</Button>
           </div>
         </div>
         <div className={classes.dateBar}>
@@ -91,7 +101,8 @@ HeaderBar.propTypes = {
     name: PropTypes.string.isRequired,
     subdomain: PropTypes.string.isRequired,
   }).isRequired,
+  fetchLogoutAction: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(connect(mapStateToProps)(HeaderBar))
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(HeaderBar))

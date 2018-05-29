@@ -8,6 +8,7 @@ import { CircularProgress } from 'material-ui/Progress'
 import Collapse from 'material-ui/transitions/Collapse'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
+import routeLocations from '../../route_locations'
 import localizedStrings from '../../../localization'
 import apiFetch from '../../../lib/api_fetch'
 
@@ -56,10 +57,15 @@ class Login extends React.Component {
       method: 'POST',
       body: data,
     })
-      .then(() => {
-        this.setState({
-          loggedIn: true,
-        })
+      .then((response) => {
+        if (response.ok) {
+          this.setState({
+            loggedIn: true,
+          })
+          window.location = routeLocations.HOMEPAGE
+          return null
+        }
+        return response.json().then(({ error }) => { throw new Error(error) })
       })
       .catch((error) => {
         this.setState({ error, lastError: error })
@@ -118,7 +124,18 @@ class Login extends React.Component {
                 className={classes.button}
                 disabled={this.state.isLoading}
               >
-                {localizedStrings.login}
+    {localizedStrings.login}
+              </Button>
+              <Button
+                type="button"
+                size="large"
+                variant="raised"
+                color="secondary"
+                className={classes.button}
+                disabled={this.state.isLoading}
+                href={routeLocations.REGISTRATION}
+              >
+                sign up
               </Button>
               <Fade
                 in={this.state.isLoading}

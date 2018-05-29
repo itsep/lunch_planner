@@ -1,20 +1,14 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import LocationItem from './location'
-import { addLocation } from '../actions'
+import CreateLocation from './create_location'
 import localizedStrings from '../../../localization'
 
 const mapStateToProps = state => ({
   locations: state.locations,
-})
-
-const mapDispatchToProps = dispatch => ({
-  addLocationAction: (name, id) => {
-    dispatch(addLocation(name, id))
-  },
 })
 
 const styles = () => ({
@@ -43,33 +37,48 @@ const styles = () => ({
   },
 })
 
-function LocationList({ locations, classes }) {
-  return (
-    <div>
-      <ul className={classes.locationList}>
-        {locations.map((location => (
-          <li key={location.id}>
-            <LocationItem id={location.id} name={location.name} timeStamps={location.timeStamps} />
-          </li>
-          )))}
-        <li>
-          <div className={classes.createButtonBox}>
-            <Button
-              className={classes.buttonLocation}
-            >
-              {localizedStrings.createLocation}
-            </Button>
-          </div>
-        </li>
-      </ul>
-    </div>
-  )
-}
+class LocationList extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      showLocation: false,
+    }
+  }
 
-/*
-  in button to create new Event
-  onClick={() => addLocationAction(newLocationName, newLocationID)}
-  */
+  render() {
+    return (
+      <div>
+        <CreateLocation
+          show={this.state.showLocation}
+          onClose={() => {
+            this.setState({ showLocation: false })
+          }}
+        />
+        <ul className={this.props.classes.locationList}>
+          {this.props.locations.map((location => (
+            <li key={location.id}>
+              <LocationItem
+                id={location.id}
+                name={location.name}
+                timeStamps={location.timeStamps}
+              />
+            </li>
+           )))}
+          <li>
+            <div className={this.props.classes.createButtonBox}>
+              <Button
+                className={this.props.classes.buttonLocation}
+                onClick={() => this.setState({ showLocation: true })}
+              >
+    {localizedStrings.createLocation}
+              </Button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    )
+  }
+}
 
 LocationList.propTypes = {
   locations: PropTypes.arrayOf(PropTypes.shape({
@@ -79,4 +88,4 @@ LocationList.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(LocationList))
+export default withStyles(styles)(connect(mapStateToProps)(LocationList))

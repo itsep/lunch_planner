@@ -1,17 +1,16 @@
-// TODO: everything should be empty
-
 const initialState = {
   lunchspace: {
-    name: 'vsf experts - lunchspace',
-    subdomain: 'test-subdomain/',
+    id: 1,
+    name: 'VSF Experts Mannheim',
+    subdomain: 'vsf-experts-ma',
   },
   currentDate: new Date(),
   user: {
-    id: 1,
-    email: 'dnadoba@gmail.com',
-    imageUrl: 'https://pbs.twimg.com/profile_images/845411989589504000/af0aKVig_400x400.jpg',
-    firstName: 'David',
-    lastName: 'Nadoba',
+    id: -1,
+    email: '',
+    imageUrl: '',
+    firstName: '',
+    lastName: '',
   },
   /*
   locations is an array of many locations. One location has the shape of:
@@ -40,6 +39,7 @@ const initialState = {
     }
   */
   joinUpAt: [],
+  error: null,
 }
 
 export default initialState
