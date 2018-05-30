@@ -15,7 +15,8 @@ WHERE user.id = ?`, [userId])
       if (result.length === 0) {
         throw new AuthenticationError('User id in token does not match with any user found in the database.')
       }
-      return result[0]
+      const [user] = result
+      return user
     })
 }
 
