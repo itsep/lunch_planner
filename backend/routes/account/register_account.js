@@ -23,15 +23,15 @@ async function registerAccount(req, res) {
   let { firstName, lastName } = req.body
   const { email, password } = req.body
   if (!validLength(firstName, maximumLength, minimumLength)) {
-    return res.status(409).json({ error: 'Length of first name must be between 1 and 24 characters.' })
+    return res.status(409).json({ message: 'Length of first name must be between 1 and 24 characters.' })
   }
   if (!validLength(lastName, maximumLength, minimumLength)) {
-    return res.status(409).json({ error: 'Length of last name must be between 1 and 24 characters.' })
+    return res.status(409).json({ message: 'Length of last name must be between 1 and 24 characters.' })
   }
   firstName = firstName.trim()
   lastName = lastName.trim()
   if (!validEmail(email)) {
-    return res.status(409).json({ error: 'Invalid email address' })
+    return res.status(409).json({ message: 'Invalid email address' })
   }
   try {
     const { userId } = await create(email, password, firstName, lastName)
@@ -42,7 +42,7 @@ async function registerAccount(req, res) {
     )
   } catch (error) {
     if (error.code === 'ER_DUP_ENTRY') {
-      return res.status(500).json({ error: 'Email is already registered.' })
+      return res.status(500).json({ message: 'Email is already registered.' })
     } throw error
   }
   return res.status(200).json({})

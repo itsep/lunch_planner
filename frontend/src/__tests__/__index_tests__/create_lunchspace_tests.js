@@ -2,7 +2,9 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 import { mount, shallow } from 'enzyme'
 import { escapeSubdomain } from 'shared/lib/subdomain'
+import { LocalizableError } from 'shared/lib/error/localizable_error'
 import CreateLunchspace from '../../pages/create_lunchspace/components/create_lunchspace'
+
 
 it('Create Lunchspace renders correctly', () => {
   // fetch.once(JSON.stringify({ count: 0 }))
@@ -60,14 +62,15 @@ describe('create lunchspace', () => {
   })
   it('create new lunchspace failure - lunchspace subdomain already exists', async () => {
     const errorMessage = 'Lunchspace subdomain already exists.'
-    fetch.mockResponse(JSON.stringify({ error: errorMessage }), { status: 409 })
+    fetch.mockResponse(JSON.stringify({ message: errorMessage }), { status: 409 })
     await createLunchspace.instance().handleSubmit()
 
     expect(createLunchspace.state('isLoading')).toBeFalsy()
     expect(createLunchspace.state('lunchspaceCreated')).toBeFalsy()
-    expect(createLunchspace.state('lastErrorMessage')).toEqual(errorMessage)
     expect(createLunchspace.state('error')).toBeDefined()
-    expect(createLunchspace.state('error')).toHaveProperty('message', errorMessage)
+    expect(createLunchspace.state('error')).toBeInstanceOf(LocalizableError)
+    expect(createLunchspace.state('lastError')).toBeDefined()
+    expect(createLunchspace.state('lastError')).toEqual(createLunchspace.state('error'))
   })
 })
 

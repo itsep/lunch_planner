@@ -7,6 +7,8 @@ const content = {
   authenticationError: 'Nicht authentifiziert. Bitte melde dich an.',
   authorizationError: 'Nicht authorisiert. Du hast nicht genug Rechte für diese Aktion.',
   unexpectedDatabaseError: 'Unerwarteter Datenbankfehler. Bitte versuche es später erneut.',
+  unknownError: 'Ein unbekannter Fehler ist aufgetreten. Bitte versuche es später erneut.',
+  unknownErrorWithMessage: 'Ein unerwartet Fehler ist aufgetrete: {message}',
 
   passwordAndEmailDoesNotMatch: 'Passwort und Email {email} stimmen nicht überein.',
   illegalInput: 'Upps, es ist ein Fehler aufgetreten. Bitte versuche es erneut.',
