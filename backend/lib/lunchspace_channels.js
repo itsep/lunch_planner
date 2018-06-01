@@ -1,6 +1,6 @@
 const Channel = require('./redis/channel')
 
-const channelPrefix = {
+const channelSuffix = {
   lunchspace: 'lunchspace',
   location: 'location',
   joinUpAt: 'joinUpAt',
@@ -11,7 +11,7 @@ const channelPrefix = {
  * @returns {Channel}
  */
 function lunchspaceChannel(lunchspaceId) {
-  return new Channel([channelPrefix.lunchspace, lunchspaceId])
+  return new Channel([lunchspaceId, channelSuffix.lunchspace])
 }
 
 /**
@@ -20,7 +20,7 @@ function lunchspaceChannel(lunchspaceId) {
  * @returns {Channel}
  */
 function locationChannel(lunchspaceId, locationId) {
-  return lunchspaceChannel(lunchspaceId).concat([channelPrefix.location, locationId])
+  return lunchspaceChannel(lunchspaceId).concat([locationId, channelSuffix.location])
 }
 
 /**
@@ -32,7 +32,7 @@ function locationChannel(lunchspaceId, locationId) {
  * @returns {Channel}
  */
 function joinUpAt(lunchspaceId, locationId, dateId, timeId) {
-  return locationChannel(lunchspaceId, locationId).concat([channelPrefix.joinUpAt, dateId, timeId])
+  return locationChannel(lunchspaceId, locationId).concat([dateId, timeId, channelSuffix.joinUpAt])
 }
 
 module.exports = {

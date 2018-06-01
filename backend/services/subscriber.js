@@ -10,20 +10,35 @@ const { checkLunchspacePermissionOfSocket } = require('../middleware/lunchspace_
 const io = socketIO(8090)
 const subscriber = SubscriberClient(redis.createClient())
 
+function subscribeToAllLocationChanges(lunchspaceId, eventDate, callback) {
+  const unsubscriber = [
+    subscriber.subscribe(locationChannel(lunchspaceId, '*'), callback),
+    subscriber.subscribe(joinUpAt(lunchspaceId, '*', toEventDateId(eventDate), '*'), callback),
+  ]
+  return () => {
+    unsubscriber.forEach(unsubscribe => unsubscribe())
+  }
+}
+
 io.use(cookieParser())
 io.use(authenticateSocket)
 io.use(checkLunchspacePermissionOfSocket)
 io.on('connection', (socket) => {
   const { id: lunchspaceId } = socket.lunchspace
-  const eventDate = toEventDate(new Date())
   const emitToSocket = (message) => {
     socket.emit('change', message)
   }
-  const unsubscriber = [
-    subscriber.subscribe(locationChannel(lunchspaceId, '*'), emitToSocket),
-    subscriber.subscribe(joinUpAt(lunchspaceId, '*', toEventDateId(eventDate), '*'), emitToSocket),
-  ]
+  let unsubscribe
+  socket.on('subscribeToAllLocationChanges', (eventDate) => {
+    if (unsubscribe) {
+      unsubscribe()
+    }
+    unsubscribe = subscribeToAllLocationChanges(lunchspaceId, eventDate, emitToSocket)
+  })
+
   socket.on('disconnect', () => {
-    unsubscriber.forEach(unsubscribe => unsubscribe())
+    if (unsubscribe) {
+      unsubscribe()
+    }
   })
 })
