@@ -25,7 +25,10 @@
     "fs-nextra": "^0.3.2",
     "jsonwebtoken": "^8.2.1",
     "mysql2": "^1.5.3",
-    "nodemailer": "^4.6.5"
+    "nodemailer": "^4.6.5",
+    "redis": "^2.8.0",
+    "redis-mock": "^0.24.0",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",

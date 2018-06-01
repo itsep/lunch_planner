@@ -1,6 +1,7 @@
 const { pool } = require('../../lib/database')
 const { validLength, isNumber } = require('../../lib/validation')
 const { InputValidationError } = require('../../../shared/lib/error')
+const { locationChannel } = require('../../lib/lunchspace_channels')
 
 const minimumLength = 1
 const maximumLength = 64
@@ -29,6 +30,12 @@ async function createLocation(req, res) {
     )
   }
   const locationId = await create(name, coordinates, id)
+  req.publishClient.publish(locationChannel(id, locationId), {
+    action: 'createLocation',
+    locationId,
+    name,
+    coordinates,
+  })
   return res.status(200).json({ locationId })
 }
 

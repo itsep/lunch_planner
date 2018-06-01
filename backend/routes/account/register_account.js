@@ -2,6 +2,7 @@ const { pool } = require('../../lib/database')
 const { hash } = require('../../lib/password_hash')
 const { stringifyToken } = require('../../lib/authenticate')
 const { validLength, validEmail } = require('../../lib/validation')
+const { InputValidationError } = require('../../../shared/lib/error')
 
 const minimumLength = 1
 const maximumLength = 24
@@ -23,28 +24,31 @@ async function registerAccount(req, res) {
   let { firstName, lastName } = req.body
   const { email, password } = req.body
   if (!validLength(firstName, maximumLength, minimumLength)) {
-    return res.status(409).json({ message: 'Length of first name must be between 1 and 24 characters.' })
+    throw new InputValidationError(
+      'firstName', `firstName has invalid length: ${firstName}`,
+      'inputTooLong24', { firstName },
+    )
   }
   if (!validLength(lastName, maximumLength, minimumLength)) {
-    return res.status(409).json({ message: 'Length of last name must be between 1 and 24 characters.' })
+    throw new InputValidationError(
+      'lastName', `firstName has invalid length: ${lastName}`,
+      'inputTooLong24', { lastName },
+    )
   }
   firstName = firstName.trim()
   lastName = lastName.trim()
   if (!validEmail(email)) {
-    return res.status(409).json({ message: 'Invalid email address' })
-  }
-  try {
-    const { userId } = await create(email, password, firstName, lastName)
-    const token = stringifyToken(userId)
-    res.cookie(
-      'lunch_planner_token',
-      token,
+    throw new InputValidationError(
+      'email', `invalid email: ${email}`,
+      'invalidEmail', { email },
     )
-  } catch (error) {
-    if (error.code === 'ER_DUP_ENTRY') {
-      return res.status(500).json({ message: 'Email is already registered.' })
-    } throw error
   }
+  const { userId } = await create(email, password, firstName, lastName)
+  const token = stringifyToken(userId)
+  res.cookie(
+    'lunch_planner_token',
+    token,
+  )
   return res.status(200).json({})
 }
 

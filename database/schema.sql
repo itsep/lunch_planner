@@ -96,6 +96,23 @@ ALTER TABLE join_up_at
 	ON DELETE CASCADE
 	ON UPDATE CASCADE;
 
+-- Invitation Entity
+CREATE TABLE invitation
+(
+    token VARCHAR(36) NOT NULL,
+    lunchspace_id BIGINT UNSIGNED NOT NULL,
+    email VARCHAR(120) NOT NULL,
+    PRIMARY KEY(token),
+    UNIQUE (email, lunchspace_id)
+    )
+
+--Invitation Foreign Key
+ALTER TABLE invitation
+    ADD FOREIGN KEY invitation_to_lunchspace_idx (lunchspace_id)
+    REFERENCES lunchspace (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
 -- View on the member data of a location
 CREATE VIEW event_participants AS
 SELECT join_up_at.*, user.*, location.lunchspace_id
