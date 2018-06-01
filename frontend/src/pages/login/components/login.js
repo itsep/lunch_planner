@@ -61,6 +61,7 @@ class Login extends React.Component {
         this.setState({
           loggedIn: true,
         })
+        window.location = routeLocations.HOMEPAGE
       })
       .catch((error) => {
         this.setState({ error, lastError: error })
