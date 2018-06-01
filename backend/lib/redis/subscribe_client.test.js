@@ -74,6 +74,8 @@ describe('SubscribeClient', () => {
     })
     const unsubscribe2 = subscriber.subscribe(expectedChannel, mockCallback)
     unsubscribe2()
+    // unsubscribe called multiple times should not cause any trouble
+    unsubscribe1()
     pubClient.publish(expectedChannel, JSON.stringify(expectedMessage))
   })
   it('should subscribe to a pattern correctly', (done) => {
@@ -104,6 +106,38 @@ describe('SubscribeClient', () => {
     })
     const unsubscribe2 = subscriber.subscribe(pattern, mockCallback)
     unsubscribe2()
+    pubClient.publish(channel, JSON.stringify(expectedMessage))
+  })
+  it('should handle unsubscribe properly', (done) => {
+    const channel = 'test.123.pattern'
+    const expectedMessage = { hello: 'world' }
+    const { pubClient, subscriber, release } = makeSubscribeClientMock()
+    // unsubscribe from a non existing channel should work
+    subscriber.unsubscribe('channel that does not exists', () => {})
+    subscriber.subscribe(channel, (message) => {
+      expect(message).toEqual(expectedMessage)
+      release()
+      done()
+    })
+    // unsubscribe from an existing channel but with an unkown callback should work
+    subscriber.unsubscribe(channel, () => {})
+    pubClient.publish(channel, JSON.stringify(expectedMessage))
+  })
+  it('should discard messages from an unexpected chanels', (done) => {
+    const channel = 'test.123.pattern'
+    const unexpectedChannel = 'unexpected channel'
+    const expectedMessage = { hello: 'world' }
+    const {
+      pubClient, subClient, subscriber, release,
+    } = makeSubscribeClientMock()
+    // unsubscribe from a non existing channel should work
+    subscriber.subscribe(channel, (message) => {
+      expect(message).toEqual(expectedMessage)
+      release()
+      done()
+    })
+    subClient.subscribe(unexpectedChannel)
+    pubClient.publish(unexpectedChannel, 'malformed message')
     pubClient.publish(channel, JSON.stringify(expectedMessage))
   })
 })

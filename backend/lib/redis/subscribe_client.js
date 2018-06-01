@@ -124,8 +124,11 @@ class SubscribeClient {
    * @param {string} message
    */
   notifySubscriber(channel, message) {
-    const messageObject = JSON.parse(message)
     const subscriber = this.channelToSubscriberMap[channel] || []
+    if (subscriber.length === 0) {
+      return
+    }
+    const messageObject = JSON.parse(message)
     subscriber.forEach((callback) => {
       callback(messageObject)
     })
