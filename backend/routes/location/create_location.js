@@ -1,7 +1,7 @@
 const { pool } = require('../../lib/database')
 const { validLength, isNumber } = require('../../lib/validation')
 const { InputValidationError } = require('../../../shared/lib/error')
-const { locationChannel } = require('../../lib/redis/channels')
+const { locationChannel } = require('../../lib/lunchspace_channels')
 
 const minimumLength = 1
 const maximumLength = 64

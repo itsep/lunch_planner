@@ -1,4 +1,4 @@
-const Channel = require('./channel')
+const Channel = require('./redis/channel')
 
 const channelPrefix = {
   lunchspace: 'lunchspace',

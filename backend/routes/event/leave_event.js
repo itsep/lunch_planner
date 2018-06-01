@@ -3,7 +3,7 @@ const { validDate, validTime } = require('../../lib/validation')
 const { timeForSQL, dateForSQL } = require('../../lib/formatation')
 const { toEventTimeId, toEventDateId } = require('../../../shared/lib/event')
 const { InputValidationError } = require('../../../shared/lib/error')
-const { joinUpAt } = require('../../lib/redis/channels')
+const { joinUpAt } = require('../../lib/lunchspace_channels')
 
 async function leaveEvent(userId, locationId, eventTime, eventDate) {
   await pool.execute(

@@ -3,7 +3,7 @@ const { validDate, validTime } = require('../../lib/validation')
 const { timeForSQL, dateForSQL } = require('../../lib/formatation')
 const { toEventTimeId, toEventDateId } = require('../../../shared/lib/event')
 const { InputValidationError } = require('../../../shared/lib/error')
-const { joinUpAt } = require('../../lib/redis/channels')
+const { joinUpAt } = require('../../lib/lunchspace_channels')
 
 async function joinEvent(userId, locationId, eventTime, eventDate) {
   await pool.execute('INSERT INTO join_up_at (user_id, location_id, event_time, event_date) ' +
