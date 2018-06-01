@@ -24,6 +24,7 @@ const legalTestDate = { year: 2018, month: 5, day: 15 }
 let testUserId
 let testLunchspaceId
 let testLocationId
+let testUserPromise
 
 describe('joinEvent', () => {
   beforeAll(createMockDatabase)
@@ -34,6 +35,9 @@ describe('joinEvent', () => {
     testLunchspaceId = await createLunchspace(testUserId, testSpaceName, testSpaceSubdomain)
     testLocationId = await location
       .create(testLocationName, testLocationCoordinates, testLunchspaceId)
+    testUserPromise = Promise.resolve({
+      id: testUserId, firstName: 'testFirstName', lastName: 'testLastName', email: testEmail,
+    })
   })
   describe('create', async () => {
     it('should joinEvent a location in DB', async () => {
@@ -45,6 +49,8 @@ describe('joinEvent', () => {
       const req = mockReq({
         body: { locationId: testLocationId, eventTime: legalTestTime, eventDate: legalTestDate },
         token: { userId: testUserId },
+        lunchspace: { id: testLunchspaceId },
+        userPromise: testUserPromise,
       })
       const res = mockRes()
       await expect(joinEventRoute(req, res))
@@ -54,6 +60,8 @@ describe('joinEvent', () => {
       const req = mockReq({
         body: { locationId: testLocationId, eventTime: legalTestTime, eventDate: legalTestDate },
         token: { userId: testUserId },
+        lunchspace: { id: testLunchspaceId },
+        userPromise: testUserPromise,
       })
       const res = mockRes()
       await expect(joinEventRoute(req, res))

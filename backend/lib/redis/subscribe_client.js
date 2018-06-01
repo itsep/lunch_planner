@@ -10,18 +10,6 @@ const Channel = require('./channel')
  * @callback UnsubscribeCallback
  */
 
-/**
- * @type {RegExp}
- */
-const containsPatternRegex = /[^\\](\*|\?|(\[\w+\]))/
-
-/**
- * @param {string} channel
- * @returns {boolean}
- */
-function containsPattern(channel) {
-  return containsPatternRegex.test(channel)
-}
 
 class SubscribeClient {
   constructor(client) {
@@ -95,7 +83,7 @@ class SubscribeClient {
    * @param {string} channel
    */
   globalSubscribe(channel) {
-    if (containsPattern(channel)) {
+    if (Channel.containsPattern(channel)) {
       this.client.psubscribe(channel)
     } else {
       this.client.subscribe(channel)
@@ -106,7 +94,7 @@ class SubscribeClient {
    * @param {string} channel
    */
   globalUnsubscribe(channel) {
-    if (containsPattern(channel)) {
+    if (Channel.containsPattern(channel)) {
       this.client.punsubscribe(channel)
     } else {
       this.client.unsubscribe(channel)
