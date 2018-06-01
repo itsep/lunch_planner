@@ -25,6 +25,7 @@ async function authenticateSocket(socket) {
 }
 
 module.exports = {
+  asyncAuthenticateRequest: authenticateRequest,
   authenticateRequest: asyncExpressMiddleware(authenticateRequest),
   authenticateSocket: asyncSocketMiddleware(authenticateSocket),
 }

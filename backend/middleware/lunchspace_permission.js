@@ -52,7 +52,7 @@ async function checkLunchspacePermissionOfSocket(socket) {
 }
 
 module.exports = {
-  asyncCheckLunchspacePermission: checkLunchspacePermission,
+  asyncCheckLunchspacePermissionOfRequest: checkLunchspacePermissionOfRequest,
   checkLunchspacePermissionOfRequest: asyncExpressMiddleware(checkLunchspacePermissionOfRequest),
   checkLunchspacePermissionOfSocket: asyncSocketMiddleware(checkLunchspacePermissionOfSocket),
 }

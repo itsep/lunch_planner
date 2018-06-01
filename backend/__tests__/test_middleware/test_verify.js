@@ -1,5 +1,5 @@
 const { parseToken } = require('../../lib/authenticate')
-const { authenticateRequest } = require('../../middleware/authenticate')
+const { asyncAuthenticateRequest } = require('../../middleware/authenticate')
 const { registerAccount } = require('../../routes/account/register_account')
 const { mockReq, mockRes, mockNext } = require('../../lib/express_mock')
 const { login } = require('../../routes/account/login_account')
@@ -42,18 +42,11 @@ describe('verify account', () => {
   it('is token verified', async () => {
     const request = { cookies: { lunch_planner_token: testToken } }
     req = mockReq(request)
-    // Mock cookie in request
-    const next = mockNext()
-    authenticateRequest(req, res2, next)
-    expect(next).not.toBeCalledWith(expect.any(Error))
+    await expect(asyncAuthenticateRequest(req, res2)).resolves.not.toThrow()
   })
   it('is token invalid', async () => {
     const request = { cookies: { lunch_planner_token: 'invalid token' } }
     req = mockReq(request)
-    // Mock cookie in request
-    const next = mockNext()
-    authenticateRequest(req, res2, next)
-    // eslint-disable-next-line no-unused-expressions
-    expect(next).toBeCalledWith(expect.any(Error))
+    await expect(asyncAuthenticateRequest(req, res2)).rejects.toThrowError(Error)
   })
 })
