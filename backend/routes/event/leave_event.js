@@ -1,7 +1,9 @@
 const { pool } = require('../../lib/database')
 const { validDate, validTime } = require('../../lib/validation')
 const { timeForSQL, dateForSQL } = require('../../lib/formatation')
+const { toEventTimeId, toEventDateId } = require('../../../shared/lib/event')
 const { InputValidationError } = require('../../../shared/lib/error')
+const { joinUpAt } = require('../../lib/lunchspace_channels')
 
 async function leaveEvent(userId, locationId, eventTime, eventDate) {
   await pool.execute(
@@ -28,6 +30,24 @@ async function leaveEventRoute(req, res) {
   const eventTimeSQL = timeForSQL(eventTime)
   const eventDateSQL = dateForSQL(eventDate)
   await leaveEvent(userId, locationId, eventTimeSQL, eventDateSQL)
+
+  const { id: lunchspaceId } = req.lunchspace
+  const { fistName, lastName, imageUrl } = await req.userPromise
+  req.publishClient.publish(
+    joinUpAt(lunchspaceId, locationId, toEventDateId(eventDate), toEventTimeId(eventTime)),
+    {
+      action: 'leaveEvent',
+      locationId,
+      eventDate,
+      eventTime,
+      participant: {
+        userId,
+        fistName,
+        lastName,
+        imageUrl,
+      },
+    }
+  )
   return res.status(200).json({})
 }
 
