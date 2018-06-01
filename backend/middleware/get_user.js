@@ -1,4 +1,4 @@
-const { asyncMiddleware } = require('../lib/async_middleware')
+const { asyncExpressMiddleware } = require('../lib/async_middleware')
 const { AuthenticationError } = require('../../shared/lib/error')
 const { pool } = require('../lib/database')
 
@@ -22,5 +22,5 @@ WHERE user.id = ?`, [userId])
 
 module.exports = {
   asyncGetUser,
-  getUser: asyncMiddleware(asyncGetUser),
+  getUser: asyncExpressMiddleware(asyncGetUser),
 }
