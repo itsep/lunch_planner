@@ -137,7 +137,7 @@ class Login extends React.Component {
                   disabled={this.state.isLoading}
                   href={routeLocations.REGISTRATION}
                 >
-                  sign up
+                  {localizedStrings.signUp}
                 </Button>
                 <Button
                   type="submit"
