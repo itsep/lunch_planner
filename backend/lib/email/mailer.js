@@ -1,5 +1,7 @@
 const nodemailer = require('nodemailer')
 
+const { buildEmail } = 'TODO'
+
 const sender = 'noreply.lunchspace@gmail.com'
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -11,12 +13,7 @@ const transporter = nodemailer.createTransport({
 
 function sendEMail(receivers, topic) {
   receivers.forEach((receiver) => {
-    const mailOptions = {
-      from: sender,
-      to: receiver,
-      subject: topic.subject,
-      html: topic.content,
-    }
+    const mailOptions = buildEmail(sender, receiver, topic)
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         console.log(error)
