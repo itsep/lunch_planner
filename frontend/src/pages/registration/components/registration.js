@@ -183,7 +183,7 @@ class Registration extends React.Component {
                 in={this.state.isLoading}
                 unmountOnExit
               >
-                <CircularProgress size="36px" className={classes.progressIndicator}/>
+                <CircularProgress size="36px" className={classes.progressIndicator} />
               </Fade>
             </div>
           </ValidatorForm>
