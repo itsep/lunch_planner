@@ -1,22 +1,29 @@
+const { asyncExpressMiddleware, asyncSocketMiddleware } = require('../lib/async_middleware')
 const { parseToken } = require('../lib/authenticate')
 const { isAuthorised } = require('../lib/authorisation')
 const { AuthorizationError, AuthenticationError } = require('../../shared/lib/error')
 
-function authenticate(req, res, next) {
-  if (!req.cookies || !req.cookies.lunch_planner_token) {
-    next(new AuthenticationError('no cookie token defined'))
-    return
+function authentication(cookies) {
+  if (!cookies || !cookies.lunch_planner_token) {
+    throw new AuthenticationError('no cookie token defined')
   }
-  const token = req.cookies.lunch_planner_token
+  const token = cookies.lunch_planner_token
   const tokenData = parseToken(token)
   if (!isAuthorised(tokenData)) {
-    next(new AuthorizationError('User is not authorized'))
+    throw new AuthorizationError('User is not authorized')
   }
+}
 
-  req.token = tokenData
-  next()
+async function authenticateRequest(req) {
+  req.token = authentication(req.cookies)
+}
+
+async function authenticateSocket(socket) {
+  // eslint-disable-next-line no-param-reassign
+  socket.token = authentication(socket.request.cookies)
 }
 
 module.exports = {
-  authenticate,
+  authenticateRequest: asyncExpressMiddleware(authenticateRequest),
+  authenticateSocket: asyncSocketMiddleware(authenticateSocket),
 }

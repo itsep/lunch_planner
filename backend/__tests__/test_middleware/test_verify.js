@@ -1,5 +1,5 @@
 const { parseToken } = require('../../lib/authenticate')
-const { authenticate } = require('../../middleware/authenticate')
+const { authenticateRequest } = require('../../middleware/authenticate')
 const { registerAccount } = require('../../routes/account/register_account')
 const { mockReq, mockRes, mockNext } = require('../../lib/express_mock')
 const { login } = require('../../routes/account/login_account')
@@ -44,7 +44,7 @@ describe('verify account', () => {
     req = mockReq(request)
     // Mock cookie in request
     const next = mockNext()
-    authenticate(req, res2, next)
+    authenticateRequest(req, res2, next)
     expect(next).not.toBeCalledWith(expect.any(Error))
   })
   it('is token invalid', async () => {
@@ -52,7 +52,7 @@ describe('verify account', () => {
     req = mockReq(request)
     // Mock cookie in request
     const next = mockNext()
-    authenticate(req, res2, next)
+    authenticateRequest(req, res2, next)
     // eslint-disable-next-line no-unused-expressions
     expect(next).toBeCalledWith(expect.any(Error))
   })

@@ -2,7 +2,7 @@ const { createMockDatabase, dropMockDatabase } = require('../../lib/database/moc
 const { registerAccount } = require('../../routes/account/register_account')
 const { createLunchspaceAndJoin } = require('../../routes/lunchspace/create_lunchspace')
 const { mockReq, mockRes } = require('../../lib/express_mock')
-const { asyncCheckPermission } = require('../../middleware/permission')
+const { asyncCheckLunchspacePermission } = require('../../middleware/lunchspace_permission')
 
 const testEmail = 'max.mustermann@gmail.com'
 const testPassword = 'passwort'
@@ -38,7 +38,7 @@ describe('permission', () => {
       token: { userId: testUserId },
     })
     const res = mockRes()
-    await asyncCheckPermission(req, res)
+    await asyncCheckLunchspacePermission(req, res)
   })
   it('has no permission permission', async () => {
     const req = mockReq({
@@ -46,13 +46,13 @@ describe('permission', () => {
       token: { userId: testUserId2 },
     })
     const res = mockRes()
-    await expect(asyncCheckPermission(req, res)).rejects.toThrow()
+    await expect(asyncCheckLunchspacePermission(req, res)).rejects.toThrow()
   })
   it('has no token', async () => {
     const req = mockReq({
       body: { subdomain: testSubdomain },
     })
     const res = mockRes()
-    await expect(asyncCheckPermission(req, res)).rejects.toThrow()
+    await expect(asyncCheckLunchspacePermission(req, res)).rejects.toThrow()
   })
 })
