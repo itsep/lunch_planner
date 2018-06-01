@@ -12,6 +12,7 @@ function authentication(cookies) {
   if (!isAuthorised(tokenData)) {
     throw new AuthorizationError('User is not authorized')
   }
+  return tokenData
 }
 
 async function authenticateRequest(req) {

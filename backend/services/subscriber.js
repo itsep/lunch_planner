@@ -1,14 +1,16 @@
+require('dotenv').load()
+require('../../shared/lib/promise_polyfill')
 const socketIO = require('socket.io')
 const cookieParser = require('socket.io-cookie-parser')
 const redis = require('redis')
 const SubscriberClient = require('../lib/redis/subscribe_client')
 const { locationChannel, joinUpAt } = require('../lib/lunchspace_channels')
-const { toEventDate, toEventDateId } = require('../../shared/lib/event')
+const { toEventDateId } = require('../../shared/lib/event')
 const { authenticateSocket } = require('../middleware/authenticate')
 const { checkLunchspacePermissionOfSocket } = require('../middleware/lunchspace_permission')
 
 const io = socketIO(8090)
-const subscriber = SubscriberClient(redis.createClient())
+const subscriber = new SubscriberClient(redis.createClient())
 
 function subscribeToAllLocationChanges(lunchspaceId, eventDate, callback) {
   const unsubscriber = [

@@ -1,5 +1,5 @@
 const { pool } = require('../lib/database')
-const { asyncExpressMiddleware } = require('../lib/async_middleware')
+const { asyncExpressMiddleware, asyncSocketMiddleware } = require('../lib/async_middleware')
 const { InputValidationError, AuthenticationError, AuthorizationError } = require('../../shared/lib/error')
 
 async function checkLunchspacePermission(token, subdomain) {
@@ -29,7 +29,7 @@ async function checkLunchspacePermission(token, subdomain) {
   return result
 }
 
-async function checkLunchspacePremissionOfRequest(req) {
+async function checkLunchspacePermissionOfRequest(req) {
   const { token } = req
   const { subdomain } = req.headers
   const lunchspace = await checkLunchspacePermission(token, subdomain)
@@ -39,7 +39,7 @@ async function checkLunchspacePremissionOfRequest(req) {
     subdomain,
   }
 }
-async function checkLunchspacePremissionOfSocket(socket) {
+async function checkLunchspacePermissionOfSocket(socket) {
   const { token } = socket
   const { subdomain } = socket.request.cookies
   const lunchspace = await checkLunchspacePermission(token, subdomain)
@@ -53,6 +53,6 @@ async function checkLunchspacePremissionOfSocket(socket) {
 
 module.exports = {
   asyncCheckLunchspacePermission: checkLunchspacePermission,
-  checkLunchspacePermissionOfRequest: asyncExpressMiddleware(checkLunchspacePremissionOfRequest),
-  checkLunchspacePermissionOfSocket: asyncExpressMiddleware(checkLunchspacePremissionOfSocket),
+  checkLunchspacePermissionOfRequest: asyncExpressMiddleware(checkLunchspacePermissionOfRequest),
+  checkLunchspacePermissionOfSocket: asyncSocketMiddleware(checkLunchspacePermissionOfSocket),
 }
