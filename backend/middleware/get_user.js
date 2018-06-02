@@ -1,4 +1,4 @@
-const { asyncMiddleware } = require('../lib/async_middleware')
+const { asyncExpressMiddleware } = require('../lib/async_middleware')
 const { AuthenticationError } = require('../../shared/lib/error')
 const { pool } = require('../lib/database')
 
@@ -15,11 +15,12 @@ WHERE user.id = ?`, [userId])
       if (result.length === 0) {
         throw new AuthenticationError('User id in token does not match with any user found in the database.')
       }
-      return result[0]
+      const [user] = result
+      return user
     })
 }
 
 module.exports = {
   asyncGetUser,
-  getUser: asyncMiddleware(asyncGetUser),
+  getUser: asyncExpressMiddleware(asyncGetUser),
 }

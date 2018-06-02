@@ -1,5 +1,7 @@
 import actionTypes from './action_types'
 import routeLocations from '../route_locations'
+import apiFetch from '../../lib/api_fetch'
+
 
 const withQuery = require('with-query');
 
@@ -72,46 +74,27 @@ export function deleteUser(eventTime, locationID, user) {
 }
 
 export function fetchCreateLocation(locationName, lunchspace) {
-  return dispatch => fetch('/api/location/', {
+  return dispatch => apiFetch('/api/location/', {
     method: 'POST',
     headers: {
       subdomain: lunchspace.subdomain,
-      'content-type': 'application/json',
     },
-    credentials: 'same-origin',
-    body: JSON.stringify({
+    body: {
       name: locationName,
       coordinates: { lat: 0, long: 0 },
       lunchspace,
-    }),
-  }).then((response) => {
-    if (response.ok) {
-      return response.json().then((data) => {
-        dispatch(addLocation(locationName, data.locationId))
-      })
-    }
-    return response.json().then(({ error }) => {
-      dispatch(setError(error))
-    })
-  }).catch(error => console.error(error))
+    },
+  }).then(({ data }) => dispatch(addLocation(locationName, data.locationId)))
+    .catch(error => dispatch(setError(error)))
 }
 
 export function fetchLogout() {
-  return () => fetch('/api/account/logout', {
+  return () => apiFetch('/api/account/logout', {
     method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-    },
-    credentials: 'same-origin',
-  }).then((response) => {
-    if (response.ok) {
-      window.location = routeLocations.LOGIN
-      return response.json()
-    }
-    return response.json().then(({ error }) => {
-      throw new Error(error)
-    })
-  }).catch(error => console.error(error))
+  }).then(() => {
+    window.location = routeLocations.LOGIN
+  })
+    .catch(error => console.error(error))
 }
 
 function toEventTime(timeStamp) {
@@ -174,56 +157,48 @@ gets data of backend and change state with dispatch
 export function fetchPageData(lunchspaceSubdomain, date) {
   return (dispatch) => {
     dispatch(requestPageData(lunchspaceSubdomain))
-    return fetch(withQuery('/api/location/', { date: date.toISOString().substring(0, 10) }), {
+    return apiFetch(withQuery('/api/location/', { date: date.toISOString().substring(0, 10) }), {
       headers: {
-        'content-type': 'application/json',
         subdomain: lunchspaceSubdomain,
       },
-      credentials: 'same-origin',
-    }).then((response) => {
-      if (response.ok) {
-        return response.json()
-      }
-      return response.json().then(({ error }) => { throw new Error(error) })
-    }).then((data) => {
-      dispatch(receivePageData(lunchspaceSubdomain, data))
-    })
+    }).then(({ data }) => dispatch(receivePageData(lunchspaceSubdomain, data)))
+      // TODO: handle error by dispatching an error action
       .catch(error => console.error(error))
   }
 }
 
 export function joinEvent(lunchspaceSubdomain, locationId, eventTime, eventDate, participant) {
   return (dispatch) => {
-    fetch('/api/event', {
+    apiFetch('/api/event', {
       method: 'PUT',
       headers: {
-        'content-type': 'application/json',
         subdomain: lunchspaceSubdomain,
       },
-      credentials: 'same-origin',
-      body: JSON.stringify({
+      body: {
         locationId,
         eventTime,
         eventDate,
-      }),
+      },
     }).then(() => dispatch(addUser(eventTime, locationId, participant)))
+      // TODO: handle error by dispatching an error action
+      .catch(error => console.error(error))
   }
 }
 export function leaveEvent(lunchspaceSubdomain, locationId, eventTime, eventDate, participant) {
   return (dispatch) => {
-    fetch('/api/event', {
+    apiFetch('/api/event', {
       method: 'DELETE',
       headers: {
-        'content-type': 'application/json',
         subdomain: lunchspaceSubdomain,
       },
-      credentials: 'same-origin',
-      body: JSON.stringify({
+      body: {
         locationId,
         eventTime,
         eventDate,
-      }),
+      },
     }).then(() => dispatch(deleteUser(eventTime, locationId, participant)))
+      // TODO: handle error by dispatching an error action
+      .catch(error => console.error(error))
   }
 }
 

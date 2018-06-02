@@ -25,6 +25,7 @@ const legalTestDate = { year: 2018, month: 5, day: 15 }
 let testUserId
 let testLunchspaceId
 let testLocationId
+let testUserPromise
 
 describe('leave_event', () => {
   beforeAll(createMockDatabase)
@@ -36,6 +37,9 @@ describe('leave_event', () => {
     testLocationId = await location
       .create(testLocationName, testLocationCoordinates, testLunchspaceId)
     await joinEvent(testUserId, testLocationId, testTime, testDate)
+    testUserPromise = Promise.resolve({
+      id: testUserId, firstName: 'testFirstName', lastName: 'testLastName', email: testEmail,
+    })
   })
   describe('leaveEvent', async () => {
     it('should delete a join_up_at entry in DB', async () => {
@@ -47,7 +51,9 @@ describe('leave_event', () => {
     it('should leave the event', async () => {
       const req = mockReq({
         body: { locationId: testLocationId, eventTime: legalTestTime, eventDate: legalTestDate },
+        lunchspace: { id: testLunchspaceId },
         token: { userId: testUserId },
+        userPromise: testUserPromise,
       })
       const res = mockRes()
       await expect(leaveEventRoute(req, res))
@@ -56,7 +62,9 @@ describe('leave_event', () => {
     it('should throw an error (illegal time)', async () => {
       const req = mockReq({
         body: { locationId: testLocationId, eventTime: illegalTestTime, eventDate: legalTestDate },
+        lunchspace: { id: testLunchspaceId },
         token: { userId: testUserId },
+        userPromise: testUserPromise,
       })
       const res = mockRes()
       const leaveEventRoutePromise = leaveEventRoute(req, res)
@@ -66,7 +74,9 @@ describe('leave_event', () => {
     it('should throw an error (illegal date)', async () => {
       const req = mockReq({
         body: { locationId: testLocationId, eventTime: legalTestTime, eventDate: illegalTestDate },
+        lunchspace: { id: testLunchspaceId },
         token: { userId: testUserId },
+        userPromise: testUserPromise,
       })
       const res = mockRes()
       const leaveEventRoutePromise = leaveEventRoute(req, res)

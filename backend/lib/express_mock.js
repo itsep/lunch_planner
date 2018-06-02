@@ -16,6 +16,9 @@ const mockReq = (options = {}) => {
     params: {},
     query: {},
     session: {},
+    publishClient: {
+      publish: jest.fn(),
+    },
   }, options)
 }
 

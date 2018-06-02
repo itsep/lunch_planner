@@ -8,6 +8,7 @@ import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
+import apiFetch from '../../../lib/api_fetch'
 import routeLocations from '../../route_locations'
 import localizedStrings from '../../../localization'
 
@@ -34,7 +35,7 @@ class Registration extends React.Component {
       password: '',
       isLoading: false,
       error: null,
-      lastErrorMessage: '',
+      lastError: null,
       loggedIn: false,
     }
 
@@ -59,26 +60,18 @@ class Registration extends React.Component {
       isLoading: true,
       error: null,
     })
-    fetch('/api/account', {
+    apiFetch('/api/account', {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      credentials: 'same-origin',
-      body: JSON.stringify(data),
+      body: data,
     })
-      .then((response) => {
-        if (response.ok) {
-          this.setState({
-            loggedIn: true,
-          })
-          window.location = routeLocations.HOMEPAGE
-          return null
-        }
-        return response.json().then(({ error }) => { throw new Error(error) })
+      .then(() => {
+        this.setState({
+          loggedIn: true,
+        })
+        window.location = routeLocations.HOMEPAGE
       })
       .catch((error) => {
-        this.setState({ error, lastErrorMessage: error.message })
+        this.setState({ error, lastError: error })
       })
       .finally(() => {
         this.setState({ isLoading: false })
@@ -145,7 +138,7 @@ class Registration extends React.Component {
             />
             <Collapse in={!!this.state.error}>
               <Typography color="error">
-                {this.state.lastErrorMessage}
+                {this.state.lastError && this.state.lastError.toLocalizedString(localizedStrings)}
               </Typography>
             </Collapse>
 

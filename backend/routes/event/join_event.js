@@ -1,7 +1,9 @@
 const { pool } = require('../../lib/database')
 const { validDate, validTime } = require('../../lib/validation')
 const { timeForSQL, dateForSQL } = require('../../lib/formatation')
+const { toEventTimeId, toEventDateId } = require('../../../shared/lib/event')
 const { InputValidationError } = require('../../../shared/lib/error')
+const { joinUpAt } = require('../../lib/lunchspace_channels')
 
 async function joinEvent(userId, locationId, eventTime, eventDate) {
   await pool.execute('INSERT INTO join_up_at (user_id, location_id, event_time, event_date) ' +
@@ -27,6 +29,23 @@ async function joinEventRoute(req, res) {
   const eventDateSQL = dateForSQL(eventDate)
   await joinEvent(userId, locationId, eventTimeSQL, eventDateSQL)
 
+  const { id: lunchspaceId } = req.lunchspace
+  const { fistName, lastName, imageUrl } = await req.userPromise
+  req.publishClient.publish(
+    joinUpAt(lunchspaceId, locationId, toEventDateId(eventDate), toEventTimeId(eventTime)),
+    {
+      action: 'joinEvent',
+      locationId,
+      eventDate,
+      eventTime,
+      participant: {
+        userId,
+        fistName,
+        lastName,
+        imageUrl,
+      },
+    }
+  )
   return res.status(200).json({})
 }
 

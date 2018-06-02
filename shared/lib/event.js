@@ -1,8 +1,19 @@
+function toTwoDigitString(number) {
+  return number < 10 ? `0${number}` : `${number}`
+}
+
 function toEventTimeId(eventTime) {
   const second = '00'
-  const minute = eventTime.minute < 10 ? `0${eventTime.minute}` : `${eventTime.minute}`
-  const hour = eventTime.hour < 10 ? `0${eventTime.hour}` : `${eventTime.hour}`
+  const minute = toTwoDigitString(eventTime.minute)
+  const hour = toTwoDigitString(eventTime.hour)
   return `${hour}:${minute}:${second}`
+}
+
+function toEventDateId(eventDate) {
+  const year = eventDate.year.toString()
+  const month = toTwoDigitString(eventDate.month)
+  const day = toTwoDigitString(eventDate.day)
+  return `${year}-${month}-${day}`
 }
 
 function toEventDate(date) {
@@ -15,5 +26,6 @@ function toEventDate(date) {
 
 module.exports = {
   toEventTimeId,
+  toEventDateId,
   toEventDate,
 }

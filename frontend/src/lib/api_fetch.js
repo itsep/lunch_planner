@@ -5,7 +5,7 @@ const reject = Promise.reject.bind(Promise)
  *
  * @param url
  * @param config {Object}
- * @returns {Promise<any, LocalizableError>}
+ * @returns {Promise<{data: any, response: Response}, LocalizableError>}
  */
 export default function apiFetch(url, config = {}) {
   return Promise.resolve().then(() => {

@@ -134,9 +134,7 @@ exports[`Create Lunchspace renders correctly 1`] = `
               >
                 <p
                   className="MuiTypography-root-8 MuiTypography-body1-17 MuiTypography-colorError-31"
-                >
-                  
-                </p>
+                />
               </div>
             </div>
           </div>
