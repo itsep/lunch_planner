@@ -14,6 +14,8 @@ const testFirstName = 'Max'
 const testLastName = 'Mustermann'
 const testEmail = 'max.mustermann@gmail.com'
 const testPassword = 'password'
+const eventDate = '2018-05-16'
+const eventTime = '12:30:00'
 
 // let testUserId
 let testLunchspaceId
@@ -29,26 +31,27 @@ describe('get locations', () => {
     testLunchspaceId = await createLunchspace(userId, testSpaceName, testSpaceSubdomain)
     testLocationId = await location
       .create(testLocationName, testLocationCoordinates, testLunchspaceId)
-    await joinEvent(userId, testLocationId, '12:30', '2018-05-16')
+    await joinEvent(userId, testLocationId, eventTime, eventDate)
   })
   it('should return locations and participants', async () => {
-    const locations = await getLocationsAndParticipants(testLunchspaceId, '2018-05-16')
+    const locations = await getLocationsAndParticipants(testLunchspaceId, eventDate)
     expect(locations).toMatchObject({
+      locationsInLunchspace: [testLocationId],
       locations: {
         [testLocationId]:
         {
-          id: testLocationId,
           name: testLocationName,
           coordinates: testLocationCoordinates,
           participantsAtTimestamp: {
-            '12:30:00':
-              [{
-                firstName: testFirstName,
-                lastName: testLastName,
-                imageUrl: null,
-                userId: testUserId,
-              }],
+            [eventTime]: [testUserId],
           },
+        },
+      },
+      users: {
+        [testUserId]: {
+          firstName: testFirstName,
+          lastName: testLastName,
+          imageUrl: null,
         },
       },
     })
