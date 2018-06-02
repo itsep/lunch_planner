@@ -1,17 +1,17 @@
 import { combineReducers } from 'redux'
+import { toEventTimeId } from 'shared/lib/event'
 import initialState from './initial_state'
 import actionTypes from './action_types'
-import { toEventTimeId } from 'shared/lib/event'
 
 /*
 reducer should get split to multiple reducer and then with combine(reducerList) combined in the end
 so its easier to search for an statechange
  */
 
-function reduceCurrentDate(currentDate = initialState.currentDate, action) {
+function reduceCurrentDate(currentDate = initialState.currentDate) {
   return currentDate
 }
-function reduceLunchspace(lunchspace = initialState.lunchspace, action) {
+function reduceLunchspace(lunchspace = initialState.lunchspace) {
   return lunchspace
 }
 
@@ -94,7 +94,10 @@ function reduceLocations(locations = initialState.locations, action) {
 }
 
 
-function reduceLocationsInLunchspace(locationsInLunchspace = initialState.locationsInLunchspace, action) {
+function reduceLocationsInLunchspace(
+  locationsInLunchspace = initialState.locationsInLunchspace,
+  action
+) {
   switch (action.type) {
     case actionTypes.RECEIVE_PAGE_DATA:
       return action.data.locationsInLunchspace
