@@ -6,31 +6,34 @@ import { connect } from 'react-redux'
 import { toEventDate } from 'shared/lib/event'
 import UserAvatar from './user_avatar'
 import { joinEvent, leaveEvent } from '../actions'
-import './participants.scss'
+import Participant from './participant'
 
 function participantFrom(user) {
-  return {
-    ...user,
-    userId: user.id,
-  }
+  const { id, ...participant } = user
+  participant.userId = id
+  return participant
 }
 
-const mapStateToProps = state => ({ user: state.user, currentDate: state.currentDate })
+const mapStateToProps = (state, props) => ({
+  user: state.user,
+  currentDate: state.currentDate,
+  participants: state.locations[props.locationId].participantsAtTimestamp[props.timeStamp.id] || [],
+})
 
 const mapDispatchToProps = dispatch => ({
-  addUserAction: (timeStampID, locationID, eventTime, eventDate, user) => {
+  addUserAction: (timeStampID, locationId, eventTime, eventDate, user) => {
     dispatch(joinEvent(
       'vsf-experts-ma',
-      locationID,
+      locationId,
       eventTime,
       eventDate,
       participantFrom(user)
     ))
   },
-  deleteUserAction: (timeStampID, locationID, eventTime, eventDate, user) => {
+  deleteUserAction: (timeStampID, locationId, eventTime, eventDate, user) => {
     dispatch(leaveEvent(
       'vsf-experts-ma',
-      locationID,
+      locationId,
       eventTime,
       eventDate,
       participantFrom(user)
@@ -41,15 +44,15 @@ const mapDispatchToProps = dispatch => ({
 /*
 return string of concatitantion of all classes the timestamp has
  */
-function getTimeStampClass(classes, timeStamp, user) {
+function getTimeStampClass(classes, participants, user) {
   let timeStampClass = classes.timeStamp
   // if he has users in the timestamp, he should get bigger
-  if (timeStamp.userIDs.length > 0) {
+  if (participants.length > 0) {
     timeStampClass = `${timeStampClass} ${classes.timeStampWithJoin}`
   }
   // if current User is in timestamp, it should get green
-  timeStamp.userIDs.forEach((userID) => {
-    if (userID === user.id) timeStampClass = `${timeStampClass} ${classes.timeStampWithUser}`
+  participants.forEach((userId) => {
+    if (userId === user.id) timeStampClass = `${timeStampClass} ${classes.timeStampWithUser}`
   })
   return timeStampClass
 }
@@ -83,18 +86,18 @@ const styles = () => ({
 })
 
 function TimeStamp({
-  classes, timeStamp, locationID, addUserAction, deleteUserAction, user, currentDate,
+  classes, locationId, timeStamp, participants, addUserAction, deleteUserAction, user, currentDate,
 }) {
   return (
-    <div className={`${classes.timeStampDiv} time-stamp participant-count-${timeStamp.participants.length}`}>
+    <div className={`${classes.timeStampDiv} time-stamp participant-count-${participants.length}`}>
       <Button
         variant="fab"
-        className={getTimeStampClass(classes, timeStamp, user)}
+        className={getTimeStampClass(classes, participants, user)}
         onClick={() => {
           if (!isUserJoined(user.id, timeStamp.userIDs)) {
             addUserAction(
               timeStamp.id,
-              locationID,
+              locationId,
               { hour: timeStamp.hour, minute: timeStamp.minute },
               toEventDate(currentDate),
               user
@@ -102,7 +105,7 @@ function TimeStamp({
           } else {
             deleteUserAction(
               timeStamp.id,
-              locationID,
+              locationId,
               { hour: timeStamp.hour, minute: timeStamp.minute },
               toEventDate(currentDate),
               user
@@ -115,8 +118,8 @@ function TimeStamp({
           {timeStamp.minute.toString().length === 2 ?
             timeStamp.minute : `0${timeStamp.minute}`}
         </Typography>
-        <div className={`participants participant-count-${timeStamp.participants.length}`}>
-          {timeStamp.participants.map(participant => <div className="avatar-container" key={participant.userId}><UserAvatar user={participant} /></div>)}
+        <div className={`participants participant-count-${participants.length}`}>
+          {participants.map(userId => <Participant key={userId} userId={userId} />)}
         </div>
       </Button>
     </div>
@@ -125,12 +128,13 @@ function TimeStamp({
 
 TimeStamp.propTypes = {
   timeStamp: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     key: PropTypes.number.isRequired,
     hour: PropTypes.number.isRequired,
     minute: PropTypes.number.isRequired,
-    userIDs: PropTypes.array.isRequired,
   }).isRequired,
-  locationID: PropTypes.number.isRequired,
+  participants: PropTypes.arrayOf(PropTypes.number).isRequired,
+  locationId: PropTypes.number.isRequired,
   deleteUserAction: PropTypes.func.isRequired,
   addUserAction: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,

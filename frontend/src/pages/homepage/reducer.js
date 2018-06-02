@@ -41,9 +41,10 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        locations: action.data.locations,
-        participants: action.data.participants,
         user: action.data.user,
+        locationsInLunchspace: action.data.locationsInLunchspace,
+        locations: action.data.locations,
+        users: action.data.users,
       }
     case actionTypes.ADD_USER:
       /*

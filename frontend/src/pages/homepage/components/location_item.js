@@ -4,12 +4,15 @@ import PropTypes from 'prop-types'
 import { Avatar, Button, Typography } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
+import { toEventTimeId } from 'shared/lib/event'
 import TimeStamp from './time_stamp'
 
-const mapStateToProps = null
+const mapStateToProps = (state, props) => ({
+  id: props.id,
+  location: state.locations[props.id]
+})
 
 const mapDispatchToProps = dispatch => ({
-
 })
 
 const styles = () => ({
@@ -46,17 +49,39 @@ const styles = () => ({
   },
 })
 
+/*
+creates array with empty timestamps
+ */
+function defaultTimeStamps() {
+  const timeStamps = []
+  let timeInHours
+  let counter = 0
+  for (timeInHours = 10; timeInHours < 18; timeInHours += 0.5) {
+    const timeStamp = {
+      key: counter,
+      hour: Math.floor(timeInHours),
+      minute: (timeInHours % 1) * 60,
+    }
+    timeStamp.id = toEventTimeId(timeStamp)
+    timeStamps.push(timeStamp)
+    counter += 1
+  }
+  return timeStamps
+}
+
+const timeStamps = defaultTimeStamps()
+
 function LocationItem({
-  id, name, timeStamps, classes,
+  id, location, classes,
 }) {
   return (
     <div className={classes.wrapper}>
       <div>
-        <Button className={classes.locationTitle}>{name}</Button>
+        <Button className={classes.locationTitle}>{location.name}</Button>
       </div>
       <div className={classes.container}>
         {timeStamps.map(timeStamp => (
-          <TimeStamp key={timeStamp.key} locationID={id} timeStamp={timeStamp} />
+          <TimeStamp key={timeStamp.key} locationId={id} timeStamp={timeStamp} />
       ))}
       </div>
     </div>
@@ -65,9 +90,8 @@ function LocationItem({
 
 LocationItem.propTypes = {
   id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  timeStamps: PropTypes.array.isRequired,
 }
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(LocationItem))

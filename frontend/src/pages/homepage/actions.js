@@ -14,33 +14,10 @@ export function addUser(eventTime, locationID, user) {
   }
 }
 
-/*
-creates array with empty timestamps
- */
-function defaultTimeStamps() {
-  const timeStamps = []
-  let timeInHours
-  let counter = 0
-  for (timeInHours = 10; timeInHours < 18; timeInHours += 0.5) {
-    const timeStamp = {
-      id: counter,
-      key: timeInHours * 2,
-      hour: Math.floor(timeInHours),
-      minute: (timeInHours % 1) * 60,
-      userIDs: [],
-      participants: [],
-    }
-    timeStamps.push(timeStamp)
-    counter += 1
-  }
-  return timeStamps
-}
-
 function createLocation(name, id) {
   return {
     id,
     name,
-    timeStamps: defaultTimeStamps(),
   }
 }
 
@@ -103,34 +80,6 @@ function toEventTime(timeStamp) {
   return `${hours}:${minutes}:00`
 }
 
-/*
-should insert participants into correct timestamps
-is not working perfectly right now
- */
-function initialTimeStamps(locationID, participants) {
-  let timeStamps = defaultTimeStamps()
-  participants.forEach((participant) => {
-    if (locationID === participant.locationId) {
-      timeStamps = timeStamps.map((timeStamp) => {
-        // sometimes timestamp is undefined??
-        if (!timeStamp) {
-          return timeStamp
-        }
-        const eventTime = toEventTime(timeStamp)
-        if (eventTime === participant.eventTime) {
-          return {
-            ...timeStamp,
-            userIDs: [participant.userId, ...timeStamp.userIDs],
-            participants: [participant, ...timeStamp.participants],
-          }
-        }
-        return timeStamp
-      })
-    }
-  })
-  return timeStamps
-}
-
 export function requestPageData(lunchspaceSubdomain) {
   return {
     type: actionTypes.REQUEST_PAGE_DATA,
@@ -138,12 +87,7 @@ export function requestPageData(lunchspaceSubdomain) {
   }
 }
 
-export function receivePageData(lunchspaceSubdomain, response) {
-  const data = response
-  data.locations = data.locations.map(location => ({
-    ...location,
-    timeStamps: initialTimeStamps(location.id, data.participants),
-  }))
+export function receivePageData(lunchspaceSubdomain, data) {
   return {
     type: actionTypes.RECEIVE_PAGE_DATA,
     lunchspaceSubdomain,
