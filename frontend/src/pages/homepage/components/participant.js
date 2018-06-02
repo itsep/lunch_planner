@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Typography } from 'material-ui'
-import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 import UserAvatar from './user_avatar'
 import './participants.scss'

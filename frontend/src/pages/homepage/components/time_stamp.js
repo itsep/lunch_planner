@@ -4,7 +4,6 @@ import { Button, Typography } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 import { toEventDate } from 'shared/lib/event'
-import UserAvatar from './user_avatar'
 import { joinEvent, leaveEvent } from '../actions'
 import Participant from './participant'
 

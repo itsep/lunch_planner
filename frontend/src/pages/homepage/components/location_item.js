@@ -9,7 +9,7 @@ import TimeStamp from './time_stamp'
 
 const mapStateToProps = (state, props) => ({
   id: props.id,
-  location: state.locations[props.id]
+  location: state.locations[props.id],
 })
 
 const mapDispatchToProps = dispatch => ({

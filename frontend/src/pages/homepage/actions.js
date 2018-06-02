@@ -1,9 +1,7 @@
+import withQuery from 'with-query'
 import actionTypes from './action_types'
 import routeLocations from '../route_locations'
 import apiFetch from '../../lib/api_fetch'
-
-
-const withQuery = require('with-query');
 
 export function addUser(eventTime, locationID, user) {
   return {
@@ -72,12 +70,6 @@ export function fetchLogout() {
     window.location = routeLocations.LOGIN
   })
     .catch(error => console.error(error))
-}
-
-function toEventTime(timeStamp) {
-  const hours = timeStamp.hour < 10 ? `0${timeStamp.hour}` : `${timeStamp.hour}`
-  const minutes = timeStamp.minute < 10 ? `0${timeStamp.minute}` : `${timeStamp.minute}`
-  return `${hours}:${minutes}:00`
 }
 
 export function requestPageData(lunchspaceSubdomain) {
