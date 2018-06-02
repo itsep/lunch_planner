@@ -14,7 +14,6 @@ class SQLError extends LocalizableError {
     return new this(errorObject)
   }
   constructor(rawSqlError) {
-    console.log(rawSqlError)
     super(rawSqlError.message)
     this.name = SQLError.name
     this.status = 500
