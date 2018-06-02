@@ -57,8 +57,8 @@ function getTimeStampClass(classes, participants, user) {
 }
 
 // is current userID in the array of users
-function isUserJoined(userID, userIDs) {
-  return userIDs.indexOf(userID) !== -1
+function isUserJoined(userId, participants) {
+  return participants.indexOf(userId) !== -1
 }
 
 const styles = () => ({
@@ -93,7 +93,7 @@ function TimeStamp({
         variant="fab"
         className={getTimeStampClass(classes, participants, user)}
         onClick={() => {
-          if (!isUserJoined(user.id, timeStamp.userIDs)) {
+          if (!isUserJoined(user.id, participants)) {
             addUserAction(
               timeStamp.id,
               locationId,

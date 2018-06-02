@@ -1,8 +1,8 @@
 const homepageActionTypes = {
 
   // USER
-  ADD_USER: Symbol('homepage/ADD_USER'),
-  DELETE_USER: Symbol('homepage/DELETE_USER'),
+  ADD_PARTICIPANT: Symbol('homepage/ADD_PARTICIPANT'),
+  REMOVE_PARTICIPANT: Symbol('homepage/REMOVE_PARTICIPANT'),
 
   // LOCATION
   ADD_LOCATION: Symbol('homepage/ADD_LOCATION'),

@@ -3,12 +3,12 @@ import actionTypes from './action_types'
 import routeLocations from '../route_locations'
 import apiFetch from '../../lib/api_fetch'
 
-export function addUser(eventTime, locationID, user) {
+export function addParticipant(eventTime, locationId, participant) {
   return {
-    type: actionTypes.ADD_USER,
+    type: actionTypes.ADD_PARTICIPANT,
     eventTime,
-    locationID,
-    user,
+    locationId,
+    participant,
   }
 }
 
@@ -16,13 +16,14 @@ function createLocation(name, id) {
   return {
     id,
     name,
+    participantsAtTimestamp: {},
   }
 }
 
-export function addLocation(locationName, locationID) {
+export function addLocation(locationName, locationId) {
   return {
     type: actionTypes.ADD_LOCATION,
-    location: createLocation(locationName, locationID),
+    location: createLocation(locationName, locationId),
   }
 }
 
@@ -39,12 +40,12 @@ export function resetError() {
   }
 }
 
-export function deleteUser(eventTime, locationID, user) {
+export function removeParticipant(eventTime, locationId, participant) {
   return {
-    type: actionTypes.DELETE_USER,
+    type: actionTypes.REMOVE_PARTICIPANT,
     eventTime,
-    locationID,
-    user,
+    locationId,
+    participant,
   }
 }
 
@@ -115,7 +116,7 @@ export function joinEvent(lunchspaceSubdomain, locationId, eventTime, eventDate,
         eventTime,
         eventDate,
       },
-    }).then(() => dispatch(addUser(eventTime, locationId, participant)))
+    }).then(() => dispatch(addParticipant(eventTime, locationId, participant)))
       // TODO: handle error by dispatching an error action
       .catch(error => console.error(error))
   }
@@ -132,7 +133,7 @@ export function leaveEvent(lunchspaceSubdomain, locationId, eventTime, eventDate
         eventTime,
         eventDate,
       },
-    }).then(() => dispatch(deleteUser(eventTime, locationId, participant)))
+    }).then(() => dispatch(removeParticipant(eventTime, locationId, participant)))
       // TODO: handle error by dispatching an error action
       .catch(error => console.error(error))
   }

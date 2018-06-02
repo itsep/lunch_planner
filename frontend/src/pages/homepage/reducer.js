@@ -1,111 +1,155 @@
+import { combineReducers } from 'redux'
 import initialState from './initial_state'
 import actionTypes from './action_types'
+import { toEventTimeId } from 'shared/lib/event'
 
 /*
 reducer should get split to multiple reducer and then with combine(reducerList) combined in the end
 so its easier to search for an statechange
  */
 
-/*
-where do function come in?
- */
+function reduceCurrentDate(currentDate = initialState.currentDate, action) {
+  return currentDate
+}
+function reduceLunchspace(lunchspace = initialState.lunchspace, action) {
+  return lunchspace
+}
 
-/*
-there is something to do
-when the state gets changed by some functions, there should be an call,
-to send requests to the backend and thend get the current state of the db again
- */
-export default function (state = initialState, action) {
+function reduceUser(user = initialState.user, action) {
   switch (action.type) {
-    case actionTypes.ADD_LOCATION:
-      return {
-        ...state,
-        locations: [...state.locations, action.location],
-      }
-    case actionTypes.REQUEST_PAGE_DATA:
-      return {
-        ...state,
-        isLoading: true,
-      }
-    case actionTypes.SET_ERROR:
-      return {
-        ...state,
-        error: action.error,
-      }
-    case actionTypes.RESET_ERROR:
-      return {
-        ...state,
-        error: null,
-      }
     case actionTypes.RECEIVE_PAGE_DATA:
-      return {
-        ...state,
-        isLoading: false,
-        user: action.data.user,
-        locationsInLunchspace: action.data.locationsInLunchspace,
-        locations: action.data.locations,
-        users: action.data.users,
-      }
-    case actionTypes.ADD_USER:
-      /*
-      searches for location, that is getting changed, action.locationID
-      in location for timestamp with action.eventTime
-      then adds User to User list of timeStampID
-       */
-      return {
-        ...state,
-        locations: state.locations.map((location) => {
-          if (location.id === action.locationID) {
-            const newLocation = location
-            newLocation.timeStamps = newLocation.timeStamps.map((timeStamp) => {
-              if (timeStamp.minute === action.eventTime.minute &&
-                 timeStamp.hour === action.eventTime.hour) {
-                return {
-                  ...timeStamp,
-                  // array like old userIDs just with the new one added
-                  userIDs: [...timeStamp.userIDs, action.user.userId],
-                  participants: [...timeStamp.participants, action.user],
-                }
-              }
-              return timeStamp
-            })
-            return newLocation
-          }
-          return location
-        }),
-      }
-    case actionTypes.DELETE_USER:
-      return {
-        /*
-        searches timestamp the same way, but deletes userID of timestamps user List
-        very redundant, new function or other way to search for object in array an then change it
-         */
-        ...state,
-        locations: state.locations.map((location) => {
-          if (location.id === action.locationID) {
-            const newLocation = location
-            newLocation.timeStamps = newLocation.timeStamps.map((timeStamp) => {
-              if (timeStamp.minute === action.eventTime.minute &&
-                timeStamp.hour === action.eventTime.hour) {
-                return {
-                  ...timeStamp,
-                  /*
-                  array like old userIDs just whenever an userID is like the one that should get
-                  deleted, it gets deleted out of the array
-                  */
-                  userIDs: timeStamp.userIDs
-                    .filter(userID => userID !== action.user.userId),
-                  participants: timeStamp.participants
-                    .filter(user => user.userId !== action.user.userId),
-                }
-              }
-              return timeStamp
-            })
-            return newLocation
-          }
-          return location
-        }),
-      }
-    default: return state
+      return action.data.user
+    default:
+      return user
   }
 }
+
+function reduceParticipantsAtTimestamp(participantsAtTimestamp, action) {
+  const { userId } = action.participant
+  const eventTimeId = toEventTimeId(action.eventTime)
+  const participants = participantsAtTimestamp[eventTimeId] || []
+  switch (action.type) {
+    case actionTypes.ADD_PARTICIPANT:
+      // user already added
+      if (participants.indexOf(userId) !== -1) {
+        return participantsAtTimestamp
+      }
+      return {
+        ...participantsAtTimestamp,
+        [eventTimeId]: [...participants, userId],
+      }
+    case actionTypes.REMOVE_PARTICIPANT:
+      return (() => {
+        // user already removed
+        const participantIndex = participants.indexOf(userId)
+        if (participantIndex === -1) {
+          return participantsAtTimestamp
+        }
+        const newParticipants = Array.from(participants)
+        newParticipants.splice(participantIndex, 1)
+        return {
+          ...participantsAtTimestamp,
+          [eventTimeId]: newParticipants,
+        }
+      })()
+    default:
+      return participantsAtTimestamp
+  }
+}
+
+function reduceLocations(locations = initialState.locations, action) {
+  switch (action.type) {
+    case actionTypes.RECEIVE_PAGE_DATA:
+      return action.data.locations
+    case actionTypes.ADD_LOCATION:
+      return (() => {
+        const { id, ...location } = action.location
+        // location already in state
+        if (locations[id]) {
+          return locations
+        }
+        return {
+          ...locations,
+          [id]: location,
+        }
+      })()
+    case actionTypes.ADD_PARTICIPANT:
+    case actionTypes.REMOVE_PARTICIPANT:
+      return (() => {
+        const location = locations[action.locationId]
+        return {
+          ...locations,
+          [action.locationId]: {
+            ...location,
+            participantsAtTimestamp: reduceParticipantsAtTimestamp(
+              location.participantsAtTimestamp,
+              action
+            ),
+          },
+        }
+      })()
+    default:
+      return locations
+  }
+}
+
+
+function reduceLocationsInLunchspace(locationsInLunchspace = initialState.locationsInLunchspace, action) {
+  switch (action.type) {
+    case actionTypes.RECEIVE_PAGE_DATA:
+      return action.data.locationsInLunchspace
+    case actionTypes.ADD_LOCATION:
+      return (() => {
+        const { id } = action.location
+        // location already in state
+        if (locationsInLunchspace.indexOf(id) !== -1) {
+          return locationsInLunchspace
+        }
+        return [...locationsInLunchspace, id]
+      })()
+    default:
+      return locationsInLunchspace
+  }
+}
+
+function reduceUsers(users = initialState.users, action) {
+  switch (action.type) {
+    case actionTypes.RECEIVE_PAGE_DATA:
+      return action.data.users
+    case actionTypes.ADD_PARTICIPANT:
+      return (() => {
+        const { userId, ...participant } = action.participant
+        if (users[userId]) {
+          return users
+        }
+        return {
+          ...users,
+          [userId]: participant,
+        }
+      })()
+    default:
+      return users
+  }
+}
+
+function reduceIsLoadingLocations(isLoadingLocations = false, action) {
+  switch (action.type) {
+    case actionTypes.REQUEST_PAGE_DATA:
+      return true
+    case actionTypes.RECEIVE_PAGE_DATA:
+      return false
+    default:
+      return isLoadingLocations
+  }
+}
+
+const reducer = combineReducers({
+  currentDate: reduceCurrentDate,
+  lunchspace: reduceLunchspace,
+  user: reduceUser,
+  locations: reduceLocations,
+  locationsInLunchspace: reduceLocationsInLunchspace,
+  users: reduceUsers,
+  isLoadingLocations: reduceIsLoadingLocations,
+})
+export default reducer
