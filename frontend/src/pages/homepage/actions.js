@@ -3,7 +3,7 @@ import routeLocations from '../route_locations'
 import apiFetch from '../../lib/api_fetch'
 
 
-const withQuery = require('with-query');
+const withQuery = require('with-query')
 
 export function addUser(eventTime, locationID, user) {
   return {
