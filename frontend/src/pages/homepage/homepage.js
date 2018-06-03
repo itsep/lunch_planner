@@ -10,10 +10,12 @@ import ChangeDispatcher from './change_dispatcher'
 import HomepageApp from './components/homepage_app'
 import '../../style/main.scss'
 
+const lunchspaceSubdomain = 'vsf-experts-ma'
+
 const socket = io({
   path: '/subscriber',
   extraHeaders: {
-    subdomain: 'vsf-experts-ma',
+    subdomain: lunchspaceSubdomain,
   },
 })
 
@@ -24,7 +26,7 @@ const store = createStore(
 
 const subscriber = new ChangeDispatcher(socket, store)
 
-store.dispatch(fetchPageData('vsf-experts-ma', new Date()))
+store.dispatch(fetchPageData(lunchspaceSubdomain, store.getState().currentDate))
 
 render(
   <Provider store={store}>
