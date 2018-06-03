@@ -24,6 +24,9 @@ async function readTestDataDump() {
 async function importTestData(conn, testDataDump) {
   await conn.query(testDataDump.toString())
 }
+async function updateTestDataTimeAndDate(conn) {
+  await conn.execute('UPDATE join_up_at SET event_date = NOW()')
+}
 
 async function clearDatabaseAndImportTestDump(dbName) {
   const connPromise = createMultiStatementConnection(true)
@@ -32,6 +35,7 @@ async function clearDatabaseAndImportTestDump(dbName) {
   return consumeConnection(connPromise, async (conn) => {
     await clearDatabase(conn, await dbSchemaPromise, dbName)
     await importTestData(conn, await testDataDumpPromise)
+    await updateTestDataTimeAndDate(conn)
   })
 }
 
