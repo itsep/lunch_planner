@@ -20,6 +20,8 @@ const content = {
   illegalHyphen: '(-) darf weder am Anfang noch am Ende der Sudomain stehen.',
   inputTooLong24: 'maximal 24 Zeichen',
 
+  joinLunchspace: 'Du wurdest zum {lunchspaceName} eingeladen!',
+
   createLunchspace: 'Lunchspace erstellen',
   createLocation: 'Location erstellen',
   login: 'Anmelden',

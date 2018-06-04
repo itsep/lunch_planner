@@ -20,6 +20,8 @@ const content = {
   illegalHyphen: 'A subdomain may not contain a leading or trailing hyphen(-).',
   inputTooLong24: 'max 24 characters',
 
+  joinLunchspace: 'You got invited to {lunchspaceName}!',
+
   createLunchspace: 'Create Lunchspace',
   createLocation: 'Create Location',
   login: 'Login',

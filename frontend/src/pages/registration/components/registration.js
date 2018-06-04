@@ -9,7 +9,7 @@ import Typography from 'material-ui/Typography'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
 import apiFetch from '../../../lib/api_fetch'
-import routeLocations from '../../route_locations'
+import { routeLocations, whiteListRoutes } from '../../route_locations'
 import localizedStrings from '../../../localization'
 
 const styles = theme => ({
@@ -53,9 +53,20 @@ class Registration extends React.Component {
       error: null,
       lastError: null,
       loggedIn: false,
+      redirect: null,
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  componentDidMount() {
+    const urlString = window.location.href
+    const url = new URL(urlString)
+    const redirect = url.searchParams.get('redirect')
+    const token = url.searchParams.get('token')
+    console.log(redirect)
+    if (whiteListRoutes.indexOf(redirect) >= 0) {
+      this.setState({ redirect: `${redirect}?token=${token}` })
+    }
   }
   handleChange(name) {
     const that = this
@@ -84,7 +95,7 @@ class Registration extends React.Component {
         this.setState({
           loggedIn: true,
         })
-        window.location = routeLocations.HOMEPAGE
+        window.location = this.state.redirect ? this.state.redirect : routeLocations.HOMEPAGE
       })
       .catch((error) => {
         this.setState({ error, lastError: error })
