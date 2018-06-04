@@ -24,6 +24,17 @@ function sendEMail(receivers, topic) {
   })
 }
 
+function sendEMailBeta(mail){
+  transporter.sendMail(mail, (error, info) => {
+    if (error) {
+      console.log(error)
+    } else {
+      console.log(`Email sent: ${info.response}`)
+    }
+  })
+}
+
 module.exports = {
   sendEMail,
+  sendEMailBeta,
 }
