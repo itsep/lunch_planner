@@ -1,53 +1,29 @@
+import withQuery from 'with-query'
 import actionTypes from './action_types'
 import routeLocations from '../route_locations'
 import apiFetch from '../../lib/api_fetch'
 
-
-const withQuery = require('with-query')
-
-export function addUser(eventTime, locationID, user) {
+export function addParticipant(eventTime, locationId, participant) {
   return {
-    type: actionTypes.ADD_USER,
+    type: actionTypes.ADD_PARTICIPANT,
     eventTime,
-    locationID,
-    user,
+    locationId,
+    participant,
   }
-}
-
-/*
-creates array with empty timestamps
- */
-function defaultTimeStamps() {
-  const timeStamps = []
-  let timeInHours
-  let counter = 0
-  for (timeInHours = 10; timeInHours < 18; timeInHours += 0.5) {
-    const timeStamp = {
-      id: counter,
-      key: timeInHours * 2,
-      hour: Math.floor(timeInHours),
-      minute: (timeInHours % 1) * 60,
-      userIDs: [],
-      participants: [],
-    }
-    timeStamps.push(timeStamp)
-    counter += 1
-  }
-  return timeStamps
 }
 
 function createLocation(name, id) {
   return {
     id,
     name,
-    timeStamps: defaultTimeStamps(),
+    participantsAtTimestamp: {},
   }
 }
 
-export function addLocation(locationName, locationID) {
+export function addLocation(locationName, locationId) {
   return {
     type: actionTypes.ADD_LOCATION,
-    location: createLocation(locationName, locationID),
+    location: createLocation(locationName, locationId),
   }
 }
 
@@ -64,12 +40,12 @@ export function resetError() {
   }
 }
 
-export function deleteUser(eventTime, locationID, user) {
+export function removeParticipant(eventTime, locationId, participant) {
   return {
-    type: actionTypes.DELETE_USER,
+    type: actionTypes.REMOVE_PARTICIPANT,
     eventTime,
-    locationID,
-    user,
+    locationId,
+    participant,
   }
 }
 
@@ -97,40 +73,6 @@ export function fetchLogout() {
     .catch(error => console.error(error))
 }
 
-function toEventTime(timeStamp) {
-  const hours = timeStamp.hour < 10 ? `0${timeStamp.hour}` : `${timeStamp.hour}`
-  const minutes = timeStamp.minute < 10 ? `0${timeStamp.minute}` : `${timeStamp.minute}`
-  return `${hours}:${minutes}:00`
-}
-
-/*
-should insert participants into correct timestamps
-is not working perfectly right now
- */
-function initialTimeStamps(locationID, participants) {
-  let timeStamps = defaultTimeStamps()
-  participants.forEach((participant) => {
-    if (locationID === participant.locationId) {
-      timeStamps = timeStamps.map((timeStamp) => {
-        // sometimes timestamp is undefined??
-        if (!timeStamp) {
-          return timeStamp
-        }
-        const eventTime = toEventTime(timeStamp)
-        if (eventTime === participant.eventTime) {
-          return {
-            ...timeStamp,
-            userIDs: [participant.userId, ...timeStamp.userIDs],
-            participants: [participant, ...timeStamp.participants],
-          }
-        }
-        return timeStamp
-      })
-    }
-  })
-  return timeStamps
-}
-
 export function requestPageData(lunchspaceSubdomain) {
   return {
     type: actionTypes.REQUEST_PAGE_DATA,
@@ -138,12 +80,7 @@ export function requestPageData(lunchspaceSubdomain) {
   }
 }
 
-export function receivePageData(lunchspaceSubdomain, response) {
-  const data = response
-  data.locations = data.locations.map(location => ({
-    ...location,
-    timeStamps: initialTimeStamps(location.id, data.participants),
-  }))
+export function receivePageData(lunchspaceSubdomain, data) {
   return {
     type: actionTypes.RECEIVE_PAGE_DATA,
     lunchspaceSubdomain,
@@ -179,7 +116,7 @@ export function joinEvent(lunchspaceSubdomain, locationId, eventTime, eventDate,
         eventTime,
         eventDate,
       },
-    }).then(() => dispatch(addUser(eventTime, locationId, participant)))
+    }).then(() => dispatch(addParticipant(eventTime, locationId, participant)))
       // TODO: handle error by dispatching an error action
       .catch(error => console.error(error))
   }
@@ -196,7 +133,7 @@ export function leaveEvent(lunchspaceSubdomain, locationId, eventTime, eventDate
         eventTime,
         eventDate,
       },
-    }).then(() => dispatch(deleteUser(eventTime, locationId, participant)))
+    }).then(() => dispatch(removeParticipant(eventTime, locationId, participant)))
       // TODO: handle error by dispatching an error action
       .catch(error => console.error(error))
   }
