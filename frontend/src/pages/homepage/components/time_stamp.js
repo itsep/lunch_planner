@@ -13,10 +13,13 @@ function participantFrom(user) {
   return participant
 }
 
+const noParticipants = []
+
 const mapStateToProps = (state, props) => ({
   user: state.user,
   currentDate: state.currentDate,
-  participants: state.locations[props.locationId].participantsAtTimestamp[props.timeStamp.id] || [],
+  participants: state.locations[props.locationId].participantsAtTimestamp[props.timeStamp.id] ||
+  noParticipants,
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -6,10 +6,7 @@ import './participants.scss'
 
 
 const mapStateToProps = (state, props) => ({
-  participant: {
-    userId: props.userId,
-    ...state.users[props.userId],
-  },
+  participant: state.users[props.userId],
 })
 
 function Participant({
