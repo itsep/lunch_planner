@@ -4,11 +4,6 @@ const { InputValidationError } = require('../../../shared/lib/error')
 const uuidv4 = require('uuid/v4')
 const { sendEMailBeta } = require('../../lib/email/mailer')
 
-async function getLunchspaceName(lunchspaceId) {
-  const [result] = await pool.execute('SELECT name AS lunchspaceName FROM lunchspace WHERE id = ?', [lunchspaceId])
-  return result.lunchspaceName
-}
-
 async function getToken(email, lunchspaceId) {
   const [result] = await pool.execute(
     'SELECT token FROM invitation WHERE email = ? AND lunchspace_id = ?',
@@ -25,11 +20,11 @@ async function getToken(email, lunchspaceId) {
   return token
 }
 
-async function inviteLucnhspaceRoute(req, res) {
+async function inviteLunchspaceRoute(req, res) {
   const { firstName, lastName } = await req.userPromise
   const { id: lunchspaceId } = req.lunchspace
   const { receivers } = req.body
-  const lunchspaceName = getLunchspaceName(lunchspaceId)
+  const { name: lunchspaceName } = req.lunchspace
   receivers.forEach((receiverMail) => {
     if (!validEmail(receiverMail)) {
       throw new InputValidationError(
@@ -38,7 +33,7 @@ async function inviteLucnhspaceRoute(req, res) {
       )
     }
     const token = getToken(receiverMail, lunchspaceId)
-    const link = `localhost:8080/lunchspace/me?token=${encodeURIComponent(token)}`
+    const link = `localhost:8080/join_lunchspace.html?token=${encodeURIComponent(token)}`
     const mailContent = {
       from: 'noreplay.lunchspace@gmail.com',
       to: receiverMail,
@@ -48,4 +43,8 @@ async function inviteLucnhspaceRoute(req, res) {
     sendEMailBeta(mailContent)
   })
 }
-inviteLucnhspaceRoute()
+
+module.export = {
+  getToken,
+  inviteLunchspaceRoute,
+}
