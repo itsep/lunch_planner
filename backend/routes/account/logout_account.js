@@ -1,6 +1,6 @@
 function logout(req, res) {
   res.clearCookie('lunch_planner_token')
-  res.end()
+  res.json({})
 }
 
 module.exports = {
