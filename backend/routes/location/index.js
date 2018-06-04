@@ -3,15 +3,15 @@ const asyncHandler = require('express-async-handler')
 const bodyParser = require('body-parser')
 const { createLocation } = require('./create_location')
 const { getLocations } = require('./get_locations')
-const { authenticate } = require('../../middleware/authenticate')
-const { checkPermission } = require('../../middleware/permission')
+const { authenticateRequest } = require('../../middleware/authenticate')
+const { checkLunchspacePermissionOfRequest } = require('../../middleware/lunchspace_permission')
 const { getUser } = require('../../middleware/get_user')
 
 const locationRouter = Router()
 locationRouter.use(bodyParser.json())
 
-locationRouter.post('/', authenticate, checkPermission, asyncHandler(createLocation))
-locationRouter.get('/', authenticate, getUser, checkPermission, asyncHandler(getLocations))
+locationRouter.post('/', authenticateRequest, checkLunchspacePermissionOfRequest, asyncHandler(createLocation))
+locationRouter.get('/', authenticateRequest, getUser, checkLunchspacePermissionOfRequest, asyncHandler(getLocations))
 
 module.exports = {
   router: locationRouter,

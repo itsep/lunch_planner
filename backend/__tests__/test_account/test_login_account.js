@@ -27,7 +27,7 @@ describe('test login account', () => {
       expect(result).toEqual(undefined)
     })
   })
-  describe('authenticate', () => {
+  describe('authenticateRequest', () => {
     it('should return a jwt', async () => {
       const token = await authenticate(testEmail, testPassword)
       expect(token).not.toEqual(false)
