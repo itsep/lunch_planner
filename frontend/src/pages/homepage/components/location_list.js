@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button } from 'material-ui'
 import { withStyles } from 'material-ui/styles'
-import LocationItem from './location'
+import LocationItem from './location_item'
 import CreateLocation from './create_location'
 import localizedStrings from '../../../localization'
 
 const mapStateToProps = state => ({
-  locations: state.locations,
+  locationsInLunchspace: state.locationsInLunchspace,
 })
 
 const styles = () => ({
@@ -46,6 +46,7 @@ class LocationList extends Component {
   }
 
   render() {
+    const { locationsInLunchspace, classes } = this.props
     return (
       <div>
         <CreateLocation
@@ -54,20 +55,18 @@ class LocationList extends Component {
             this.setState({ showLocation: false })
           }}
         />
-        <ul className={this.props.classes.locationList}>
-          {this.props.locations.map((location => (
-            <li key={location.id}>
+        <ul className={classes.locationList}>
+          {locationsInLunchspace.map((locationId => (
+            <li key={locationId}>
               <LocationItem
-                id={location.id}
-                name={location.name}
-                timeStamps={location.timeStamps}
+                id={locationId}
               />
             </li>
            )))}
           <li>
-            <div className={this.props.classes.createButtonBox}>
+            <div className={classes.createButtonBox}>
               <Button
-                className={this.props.classes.buttonLocation}
+                className={classes.buttonLocation}
                 onClick={() => this.setState({ showLocation: true })}
               >
                 {localizedStrings.createLocation}
@@ -81,10 +80,7 @@ class LocationList extends Component {
 }
 
 LocationList.propTypes = {
-  locations: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-  }).isRequired).isRequired,
+  locationsInLunchspace: PropTypes.arrayOf(PropTypes.number).isRequired,
   classes: PropTypes.object.isRequired,
 }
 
