@@ -23,7 +23,7 @@ const store = createStore(
   stateReducer,
   applyMiddleware(thunkMiddleware)
 )
-
+// eslint-disable-next-line no-unused-vars
 const subscriber = new ChangeDispatcher(socket, store)
 
 store.dispatch(fetchPageData(lunchspaceSubdomain, store.getState().currentDate))

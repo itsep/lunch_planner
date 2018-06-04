@@ -64,7 +64,7 @@ function isUserJoined(userId, participants) {
   return participants.indexOf(userId) !== -1
 }
 
-const styles = (theme) => ({
+const styles = theme => ({
   timeStampDiv: {
     margin: '48px 14px',
     '&:last-child': {
