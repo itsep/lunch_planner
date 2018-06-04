@@ -20,7 +20,6 @@ const styles = () => ({
     marginTop: '5px',
   },
   container: {
-    padding: '24px',
     display: 'flex',
     overflowY: 'hidden',
     overflowX: 'auto',

@@ -66,12 +66,16 @@ function isUserJoined(userId, participants) {
 
 const styles = () => ({
   timeStampDiv: {
-    margin: '24px 16px',
+    margin: '48px 14px',
+    '&:last-child': {
+      // hack to add margin-right to the last element, it does not work because of flexbox
+      borderRight: '16px solid transparent',
+    },
   },
   timeStamp: {
     backgroundColor: 'white',
-    height: '80px',
-    width: '80px',
+    height: '64px',
+    width: '64px',
     flexShrink: 0,
     transition: '400ms border-color',
     borderStyle: 'solid',
