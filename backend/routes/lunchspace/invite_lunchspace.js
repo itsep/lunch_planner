@@ -2,15 +2,16 @@ const { pool } = require('../../lib/database')
 const { validEmail } = require('../../lib/validation')
 const { InputValidationError } = require('../../../shared/lib/error')
 const uuidv4 = require('uuid/v4')
-const { sendEMailBeta } = require('../../lib/email/mailer')
+const { sendEMail } = require('../../lib/email/mailer')
+const { buildInvitation } = require('../../lib/email/mailBuilder')
 
 async function getToken(email, lunchspaceId) {
   const [result] = await pool.execute(
     'SELECT token FROM invitation WHERE email = ? AND lunchspace_id = ?',
     [email, lunchspaceId]
   )
-  if (result.token) {
-    return result.token
+  if (result[0]) {
+    return result[0].token
   }
   const token = uuidv4()
   await pool.execute(
@@ -20,31 +21,32 @@ async function getToken(email, lunchspaceId) {
   return token
 }
 
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index += 1) {
+    await callback(array[index], index, array)
+  }
+}
+
 async function inviteLunchspaceRoute(req, res) {
   const { firstName, lastName } = await req.userPromise
   const { id: lunchspaceId } = req.lunchspace
   const { receivers } = req.body
   const { name: lunchspaceName } = req.lunchspace
-  receivers.forEach((receiverMail) => {
+  await asyncForEach(receivers, async (receiverMail) => {
     if (!validEmail(receiverMail)) {
       throw new InputValidationError(
         'email', `invalid email: ${receiverMail}`,
         'invalidEmail', { receiverMail },
       )
     }
-    const token = getToken(receiverMail, lunchspaceId)
-    const link = `localhost:8080/join_lunchspace.html?token=${encodeURIComponent(token)}`
-    const mailContent = {
-      from: 'noreplay.lunchspace@gmail.com',
-      to: receiverMail,
-      subject: 'Invitation to Lunchspace',
-      html: `<h1>You have been invites!</h1><p>${firstName} ${lastName} has invited you to "${lunchspaceName}. Click this link to join:</p><a>href=${link}</a>`,
-    }
-    sendEMailBeta(mailContent)
+    const token = await getToken(receiverMail, lunchspaceId)
+    const mail = buildInvitation(receiverMail, token, lastName, firstName, lunchspaceName)
+    sendEMail(mail)
   })
+  return res.status(200).json({})
 }
 
-module.export = {
+module.exports = {
   getToken,
   inviteLunchspaceRoute,
 }

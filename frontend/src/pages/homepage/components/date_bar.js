@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Button from 'material-ui/es/Button/Button'
 import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
-import localizedStrings from '../../../localization'
+import localizedStrings from '../../../../../shared/src/localization'
 
 
 const styles = () => ({

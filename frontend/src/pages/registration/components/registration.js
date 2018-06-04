@@ -10,7 +10,7 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
 import apiFetch from '../../../lib/api_fetch'
 import routeLocations from '../../route_locations'
-import localizedStrings from '../../../localization'
+import localizedStrings from '../../../../../shared/src/localization'
 
 const styles = theme => ({
   form: {

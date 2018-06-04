@@ -16,5 +16,6 @@ module.exports = {
       functions: 'ignore',
     }],
     'linebreak-style': 0,
+    'no-await-in-loop': 0,
   },
 }
