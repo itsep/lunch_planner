@@ -13,8 +13,21 @@ import localizedStrings from '../../../localization'
 import apiFetch from '../../../lib/api_fetch'
 
 const styles = theme => ({
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  title: {
+    margin: theme.spacing.unit,
+  },
   textField: {
-    width: '100%',
+    margin: theme.spacing.unit,
+  },
+  errorMessage: {
+    margin: theme.spacing.unit,
+  },
+  button: {
+    margin: theme.spacing.unit,
   },
   actionsContainer: {
     display: 'flex',
@@ -22,6 +35,9 @@ const styles = theme => ({
     flexDirection: 'row-reverse',
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
+  },
+  progressIndicator: {
+    margin: theme.spacing.unit,
   },
 })
 
@@ -61,6 +77,7 @@ class Login extends React.Component {
         this.setState({
           loggedIn: true,
         })
+        window.location = routeLocations.HOMEPAGE
       })
       .catch((error) => {
         this.setState({ error, lastError: error })
@@ -77,6 +94,7 @@ class Login extends React.Component {
         <Collapse in={!this.state.loggedIn}>
           <ValidatorForm
             onSubmit={this.handleSubmit}
+            className={classes.form}
           >
             <Typography className={classes.title} variant="title">
               Login
@@ -90,7 +108,6 @@ class Login extends React.Component {
               onChange={this.handleChange('email')}
               validators={['required', 'isEmail']}
               errorMessages={[localizedStrings.fieldRequired, localizedStrings.invalidEmail]}
-              margin="normal"
               autoComplete="email"
             />
             <TextValidator
@@ -102,42 +119,44 @@ class Login extends React.Component {
               errorMessages={[localizedStrings.fieldRequired]}
               value={this.state.password}
               className={classes.textField}
-              margin="normal"
               autoComplete="current-password"
             />
             <Collapse in={!!this.state.error}>
-              <Typography color="error">
+              <Typography color="error" className={classes.errorMessage}>
                 {this.state.lastError && this.state.lastError.toLocalizedString(localizedStrings)}
               </Typography>
             </Collapse>
             <div className={classes.actionsContainer}>
-              <Button
-                type="submit"
-                size="large"
-                variant="raised"
-                color="primary"
-                className={classes.button}
-                disabled={this.state.isLoading}
-              >
-                {localizedStrings.login}
-              </Button>
+              <div>
+                <Button
+                  type="button"
+                  size="large"
+                  variant="flat"
+                  color="secondary"
+                  className={classes.button}
+                  disabled={this.state.isLoading}
+                  href={routeLocations.REGISTRATION}
+                >
+                  {localizedStrings.signUp}
+                </Button>
+                <Button
+                  type="submit"
+                  size="large"
+                  variant="raised"
+                  color="primary"
+                  className={classes.button}
+                  disabled={this.state.isLoading}
+                >
+                  {localizedStrings.login}
+                </Button>
+              </div>
               <Fade
                 in={this.state.isLoading}
                 unmountOnExit
               >
-                <CircularProgress size="36px" />
+                <CircularProgress size="36px" className={classes.progressIndicator} />
               </Fade>
-              <Button
-                type="button"
-                size="large"
-                variant="raised"
-                color="secondary"
-                className={classes.button}
-                disabled={this.state.isLoading}
-                href={routeLocations.REGISTRATION}
-              >
-                sign up
-              </Button>
+
             </div>
           </ValidatorForm>
         </Collapse>
