@@ -23,14 +23,7 @@ const styles = () => ({
     justifyContent: 'center',
   },
   buttonLocation: {
-    fontSize: 'large',
-    marginTop: '10pt',
-    marginBottom: '2pt',
-    marginLeft: '1%',
-    borderRadius: '100px',
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    color: '#75a045',
+    margin: '10px',
   },
 })
 
@@ -64,6 +57,9 @@ class LocationList extends Component {
             <div className={classes.createButtonBox}>
               <Button
                 className={classes.buttonLocation}
+                variant="raised"
+                color="primary"
+                size="large"
                 onClick={() => this.setState({ showLocation: true })}
               >
                 {localizedStrings.createLocation}
