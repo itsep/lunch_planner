@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    environment {
+        CI = 'true'
+        JWT_SECRET = 'most_secret_key'
+    }
+    stages {
+        stage('Install Backend') {
+            steps {
+                // `npm install` but especially for continues integration.
+                // sh 'npm ci --prefix=backend'
+                sh 'npm install --prefix=backend'
+            }
+        }
+        stage('Install Frontend') {
+            steps {
+                // `npm install` but especially for continues integration.
+                // sh 'npm ci --prefix=frontend'
+                sh 'npm install --prefix=frontend'
+            }
+        }
+        stage('Build Frontend') {
+            steps {
+                sh 'npm run build --prefix=frontend'
+            }
+        }
+    }
+}
+
