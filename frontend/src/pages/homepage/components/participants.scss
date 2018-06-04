@@ -115,6 +115,8 @@ $three-user-offset: 40;
   left: 0;
   right: 0;
   bottom: 0;
+  // moves the ripple effect behind the participants
+  z-index: 1;
   .avatar-container {
     position: absolute;
     top: 50%;

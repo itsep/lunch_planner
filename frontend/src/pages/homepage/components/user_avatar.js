@@ -21,7 +21,7 @@ const styles = theme => ({
     height: '24px',
     flexShrink: 0,
     borderRadius: '100%',
-    backgroundColor: '#75a045',
+    backgroundColor: theme.palette.primary.light,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

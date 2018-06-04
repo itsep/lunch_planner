@@ -91,7 +91,7 @@ const styles = theme => ({
     },
   },
   timeStampWithUser: {
-    borderColor: '#75A045',
+    borderColor: theme.palette.primary.light,
   },
   clock: {
     fontSize: '20px',
