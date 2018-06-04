@@ -13,8 +13,21 @@ import routeLocations from '../../route_locations'
 import localizedStrings from '../../../localization'
 
 const styles = theme => ({
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  title: {
+    margin: theme.spacing.unit,
+  },
   textField: {
-    width: '100%',
+    margin: theme.spacing.unit,
+  },
+  errorMessage: {
+    margin: theme.spacing.unit,
+  },
+  button: {
+    margin: theme.spacing.unit,
   },
   actionsContainer: {
     display: 'flex',
@@ -22,6 +35,9 @@ const styles = theme => ({
     flexDirection: 'row-reverse',
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
+  },
+  progressIndicator: {
+    margin: theme.spacing.unit,
   },
 })
 
@@ -85,6 +101,7 @@ class Registration extends React.Component {
         <Collapse in={!this.state.loggedIn}>
           <ValidatorForm
             onSubmit={this.handleSubmit}
+            className={classes.form}
           >
             <Typography className={classes.title} variant="title">
               Registration
@@ -97,7 +114,6 @@ class Registration extends React.Component {
               onChange={this.handleChange('firstName')}
               validators={['required']}
               errorMessages={[localizedStrings.fieldRequired]}
-              margin="normal"
               autoComplete="given-name"
               autoFocus
             />
@@ -109,7 +125,6 @@ class Registration extends React.Component {
               onChange={this.handleChange('lastName')}
               validators={['required']}
               errorMessages={[localizedStrings.fieldRequired]}
-              margin="normal"
               autoComplete="family-name"
             />
             <TextValidator
@@ -121,7 +136,6 @@ class Registration extends React.Component {
               onChange={this.handleChange('email')}
               validators={['required', 'isEmail']}
               errorMessages={[localizedStrings.fieldRequired, localizedStrings.invalidEmail]}
-              margin="normal"
               autoComplete="email"
             />
             <TextValidator
@@ -133,31 +147,43 @@ class Registration extends React.Component {
               errorMessages={[localizedStrings.fieldRequired]}
               value={this.state.password}
               className={classes.textField}
-              margin="normal"
               autoComplete="new-password"
             />
             <Collapse in={!!this.state.error}>
-              <Typography color="error">
+              <Typography color="error" className={classes.errorMessage}>
                 {this.state.lastError && this.state.lastError.toLocalizedString(localizedStrings)}
               </Typography>
             </Collapse>
 
             <div className={classes.actionsContainer}>
-              <Button
-                type="submit"
-                size="large"
-                variant="raised"
-                color="primary"
-                className={classes.button}
-                disabled={this.state.isLoading}
-              >
-                {localizedStrings.signUp}
-              </Button>
+              <div>
+                <Button
+                  type="button"
+                  size="large"
+                  variant="flat"
+                  color="secondary"
+                  className={classes.button}
+                  disabled={this.state.isLoading}
+                  href={routeLocations.LOGIN}
+                >
+                  {localizedStrings.login}
+                </Button>
+                <Button
+                  type="submit"
+                  size="large"
+                  variant="raised"
+                  color="primary"
+                  className={classes.button}
+                  disabled={this.state.isLoading}
+                >
+                  {localizedStrings.signUp}
+                </Button>
+              </div>
               <Fade
                 in={this.state.isLoading}
                 unmountOnExit
               >
-                <CircularProgress size="36px" />
+                <CircularProgress size="36px" className={classes.progressIndicator} />
               </Fade>
             </div>
           </ValidatorForm>
