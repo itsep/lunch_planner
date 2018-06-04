@@ -14,7 +14,7 @@ function initialsOf(user) {
   return firstLetterOf(firstName) + firstLetterOf(lastName)
 }
 
-const styles = () => ({
+const styles = (theme) => ({
   container: {
     position: 'relative',
     width: '24px',
@@ -25,6 +25,10 @@ const styles = () => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    [theme.breakpoints.up('md')]: {
+      width: '30px',
+      height: '30px',
+    },
   },
   initials: {
     fontSize: '12px',

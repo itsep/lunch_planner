@@ -64,12 +64,15 @@ function isUserJoined(userId, participants) {
   return participants.indexOf(userId) !== -1
 }
 
-const styles = () => ({
+const styles = (theme) => ({
   timeStampDiv: {
     margin: '48px 14px',
     '&:last-child': {
       // hack to add margin-right to the last element, it does not work because of flexbox
-      borderRight: '16px solid transparent',
+      borderRight: '14px solid transparent',
+    },
+    [theme.breakpoints.up('md')]: {
+      margin: '56px 22px',
     },
   },
   timeStamp: {
@@ -79,15 +82,24 @@ const styles = () => ({
     flexShrink: 0,
     transition: '400ms border-color',
     borderStyle: 'solid',
-    borderWidth: '4px',
+    borderWidth: '2px',
     borderColor: 'transparent',
+    [theme.breakpoints.up('md')]: {
+      borderWidth: '4px',
+      width: '86px',
+      height: '86px',
+    },
   },
   timeStampWithUser: {
     borderColor: '#75A045',
   },
   clock: {
-    fontSize: 'large',
+    fontSize: '20px',
     fontWeight: 'bolder',
+    [theme.breakpoints.up('md')]: {
+      fontSize: '24px',
+    },
+    marginBottom: 0,
   },
 })
 

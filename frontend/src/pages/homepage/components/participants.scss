@@ -1,4 +1,5 @@
-$circle-size: 64px - 4px;
+$circle-size-sm: 64px - 2px;
+$circle-size-md: 86px - 3px;
 $two-user-offset: 20;
 $three-user-offset: 40;
 
@@ -48,29 +49,13 @@ $three-user-offset: 40;
           translate($radius)
           rotate($angle * -1deg);
 }
-.participants {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  .avatar-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transition: 400ms transform;
-    div{
-      margin: -50%;
-      margin: -50%;
-      animation: 400ms fade-in;
-    }
-  }
+
+@mixin participantRotation($radius) {
   $bottom-angle: 90;
   $top-angle: -90;
-  $radius: $circle-size/2;
   &.participant-count-1 .avatar-container{
     &:nth-of-type(1) {
-      @include rotate($circle-size/2, $bottom-angle);
+      @include rotate($radius, $bottom-angle);
     }
   }
   &.participant-count-2 .avatar-container{
@@ -122,4 +107,29 @@ $three-user-offset: 40;
       @include rotate($radius, $top-angle + $three-user-offset);
     }
   }
+}
+
+.participants {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  .avatar-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: 400ms transform;
+    div{
+      margin: -50%;
+      margin: -50%;
+      animation: 400ms fade-in;
+    }
+  }
+
+  @include participantRotation($circle-size-sm/2);
+  @media screen and (min-width: 960px) {
+    @include participantRotation($circle-size-md/2);
+  }
+
 }
