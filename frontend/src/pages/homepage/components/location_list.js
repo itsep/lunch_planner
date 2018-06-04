@@ -13,12 +13,9 @@ const mapStateToProps = state => ({
 
 const styles = () => ({
   locationList: {
-    marginTop: '5pt',
-    height: '100pt',
     margin: 0,
     padding: 0,
     listStyleType: 'none',
-    zIndex: 0,
   },
   createButtonBox: {
     display: 'flex',
