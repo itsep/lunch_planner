@@ -8,6 +8,7 @@ async function leaveLunchspaceRoute(req, res) {
   const { userId } = req.token
   const { id } = req.lunchspace
   await leaveLunchspace(userId, id)
+  return res.status(200).json({})
 }
 
 module.exports = {

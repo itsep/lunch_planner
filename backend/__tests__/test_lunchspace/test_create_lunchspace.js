@@ -30,7 +30,7 @@ describe('create lunchspace', () => {
       'VALUES (?, ?)', [firstName, lastName])
     testUserId = testUserId[0].insertId
   })
-  describe('create', async () => {
+  describe('create', () => {
     it('should create a new lunchspace in DB and giving back its id', async () => {
       await expect(create(testLunchspaceName1, testSubdomain1)).resolves.toEqual(expect.any(Number))
     })
@@ -38,7 +38,7 @@ describe('create lunchspace', () => {
       await expect(create(testLunchspaceName1, testSubdomain1)).rejects.toHaveProperty('code', 'ER_DUP_ENTRY')
     })
   })
-  describe('connect', async () => {
+  describe('connect', () => {
     it('should create a member_of in DB, without throwing an error', async () => {
       await expect(connect(testUserId, testLunchspaceId, testIsAdmin)).resolves.not.toThrow()
     })

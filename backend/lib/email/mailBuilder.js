@@ -1,4 +1,4 @@
-import localizedStrings from '../../../localization'
+// import localizedStrings from '../../../localization'
 
 const sender = 'noreply.lunchspace@gmail.com'
 

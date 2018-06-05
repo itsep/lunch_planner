@@ -103,7 +103,7 @@ CREATE TABLE invitation
     lunchspace_id BIGINT UNSIGNED NOT NULL,
     email VARCHAR(120) NOT NULL,
     PRIMARY KEY(token),
-    UNIQUE (email, lunchspace_id)
+    UNIQUE (lunchspace_id, email)
 ) ENGINE = InnoDB;
 
 -- Invitation Foreign Key

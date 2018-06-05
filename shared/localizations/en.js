@@ -19,6 +19,8 @@ const content = {
   invalidEmail: 'Please enter a valid email address.',
   illegalHyphen: 'A subdomain may not contain a leading or trailing hyphen(-).',
   inputTooLong24: 'max 24 characters',
+  invalidToken: 'This invitation is no longer valid.',
+  lunchspaceDoesNotExist: 'The requested Lunchspace does not exist.',
 
   createLunchspace: 'Create Lunchspace',
   createLocation: 'Create Location',
