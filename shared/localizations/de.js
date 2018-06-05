@@ -21,6 +21,7 @@ const content = {
   createLunchspace: 'Lunchspace erstellen',
   createLocation: 'Location erstellen',
   login: 'Anmelden',
+  logout: 'Abmelden',
   today: 'Heute',
   signUp: 'Registrieren',
 }
