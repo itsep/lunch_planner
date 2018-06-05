@@ -17,7 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "await-to-js": "^2.0.1",
-    "bcrypt": "^2.0.0",
+    "bcryptjs": "^2.4.0",
     "body-parser": "^1.18.2",
     "config": "^1.30.0",
     "cookie-parser": "^1.4.3",
@@ -41,5 +41,8 @@
     "eslint-plugin-import": "^2.10.0",
     "jest": "^22.4.3",
     "nyc": "^11.6.0"
+  },
+  "optionalDependencies": {
+    "bcrypt": "^2.0.0"
   }
 }
