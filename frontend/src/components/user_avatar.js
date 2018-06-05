@@ -41,7 +41,7 @@ const styles = theme => ({
 })
 
 function UserAvatar({
-  classes, user, className,
+  classes, user, className = '',
 }) {
   return (
     <div className={combineStyleClasses(classes.container, className)}>
@@ -66,6 +66,10 @@ UserAvatar.propTypes = {
   }).isRequired,
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
+}
+
+UserAvatar.defaultProps = {
+  className: '',
 }
 
 export default withStyles(styles)(UserAvatar)
