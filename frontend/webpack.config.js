@@ -43,6 +43,10 @@ module.exports = {
         target: 'http://localhost:8081',
         pathRewrite: { '^/api': '' },
       },
+      '/subscriber/*': {
+        target: 'ws://localhost:8090',
+        ws: true,
+      },
     },
   },
   optimization: {

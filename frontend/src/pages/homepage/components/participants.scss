@@ -1,24 +1,34 @@
-$circle-size: 80px;
+$circle-size-sm: 64px - 2px;
+$circle-size-md: 86px - 3px;
+$two-user-offset: 20;
+$three-user-offset: 40;
 
 .time-stamp {
   transition: 400ms transform;
+  z-index: 100;
   &.participant-count-1 {
     transform: scale(1.1);
+    z-index: 110;
   }
   &.participant-count-2 {
     transform: scale(1.2);
+    z-index: 120;
   }
   &.participant-count-3 {
     transform: scale(1.3);
+    z-index: 130;
   }
   &.participant-count-4 {
     transform: scale(1.4);
+    z-index: 140;
   }
   &.participant-count-5 {
     transform: scale(1.5);
+    z-index: 150;
   }
   &.participant-count-6 {
     transform: scale(1.6);
+    z-index: 160;
   }
 }
 
@@ -39,37 +49,21 @@ $circle-size: 80px;
           translate($radius)
           rotate($angle * -1deg);
 }
-.participants {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  .avatar-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transition: 400ms transform;
-    div{
-      margin: -50%;
-      margin: -50%;
-      animation: 400ms fade-in;
-    }
-  }
+
+@mixin participantRotation($radius) {
   $bottom-angle: 90;
   $top-angle: -90;
-  $radius: $circle-size/2;
   &.participant-count-1 .avatar-container{
     &:nth-of-type(1) {
-      @include rotate($circle-size/2, $bottom-angle);
+      @include rotate($radius, $bottom-angle);
     }
   }
   &.participant-count-2 .avatar-container{
     &:nth-of-type(1) {
-      @include rotate($radius, $bottom-angle + 20);
+      @include rotate($radius, $bottom-angle + $two-user-offset);
     }
     &:nth-of-type(2) {
-      @include rotate($radius, $bottom-angle - 20);
+      @include rotate($radius, $bottom-angle - $two-user-offset);
     }
   }
   &.participant-count-3,
@@ -78,13 +72,13 @@ $circle-size: 80px;
   &.participant-count-6 {
     .avatar-container{
       &:nth-of-type(1) {
-        @include rotate($radius, $bottom-angle + 35);
+        @include rotate($radius, $bottom-angle + $three-user-offset);
       }
       &:nth-of-type(2) {
         @include rotate($radius, $bottom-angle);
       }
       &:nth-of-type(3) {
-        @include rotate($radius, $bottom-angle - 35);
+        @include rotate($radius, $bottom-angle - $three-user-offset);
       }
     }
   }
@@ -96,21 +90,48 @@ $circle-size: 80px;
   }
   &.participant-count-5 .avatar-container{
     &:nth-of-type(4) {
-      @include rotate($radius, $top-angle - 20);
+      @include rotate($radius, $top-angle - $two-user-offset);
     }
     &:nth-of-type(5) {
-      @include rotate($radius, $top-angle + 20);
+      @include rotate($radius, $top-angle + $two-user-offset);
     }
   }
   &.participant-count-6 .avatar-container{
     &:nth-of-type(4) {
-      @include rotate($radius, $top-angle - 35);
+      @include rotate($radius, $top-angle - $three-user-offset);
     }
     &:nth-of-type(5) {
       @include rotate($radius, $top-angle);
     }
     &:nth-of-type(6) {
-      @include rotate($radius, $top-angle + 35);
+      @include rotate($radius, $top-angle + $three-user-offset);
     }
   }
+}
+
+.participants {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  // moves the ripple effect behind the participants
+  z-index: 1;
+  .avatar-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: 400ms transform;
+    div{
+      margin: -50%;
+      margin: -50%;
+      animation: 400ms fade-in;
+    }
+  }
+
+  @include participantRotation($circle-size-sm/2);
+  @media screen and (min-width: 960px) {
+    @include participantRotation($circle-size-md/2);
+  }
+
 }
