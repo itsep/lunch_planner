@@ -87,6 +87,7 @@
     "react-test-renderer": "^16.3.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0",
+    "socket.io-client": "^2.1.1",
     "with-query": "^1.0.2"
   }
 }

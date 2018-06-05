@@ -20,10 +20,10 @@ const styles = () => ({
     marginTop: '5px',
   },
   container: {
-    padding: '2%',
     display: 'flex',
     overflowY: 'hidden',
     overflowX: 'auto',
+    '-webkit-overflow-scrolling': 'touch',
     '&::-webkit-scrollbar': {
       height: '10px',
       background: 'grey',
