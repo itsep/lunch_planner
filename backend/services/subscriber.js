@@ -9,11 +9,13 @@ const { toEventDateId } = require('../../shared/lib/event')
 const { authenticateSocket } = require('../middleware/authenticate')
 const { checkLunchspacePermissionOfSocket } = require('../middleware/lunchspace_permission')
 
-const io = socketIO(8090, { path: '/subscriber' })
+const io = socketIO(9200, {
+  path: '/subscriber',
+})
+// io.set('transports', ['websocket'])
 const subscriber = new SubscriberClient(redis.createClient())
 
 function subscribeToAllLocationChanges(lunchspaceId, eventDate, callback) {
-  console.log('subscribeToAllLocationChanges', lunchspaceId, eventDate)
   const unsubscriber = [
     subscriber.subscribe(locationChannel(lunchspaceId, '*'), callback),
     subscriber.subscribe(joinUpAt(lunchspaceId, '*', toEventDateId(eventDate), '*'), callback),

@@ -14,6 +14,7 @@ const lunchspaceSubdomain = 'vsf-experts-ma'
 
 const socket = io({
   path: '/subscriber',
+  // transports: ['websocket'],
   extraHeaders: {
     subdomain: lunchspaceSubdomain,
   },
