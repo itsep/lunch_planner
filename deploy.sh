@@ -1,8 +1,8 @@
 git pull
-#npm install --prefix=backend
-#npm install --prefix=frontend
-#npm run build --prefix=frontend
-#npm run deploy --prefix=frontend
+npm install --prefix=backend
+npm install --prefix=frontend
+npm run build --prefix=frontend
+npm run deploy --prefix=frontend
 cd ./backend
 pm2 stop rest-api
 pm2 start services/rest-api.js --name rest-api
