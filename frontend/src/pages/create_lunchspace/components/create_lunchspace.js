@@ -13,7 +13,7 @@ import { CircularProgress } from 'material-ui/Progress'
 import FormControlInputValidator from 'components/form_control_input_validator'
 import FormSection from 'components/form_section'
 import apiFetch from '../../../lib/api_fetch'
-import localizedStrings from '../../../../../shared/src/localization'
+import localizedStrings from '../../../../../frontend/src/localization'
 
 const styles = theme => ({
   textField: {

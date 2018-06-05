@@ -9,7 +9,7 @@ import Collapse from 'material-ui/transitions/Collapse'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
 import routeLocations from '../../route_locations'
-import localizedStrings from '../../../../../shared/src/localization'
+import localizedStrings from '../../../../../frontend/src/localization'
 import apiFetch from '../../../lib/api_fetch'
 
 const styles = theme => ({
