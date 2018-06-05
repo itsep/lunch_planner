@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
 import LocationList from './location_list'
@@ -37,6 +38,12 @@ class HomepageApp extends Component {
       </CommonAppContainer>
     )
   }
+}
+
+HomepageApp.propTypes = {
+  user: PropTypes.object.isRequired,
+  lunchspace: PropTypes.object.isRequired,
+  fetchLogoutAction: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomepageApp)
