@@ -49,12 +49,12 @@ module.exports = {
       },
     },
   },
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      name: 'common',
-    },
-  },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: 'all',
+  //     name: 'common',
+  //   },
+  // },
   module: {
     rules: [
       {
