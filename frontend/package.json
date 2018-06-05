@@ -84,6 +84,7 @@
     "react-redux": "^5.0.7",
     "react-test-renderer": "^16.3.1",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "with-query": "^1.0.2"
   }
 }

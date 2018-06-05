@@ -13,7 +13,7 @@ const store = createStore(
   applyMiddleware(thunkMiddleware)
 )
 
-store.dispatch(fetchPageData('vsf-experts-ma'))
+store.dispatch(fetchPageData('vsf-experts-ma', new Date()))
 
 render(
   <Provider store={store}>
