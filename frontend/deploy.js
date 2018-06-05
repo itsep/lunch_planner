@@ -1,6 +1,5 @@
-const fs = require('fs')
+const fs = require('fs-extra')
 const path = require('path')
-const mkdirp = require('mkdirp')
 
 const deployDestination = '/var/www/lunchspace.de'
 const deploySource = path.resolve('./dist')
@@ -15,11 +14,13 @@ if (!fs.existsSync(deploySource)) {
 
 // check current deploy source exists and rename it
 if (fs.existsSync(deployDestination)) {
+  // remove previous last version
+  fs.removeSync(deployLastVersion)
   fs.renameSync(deployDestination, deployLastVersion)
 } else {
   // make all directories in front of the deploy destination directory
   // this is required for a rename to succeed
-  mkdirp.sync(path.join(deployDestination, '..'))
+  fs.ensureDirSync(path.join(deployDestination, '..'))
 }
 
 // deploy new version
