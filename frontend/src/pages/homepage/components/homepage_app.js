@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import HeaderBar from './header_bar'
 import LocationList from './location_list'
-import routeLocations from '../../route_locations'
+import { routeLocations } from '../../route_locations'
 import CommonAppContainer from '../../../components/common_app_container'
 import { isDefinitelyNotAuthenticated } from '../../../lib/authentication'
 
 
 class HomepageApp extends Component {
-  componentWillMount() {
+  componentDidMount() {
     if (isDefinitelyNotAuthenticated()) {
       window.location = routeLocations.LOGIN
     }

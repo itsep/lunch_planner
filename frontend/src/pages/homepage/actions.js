@@ -1,5 +1,5 @@
 import actionTypes from './action_types'
-import routeLocations from '../route_locations'
+import { routeLocations } from '../route_locations'
 import apiFetch from '../../lib/api_fetch'
 
 

@@ -8,7 +8,7 @@ import { CircularProgress } from 'material-ui/Progress'
 import Collapse from 'material-ui/transitions/Collapse'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
-import { routeLocations, whiteListRoutes } from '../../route_locations'
+import { toRegistration, toRedirect } from 'lib/redirect'
 import localizedStrings from '../../../localization'
 import apiFetch from '../../../lib/api_fetch'
 
@@ -50,6 +50,7 @@ class Login extends React.Component {
       isLoading: false,
       error: null,
       redirect: null,
+      token: null,
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -60,9 +61,7 @@ class Login extends React.Component {
     const url = new URL(urlString)
     const redirect = url.searchParams.get('redirect')
     const token = url.searchParams.get('token')
-    if (whiteListRoutes.indexOf(redirect) >= 0) {
-      this.setState({ redirect: `${redirect}?token=${token}` })
-    }
+    this.setState({ redirect, token }) // eslint-disable-line react/no-did-mount-set-state
   }
 
   handleChange(name) {
@@ -89,7 +88,7 @@ class Login extends React.Component {
         this.setState({
           loggedIn: true,
         })
-        window.location = this.state.redirect ? this.state.redirect : routeLocations.HOMEPAGE
+        window.location = toRedirect(this.state.redirect, this.state.token)
       })
       .catch((error) => {
         this.setState({ error, lastError: error })
@@ -147,7 +146,7 @@ class Login extends React.Component {
                   color="secondary"
                   className={classes.button}
                   disabled={this.state.isLoading}
-                  href={`${routeLocations.REGISTRATION}?redirect=${this.state.redirect}`}
+                  href={toRegistration(this.state.redirect, this.state.token)}
                 >
                   {localizedStrings.signUp}
                 </Button>

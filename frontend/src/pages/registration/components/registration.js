@@ -8,8 +8,8 @@ import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
+import { toRedirect, toLogin } from 'lib/redirect'
 import apiFetch from '../../../lib/api_fetch'
-import { routeLocations, whiteListRoutes } from '../../route_locations'
 import localizedStrings from '../../../localization'
 
 const styles = theme => ({
@@ -63,10 +63,7 @@ class Registration extends React.Component {
     const url = new URL(urlString)
     const redirect = url.searchParams.get('redirect')
     const token = url.searchParams.get('token')
-    console.log(redirect)
-    if (whiteListRoutes.indexOf(redirect) >= 0) {
-      this.setState({ redirect: `${redirect}?token=${token}` })
-    }
+    this.setState({ redirect, token }) // eslint-disable-line react/no-did-mount-set-state
   }
   handleChange(name) {
     const that = this
@@ -95,7 +92,7 @@ class Registration extends React.Component {
         this.setState({
           loggedIn: true,
         })
-        window.location = this.state.redirect ? this.state.redirect : routeLocations.HOMEPAGE
+        window.location = toRedirect(this.state.redirect, this.state.token)
       })
       .catch((error) => {
         this.setState({ error, lastError: error })
@@ -175,7 +172,7 @@ class Registration extends React.Component {
                   color="secondary"
                   className={classes.button}
                   disabled={this.state.isLoading}
-                  href={routeLocations.LOGIN}
+                  href={toLogin(this.state.redirect, this.state.token)}
                 >
                   {localizedStrings.login}
                 </Button>

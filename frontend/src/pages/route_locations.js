@@ -6,5 +6,7 @@ export const routeLocations = {
   JOIN_LUNCHSPACE: '/join_lunchspace.html',
 }
 
-export const whiteListRoutes = Object.keys(routeLocations).map(key => routeLocations[key])
-
+export function isOnWhitelist(redirect) {
+  const whiteListRoutes = Object.keys(routeLocations).map(key => routeLocations[key])
+  return (whiteListRoutes.indexOf(redirect) >= 0)
+}
