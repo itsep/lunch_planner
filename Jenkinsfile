@@ -6,10 +6,13 @@ pipeline {
     }
     stages {
         stage('Deploy') {
-            if (env.BRANCH_NAME == 'release') {
-                steps {
-                    sh 'npm run deploy --prefix=frontend'
+            when {
+                expression {
+                    env.BRANCH_NAME == 'release' 
                 }
+            }
+            steps {
+                sh 'npm run deploy --prefix=frontend'
             }
         }
         stage('Install Shared') {
