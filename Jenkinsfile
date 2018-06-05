@@ -5,6 +5,13 @@ pipeline {
         JWT_SECRET = 'most_secret_key'
     }
     stages {
+        stage('Deploy') {
+            if (env.BRANCH_NAME == 'release') {
+                steps {
+                    sh 'npm run deploy --prefix=frontend'
+                }
+            }
+        }
         stage('Install Shared') {
             steps {
                 // `npm install` but especially for continues integration.
@@ -62,13 +69,6 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 sh 'npm run build --prefix=frontend'
-            }
-        }
-        stage('Deploy') {
-            if (env.BRANCH_NAME == 'release') {
-                steps {
-                    sh 'npm run deploy --prefix=frontend'
-                }
             }
         }
     }
