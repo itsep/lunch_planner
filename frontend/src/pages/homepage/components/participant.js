@@ -19,7 +19,6 @@ function Participant({
 
 Participant.propTypes = {
   participant: PropTypes.shape({
-    userId: PropTypes.number.isRequired,
     email: PropTypes.string,
     firstName: PropTypes.string,
     lastName: PropTypes.string,

@@ -41,7 +41,7 @@ async function checkLunchspacePermissionOfRequest(req) {
 }
 async function checkLunchspacePermissionOfSocket(socket) {
   const { token } = socket
-  const { subdomain } = socket.request.cookies
+  const { subdomain } = socket.request.headers
   const lunchspace = await checkLunchspacePermission(token, subdomain)
   // eslint-disable-next-line no-param-reassign
   socket.lunchspace = {
