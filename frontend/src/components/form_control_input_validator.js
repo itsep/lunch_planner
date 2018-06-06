@@ -1,7 +1,8 @@
 import React from 'react'
-import { FormControl, FormHelperText } from 'material-ui/Form'
+import FormControl from '@material-ui/core/FormControl'
+import FormHelperText from '@material-ui/core/FormHelperText'
 import { ValidatorComponent } from 'react-material-ui-form-validator'
-import Input from 'material-ui/Input'
+import Input from '@material-ui/core/Input'
 
 export default class FormControlInputValidator extends ValidatorComponent {
   render() {

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Typography } from 'material-ui'
-import { withStyles } from 'material-ui/styles'
+import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { toEventDate } from 'shared/lib/event'
 import { joinEvent, leaveEvent } from '../actions'
