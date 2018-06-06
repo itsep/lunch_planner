@@ -1,5 +1,4 @@
-import { escapeSubdomain, isValidSubdomain } from 'shared/lib/subdomain'
-
+import { parseSubdomainFromHost } from 'shared/lib/subdomain'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
@@ -12,12 +11,53 @@ import IconButton from '@material-ui/core/IconButton'
 import SettingsIcon from '@material-ui/icons/Settings'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Fade from '@material-ui/core/Fade'
+import withQuery from 'with-query'
 import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
 import apiFetch from '../../../lib/api_fetch'
 import localizedStrings from '../../../localization'
 
-function currentLunchspaceSubdomain() {
+const defaultDomain = 'mylunch.space'
 
+function topLevelDomainFromHost(hostname) {
+  const domainParts = hostname.split('.')
+  return domainParts[domainParts.length - 1]
+}
+
+function domainFromHost(hostname) {
+  const domainParts = hostname.split('.')
+  if (domainParts.length >= 2) {
+    return `${domainParts[domainParts.length - 2]}.${domainParts[domainParts.length - 1]}`
+  }
+  return undefined
+}
+
+function shouldUseDevelopmentSubdomainHandling() {
+  return window.location.hostname === 'localhost' ||
+    topLevelDomainFromHost(window.location.hostname) === 'local'
+}
+
+function userVisibleDomain() {
+  return shouldUseDevelopmentSubdomainHandling() ?
+    defaultDomain :
+    domainFromHost(window.location.hostname)
+}
+
+function domainForLunchspace(subdomain) {
+  const domain = userVisibleDomain()
+  return `${subdomain}.${domain}`
+}
+
+function withLunchspaceSubdomain(url, subdomain) {
+  if (shouldUseDevelopmentSubdomainHandling()) {
+    return withQuery(url, { subdomain })
+  }
+  const domain = domainFromHost(window.location.hostname)
+  return `//${subdomain}.${domain}${url}`
+}
+
+function currentLunchspaceSubdomain() {
+  return parseSubdomainFromHost(window.location.hostname) ||
+    new URLSearchParams(window.location.search).get('subdomain')
 }
 
 const styles = theme => ({
@@ -46,6 +86,7 @@ const styles = theme => ({
 class Lunchspaces extends React.Component {
   constructor(props) {
     super(props)
+    this.currentLunchspaceSubdomain = currentLunchspaceSubdomain()
     this.state = {
       isLoading: true,
       user: {},
@@ -62,6 +103,8 @@ class Lunchspaces extends React.Component {
           user: data.user,
           lunchspaces: data.lunchspaces,
           isLoading: false,
+          currentLunchspace: data.lunchspaces
+            .find(lunchspace => lunchspace.subdomain === this.currentLunchspaceSubdomain)
         })
       })
       .catch(console.error.bind(console))
@@ -69,10 +112,15 @@ class Lunchspaces extends React.Component {
 
   render() {
     const { classes } = this.props
-    const { user, lunchspaces, isLoading } = this.state
+    const {
+      user,
+      lunchspaces,
+      isLoading,
+      currentLunchspace,
+    } = this.state
     return (
       <div>
-        <AuthorizedHeaderBar lunchspace={lunchspaces[0] || {}} user={user} />
+        <AuthorizedHeaderBar lunchspace={currentLunchspace || {}} user={user} />
         <div className={classes.root}>
           <div className={classes.container}>
             <Typography variant="title" className={classes.titleBar}>
@@ -93,12 +141,12 @@ class Lunchspaces extends React.Component {
                     role={undefined}
                     button
                     component="a"
-                    href={`//${lunchspace.subdomain}.mylunch.space/homepage.html`}
+                    href={withLunchspaceSubdomain('/homepage.html', lunchspace.subdomain)}
                     className={classes.listItem}
                   >
                     <ListItemText
                       primary={lunchspace.name}
-                      secondary={`${lunchspace.subdomain}.mylunch.space`}
+                      secondary={domainForLunchspace(lunchspace.subdomain)}
                     />
                     {lunchspace.isAdmin &&
                       <ListItemSecondaryAction>
