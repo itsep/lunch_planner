@@ -14,7 +14,7 @@ const styles = {
   },
 }
 
-function CommonAppContainer({ classes }) {
+function UnauthorizedHeaderBar({ classes }) {
   return (
     <AppBar position="static" color="default">
       <Toolbar>
@@ -37,8 +37,8 @@ function CommonAppContainer({ classes }) {
     </AppBar>
   )
 }
-CommonAppContainer.propTypes = {
+UnauthorizedHeaderBar.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(CommonAppContainer)
+export default withStyles(styles)(UnauthorizedHeaderBar)

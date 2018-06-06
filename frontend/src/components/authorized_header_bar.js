@@ -6,7 +6,8 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import Menu, { MenuItem } from '@material-ui/core/Menu'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 import UserAvatar from './user_avatar'
 import localizedStrings from '../localization'
 
@@ -24,7 +25,7 @@ const styles = theme => ({
   },
 })
 
-class CommonAppContainer extends React.Component {
+class AuthorizedAppBar extends React.Component {
   constructor(props) {
     super(props)
     this.openMenu = this.openMenu.bind(this)
@@ -77,11 +78,11 @@ class CommonAppContainer extends React.Component {
     )
   }
 }
-CommonAppContainer.propTypes = {
+AuthorizedAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   lunchspace: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(CommonAppContainer)
+export default withStyles(styles)(AuthorizedAppBar)
