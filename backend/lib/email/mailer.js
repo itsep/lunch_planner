@@ -12,10 +12,9 @@ const transporter = nodemailer.createTransport({
 function sendEMail(mail) {
   transporter.sendMail(mail, (error, info) => {
     if (error) {
-      console.log(error)
-    } else {
-      console.log(`Email sent: ${info.response}`)
+      throw error
     }
+    return (`Email sent: ${info.response}`)
   })
 }
 
