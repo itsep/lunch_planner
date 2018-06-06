@@ -1,8 +1,6 @@
 const languageKey = 'en'
 const content = {
-  test: 'test',
-  welcome: 'Hello {name}',
-  welcome2: 'Hello {firstName} {lastName}',
+  productName: 'Lunchspace',
   // Localizable Errors
   authenticationError: 'Not authenticated. Please login.',
   authorizationError: 'Not authorized. You do not have the rights to perform this action.',
@@ -23,6 +21,7 @@ const content = {
   createLunchspace: 'Create Lunchspace',
   createLocation: 'Create Location',
   login: 'Login',
+  logout: 'Logout',
   today: 'Today',
   signUp: 'Sign Up',
 }
