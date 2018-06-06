@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // all available pages
 const pages = {
   // index: {/* config options */},
-  // registration: {/* config options */},
+  registration: {/* config options */},
   login: {/* config options */},
   // homepage: {/* config options */},
   create_lunchspace: {/* config options */},
