@@ -1,8 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import UserAvatar from './user_avatar'
+import { withStyles } from 'material-ui/styles'
+import UserAvatar from '../../../components/user_avatar'
 import './participants.scss'
+
+const styles = theme => ({
+  avatar: {
+    width: '24px',
+    height: '24px',
+    [theme.breakpoints.up('md')]: {
+      width: '30px',
+      height: '30px',
+    },
+  },
+})
 
 
 const mapStateToProps = (state, props) => ({
@@ -10,21 +22,26 @@ const mapStateToProps = (state, props) => ({
 })
 
 function Participant({
-  participant,
+  classes, participant,
 }) {
   return (
-    <div className="avatar-container"><UserAvatar user={participant} /></div>
+    <div className="avatar-container">
+      <UserAvatar
+        user={participant}
+        className={classes.avatar}
+      />
+    </div>
   )
 }
 
 Participant.propTypes = {
   participant: PropTypes.shape({
-    userId: PropTypes.number.isRequired,
     email: PropTypes.string,
     firstName: PropTypes.string,
     lastName: PropTypes.string,
     imageUrl: PropTypes.string,
   }).isRequired,
+  classes: PropTypes.object.isRequired,
 }
 
-export default connect(mapStateToProps)(Participant)
+export default withStyles(styles)(connect(mapStateToProps)(Participant))

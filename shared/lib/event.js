@@ -18,9 +18,20 @@ function toEventDateId(eventDate) {
 
 function toEventDate(date) {
   return {
-    day: date.getDate(),
-    month: date.getMonth() + 1,
     year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDate(),
+  }
+}
+
+function toEventDateFromString(dateString) {
+  const dateParts = dateString
+    .split('-')
+    .map(datePart => parseInt(datePart, 10))
+  return {
+    year: dateParts[0],
+    month: dateParts[1],
+    day: dateParts[2],
   }
 }
 
@@ -28,4 +39,5 @@ module.exports = {
   toEventTimeId,
   toEventDateId,
   toEventDate,
+  toEventDateFromString,
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import combineStyleClasses from 'lib/combineStyleClassses'
 
 function firstLetterOf(potentialString) {
   if (typeof potentialString !== 'string') {
@@ -14,14 +15,12 @@ function initialsOf(user) {
   return firstLetterOf(firstName) + firstLetterOf(lastName)
 }
 
-const styles = () => ({
+const styles = theme => ({
   container: {
     position: 'relative',
-    width: '24px',
-    height: '24px',
     flexShrink: 0,
     borderRadius: '100%',
-    backgroundColor: '#75a045',
+    backgroundColor: theme.palette.primary.light,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -42,10 +41,10 @@ const styles = () => ({
 })
 
 function UserAvatar({
-  classes, user,
+  classes, user, className = '',
 }) {
   return (
-    <div className={classes.container}>
+    <div className={combineStyleClasses(classes.container, className)}>
       { user.imageUrl &&
         <img
           src={user.imageUrl}
@@ -66,6 +65,11 @@ UserAvatar.propTypes = {
     imageUrl: PropTypes.string,
   }).isRequired,
   classes: PropTypes.object.isRequired,
+  className: PropTypes.string,
+}
+
+UserAvatar.defaultProps = {
+  className: '',
 }
 
 export default withStyles(styles)(UserAvatar)
