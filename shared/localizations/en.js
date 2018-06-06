@@ -21,6 +21,7 @@ const content = {
   createLunchspace: 'Create Lunchspace',
   createLocation: 'Create Location',
   login: 'Login',
+  logout: 'Logout',
   today: 'Today',
   signUp: 'Sign Up',
 }
