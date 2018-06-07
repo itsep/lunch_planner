@@ -3,7 +3,7 @@
 const sender = 'noreply.lunchspace@gmail.com'
 
 function makeLink(token) {
-  const link = `localhost:8080/join_lunchspace.html?token=${encodeURIComponent(token)}`
+  const link = `localhost:8081/join_lunchspace.html?token=${encodeURIComponent(token)}`
   return link
 }
 
