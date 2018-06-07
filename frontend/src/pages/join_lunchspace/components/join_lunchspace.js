@@ -3,7 +3,7 @@ import { Dialog, DialogTitle, CircularProgress, Button, Typography } from 'mater
 import { ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
 import { withStyles } from 'material-ui/styles'
-import { toLogin } from 'lib/redirect'
+import {toLogin, toRedirect} from 'lib/redirect'
 import Fade from 'material-ui/transitions/Fade'
 import PropTypes from 'prop-types'
 import localizedStrings from '../../../localization'
@@ -25,9 +25,6 @@ const styles = theme => ({
   title: {
     margin: theme.spacing.unit,
   },
-  textField: {
-    margin: theme.spacing.unit,
-  },
   errorMessage: {
     margin: theme.spacing.unit,
   },
@@ -40,9 +37,6 @@ const styles = theme => ({
     flexDirection: 'row-reverse',
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
-  },
-  progressIndicator: {
-    margin: theme.spacing.unit,
   },
 })
 
@@ -84,7 +78,25 @@ class JoinLunchspace extends Component {
   }
 
   handleSubmit() {
-    console.log('Submit')
+    this.setState({K
+      isLoading: true,
+      error: null,
+    })
+    apiFetch('/api/account/login', {
+      method: 'POST',
+      body: {
+
+      }
+    }).then(() => {
+        console.log('submit')
+        window.location = toRedirect()
+      })
+      .catch((error) => {
+        this.setState({ error })
+      })
+      .finally(() => {
+        this.setState({ isLoading: false })
+      })
   }
 
   logout() {
@@ -120,7 +132,7 @@ class JoinLunchspace extends Component {
     }
     if (this.state.isLoading) {
       return (
-        <div className={this.props.classes.loadingWrapper}>
+        <div className={classes.loadingWrapper}>
           <CircularProgress />
         </div>
       )
