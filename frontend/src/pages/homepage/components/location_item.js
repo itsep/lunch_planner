@@ -15,7 +15,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = dispatch => ({
 })
 
-const styles = () => ({
+const styles = theme => ({
   wrapper: {
     marginTop: '5px',
   },
@@ -25,27 +25,30 @@ const styles = () => ({
     overflowX: 'auto',
     '-webkit-overflow-scrolling': 'touch',
     '&::-webkit-scrollbar': {
-      height: '10px',
-      background: 'grey',
+      height: theme.spacing.unit,
       backgroundColor: 'transparent',
     },
     '&::-webkit-scrollbar-thumb': {
-      background: 'grey',
+      background: theme.palette.primary.light,
     },
     '&::-webkit-scrollbar-thumb:hover': {
-      background: '#467117',
+      background: theme.palette.primary.main,
+    },
+    '&::-webkit-scrollbar-thumb:active': {
+      background: theme.palette.primary.dark,
     },
     '&::-webkit-scrollbar-track': {
-      background: 'black',
+      backgroundColor: theme.palette.grey[300],
     },
   },
   locationTitle: {
-    fontSize: 'large',
-    marginLeft: '5px',
+    fontSize: '18px',
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
     borderRadius: '100px',
     borderWidth: '1px',
     borderStyle: 'solid',
-    color: '#75a045',
+    color: theme.palette.primary.dark,
   },
 })
 

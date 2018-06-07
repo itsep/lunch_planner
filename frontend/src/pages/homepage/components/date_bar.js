@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Button from 'material-ui/es/Button/Button'
+import { ArrowBack, ArrowForward } from '@material-ui/icons'
 import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 import localizedStrings from '../../../../../frontend/src/localization'
@@ -10,20 +11,12 @@ const styles = () => ({
   flexContainer: {
     padding: 0,
     margin: 0,
-    listStyle: 'none',
-    height: '25px',
-    backgroundColor: 'grey',
     display: 'flex',
     justifyContent: 'space-between',
   },
-  flexItem: {
-    padding: 0,
-    margin: 0,
+  button: {
     width: '100%',
-    minHeight: 0,
     borderRadius: 0,
-    color: 'white',
-    fontWeight: 'bolder',
   },
 })
 
@@ -33,21 +26,29 @@ const mapStateToProps = state => ({
 })
 
 function DateBar({ classes }) {
-  const nextDay = '>'
-  const previosDay = '<'
   return (
-    <div>
-      <ul className={classes.flexContainer}>
-        <Button color="default" className={classes.flexItem}>
-          {previosDay}
-        </Button>
-        <Button color="default" className={classes.flexItem}>
-          {localizedStrings.today}
-        </Button>
-        <Button color="default" className={classes.flexItem}>
-          {nextDay}
-        </Button>
-      </ul>
+    <div className={classes.flexContainer}>
+      <Button
+        color="default"
+        size="large"
+        className={classes.button}
+      >
+        <ArrowBack />
+      </Button>
+      <Button
+        color="primary"
+        size="large"
+        className={classes.button}
+      >
+        {localizedStrings.today}
+      </Button>
+      <Button
+        color="default"
+        size="large"
+        className={classes.button}
+      >
+        <ArrowForward />
+      </Button>
     </div>
   )
 }

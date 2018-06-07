@@ -1,8 +1,6 @@
 const languageKey = 'de'
 const content = {
-  test: 'test',
-  welcome: 'Hallo {name}',
-  welcome2: 'Hallo {lastName} {firstName}',
+  productName: 'Lunchspace',
   // Localizable Errors
   authenticationError: 'Nicht authentifiziert. Bitte melde dich an.',
   authorizationError: 'Nicht authorisiert. Du hast nicht genug Rechte für diese Aktion.',
@@ -25,6 +23,7 @@ const content = {
   createLunchspace: 'Lunchspace erstellen',
   createLocation: 'Location erstellen',
   login: 'Anmelden',
+  logout: 'Abmelden',
   today: 'Heute',
   signUp: 'Registrieren',
 }
