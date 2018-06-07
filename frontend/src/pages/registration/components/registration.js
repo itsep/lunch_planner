@@ -53,17 +53,9 @@ class Registration extends React.Component {
       error: null,
       lastError: null,
       loggedIn: false,
-      redirect: null,
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
-  }
-  componentDidMount() {
-    const urlString = window.location.href
-    const url = new URL(urlString)
-    const redirect = url.searchParams.get('redirect')
-    const token = url.searchParams.get('token')
-    this.setState({ redirect, token }) // eslint-disable-line react/no-did-mount-set-state
   }
   handleChange(name) {
     const that = this
@@ -92,7 +84,7 @@ class Registration extends React.Component {
         this.setState({
           loggedIn: true,
         })
-        window.location = toRedirect(this.state.redirect, this.state.token)
+        window.location = toRedirect()
       })
       .catch((error) => {
         this.setState({ error, lastError: error })
@@ -172,7 +164,7 @@ class Registration extends React.Component {
                   color="secondary"
                   className={classes.button}
                   disabled={this.state.isLoading}
-                  href={toLogin(this.state.redirect, this.state.token)}
+                  href={toLogin()}
                 >
                   {localizedStrings.login}
                 </Button>

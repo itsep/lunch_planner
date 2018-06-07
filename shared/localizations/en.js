@@ -19,6 +19,8 @@ const content = {
   inputTooLong24: 'max 24 characters',
 
   joinLunchspace: 'You got invited to {lunchspaceName}!',
+  notYou: 'Not you?',
+  accept: 'Accept',
 
   createLunchspace: 'Create Lunchspace',
   createLocation: 'Create Location',

@@ -5,8 +5,8 @@ import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
-import routeLocations from '../pages/route_locations'
 import localizedStrings from '../localization'
+import { toLogin, toRegistration } from '../lib/redirect'
 
 const styles = {
   title: {
@@ -14,7 +14,7 @@ const styles = {
   },
 }
 
-function CommonAppContainer({ classes }) {
+function UnauthorizedHeaderBar({ classes }) {
   return (
     <AppBar position="static" color="default">
       <Toolbar>
@@ -23,13 +23,13 @@ function CommonAppContainer({ classes }) {
         </Typography>
         <Button
           color="inherit"
-          href={routeLocations.LOGIN}
+          href={toLogin()}
         >
           {localizedStrings.login}
         </Button>
         <Button
           color="inherit"
-          href={routeLocations.REGISTRATION}
+          href={toRegistration()}
         >
           {localizedStrings.signUp}
         </Button>
@@ -37,8 +37,8 @@ function CommonAppContainer({ classes }) {
     </AppBar>
   )
 }
-CommonAppContainer.propTypes = {
+UnauthorizedHeaderBar.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(CommonAppContainer)
+export default withStyles(styles)(UnauthorizedHeaderBar)

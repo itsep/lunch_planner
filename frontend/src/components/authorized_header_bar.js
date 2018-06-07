@@ -24,7 +24,7 @@ const styles = theme => ({
   },
 })
 
-class CommonAppContainer extends React.Component {
+class AuthorizedHeaderBar extends React.Component {
   constructor(props) {
     super(props)
     this.openMenu = this.openMenu.bind(this)
@@ -77,11 +77,11 @@ class CommonAppContainer extends React.Component {
     )
   }
 }
-CommonAppContainer.propTypes = {
+AuthorizedHeaderBar.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   lunchspace: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(CommonAppContainer)
+export default withStyles(styles)(AuthorizedHeaderBar)
