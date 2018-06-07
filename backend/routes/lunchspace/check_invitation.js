@@ -6,7 +6,12 @@ async function checkTokenAndGetLunchspaceId(token) {
   if (result[0]) {
     return result[0].lunchspaceId
   }
-  return false
+  const error = new InputValidationError(
+    'token', `token is invalid: ${token}`,
+    'invalidToken', { token },
+  )
+  error.status = 410
+  throw error
 }
 
 async function getLunchspaceName(lunchspaceId) {
@@ -23,14 +28,6 @@ async function getLunchspaceName(lunchspaceId) {
 async function checkInvitation(req, res) {
   const { token } = req.query
   const lunchspaceId = await checkTokenAndGetLunchspaceId(token)
-  if (!lunchspaceId) {
-    const error = new InputValidationError(
-      'token', `token is invalid: ${token}`,
-      'invalidToken', { token },
-    )
-    error.status = 410
-    throw error
-  }
   const lunchspaceName = await getLunchspaceName(lunchspaceId)
   const { firstName, lastName } = await req.userPromise
   const result = {

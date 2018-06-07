@@ -7,6 +7,7 @@ const content = {
   unexpectedDatabaseError: 'Unerwarteter Datenbankfehler. Bitte versuche es später erneut.',
   unknownError: 'Ein unbekannter Fehler ist aufgetreten. Bitte versuche es später erneut.',
   unknownErrorWithMessage: 'Ein unerwartet Fehler ist aufgetrete: {message}',
+  needsUserConfirmation: 'Bitte bestätigen sie diese Aktion.',
 
   passwordAndEmailDoesNotMatch: 'Passwort und Email {email} stimmen nicht überein.',
   illegalInput: 'Upps, es ist ein Fehler aufgetreten. Bitte versuche es erneut.',

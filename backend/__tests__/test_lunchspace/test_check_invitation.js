@@ -27,7 +27,8 @@ describe('check_invitation', () => {
       await expect(checkTokenAndGetLunchspaceId(token)).resolves.toEqual(lunchspaceId)
     })
     it('should return false', async () => {
-      await expect(checkTokenAndGetLunchspaceId(invalidToken)).resolves.toEqual(false)
+      await expect(checkTokenAndGetLunchspaceId(invalidToken))
+        .rejects.toThrowError(InputValidationError)
     })
   })
   describe('getLunchspaceName', () => {

@@ -4,6 +4,7 @@ const { InputValidationError } = require('../../../shared/lib/error')
 const uuidv4 = require('uuid/v4')
 const { sendEMail } = require('../../lib/email/mailer')
 const { buildInvitation } = require('../../lib/email/mailBuilder')
+const { asyncForEach } = require('../../lib/supportive_functions')
 
 async function getToken(email, lunchspaceId) {
   const [result] = await pool.execute(
@@ -19,12 +20,6 @@ async function getToken(email, lunchspaceId) {
     [token, lunchspaceId, email]
   )
   return token
-}
-
-async function asyncForEach(array, callback) {
-  for (let index = 0; index < array.length; index += 1) {
-    await callback(array[index], index, array)
-  }
 }
 
 async function inviteLunchspaceRoute(req, res) {

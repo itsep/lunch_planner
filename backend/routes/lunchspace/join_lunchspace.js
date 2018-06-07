@@ -3,7 +3,7 @@ const { pool } = require('../../lib/database')
 const { checkTokenAndGetLunchspaceId } = require('./check_invitation')
 
 async function invalidateToken(token) {
-  pool.execute('DELETE FROM invitation WHERE token = ?', [token])
+  await pool.execute('DELETE FROM invitation WHERE token = ?', [token])
 }
 
 async function joinLunchspace(req, res) {
