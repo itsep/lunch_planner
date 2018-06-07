@@ -40,14 +40,14 @@ exports[`Create Lunchspace renders correctly 1`] = `
               Lunchspace Name
             </label>
             <div
-              className="MuiInput-root-47 MuiInput-formControl-48 MuiInput-underline-51"
+              className="MuiInput-root-46 MuiInput-formControl-47 MuiInput-underline-50"
             >
               <input
                 aria-invalid={false}
                 aria-required={false}
                 autoComplete="organization"
                 autoFocus={true}
-                className="MuiInput-input-55"
+                className="MuiInput-input-54"
                 defaultValue={undefined}
                 disabled={false}
                 id={undefined}
@@ -79,14 +79,14 @@ exports[`Create Lunchspace renders correctly 1`] = `
               Subdomain to your Lunchspace
             </label>
             <div
-              className="MuiInput-root-47 MuiInput-formControl-48 MuiInput-underline-51"
+              className="MuiInput-root-46 MuiInput-formControl-47 MuiInput-underline-50"
             >
               <input
                 aria-invalid={false}
                 aria-required={false}
                 autoComplete="off"
                 autoFocus={undefined}
-                className="MuiInput-input-55"
+                className="MuiInput-input-54"
                 defaultValue={undefined}
                 disabled={false}
                 id={undefined}
@@ -104,7 +104,7 @@ exports[`Create Lunchspace renders correctly 1`] = `
                 value=""
               />
               <div
-                className="MuiInputAdornment-root-61 MuiInputAdornment-positionEnd-63"
+                className="MuiInputAdornment-root-59 MuiInputAdornment-positionEnd-61"
               >
                 <p
                   className="MuiTypography-root-8 MuiTypography-body1-17 MuiTypography-colorTextSecondary-30"
@@ -114,7 +114,7 @@ exports[`Create Lunchspace renders correctly 1`] = `
               </div>
             </div>
             <p
-              className="MuiFormHelperText-root-64"
+              className="MuiFormHelperText-root-62"
               id="name-error-text"
             />
           </div>
@@ -142,7 +142,7 @@ exports[`Create Lunchspace renders correctly 1`] = `
             className="CreateLunchspace-actionsContainer-2"
           >
             <button
-              className="MuiButtonBase-root-83 MuiButton-root-68 MuiButton-raised-73 MuiButton-raisedPrimary-75 MuiButton-sizeLarge-81"
+              className="MuiButtonBase-root-88 MuiButton-root-66 MuiButton-contained-75 MuiButton-containedPrimary-76 MuiButton-raised-78 MuiButton-raisedPrimary-79 MuiButton-sizeLarge-86"
               disabled={false}
               onBlur={[Function]}
               onFocus={[Function]}
@@ -158,12 +158,12 @@ exports[`Create Lunchspace renders correctly 1`] = `
               type="submit"
             >
               <span
-                className="MuiButton-label-69"
+                className="MuiButton-label-67"
               >
                 Create Lunchspace
               </span>
               <span
-                className="MuiTouchRipple-root-86"
+                className="MuiTouchRipple-root-91"
               />
             </button>
           </div>
