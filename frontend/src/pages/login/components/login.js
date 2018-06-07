@@ -53,7 +53,6 @@ class Login extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-
   handleChange(name) {
     const that = this
     return (event) => {
@@ -62,7 +61,6 @@ class Login extends React.Component {
       })
     }
   }
-
   handleSubmit() {
     const { email, password } = this.state
     const data = { email, password }

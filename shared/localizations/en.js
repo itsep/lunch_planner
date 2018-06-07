@@ -7,6 +7,7 @@ const content = {
   unexpectedDatabaseError: 'Unexpected Database error. Please try again later.',
   unknownError: 'Unknown error. Please try again later.',
   unknownErrorWithMessage: 'Unexpected error: {message}',
+  needsUserConfirmation: 'Please confirm this action.',
 
   passwordAndEmailDoesNotMatch: 'Password does not match with email {email}.',
   illegalInput: 'Upps, something went wrong. Please try again.',
@@ -17,6 +18,8 @@ const content = {
   invalidEmail: 'Please enter a valid email address.',
   illegalHyphen: 'A subdomain may not contain a leading or trailing hyphen(-).',
   inputTooLong24: 'max 24 characters',
+  invalidToken: 'This invitation is no longer valid.',
+  lunchspaceDoesNotExist: 'The requested Lunchspace does not exist.',
 
   joinLunchspace: 'You got invited to {lunchspaceName}!',
   notYou: 'Not you?',

@@ -4,6 +4,7 @@ const { InputValidationError } = require('./input_validation_error')
 const { SQLError } = require('./sql_error')
 const { UnknownError } = require('./unknown_error')
 const { toLocalizableError } = require('./to_locailzable_error')
+const { NeedsUserConfirmation} = require('./needs_user_confirmation')
 
 module.exports = {
   AuthorizationError,
@@ -12,4 +13,5 @@ module.exports = {
   SQLError,
   UnknownError,
   toLocalizableError,
+  NeedsUserConfirmation,
 }
