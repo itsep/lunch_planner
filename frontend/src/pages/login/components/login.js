@@ -11,6 +11,7 @@ import FormSection from 'components/form_section'
 import routeLocations from '../../route_locations'
 import localizedStrings from '../../../localization'
 import apiFetch from '../../../lib/api_fetch'
+import { withLunchspaceSubdomain, currentLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
 
 const styles = theme => ({
   form: {
@@ -64,20 +65,35 @@ class Login extends React.Component {
   }
   handleSubmit() {
     const { email, password } = this.state
-    const data = { email, password }
     this.setState({
       isLoading: true,
       error: null,
     })
     apiFetch('/api/account/login', {
       method: 'POST',
-      body: data,
+      body: { email, password },
     })
-      .then(() => {
+      .then(({ data }) => {
         this.setState({
           loggedIn: true,
         })
-        window.location = routeLocations.HOMEPAGE
+        const { lunchspaces } = data
+        const preferedSubdomain =
+          // has already selected a lunchspace
+          currentLunchspaceSubdomain() ||
+          // the user is in exactly one lunchspace, redirect diretly to the homepage
+          ((lunchspaces.length === 1) && lunchspaces[0])
+
+        if (preferedSubdomain) {
+          window.location = withLunchspaceSubdomain(
+            routeLocations.HOMEPAGE,
+            preferedSubdomain,
+            true
+          )
+        } else {
+          // the user has no lunchspaces or more than one, redirect to lunchspaces
+          window.location = routeLocations.LUNCHSPACES
+        }
       })
       .catch((error) => {
         this.setState({ error, lastError: error })

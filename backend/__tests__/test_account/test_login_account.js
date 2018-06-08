@@ -29,11 +29,11 @@ describe('test login account', () => {
   })
   describe('authenticateRequest', () => {
     it('should return a jwt', async () => {
-      const token = await authenticate(testEmail, testPassword)
+      const { token } = await authenticate(testEmail, testPassword)
       expect(token).not.toEqual(false)
     })
     it('should return decoded token', async () => {
-      const token = await authenticate(testEmail, testPassword)
+      const { token } = await authenticate(testEmail, testPassword)
       expect(token).not.toEqual(undefined)
     })
   })

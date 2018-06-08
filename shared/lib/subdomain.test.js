@@ -1,4 +1,9 @@
-const { isValidSubdomainChar, isValidSubdomain, escapeSubdomain } = require('./subdomain')
+const {
+  isValidSubdomainChar,
+  isValidSubdomain,
+  escapeSubdomain,
+  parseSubdomainFromHost,
+} = require('./subdomain')
 
 describe('subdomain', () => {
   describe('isValidSubdomainCharacter()', () => {
@@ -80,6 +85,31 @@ describe('subdomain', () => {
     })
     it('should escape VSF Experts Mannheim correctly', () => {
       expect(escapeSubdomain('VSF Experts Mannheim')).toEqual('vsf-experts-mannheim')
+    })
+  })
+  describe('parseSubdomainFromHost', () => {
+    it('should parse invalid subdomains without throwing and it should return undefined', () => {
+      expect(parseSubdomainFromHost('lunchspace.de')).toBeUndefined()
+      expect(parseSubdomainFromHost('.lunchspace.de')).toBeUndefined()
+      expect(parseSubdomainFromHost('www..lunchspace.de')).toBeUndefined()
+      expect(parseSubdomainFromHost('two.subdomains.lunchspace.de')).toBeUndefined()
+      expect(parseSubdomainFromHost('.de')).toBeUndefined()
+      expect(parseSubdomainFromHost('')).toBeUndefined()
+      expect(parseSubdomainFromHost(undefined)).toBeUndefined()
+      expect(parseSubdomainFromHost(false)).toBeUndefined()
+      expect(parseSubdomainFromHost(true)).toBeUndefined()
+      expect(parseSubdomainFromHost(1)).toBeUndefined()
+      expect(parseSubdomainFromHost({})).toBeUndefined()
+    })
+    it('should parse valid subdomains with exactly three parts', () => {
+      expect(parseSubdomainFromHost('vsf-experts.lunchspace.de')).toEqual('vsf-experts')
+      expect(parseSubdomainFromHost('vsf-experts.example.com')).toEqual('vsf-experts')
+      expect(parseSubdomainFromHost('vsf-experts-ma.mylunch.space')).toEqual('vsf-experts-ma')
+    })
+    it('should parse valid subdomains with leading `www` subdomain', () => {
+      expect(parseSubdomainFromHost('www.vsf-experts.lunchspace.de')).toEqual('vsf-experts')
+      expect(parseSubdomainFromHost('www.vsf-experts.example.com')).toEqual('vsf-experts')
+      expect(parseSubdomainFromHost('www.vsf-experts-ma.mylunch.space')).toEqual('vsf-experts-ma')
     })
   })
 })
