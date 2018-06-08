@@ -1,6 +1,7 @@
+const config = require('config')
 const { pool } = require('../../lib/database')
 const { compare } = require('../../lib/password_hash')
-const { stringifyToken } = require('../../lib/authenticate')
+const { stringifyToken, setTokenOnResponse } = require('../../lib/authenticate')
 const { InputValidationError } = require('../../../shared/lib/error')
 const { getLunchspacesForUser } = require('../../middleware/get_lunchspaces')
 
@@ -31,10 +32,7 @@ async function login(req, res) {
   const { email, password } = req.body
   const { token, userId } = await authenticate(email, password)
   if (token) {
-    res.cookie(
-      'lunch_planner_token',
-      token,
-    )
+    setTokenOnResponse(res, token)
     res.status(200).json({
       lunchspaces: await getLunchspacesForUser(userId),
     })
