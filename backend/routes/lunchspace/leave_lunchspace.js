@@ -43,11 +43,13 @@ async function leaveLunchspaceRoute(req, res) {
   const { id } = req.lunchspace
   const { forceDelete } = req.body
   const toDelete = await passAdminRightsAndCheckForDeletion(userId, id, forceDelete)
-  await leaveLunchspace(userId, id)
-  await leaveEvents(userId, id)
+  const promiseArray = [
+    leaveLunchspace(userId, id), leaveEvents(userId, id),
+  ]
   if (toDelete) {
-    await deleteLunchspace(id)
+    promiseArray.push(deleteLunchspace(id))
   }
+  await Promise.all(promiseArray)
   return res.status(200).json({})
 }
 
