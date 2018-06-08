@@ -1,10 +1,17 @@
 const { pool } = require('../lib/database')
 const { asyncExpressMiddleware, asyncSocketMiddleware } = require('../lib/async_middleware')
 const { InputValidationError, AuthenticationError, AuthorizationError } = require('../../shared/lib/error')
+const { subdomainFromHostOrQuery } = require('../lib/subdomain')
 
 async function checkLunchspacePermission(token, subdomain) {
   if (!token) {
     throw new AuthenticationError('no cookie token defined')
+  }
+  if (!subdomain) {
+    throw new InputValidationError(
+      'subdomain', 'no subdomain defined',
+      'illegalInput', { subdomain }
+    )
   }
   const { userId } = token
   const result = await pool.useConnection(async (conn) => {
@@ -31,7 +38,7 @@ async function checkLunchspacePermission(token, subdomain) {
 
 async function checkLunchspacePermissionOfRequest(req) {
   const { token } = req
-  const { subdomain } = req.headers
+  const subdomain = subdomainFromHostOrQuery(req.headers, req.query)
   const lunchspace = await checkLunchspacePermission(token, subdomain)
   req.lunchspace = {
     id: lunchspace.id,
@@ -41,7 +48,7 @@ async function checkLunchspacePermissionOfRequest(req) {
 }
 async function checkLunchspacePermissionOfSocket(socket) {
   const { token } = socket
-  const { subdomain } = socket.request.headers
+  const subdomain = subdomainFromHostOrQuery(socket.request.headers, socket.handshake.query)
   const lunchspace = await checkLunchspacePermission(token, subdomain)
   // eslint-disable-next-line no-param-reassign
   socket.lunchspace = {

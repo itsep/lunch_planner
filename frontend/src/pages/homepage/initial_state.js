@@ -1,9 +1,5 @@
 const initialState = {
-  lunchspace: {
-    id: 1,
-    name: 'Team It',
-    subdomain: 'vsf-experts-ma',
-  },
+  lunchspace: {},
   currentDate: new Date(),
   user: {
     id: -1,

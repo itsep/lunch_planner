@@ -10,6 +10,7 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import UserAvatar from './user_avatar'
 import localizedStrings from '../localization'
+import { logout } from '../lib/authentication'
 
 const styles = theme => ({
   title: {
@@ -41,7 +42,7 @@ class AuthorizedAppBar extends React.Component {
   }
   render() {
     const {
-      classes, user, lunchspace, logout,
+      classes, user, lunchspace, logout: onLogout,
     } = this.props
     const { anchorEl } = this.state
     return (
@@ -69,7 +70,7 @@ class AuthorizedAppBar extends React.Component {
             open={Boolean(anchorEl)}
             onClose={this.handleMenuClose}
           >
-            <MenuItem onClick={logout}>
+            <MenuItem onClick={onLogout}>
               {localizedStrings.logout}
             </MenuItem>
           </Menu>
@@ -82,7 +83,10 @@ AuthorizedAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   lunchspace: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired,
+  logout: PropTypes.func,
+}
+AuthorizedAppBar.defaultProps = {
+  logout,
 }
 
 export default withStyles(styles)(AuthorizedAppBar)

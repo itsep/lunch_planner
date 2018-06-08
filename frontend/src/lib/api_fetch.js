@@ -1,4 +1,5 @@
 import { toLocalizableError } from 'shared/lib/error'
+import { withLunchspaceSubdomain } from './lunchspace_subdomain'
 
 const reject = Promise.reject.bind(Promise)
 /**
@@ -19,7 +20,7 @@ export default function apiFetch(url, config = {}) {
     if (config.body) {
       init.body = JSON.stringify(config.body)
     }
-    return fetch(url, init).then((response) => {
+    return fetch(withLunchspaceSubdomain(url), init).then((response) => {
       // everything okay
       if (response.ok) {
         return response.json().then(data => ({ data, response }))

@@ -11,8 +11,13 @@ so its easier to search for an statechange
 function reduceCurrentDate(currentDate = initialState.currentDate) {
   return currentDate
 }
-function reduceLunchspace(lunchspace = initialState.lunchspace) {
-  return lunchspace
+function reduceLunchspace(lunchspace = initialState.lunchspace, action) {
+  switch (action.type) {
+    case actionTypes.RECEIVE_PAGE_DATA:
+      return action.data.lunchspace
+    default:
+      return lunchspace
+  }
 }
 
 function reduceUser(user = initialState.user, action) {
