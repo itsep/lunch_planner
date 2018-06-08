@@ -18,7 +18,7 @@ const content = {
   fieldRequired: 'Eingabe notwendig.',
   invalidEmail: 'Bitte geben sie eine gültige E-Mail-Adresse an.',
   illegalHyphen: '(-) darf weder am Anfang noch am Ende der Sudomain stehen.',
-  inputTooLong24: 'maximal 24 Zeichen',
+  invalidLength: 'Eingabe muss zwischen {minimumLength} und {maximumLength} Zeichen lang sein.',
   invalidToken: 'Die verwendete Einladung ist nicht mehr gültig.',
   lunchspaceDoesNotExist: 'Der angeforderte Lunchspace existiert nicht.',
 
