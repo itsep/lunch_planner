@@ -1,7 +1,7 @@
 const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 
 // all available pages
@@ -98,7 +98,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].[chunkhash].css',
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ].concat(htmlWebPackPlugins),
   output: {
     filename: '[name].[chunkhash].js',

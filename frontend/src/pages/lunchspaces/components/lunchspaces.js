@@ -104,7 +104,7 @@ class Lunchspaces extends React.Component {
           lunchspaces: data.lunchspaces,
           isLoading: false,
           currentLunchspace: data.lunchspaces
-            .find(lunchspace => lunchspace.subdomain === this.currentLunchspaceSubdomain)
+            .find(lunchspace => lunchspace.subdomain === this.currentLunchspaceSubdomain),
         })
       })
       .catch(console.error.bind(console))
@@ -125,7 +125,7 @@ class Lunchspaces extends React.Component {
           <div className={classes.container}>
             <Typography variant="title" className={classes.titleBar}>
               <div className={classes.title}>
-                My Lunchspaces
+                {localizedStrings.myLunchspaces}
               </div>
               <Fade
                 in={isLoading}
