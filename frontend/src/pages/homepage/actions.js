@@ -1,7 +1,6 @@
 import withQuery from 'with-query'
-import { withLunchspaceSubdomain, currentLunchspaceSubdomain } from 'lib/lunchspace_subdomain'
+import { currentLunchspaceSubdomain } from 'lib/lunchspace_subdomain'
 import actionTypes from './action_types'
-import routeLocations from '../route_locations'
 import apiFetch from '../../lib/api_fetch'
 import { logout } from '../../lib/authentication'
 

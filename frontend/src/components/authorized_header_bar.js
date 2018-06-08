@@ -42,7 +42,7 @@ class AuthorizedAppBar extends React.Component {
   }
   render() {
     const {
-      classes, user, lunchspace, logout,
+      classes, user, lunchspace, logout: onLogout,
     } = this.props
     const { anchorEl } = this.state
     return (
@@ -70,7 +70,7 @@ class AuthorizedAppBar extends React.Component {
             open={Boolean(anchorEl)}
             onClose={this.handleMenuClose}
           >
-            <MenuItem onClick={logout}>
+            <MenuItem onClick={onLogout}>
               {localizedStrings.logout}
             </MenuItem>
           </Menu>

@@ -22,13 +22,16 @@ export function currentLunchspaceSubdomain() {
     new URLSearchParams(window.location.search).get('subdomain')
 }
 
-export function withLunchspaceSubdomain(url, subdomain = currentLunchspaceSubdomain(), absoule = false) {
+export function withLunchspaceSubdomain(
+  url,
+  subdomain = currentLunchspaceSubdomain(),
+  absoule = false
+) {
   if (shouldUseDevelopmentSubdomainHandling()) {
     return withQuery(url, { subdomain })
   }
   if (absoule) {
     return `//${subdomain}.${applicationDomain}${url}`
-  } else {
-    return url
   }
+  return url
 }
