@@ -23,6 +23,7 @@ const content = {
   lunchspaceDoesNotExist: 'The requested Lunchspace does not exist.',
 
   createLunchspace: 'Create Lunchspace',
+  lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} successfull created.',
   createLocation: 'Create Location',
   login: 'Login',
   logout: 'Logout',

@@ -1,7 +1,10 @@
+const config = require('config')
 const { pool } = require('../../lib/database')
 const { isValidSubdomain } = require('../../../shared/lib/subdomain')
 const { validLength } = require('../../lib/validation')
 const { InputValidationError } = require('../../../shared/lib/error')
+
+const subdomainBlacklist = config.get('subdomainBlacklist')
 
 const minimumLength = 1
 const maximumLength = 24
@@ -23,6 +26,11 @@ async function createLunchspace(userId, lunchspaceName, lunchspaceSubdomain) {
   return lunchspaceId
 }
 
+function isSubdomainInBlacklist(subdomain) {
+  const normalizedSubdomain = subdomain.toLowerCase()
+  return subdomainBlacklist.indexOf(normalizedSubdomain) !== -1
+}
+
 async function createLunchspaceAndJoin(req, res) {
   const { userId } = req.token
   let { lunchspaceName, lunchspaceSubdomain } = req.body
@@ -38,6 +46,12 @@ async function createLunchspaceAndJoin(req, res) {
     throw new InputValidationError(
       'lunchspaceSubdomain', `Illegal Token in Subdomain. (${lunchspaceSubdomain})`,
       'illegalSubdomain', { lunchspaceSubdomain },
+    )
+  }
+  if (isSubdomainInBlacklist(lunchspaceSubdomain)) {
+    throw new InputValidationError(
+      'lunchspaceSubdomain', `Lunchspace subdomain is not allowed because it is blacklisted. (${lunchspaceSubdomain})`,
+      'subdomainAlreadyExists', { lunchspaceSubdomain },
     )
   }
   try {
