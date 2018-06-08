@@ -1,5 +1,5 @@
 import { toLocalizableError } from 'shared/lib/error'
-import { withLunchspaceSubdomain } from 'lib/lunchspace_subdomain'
+import { withLunchspaceSubdomain } from './lunchspace_subdomain'
 
 const reject = Promise.reject.bind(Promise)
 /**
