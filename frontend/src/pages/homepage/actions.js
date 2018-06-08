@@ -1,8 +1,8 @@
 import withQuery from 'with-query'
+import { withLunchspaceSubdomain, currentLunchspaceSubdomain } from 'lib/lunchspace_subdomain'
 import actionTypes from './action_types'
 import routeLocations from '../route_locations'
 import apiFetch from '../../lib/api_fetch'
-import {withLunchspaceSubdomain} from 'lib/lunchspace_subdomain'
 
 export function addParticipant(eventTime, locationId, participant) {
   return {
@@ -53,9 +53,6 @@ export function removeParticipant(eventTime, locationId, participant) {
 export function fetchCreateLocation(locationName, lunchspace) {
   return dispatch => apiFetch('/api/location/', {
     method: 'POST',
-    headers: {
-      subdomain: lunchspace.subdomain,
-    },
     body: {
       name: locationName,
       coordinates: { lat: 0, long: 0 },
@@ -82,6 +79,10 @@ export function requestPageData(lunchspaceSubdomain) {
 }
 
 export function receivePageData(lunchspaceSubdomain, data) {
+  const currentSubdomain = currentLunchspaceSubdomain()
+  // eslint-disable-next-line no-param-reassign
+  data.lunchspace = data.lunchspaces
+    .find(lunchspace => lunchspace.subdomain === currentSubdomain)
   return {
     type: actionTypes.RECEIVE_PAGE_DATA,
     lunchspaceSubdomain,
@@ -95,11 +96,8 @@ gets data of backend and change state with dispatch
 export function fetchPageData(lunchspaceSubdomain, date) {
   return (dispatch) => {
     dispatch(requestPageData(lunchspaceSubdomain))
-    return apiFetch(withQuery('/api/location/', { date: date.toISOString().substring(0, 10) }), {
-      headers: {
-        subdomain: lunchspaceSubdomain,
-      },
-    }).then(({ data }) => dispatch(receivePageData(lunchspaceSubdomain, data)))
+    return apiFetch(withQuery('/api/location/', { date: date.toISOString().substring(0, 10) }))
+      .then(({ data }) => dispatch(receivePageData(lunchspaceSubdomain, data)))
       // TODO: handle error by dispatching an error action
       .catch(error => console.error(error))
   }
@@ -109,9 +107,6 @@ export function joinEvent(lunchspaceSubdomain, locationId, eventTime, eventDate,
   return (dispatch) => {
     apiFetch('/api/event', {
       method: 'PUT',
-      headers: {
-        subdomain: lunchspaceSubdomain,
-      },
       body: {
         locationId,
         eventTime,
@@ -126,9 +121,6 @@ export function leaveEvent(lunchspaceSubdomain, locationId, eventTime, eventDate
   return (dispatch) => {
     apiFetch('/api/event', {
       method: 'DELETE',
-      headers: {
-        subdomain: lunchspaceSubdomain,
-      },
       body: {
         locationId,
         eventTime,

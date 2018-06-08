@@ -13,50 +13,7 @@ import Fade from '@material-ui/core/Fade'
 import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
 import apiFetch from '../../../lib/api_fetch'
 import localizedStrings from '../../../localization'
-
-const defaultDomain = 'mylunch.space'
-
-function topLevelDomainFromHost(hostname) {
-  const domainParts = hostname.split('.')
-  return domainParts[domainParts.length - 1]
-}
-
-function domainFromHost(hostname) {
-  const domainParts = hostname.split('.')
-  if (domainParts.length >= 2) {
-    return `${domainParts[domainParts.length - 2]}.${domainParts[domainParts.length - 1]}`
-  }
-  return undefined
-}
-
-function shouldUseDevelopmentSubdomainHandling() {
-  return window.location.hostname === 'localhost' ||
-    topLevelDomainFromHost(window.location.hostname) === 'local'
-}
-
-function userVisibleDomain() {
-  return shouldUseDevelopmentSubdomainHandling() ?
-    defaultDomain :
-    domainFromHost(window.location.hostname)
-}
-
-function domainForLunchspace(subdomain) {
-  const domain = userVisibleDomain()
-  return `${subdomain}.${domain}`
-}
-
-function withLunchspaceSubdomain(url, subdomain) {
-  if (shouldUseDevelopmentSubdomainHandling()) {
-    return withQuery(url, { subdomain })
-  }
-  const domain = domainFromHost(window.location.hostname)
-  return `//${subdomain}.${domain}${url}`
-}
-
-function currentLunchspaceSubdomain() {
-  return parseSubdomainFromHost(window.location.hostname) ||
-    new URLSearchParams(window.location.search).get('subdomain')
-}
+import { currentLunchspaceSubdomain, domainForLunchspace, withLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
 
 const styles = theme => ({
   root: {
