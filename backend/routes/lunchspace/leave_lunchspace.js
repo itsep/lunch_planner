@@ -8,6 +8,7 @@ async function passAdminRightsAndCheckForDeletion(userId, lunchspaceId, forceDel
       const [member] = await conn.execute('SELECT user_id AS userId From member_of WHERE is_admin = ? AND lunchspace_id = ?', [false, lunchspaceId])
       if (member[0]) {
         await conn.execute('UPDATE member_of SET is_admin = ? WHERE user_id = ? AND lunchspace_id = ?', [true, member[0].userId, lunchspaceId])
+        await conn.execute('UPDATE member_of SET is_admin = ? WHERE user_id = ? AND lunchspace_id = ?', [false, userId, lunchspaceId])
         return false
       }
       if (!forceDelete) {
@@ -34,7 +35,7 @@ async function leaveLunchspace(userId, lunchspaceId) {
 }
 
 async function deleteLunchspace(lunchspaceId) {
-  pool.execute('DELETE FROM lunchspace WHERE id = ?', [lunchspaceId])
+  await pool.execute('DELETE FROM lunchspace WHERE id = ?', [lunchspaceId])
 }
 
 async function leaveLunchspaceRoute(req, res) {

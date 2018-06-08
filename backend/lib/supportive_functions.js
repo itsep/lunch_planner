@@ -16,11 +16,11 @@ async function isMember(userId, lunchspaceId) {
 
 async function isAdmin(userId, lunchspaceId) {
   const [result] = await pool.execute('SELECT is_admin AS isAdmin FROM member_of WHERE user_id = ? AND lunchspace_id = ?', [userId, lunchspaceId])
-  return result[0].isAdmin
+  return result[0].isAdmin === 1
 }
 
 async function lunchspaceExists(lunchspaceId) {
-  const [result] = await pool.execute('SELECT * FROM lunchspace WHERE lunchspace_id = ?', [lunchspaceId])
+  const [result] = await pool.execute('SELECT * FROM lunchspace WHERE id = ?', [lunchspaceId])
   if (result[0]) {
     return true
   }
