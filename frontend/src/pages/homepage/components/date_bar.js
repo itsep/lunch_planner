@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from 'material-ui/es/Button/Button'
+import Button from '@material-ui/core/es/Button/Button'
 import { ArrowBack, ArrowForward } from '@material-ui/icons'
 import { connect } from 'react-redux'
-import { withStyles } from 'material-ui/styles'
-import localizedStrings from '../../../../../frontend/src/localization'
+import { withStyles } from '@material-ui/core/styles'
+import localizedStrings from '../../../localization'
 
 
 const styles = () => ({
