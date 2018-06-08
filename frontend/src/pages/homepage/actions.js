@@ -3,6 +3,7 @@ import { withLunchspaceSubdomain, currentLunchspaceSubdomain } from 'lib/lunchsp
 import actionTypes from './action_types'
 import routeLocations from '../route_locations'
 import apiFetch from '../../lib/api_fetch'
+import { logout } from '../../lib/authentication'
 
 export function addParticipant(eventTime, locationId, participant) {
   return {
@@ -63,11 +64,7 @@ export function fetchCreateLocation(locationName, lunchspace) {
 }
 
 export function fetchLogout() {
-  return () => apiFetch('/api/account/logout', {
-    method: 'POST',
-  }).then(() => {
-    window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
-  })
+  return () => logout()
     .catch(error => console.error(error))
 }
 

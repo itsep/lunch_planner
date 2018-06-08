@@ -36,6 +36,10 @@ const styles = theme => ({
   list: {
     backgroundColor: theme.palette.background.paper,
   },
+  errorContainer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing.unit,
+  },
 })
 
 class Lunchspaces extends React.Component {
@@ -62,7 +66,12 @@ class Lunchspaces extends React.Component {
             .find(lunchspace => lunchspace.subdomain === this.currentLunchspaceSubdomain),
         })
       })
-      .catch(console.error.bind(console))
+      .catch((error) => {
+        this.setState({ error, lastError: error })
+      })
+      .finally(() => {
+        this.setState({ isLoading: false })
+      })
   }
 
   render() {
@@ -72,6 +81,8 @@ class Lunchspaces extends React.Component {
       lunchspaces,
       isLoading,
       currentLunchspace,
+      error,
+      lastError,
     } = this.state
     return (
       <div>
@@ -88,7 +99,14 @@ class Lunchspaces extends React.Component {
                 <CircularProgress />
               </Fade>
             </Typography>
-            <Fade in={!isLoading}>
+            <Fade in={error}>
+              <section className={classes.errorContainer}>
+                <Typography color="error">
+                  {lastError && lastError.toLocalizedString(localizedStrings)}
+                </Typography>
+              </section>
+            </Fade>
+            <Fade in={!isLoading && !error}>
               <List className={classes.list}>
                 {lunchspaces.map(lunchspace => (
                   <ListItem
