@@ -5,8 +5,6 @@ const secret = process.env.JWT_SECRET
 const cookieDomain = config.has('domain') && config.get('domain')
 const tokenLifetime = config.get('token.lifetime')
 const onlyHttps = config.get('token.onlyHttps')
-const tokenCookieName = config.get('token.cookieName')
-const isProbablyAuthenticatedCookieName = config.get('token.isProbablyAuthenticatedCookieName')
 
 function stringifyToken(userId) {
   const token = jwt.sign(

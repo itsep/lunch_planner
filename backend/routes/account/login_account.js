@@ -1,4 +1,3 @@
-const config = require('config')
 const { pool } = require('../../lib/database')
 const { compare } = require('../../lib/password_hash')
 const { stringifyToken, setTokenOnResponse } = require('../../lib/authenticate')
