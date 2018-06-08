@@ -114,7 +114,7 @@ class Lunchspaces extends React.Component {
                     role={undefined}
                     button
                     component="a"
-                    href={withLunchspaceSubdomain('/homepage.html', lunchspace.subdomain)}
+                    href={withLunchspaceSubdomain('/homepage.html', lunchspace.subdomain, true)}
                     className={classes.listItem}
                   >
                     <ListItemText
