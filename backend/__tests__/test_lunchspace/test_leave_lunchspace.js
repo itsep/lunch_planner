@@ -152,7 +152,7 @@ describe('leave_lunchspace', () => {
   })
   describe('leaveLunchspaceRoute', () => {
     // user 2 leaves Lunchspace 3
-    it('should delete user from lunchspace', async () => {
+    it('should delete user from lunchspace and its events', async () => {
       const req = mockReq({
         token: {
           userId: testUserId2,

@@ -26,13 +26,13 @@ async function registerAccount(req, res) {
   if (!validLength(firstName, maximumLength, minimumLength)) {
     throw new InputValidationError(
       'firstName', `firstName has invalid length: ${firstName}`,
-      'inputTooLong24', { firstName },
+      'invalidLength', { minimumLength, maximumLength },
     )
   }
   if (!validLength(lastName, maximumLength, minimumLength)) {
     throw new InputValidationError(
-      'lastName', `firstName has invalid length: ${lastName}`,
-      'inputTooLong24', { lastName },
+      'lastName', `lastName has invalid length: ${lastName}`,
+      'invalidLength', { minimumLength, maximumLength },
     )
   }
   firstName = firstName.trim()
