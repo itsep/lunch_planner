@@ -1,5 +1,5 @@
 const isWin = process.platform === 'win32'
-// eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line
 const bcrypt = isWin ? require('bcryptjs') : require('bcrypt')
 
 

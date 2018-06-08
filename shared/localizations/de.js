@@ -7,6 +7,7 @@ const content = {
   unexpectedDatabaseError: 'Unerwarteter Datenbankfehler. Bitte versuche es später erneut.',
   unknownError: 'Ein unbekannter Fehler ist aufgetreten. Bitte versuche es später erneut.',
   unknownErrorWithMessage: 'Ein unerwartet Fehler ist aufgetrete: {message}',
+  needsUserConfirmation: 'Bitte bestätigen sie diese Aktion.',
 
   passwordAndEmailDoesNotMatch: 'Passwort und Email {email} stimmen nicht überein.',
   illegalInput: 'Upps, es ist ein Fehler aufgetreten. Bitte versuche es erneut.',
@@ -17,6 +18,8 @@ const content = {
   invalidEmail: 'Bitte geben sie eine gültige E-Mail-Adresse an.',
   illegalHyphen: '(-) darf weder am Anfang noch am Ende der Sudomain stehen.',
   inputTooLong24: 'maximal 24 Zeichen',
+  invalidToken: 'Die verwendete Einladung ist nicht mehr gültig.',
+  lunchspaceDoesNotExist: 'Der angeforderte Lunchspace existiert nicht.',
 
   createLunchspace: 'Lunchspace erstellen',
   createLocation: 'Location erstellen',

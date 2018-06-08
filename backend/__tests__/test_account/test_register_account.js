@@ -1,6 +1,7 @@
 const { create, registerAccount } = require('../../routes/account/register_account')
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
+const { InputValidationError } = require('../../../shared/lib/error')
 
 const testEmail1 = 'test-register1@gmail.com'
 const testPassword1 = 'test-register-password1'
@@ -49,8 +50,7 @@ describe('register accounts', () => {
     it('should reject to register a new account', async () => {
       const req = mockReq(request)
       const res = mockRes()
-      await registerAccount(req, res)
-      expect(res.status).lastCalledWith(500)
+      await expect(registerAccount(req, res)).rejects.toHaveProperty('code', 'ER_DUP_ENTRY')
     })
     it('should reject to register a new account (first name too short)', async () => {
       const req = mockReq({
@@ -62,8 +62,7 @@ describe('register accounts', () => {
         },
       })
       const res = mockRes()
-      await registerAccount(req, res)
-      expect(res.status).lastCalledWith(409)
+      await expect(registerAccount(req, res)).rejects.toThrowError(InputValidationError)
     })
     it('should reject to register a new account (last name too long)', async () => {
       const req = mockReq({
@@ -75,8 +74,7 @@ describe('register accounts', () => {
         },
       })
       const res = mockRes()
-      await registerAccount(req, res)
-      expect(res.status).lastCalledWith(409)
+      await expect(registerAccount(req, res)).rejects.toThrowError(InputValidationError)
     })
     it('should reject to register a new account (invalid email address', async () => {
       const req = mockReq({
@@ -88,8 +86,7 @@ describe('register accounts', () => {
         },
       })
       const res = mockRes()
-      await registerAccount(req, res)
-      expect(res.status).lastCalledWith(409)
+      await expect(registerAccount(req, res)).rejects.toThrowError(InputValidationError)
     })
   })
 })
