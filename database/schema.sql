@@ -77,11 +77,11 @@ ALTER TABLE member_of
 -- Join up at Location Relationship
 CREATE TABLE join_up_at
 (
-	user_id BIGINT UNSIGNED NOT NULL,
-	location_id BIGINT UNSIGNED NOT NULL,
-	event_time TIME NOT NULL,
-	event_date DATE NOT NULL,
-	PRIMARY KEY(user_id, location_id, event_time, event_date)
+    user_id BIGINT UNSIGNED NOT NULL,
+    location_id BIGINT UNSIGNED NOT NULL,
+    event_time TIME NOT NULL,
+    event_date DATE NOT NULL,
+    PRIMARY KEY(user_id, location_id, event_time, event_date)
 ) ENGINE = InnoDB;
 
 -- Join up at Location Foreign Key
@@ -95,6 +95,23 @@ ALTER TABLE join_up_at
 	REFERENCES location (id) 
 	ON DELETE CASCADE
 	ON UPDATE CASCADE;
+
+-- Invitation Entity
+CREATE TABLE invitation
+(
+    token VARCHAR(36) NOT NULL,
+    lunchspace_id BIGINT UNSIGNED NOT NULL,
+    email VARCHAR(120) NOT NULL,
+    PRIMARY KEY(token),
+    UNIQUE (lunchspace_id, email)
+) ENGINE = InnoDB;
+
+-- Invitation Foreign Key
+ALTER TABLE invitation
+    ADD FOREIGN KEY invitation_to_lunchspace_idx (lunchspace_id)
+    REFERENCES lunchspace (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
 
 -- View on the member data of a location
 CREATE VIEW event_participants AS

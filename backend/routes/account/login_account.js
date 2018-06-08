@@ -5,9 +5,7 @@ const { InputValidationError } = require('../../../shared/lib/error')
 const { getLunchspacesForUser } = require('../../middleware/get_lunchspaces')
 
 async function getIdAndHashedPassword(email) {
-  const conn = await pool.getConnection()
-  const [result] = await conn.execute('SELECT user_id as userId, hashed_password as accountHashedPassword FROM account WHERE email = ?', [email])
-  conn.release()
+  const [result] = await pool.execute('SELECT user_id as userId, hashed_password as accountHashedPassword FROM account WHERE email = ?', [email])
   if (result.length > 0) {
     const idAndPassword =
       { id: result[0].userId, hashedPassword: result[0].accountHashedPassword }
