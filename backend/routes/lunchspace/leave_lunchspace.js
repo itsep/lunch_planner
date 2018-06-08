@@ -46,7 +46,7 @@ async function leaveLunchspaceRoute(req, res) {
   await leaveLunchspace(userId, id)
   await leaveEvents(userId, id)
   if (toDelete) {
-    deleteLunchspace(id)
+    await deleteLunchspace(id)
   }
   return res.status(200).json({})
 }
