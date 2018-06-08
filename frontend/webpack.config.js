@@ -1,6 +1,8 @@
 const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 
 // all available pages
 const pages = {
@@ -9,6 +11,7 @@ const pages = {
   login: {/* config options */},
   homepage: {/* config options */},
   create_lunchspace: {/* config options */},
+  lunchspaces: {/* config options */},
   // *add a new page here*
 }
 
@@ -95,6 +98,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].[chunkhash].css',
     }),
+    // new BundleAnalyzerPlugin(),
   ].concat(htmlWebPackPlugins),
   output: {
     filename: '[name].[chunkhash].js',

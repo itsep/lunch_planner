@@ -34,7 +34,7 @@ describe('permission', () => {
   })
   it('has permission', async () => {
     const req = mockReq({
-      headers: { subdomain: testSubdomain },
+      query: { subdomain: testSubdomain },
       token: { userId: testUserId },
     })
     const res = mockRes()
@@ -42,7 +42,7 @@ describe('permission', () => {
   })
   it('has no permission permission', async () => {
     const req = mockReq({
-      body: { subdomain: testSubdomain },
+      query: { subdomain: testSubdomain },
       token: { userId: testUserId2 },
     })
     const res = mockRes()
@@ -50,7 +50,7 @@ describe('permission', () => {
   })
   it('has no token', async () => {
     const req = mockReq({
-      body: { subdomain: testSubdomain },
+      query: { subdomain: testSubdomain },
     })
     const res = mockRes()
     await expect(asyncCheckLunchspacePermissionOfRequest(req, res)).rejects.toThrow()

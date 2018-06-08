@@ -89,20 +89,20 @@ describe('leave_lunchspace', () => {
   // user 2 leaves all events in lunchspace 1
   describe('leaveEvents', () => {
     it('should delete user from all events in lunchspace', async () => {
-      await expect(leaveEvents(testUserId2, lunchspaceId1)).resolves.not.toThrowError
+      await expect(leaveEvents(testUserId2, lunchspaceId1)).resolves.not.toThrow()
     })
     it('should delete user from all events in lunchspace, even if he is in none', async () => {
-      await expect(leaveEvents(testUserId2, lunchspaceId1)).resolves.not.toThrowError
+      await expect(leaveEvents(testUserId2, lunchspaceId1)).resolves.not.toThrow()
     })
   })
   // user 2 leaves lunchspace 1
   describe('leaveLunchspace', () => {
     it('should delete user from lunchspace', async () => {
-      await expect(leaveLunchspace(testUserId2, lunchspaceId1)).resolves.not.toThrowError
+      await expect(leaveLunchspace(testUserId2, lunchspaceId1)).resolves.not.toThrow()
       await expect(isMember(testUserId2, lunchspaceId1)).resolves.toEqual(false)
     })
     it('should delete user from lunchspace, even if he is not in it', async () => {
-      await expect(leaveLunchspace(testUserId2, lunchspaceId1)).resolves.not.toThrowError
+      await expect(leaveLunchspace(testUserId2, lunchspaceId1)).resolves.not.toThrow()
       await expect(isMember(testUserId2, lunchspaceId1)).resolves.toEqual(false)
     })
   })
@@ -142,11 +142,11 @@ describe('leave_lunchspace', () => {
   // lunchspace 1 gets deleted
   describe('deleteLunchspace', () => {
     it('should delete Lunchspace', async () => {
-      await expect(deleteLunchspace(lunchspaceId1)).resolves.not.toThrowError
+      await expect(deleteLunchspace(lunchspaceId1)).resolves.not.toThrow()
       await expect(lunchspaceExists(lunchspaceId1)).resolves.toEqual(false)
     })
     it('should delete Lunchspace, even if it does not exist', async () => {
-      await expect(deleteLunchspace(lunchspaceId1)).resolves.not.toThrowError
+      await expect(deleteLunchspace(lunchspaceId1)).resolves.not.toThrow()
       await expect(lunchspaceExists(lunchspaceId1)).resolves.toEqual(false)
     })
   })

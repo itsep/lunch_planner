@@ -100,7 +100,7 @@ describe('join_lunchspace', () => {
       await expect(checkTokenAndGetLunchspaceId(token3)).rejects.toThrowError(InputValidationError)
     })
     it('should not throw an error', async () => {
-      await expect(invalidateToken(invalidToken)).resolves.not.toThrowError
+      await expect(invalidateToken(invalidToken)).resolves.not.toThrow()
     })
   })
 })
