@@ -2,6 +2,7 @@ import withQuery from 'with-query'
 import actionTypes from './action_types'
 import routeLocations from '../route_locations'
 import apiFetch from '../../lib/api_fetch'
+import {withLunchspaceSubdomain} from 'lib/lunchspace_subdomain'
 
 export function addParticipant(eventTime, locationId, participant) {
   return {
@@ -68,7 +69,7 @@ export function fetchLogout() {
   return () => apiFetch('/api/account/logout', {
     method: 'POST',
   }).then(() => {
-    window.location = routeLocations.LOGIN
+    window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
   })
     .catch(error => console.error(error))
 }

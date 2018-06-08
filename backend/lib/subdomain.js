@@ -13,7 +13,6 @@ function subdomainFromHostOrQuery(headers, query) {
 }
 
 module.exports = {
-  parseSubdomainFromHost,
   parseSubdomainFromQuery,
   subdomainFromHostOrQuery,
 }
