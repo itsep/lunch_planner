@@ -185,17 +185,13 @@ exports[`Create Lunchspace renders correctly 1`] = `
       <div
         className="MuiCollapse-wrapperInner-7"
       >
-        <span>
-          Lunchspace 
-        </span>
+        Lunchspace 
         <a
-          href="//.lunchspace.de"
+          href="//.mylunch.space/homepage.html"
         >
           
         </a>
-        <span>
-           successful created.
-        </span>
+         successfull created.
       </div>
     </div>
   </div>
