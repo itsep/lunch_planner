@@ -7,7 +7,7 @@ import localizedStrings from '../../../localization'
 function LoginApp() {
   return (
     <CommonAppContainer>
-      <UnauthorizedHeaderBar title={localizedStrings.login}/>
+      <UnauthorizedHeaderBar title={localizedStrings.login} />
       <Login />
     </CommonAppContainer>
   )

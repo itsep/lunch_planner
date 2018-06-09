@@ -9,8 +9,7 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import Collapse from '@material-ui/core/Collapse'
 import Fade from '@material-ui/core/Fade'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import withMobileDialog from '@material-ui/core/withMobileDialog';
-import FormSection from 'components/form_section'
+import withMobileDialog from '@material-ui/core/withMobileDialog'
 import { fetchCreateLocation } from '../actions'
 
 const mapDispatchToProps = dispatch => ({

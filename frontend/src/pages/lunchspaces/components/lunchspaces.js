@@ -8,7 +8,6 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import SettingsIcon from '@material-ui/icons/Settings'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import Fade from '@material-ui/core/Fade'
 import Collapse from '@material-ui/core/Collapse'
 import Button from '@material-ui/core/Button'
@@ -71,8 +70,8 @@ class Lunchspaces extends React.Component {
           user: data.user,
           lunchspaces: data.lunchspaces,
           isLoading: false,
-          currentLunchspace: data.lunchspaces
-            .find(lunchspace => lunchspace.subdomain === this.currentLunchspaceSubdomain),
+          // currentLunchspace: data.lunchspaces
+          //   .find(lunchspace => lunchspace.subdomain === this.currentLunchspaceSubdomain),
         })
       })
       .catch((error) => {
