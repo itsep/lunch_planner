@@ -76,11 +76,6 @@ class CreateLocation extends React.Component {
 
     this.handleLocationNameChange = this.handleLocationNameChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    setInterval(() => {
-      this.setState(oldState => ({
-        isLoading: !oldState.isLoading,
-      }))
-    }, 2000)
   }
 
   handleLocationNameChange(event) {
@@ -110,7 +105,7 @@ class CreateLocation extends React.Component {
 
     return (
       <Dialog
-        open={!this.props.show}
+        open={this.props.show}
         fullScreen={fullScreen}
         onClose={this.props.onClose}
       >
@@ -125,7 +120,7 @@ class CreateLocation extends React.Component {
                   Create Location
                 </Typography>
                 <Fade
-                  in={!this.state.isLoading}
+                  in={this.state.isLoading}
                   unmountOnExit
                 >
                   <CircularProgress size="36px" className={classes.loadingIndicator} />
