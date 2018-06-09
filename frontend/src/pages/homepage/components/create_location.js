@@ -9,6 +9,7 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import Collapse from '@material-ui/core/Collapse'
 import Fade from '@material-ui/core/Fade'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 import FormSection from 'components/form_section'
 import { fetchCreateLocation } from '../actions'
 
@@ -22,8 +23,28 @@ const mapStateToProps = state => ({
 })
 
 const styles = theme => ({
-  textField: {
+  root: {
     width: '100%',
+    maxWidth: 420,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    [theme.breakpoints.up('sm')]: {
+      minWidth: 420,
+    },
+  },
+  title: {
+    margin: theme.spacing.unit,
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: theme.spacing.unit * 2,
+  },
+  textField: {
+    margin: theme.spacing.unit,
+  },
+  button: {
+    margin: theme.spacing.unit,
   },
   actionsContainer: {
     display: 'flex',
@@ -72,14 +93,19 @@ class CreateLocation extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, fullScreen } = this.props
 
     return (
-      <Dialog open={this.props.show} onClose={this.props.onClose}>
-        <FormSection className={classes.root}>
+      <Dialog
+        open={this.props.show}
+        fullScreen={fullScreen}
+        onClose={this.props.onClose}
+      >
+        <div className={classes.root}>
           <Collapse in={!this.state.locationCreated}>
             <ValidatorForm
               onSubmit={this.handleSubmit}
+              className={classes.form}
             >
               <Typography className={classes.title} variant="title">
                 Create Location
@@ -124,7 +150,7 @@ class CreateLocation extends React.Component {
           <Collapse in={this.state.locationCreated}>
             <span>Location successful created.</span>
           </Collapse>
-        </FormSection>
+        </div>
       </Dialog>
     )
   }
@@ -136,6 +162,10 @@ CreateLocation.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   fetchCreateLocationAction: PropTypes.func.isRequired,
+  fullScreen: PropTypes.bool.isRequired,
 }
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(CreateLocation))
+export default withStyles(styles)(withMobileDialog()(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateLocation)))
