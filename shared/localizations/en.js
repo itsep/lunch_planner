@@ -29,6 +29,7 @@ const content = {
   logout: 'Logout',
   today: 'Today',
   signUp: 'Sign Up',
+  cancel: 'Cancel',
 }
 module.exports = {
   languageKey,
