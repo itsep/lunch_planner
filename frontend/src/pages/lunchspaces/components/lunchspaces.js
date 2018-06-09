@@ -140,7 +140,8 @@ class Lunchspaces extends React.Component {
           href={routeLocations.CREATE_LUNCHSPACE}
           variant="fab"
           color="primary"
-          className={classes.addLunchspaceButton}>
+          className={classes.addLunchspaceButton}
+        >
           <AddIcon />
         </Button>
       </div>

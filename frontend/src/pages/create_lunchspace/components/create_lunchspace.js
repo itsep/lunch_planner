@@ -172,7 +172,7 @@ class CreateLunchspace extends React.Component {
           </ValidatorForm>
         </Collapse>
         <Collapse in={this.state.lunchspaceCreated}>
-          {localizedStrings.formatString(localizedStrings.lunchspaceSuccessfulCreated,{
+          {localizedStrings.formatString(localizedStrings.lunchspaceSuccessfulCreated, {
             lunchspaceName: (
               <a href={withLunchspaceSubdomain(
                 routeLocations.HOMEPAGE,
