@@ -33,7 +33,7 @@ class HomepageApp extends Component {
     const { user, lunchspace, fetchLogoutAction } = this.props
     return (
       <CommonAppContainer>
-        <AuthorizedHeaderBar user={user} lunchspace={lunchspace} logout={fetchLogoutAction} />
+        <AuthorizedHeaderBar title={lunchspace.name || ''} user={user} logout={fetchLogoutAction} />
         <DateBar />
         <LocationList />
       </CommonAppContainer>

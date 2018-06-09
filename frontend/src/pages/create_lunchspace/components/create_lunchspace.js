@@ -15,7 +15,7 @@ import FormControlInputValidator from 'components/form_control_input_validator'
 import FormSection from 'components/form_section'
 import apiFetch from '../../../lib/api_fetch'
 import localizedStrings from '../../../localization'
-import {withLunchspaceSubdomain} from 'lib/lunchspace_subdomain'
+import { withLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
 import routeLocations from '../../route_locations'
 
 const styles = theme => ({
@@ -85,7 +85,7 @@ class CreateLunchspace extends React.Component {
       method: 'POST',
       body: data,
     })
-      .then(({ date }) => {
+      .then(() => {
         this.setState({
           lunchspaceCreated: true,
         })
@@ -113,9 +113,6 @@ class CreateLunchspace extends React.Component {
           <ValidatorForm
             onSubmit={this.handleSubmit}
           >
-            <Typography className={classes.title} variant="title">
-              Create Lunchspace
-            </Typography>
             <TextValidator
               name="lunchspace-name"
               label="Lunchspace Name"

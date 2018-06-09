@@ -17,9 +17,6 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  title: {
-    margin: theme.spacing.unit,
-  },
   textField: {
     margin: theme.spacing.unit,
   },
@@ -103,9 +100,6 @@ class Registration extends React.Component {
             onSubmit={this.handleSubmit}
             className={classes.form}
           >
-            <Typography className={classes.title} variant="title">
-              Registration
-            </Typography>
             <TextValidator
               name="first-name"
               label="First Name"
@@ -136,7 +130,7 @@ class Registration extends React.Component {
               onChange={this.handleChange('email')}
               validators={['required', 'isEmail']}
               errorMessages={[localizedStrings.fieldRequired, localizedStrings.invalidEmail]}
-              autoComplete="email"
+              autoComplete="email username"
             />
             <TextValidator
               label="Password"

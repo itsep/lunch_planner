@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton'
 import SettingsIcon from '@material-ui/icons/Settings'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Fade from '@material-ui/core/Fade'
+import Collapse from '@material-ui/core/Collapse'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
@@ -25,7 +26,7 @@ const styles = theme => ({
   },
   container: {
     width: '100%',
-    maxWidth: 360,
+    maxWidth: 420,
   },
   titleBar: {
     display: 'flex',
@@ -37,14 +38,14 @@ const styles = theme => ({
     flex: 1,
   },
   list: {
-    backgroundColor: theme.palette.background.paper,
+    // take the addLunchspaceButton into account
+    marginBottom: (theme.spacing.unit * 2) + 56 + (theme.spacing.unit),
   },
-  errorContainer: {
-    backgroundColor: theme.palette.background.paper,
+  errorMessage: {
     padding: theme.spacing.unit,
   },
   addLunchspaceButton: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
   },
@@ -88,32 +89,21 @@ class Lunchspaces extends React.Component {
       user,
       lunchspaces,
       isLoading,
-      currentLunchspace,
       error,
       lastError,
     } = this.state
     return (
       <div>
-        <AuthorizedHeaderBar lunchspace={currentLunchspace || {}} user={user} />
+        <AuthorizedHeaderBar title={localizedStrings.myLunchspaces} user={user} />
         <div className={classes.root}>
           <div className={classes.container}>
-            <Typography variant="title" className={classes.titleBar}>
-              <div className={classes.title}>
-                {localizedStrings.myLunchspaces}
-              </div>
-              <Fade
-                in={isLoading}
-              >
-                <CircularProgress />
-              </Fade>
-            </Typography>
-            <Fade in={error}>
-              <section className={classes.errorContainer}>
-                <Typography color="error">
+            <Collapse in={!!error}>
+              <section>
+                <Typography color="error" className={classes.errorMessage}>
                   {lastError && lastError.toLocalizedString(localizedStrings)}
                 </Typography>
               </section>
-            </Fade>
+            </Collapse>
             <Fade in={!isLoading && !error}>
               <List className={classes.list}>
                 {lunchspaces.map(lunchspace => (
@@ -122,7 +112,11 @@ class Lunchspaces extends React.Component {
                     role={undefined}
                     button
                     component="a"
-                    href={withLunchspaceSubdomain(routeLocations.HOMEPAGE, lunchspace.subdomain, true)}
+                    href={withLunchspaceSubdomain(
+                      routeLocations.HOMEPAGE,
+                      lunchspace.subdomain,
+                      true
+                    )}
                     className={classes.listItem}
                   >
                     <ListItemText

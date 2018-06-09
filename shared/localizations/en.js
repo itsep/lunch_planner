@@ -1,7 +1,7 @@
 const languageKey = 'en'
 const content = {
   productName: 'Lunchspace',
-  myLunchspaces: 'Meine Lunchspaces',
+  myLunchspaces: 'My Lunchspaces',
   // Localizable Errors
   authenticationError: 'Not authenticated. Please login.',
   authorizationError: 'Not authorized. You do not have the rights to perform this action.',

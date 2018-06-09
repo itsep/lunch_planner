@@ -14,31 +14,21 @@ const styles = {
   },
 }
 
-function UnauthorizedHeaderBar({ classes }) {
+function UnauthorizedHeaderBar({ classes, title }) {
+  document.title = title
   return (
     <AppBar position="static" color="default">
       <Toolbar>
         <Typography variant="title" color="inherit" className={classes.title}>
-          {localizedStrings.productName}
+          {title}
         </Typography>
-        <Button
-          color="inherit"
-          href={routeLocations.LOGIN}
-        >
-          {localizedStrings.login}
-        </Button>
-        <Button
-          color="inherit"
-          href={routeLocations.REGISTRATION}
-        >
-          {localizedStrings.signUp}
-        </Button>
       </Toolbar>
     </AppBar>
   )
 }
 UnauthorizedHeaderBar.propTypes = {
   classes: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
 }
 
 export default withStyles(styles)(UnauthorizedHeaderBar)

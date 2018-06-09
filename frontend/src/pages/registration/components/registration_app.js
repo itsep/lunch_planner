@@ -2,11 +2,12 @@ import React from 'react'
 import Registration from './registration'
 import CommonAppContainer from '../../../components/common_app_container'
 import UnauthorizedHeaderBar from '../../../components/unauthorized_header_bar'
+import localizedStrings from '../../../localization'
 
 function RegistrationApp() {
   return (
     <CommonAppContainer>
-      <UnauthorizedHeaderBar />
+      <UnauthorizedHeaderBar title={localizedStrings.signUp} />
       <Registration />
     </CommonAppContainer>
   )
