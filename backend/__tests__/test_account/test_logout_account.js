@@ -6,6 +6,6 @@ describe('account login', () => {
     const req = mockReq()
     const res = mockRes()
     await logout(req, res)
-    expect(res.clearCookie.mock.calls.length).toBe(1)
+    expect(res.clearCookie.mock.calls.length).toBe(2)
   })
 })

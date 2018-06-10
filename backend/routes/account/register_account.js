@@ -1,6 +1,6 @@
 const { pool } = require('../../lib/database')
 const { hash } = require('../../lib/password_hash')
-const { stringifyToken } = require('../../lib/authenticate')
+const { stringifyToken, setTokenOnResponse } = require('../../lib/authenticate')
 const { validLength, validEmail } = require('../../lib/validation')
 const { InputValidationError } = require('../../../shared/lib/error')
 
@@ -45,10 +45,7 @@ async function registerAccount(req, res) {
   }
   const { userId } = await create(email, password, firstName, lastName)
   const token = stringifyToken(userId)
-  res.cookie(
-    'lunch_planner_token',
-    token,
-  )
+  setTokenOnResponse(res, token)
   return res.status(200).json({})
 }
 

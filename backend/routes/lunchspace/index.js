@@ -17,9 +17,9 @@ lunchspaceRouter.use(bodyParser.json())
 lunchspaceRouter.post('/', authenticateRequest, asyncHandler(createLunchspaceAndJoin))
 lunchspaceRouter.get('/', authenticateRequest, getUser, asyncHandler(getLocations))
 lunchspaceRouter.post('/invite', authenticateRequest, checkLunchspacePermissionOfRequest, getUser, asyncHandler(inviteLunchspaceRoute))
-lunchspaceRouter.post('/join', authenticateRequest, asyncHandler(joinLunchspace()))
-lunchspaceRouter.get('/check', authenticateRequest, getUser, asyncHandler(checkInvitation()))
-lunchspaceRouter.delete('/leave', authenticateRequest, checkLunchspacePermissionOfRequest, asyncHandler(leaveLunchspaceRoute()))
+lunchspaceRouter.post('/join', authenticateRequest, asyncHandler(joinLunchspace))
+lunchspaceRouter.get('/check', authenticateRequest, getUser, asyncHandler(checkInvitation))
+lunchspaceRouter.delete('/leave', authenticateRequest, checkLunchspacePermissionOfRequest, asyncHandler(leaveLunchspaceRoute))
 
 module.exports = {
   router: lunchspaceRouter,

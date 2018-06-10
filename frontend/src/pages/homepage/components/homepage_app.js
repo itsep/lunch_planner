@@ -8,6 +8,7 @@ import CommonAppContainer from '../../../components/common_app_container'
 import DateBar from './date_bar'
 import { isDefinitelyNotAuthenticated } from '../../../lib/authentication'
 import { fetchLogout } from '../actions'
+import { withLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
 
 const mapStateToProps = state => ({
   user: state.user,
@@ -24,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
 class HomepageApp extends Component {
   componentWillMount() {
     if (isDefinitelyNotAuthenticated()) {
-      window.location = routeLocations.LOGIN
+      window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
     }
   }
 
