@@ -12,7 +12,6 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import withMobileDialog from '@material-ui/core/withMobileDialog'
 import { fetchCreateLocation } from '../actions'
 import localizedStrings from '../../../localization'
-import routeLocations from '../../route_locations'
 
 const mapDispatchToProps = dispatch => ({
   fetchCreateLocationAction: (locationName, lunchspace) =>
