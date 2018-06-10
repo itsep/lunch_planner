@@ -21,33 +21,28 @@ exports[`Create Lunchspace renders correctly 1`] = `
         <form
           onSubmit={[Function]}
         >
-          <h2
-            className="MuiTypography-root-8 MuiTypography-title-14"
-          >
-            Create Lunchspace
-          </h2>
           <div
             aria-describedby={undefined}
-            className="MuiFormControl-root-32 MuiFormControl-marginNormal-33 CreateLunchspace-textField-1"
+            className="MuiFormControl-root-8 MuiFormControl-marginNormal-9 CreateLunchspace-textField-1"
             onBlur={[Function]}
             onFocus={[Function]}
           >
             <label
-              className="MuiFormLabel-root-41 MuiInputLabel-root-36 MuiInputLabel-formControl-37 MuiInputLabel-animated-40"
+              className="MuiFormLabel-root-17 MuiInputLabel-root-12 MuiInputLabel-formControl-13 MuiInputLabel-animated-16"
               data-shrink={false}
               htmlFor={undefined}
             >
               Lunchspace Name
             </label>
             <div
-              className="MuiInput-root-46 MuiInput-formControl-47 MuiInput-underline-50"
+              className="MuiInput-root-22 MuiInput-formControl-23 MuiInput-underline-26"
             >
               <input
                 aria-invalid={false}
                 aria-required={false}
                 autoComplete="organization"
                 autoFocus={true}
-                className="MuiInput-input-54"
+                className="MuiInput-input-30"
                 defaultValue={undefined}
                 disabled={false}
                 id={undefined}
@@ -67,26 +62,26 @@ exports[`Create Lunchspace renders correctly 1`] = `
             </div>
           </div>
           <div
-            className="MuiFormControl-root-32 CreateLunchspace-textField-1"
+            className="MuiFormControl-root-8 CreateLunchspace-textField-1"
             onBlur={[Function]}
             onFocus={[Function]}
           >
             <label
-              className="MuiFormLabel-root-41 MuiInputLabel-root-36 MuiInputLabel-formControl-37 MuiInputLabel-animated-40 MuiInputLabel-shrink-39"
+              className="MuiFormLabel-root-17 MuiInputLabel-root-12 MuiInputLabel-formControl-13 MuiInputLabel-animated-16 MuiInputLabel-shrink-15"
               data-shrink={true}
               htmlFor="input-with-icon-adornment"
             >
               Subdomain to your Lunchspace
             </label>
             <div
-              className="MuiInput-root-46 MuiInput-formControl-47 MuiInput-underline-50"
+              className="MuiInput-root-22 MuiInput-formControl-23 MuiInput-underline-26"
             >
               <input
                 aria-invalid={false}
                 aria-required={false}
                 autoComplete="off"
                 autoFocus={undefined}
-                className="MuiInput-input-54"
+                className="MuiInput-input-30"
                 defaultValue={undefined}
                 disabled={false}
                 id={undefined}
@@ -104,10 +99,10 @@ exports[`Create Lunchspace renders correctly 1`] = `
                 value=""
               />
               <div
-                className="MuiInputAdornment-root-59 MuiInputAdornment-positionEnd-61"
+                className="MuiInputAdornment-root-35 MuiInputAdornment-positionEnd-37"
               >
                 <p
-                  className="MuiTypography-root-8 MuiTypography-body1-17 MuiTypography-colorTextSecondary-30"
+                  className="MuiTypography-root-38 MuiTypography-body1-47 MuiTypography-colorTextSecondary-60"
                 >
                   .lunchspace.de
                 </p>
@@ -133,7 +128,7 @@ exports[`Create Lunchspace renders correctly 1`] = `
                 className="MuiCollapse-wrapperInner-7"
               >
                 <p
-                  className="MuiTypography-root-8 MuiTypography-body1-17 MuiTypography-colorError-31"
+                  className="MuiTypography-root-38 MuiTypography-body1-47 MuiTypography-colorError-61"
                 />
               </div>
             </div>
@@ -185,17 +180,13 @@ exports[`Create Lunchspace renders correctly 1`] = `
       <div
         className="MuiCollapse-wrapperInner-7"
       >
-        <span>
-          Lunchspace 
-        </span>
+        Lunchspace 
         <a
-          href="//.lunchspace.de"
+          href="//.mylunch.space/homepage.html"
         >
           
         </a>
-        <span>
-           successful created.
-        </span>
+         successfull created.
       </div>
     </div>
   </div>

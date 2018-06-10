@@ -1,7 +1,7 @@
 const languageKey = 'de'
 const content = {
   productName: 'Lunchspace',
-  myLunchspaces: 'My Lunchspaces',
+  myLunchspaces: 'Meine Lunchspaces',
   // Localizable Errors
   authenticationError: 'Nicht authentifiziert. Bitte melde dich an.',
   authorizationError: 'Nicht authorisiert. Du hast nicht genug Rechte für diese Aktion.',
@@ -23,11 +23,13 @@ const content = {
   lunchspaceDoesNotExist: 'Der angeforderte Lunchspace existiert nicht.',
 
   createLunchspace: 'Lunchspace erstellen',
+  lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} erfolgreich erstellt.',
   createLocation: 'Location erstellen',
   login: 'Anmelden',
   logout: 'Abmelden',
   today: 'Heute',
   signUp: 'Registrieren',
+  cancel: 'Abbrechen',
 }
 module.exports = {
   languageKey,

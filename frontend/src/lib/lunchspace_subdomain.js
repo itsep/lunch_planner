@@ -18,8 +18,13 @@ export function domainForLunchspace(subdomain) {
 }
 
 export function currentLunchspaceSubdomain() {
-  return parseSubdomainFromHost(window.location.hostname) ||
+  const parsedSubdomain = parseSubdomainFromHost(window.location.hostname) ||
     new URLSearchParams(window.location.search).get('subdomain')
+  // `www` is never a lunchspace subdomain
+  if (parsedSubdomain === 'www') {
+    return undefined
+  }
+  return parsedSubdomain
 }
 
 export function withLunchspaceSubdomain(
