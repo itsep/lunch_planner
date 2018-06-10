@@ -3,6 +3,6 @@ module.exports = {
   onlyHttps: true,
   host: 'mylunch.space',
   token: {
-    domain: 'mylunch.space',
+    domain: '.mylunch.space',
   },
 }
