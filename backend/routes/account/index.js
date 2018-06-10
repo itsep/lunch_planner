@@ -20,7 +20,7 @@ accountRouter.post('/logout', asyncHandler(logout))
 
 accountRouter.put('/change_name', authenticateRequest, getUser, asyncHandler(changeName))
 
-accountRouter.put('/change_password', authenticateRequest, asyncHandler(changePassword))
+accountRouter.put('/change_password', authenticateRequest, getUser, asyncHandler(changePassword))
 
 module.exports = {
   router: accountRouter,
