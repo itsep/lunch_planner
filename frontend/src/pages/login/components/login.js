@@ -18,9 +18,6 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  title: {
-    margin: theme.spacing.unit,
-  },
   textField: {
     margin: theme.spacing.unit,
   },
@@ -112,9 +109,6 @@ class Login extends React.Component {
             onSubmit={this.handleSubmit}
             className={classes.form}
           >
-            <Typography className={classes.title} variant="title">
-              Login
-            </Typography>
             <TextValidator
               name="email"
               label="Email"
@@ -124,7 +118,7 @@ class Login extends React.Component {
               onChange={this.handleChange('email')}
               validators={['required', 'isEmail']}
               errorMessages={[localizedStrings.fieldRequired, localizedStrings.invalidEmail]}
-              autoComplete="email"
+              autoComplete="username"
             />
             <TextValidator
               label="Password"

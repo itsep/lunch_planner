@@ -113,9 +113,6 @@ class CreateLunchspace extends React.Component {
           <ValidatorForm
             onSubmit={this.handleSubmit}
           >
-            <Typography className={classes.title} variant="title">
-              Create Lunchspace
-            </Typography>
             <TextValidator
               name="lunchspace-name"
               label="Lunchspace Name"

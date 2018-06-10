@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const config = require('config')
 
 const secret = process.env.JWT_SECRET
-const cookieDomain = config.has('domain') && config.get('domain')
+const cookieDomain = config.has('token.domain') && config.get('token.domain')
 const tokenLifetime = config.get('token.lifetime')
 const onlyHttps = config.get('token.onlyHttps')
 
