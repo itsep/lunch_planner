@@ -16,4 +16,4 @@ npm run deploy --prefix=frontend
 
 # stop current backend and start new one
 cd ./backend
-pm2 startOrReload ecosystem.config.js --env=producation
+pm2 startOrReload ecosystem.config.js --env=production
