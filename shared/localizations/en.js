@@ -18,11 +18,12 @@ const content = {
   fieldRequired: 'This field is required.',
   invalidEmail: 'Please enter a valid email address.',
   illegalHyphen: 'A subdomain may not contain a leading or trailing hyphen(-).',
-  inputTooLong24: 'max 24 characters',
+  invalidLength: 'Input must be between {minimumLength} and {maximumLength} characters long.',
   invalidToken: 'This invitation is no longer valid.',
   lunchspaceDoesNotExist: 'The requested Lunchspace does not exist.',
 
   createLunchspace: 'Create Lunchspace',
+  lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} successfull created.',
   createLocation: 'Create Location',
   login: 'Login',
   logout: 'Logout',

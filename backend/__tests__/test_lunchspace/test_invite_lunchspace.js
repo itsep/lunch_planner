@@ -34,10 +34,10 @@ describe('create lunchspace', () => {
         body: {
           receivers: [legalTestEmail],
         },
-        userPromise: {
+        userPromise: Promise.resolve({
           firstName,
           lastName,
-        },
+        }),
         lunchspace: {
           id: testLunchspaceId,
           name: testLunchspaceName1,
@@ -52,10 +52,10 @@ describe('create lunchspace', () => {
         body: {
           receivers: [legalTestEmail, legalTestEmail, legalTestEmail, legalTestEmail],
         },
-        userPromise: {
+        userPromise: Promise.resolve({
           firstName,
           lastName,
-        },
+        }),
         lunchspace: {
           id: testLunchspaceId,
           name: testLunchspaceName1,
@@ -70,10 +70,10 @@ describe('create lunchspace', () => {
         body: {
           receivers: [illegalTestEmail],
         },
-        userPromise: {
+        userPromise: Promise.resolve({
           firstName,
           lastName,
-        },
+        }),
         lunchspace: {
           id: testLunchspaceId,
           name: testLunchspaceName1,

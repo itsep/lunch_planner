@@ -4,18 +4,18 @@ import apiFetch from './api_fetch'
 import routeLocations from '../pages/route_locations'
 
 
-const tokenCookieName = 'lunch_planner_token'
+const isProbablyAuthenticatedCookieName = 'authenticated'
 /**
  * checks if a token exists as a cookie
  */
 export function isProbablyAuthenticated() {
-  return typeof Cookie.get(tokenCookieName) === 'string'
+  return Cookie.get(isProbablyAuthenticatedCookieName) === '1'
 }
 /**
  * checks if a token does not exists as a cookie
  */
 export function isDefinitelyNotAuthenticated() {
-  return typeof Cookie.get(tokenCookieName) !== 'string'
+  return Cookie.get(isProbablyAuthenticatedCookieName) !== '1'
 }
 
 export function logout() {

@@ -15,6 +15,8 @@ import FormControlInputValidator from 'components/form_control_input_validator'
 import FormSection from 'components/form_section'
 import apiFetch from '../../../lib/api_fetch'
 import localizedStrings from '../../../localization'
+import { withLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
+import routeLocations from '../../route_locations'
 
 const styles = theme => ({
   textField: {
@@ -87,6 +89,12 @@ class CreateLunchspace extends React.Component {
         this.setState({
           lunchspaceCreated: true,
         })
+        const subdomain = this.state.lunchspaceSubdomain
+        window.location = withLunchspaceSubdomain(
+          routeLocations.HOMEPAGE,
+          subdomain,
+          true
+        )
       })
       .catch((error) => {
         this.setState({ error, lastError: error })
@@ -167,11 +175,18 @@ class CreateLunchspace extends React.Component {
           </ValidatorForm>
         </Collapse>
         <Collapse in={this.state.lunchspaceCreated}>
-          <span>Lunchspace </span>
-          <a href={`//${this.state.lunchspaceSubdomain}.lunchspace.de`}>
-            {this.state.lunchspaceName}
-          </a>
-          <span> successful created.</span>
+          {localizedStrings.formatString(localizedStrings.lunchspaceSuccessfulCreated, {
+            lunchspaceName: (
+              <a href={withLunchspaceSubdomain(
+                routeLocations.HOMEPAGE,
+                this.state.lunchspaceSubdomain,
+                true
+              )}
+              >
+                {this.state.lunchspaceName}
+              </a>
+            ),
+          })}
         </Collapse>
       </FormSection>
     )

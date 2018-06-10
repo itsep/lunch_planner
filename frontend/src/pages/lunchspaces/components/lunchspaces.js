@@ -10,10 +10,13 @@ import IconButton from '@material-ui/core/IconButton'
 import SettingsIcon from '@material-ui/icons/Settings'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Fade from '@material-ui/core/Fade'
+import Button from '@material-ui/core/Button'
+import AddIcon from '@material-ui/icons/Add'
 import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
 import apiFetch from '../../../lib/api_fetch'
 import localizedStrings from '../../../localization'
 import { currentLunchspaceSubdomain, domainForLunchspace, withLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
+import routeLocations from '../../route_locations'
 
 const styles = theme => ({
   root: {
@@ -39,6 +42,11 @@ const styles = theme => ({
   errorContainer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing.unit,
+  },
+  addLunchspaceButton: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
   },
 })
 
@@ -114,7 +122,10 @@ class Lunchspaces extends React.Component {
                     role={undefined}
                     button
                     component="a"
-                    href={withLunchspaceSubdomain('/homepage.html', lunchspace.subdomain, true)}
+                    href={withLunchspaceSubdomain(
+                      routeLocations.HOMEPAGE,
+                      lunchspace.subdomain, true
+                    )}
                     className={classes.listItem}
                   >
                     <ListItemText
@@ -134,6 +145,14 @@ class Lunchspaces extends React.Component {
             </Fade>
           </div>
         </div>
+        <Button
+          href={routeLocations.CREATE_LUNCHSPACE}
+          variant="fab"
+          color="primary"
+          className={classes.addLunchspaceButton}
+        >
+          <AddIcon />
+        </Button>
       </div>
     )
   }
