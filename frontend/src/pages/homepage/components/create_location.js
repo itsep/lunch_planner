@@ -9,8 +9,9 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import Collapse from '@material-ui/core/Collapse'
 import Fade from '@material-ui/core/Fade'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import FormSection from 'components/form_section'
+import withMobileDialog from '@material-ui/core/withMobileDialog'
 import { fetchCreateLocation } from '../actions'
+import localizedStrings from '../../../localization'
 
 const mapDispatchToProps = dispatch => ({
   fetchCreateLocationAction: (locationName, lunchspace) =>
@@ -22,8 +23,35 @@ const mapStateToProps = state => ({
 })
 
 const styles = theme => ({
-  textField: {
+  root: {
     width: '100%',
+    maxWidth: 420,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    [theme.breakpoints.up('sm')]: {
+      minWidth: 420,
+    },
+  },
+  titleSection: {
+    display: 'flex',
+  },
+  title: {
+    margin: theme.spacing.unit,
+    flex: 1,
+  },
+  loadingIndicator: {
+    margin: `0 ${theme.spacing.unit}px`,
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: theme.spacing.unit * 2,
+  },
+  textField: {
+    margin: theme.spacing.unit,
+  },
+  button: {
+    margin: theme.spacing.unit,
   },
   actionsContainer: {
     display: 'flex',
@@ -72,18 +100,31 @@ class CreateLocation extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, fullScreen } = this.props
 
     return (
-      <Dialog open={this.props.show} onClose={this.props.onClose}>
-        <FormSection className={classes.root}>
+      <Dialog
+        open={this.props.show}
+        fullScreen={fullScreen}
+        onClose={this.props.onClose}
+      >
+        <div className={classes.root}>
           <Collapse in={!this.state.locationCreated}>
             <ValidatorForm
               onSubmit={this.handleSubmit}
+              className={classes.form}
             >
-              <Typography className={classes.title} variant="title">
-                Create Location
-              </Typography>
+              <section className={classes.titleSection}>
+                <Typography variant="title" className={classes.title}>
+                  Create Location
+                </Typography>
+                <Fade
+                  in={this.state.isLoading}
+                  unmountOnExit
+                >
+                  <CircularProgress size="36px" className={classes.loadingIndicator} />
+                </Fade>
+              </section>
               <TextValidator
                 name="location-name"
                 label="Location Name"
@@ -101,30 +142,37 @@ class CreateLocation extends React.Component {
                 </Typography>
               </Collapse>
               <div className={classes.actionsContainer}>
-                <Button
-                  type="submit"
-                  size="large"
-                  variant="raised"
-                  color="primary"
-                  className={classes.button}
-                  onClick={this.handleSubmit}
-                  disabled={this.state.isLoading}
-                >
-                  Create Location
-                </Button>
-                <Fade
-                  in={this.state.isLoading}
-                  unmountOnExit
-                >
-                  <CircularProgress size="36px" />
-                </Fade>
+                <div>
+                  <Button
+                    type="button"
+                    size="large"
+                    variant="flat"
+                    color="secondary"
+                    className={classes.button}
+                    onClick={this.props.onClose}
+                    disabled={this.state.isLoading}
+                  >
+                    {localizedStrings.cancel}
+                  </Button>
+                  <Button
+                    type="submit"
+                    size="large"
+                    variant="raised"
+                    color="primary"
+                    className={classes.button}
+                    onClick={this.handleSubmit}
+                    disabled={this.state.isLoading}
+                  >
+                    Create Location
+                  </Button>
+                </div>
               </div>
             </ValidatorForm>
           </Collapse>
           <Collapse in={this.state.locationCreated}>
             <span>Location successful created.</span>
           </Collapse>
-        </FormSection>
+        </div>
       </Dialog>
     )
   }
@@ -136,6 +184,10 @@ CreateLocation.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   fetchCreateLocationAction: PropTypes.func.isRequired,
+  fullScreen: PropTypes.bool.isRequired,
 }
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(CreateLocation))
+export default withStyles(styles)(withMobileDialog()(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateLocation)))

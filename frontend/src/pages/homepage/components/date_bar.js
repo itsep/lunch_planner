@@ -17,6 +17,7 @@ const styles = () => ({
   },
   button: {
     width: '100%',
+    minWidth: 0,
     borderRadius: 0,
   },
 })
