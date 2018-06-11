@@ -143,7 +143,7 @@ export function closeEventDialog() {
 
 function changeDay(dayOffset) {
   return (dispatch, getState) => {
-    const newDate = getState().currentDate.add(dayOffset, 'day')
+    const newDate = getState().currentDate.clone().add(dayOffset, 'day')
     dispatch({
       type: actionTypes.CHANGE_DATE,
       date: newDate,

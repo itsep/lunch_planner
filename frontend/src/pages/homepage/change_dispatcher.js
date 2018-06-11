@@ -55,8 +55,10 @@ export default class ChangeDispatcher {
     }
   }
   onStateChange() {
+    console.log("onStateChange")
     const { currentDate } = this.store.getState()
-    if (currentDate !== this.currentDate) {
+    if (!this.currentDate || !this.currentDate.isSame(currentDate, 'day')) {
+      console.log("stateDidChange")
       this.currentDate = currentDate
       this.subscribeToAllLocationChanges(currentDate)
     }
