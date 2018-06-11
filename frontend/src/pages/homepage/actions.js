@@ -128,3 +128,18 @@ export function leaveEvent(lunchspaceSubdomain, locationId, eventTime, eventDate
   }
 }
 
+export function openEventDialog(locationId, eventTimeId, selectedUserId) {
+  return {
+    type: actionTypes.OPEN_EVENT_DIALOG,
+    locationId,
+    eventTimeId,
+    selectedUserId,
+  }
+}
+
+export function closeEventDialog() {
+  return {
+    type: actionTypes.CLOSE_EVENT_DIALOG,
+  }
+}
+

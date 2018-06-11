@@ -24,8 +24,6 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  initials: {
     fontSize: '12px',
   },
   image: {

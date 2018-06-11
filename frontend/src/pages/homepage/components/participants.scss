@@ -6,6 +6,9 @@ $three-user-offset: 40;
 .time-stamp {
   transition: 400ms transform;
   z-index: 100;
+  &:hover{
+    cursor: pointer;
+  }
   &.participant-count-1 {
     transform: scale(1.1);
     z-index: 110;
@@ -52,7 +55,7 @@ $three-user-offset: 40;
 
 @mixin participantRotation($radius) {
   $bottom-angle: 90;
-  $top-angle: -90;
+  $top-angle: 270;
   &.participant-count-1 .avatar-container{
     &:nth-of-type(1) {
       @include rotate($radius, $bottom-angle);
@@ -60,10 +63,10 @@ $three-user-offset: 40;
   }
   &.participant-count-2 .avatar-container{
     &:nth-of-type(1) {
-      @include rotate($radius, $bottom-angle + $two-user-offset);
+      @include rotate($radius, $bottom-angle - $two-user-offset);
     }
     &:nth-of-type(2) {
-      @include rotate($radius, $bottom-angle - $two-user-offset);
+      @include rotate($radius, $bottom-angle + $two-user-offset);
     }
   }
   &.participant-count-3,
@@ -72,13 +75,13 @@ $three-user-offset: 40;
   &.participant-count-6 {
     .avatar-container{
       &:nth-of-type(1) {
-        @include rotate($radius, $bottom-angle + $three-user-offset);
+        @include rotate($radius, $bottom-angle - $three-user-offset);
       }
       &:nth-of-type(2) {
         @include rotate($radius, $bottom-angle);
       }
       &:nth-of-type(3) {
-        @include rotate($radius, $bottom-angle - $three-user-offset);
+        @include rotate($radius, $bottom-angle + $three-user-offset);
       }
     }
   }
@@ -117,7 +120,9 @@ $three-user-offset: 40;
   bottom: 0;
   // moves the ripple effect behind the participants
   z-index: 1;
+  pointer-events: none;
   .avatar-container {
+    pointer-events: auto;
     position: absolute;
     top: 50%;
     left: 50%;
