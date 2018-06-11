@@ -86,6 +86,9 @@ class LocationItem extends React.Component {
     this.containerRef = React.createRef()
   }
   componentDidMount() {
+    this.scrollToCurrentTime()
+  }
+  scrollToCurrentTime() {
     const currentEventTime = nextEventTimeForDate(new Date())
     const eventTimeStepsNeeded = eventTimeSteps(firstTimeStamp, currentEventTime)
     this.containerRef.current.scrollLeft = LocationItem.width * eventTimeStepsNeeded
