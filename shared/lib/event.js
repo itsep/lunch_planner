@@ -24,6 +24,10 @@ function toEventDate(date) {
   }
 }
 
+function toEventDateFromMoment(momentDate) {
+  return toEventDate(momentDate.toDate())
+}
+
 function toEventDateFromString(dateString) {
   const dateParts = dateString
     .split('-')
@@ -65,4 +69,5 @@ module.exports = {
   toEventDateFromString,
   nextEventTimeForDate,
   eventTimeSteps,
+  toEventDateFromMoment,
 }

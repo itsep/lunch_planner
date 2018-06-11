@@ -18,6 +18,9 @@ const homepageActionTypes = {
   // EVENT DIALOG
   OPEN_EVENT_DIALOG: Symbol('homepage/OPEN_EVENT_DIALOG'),
   CLOSE_EVENT_DIALOG: Symbol('homepage/CLOSE_EVENT_DIALOG'),
+
+  // CHANGE DATE
+  CHANGE_DATE: Symbol('homepage/CHANGE_DATE'),
 }
 
 export { homepageActionTypes }

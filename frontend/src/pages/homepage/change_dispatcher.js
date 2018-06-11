@@ -1,4 +1,4 @@
-import { toEventDate } from 'shared/lib/event'
+import { toEventDateFromMoment } from 'shared/lib/event'
 import { addParticipant, removeParticipant, addLocation } from './actions'
 
 export default class ChangeDispatcher {
@@ -37,7 +37,7 @@ export default class ChangeDispatcher {
 
   subscribeToAllLocationChanges(date) {
     this.currentDate = date
-    this.socket.emit('subscribeToAllLocationChanges', toEventDate(date))
+    this.socket.emit('subscribeToAllLocationChanges', toEventDateFromMoment(date))
   }
 
   onConnect() {
