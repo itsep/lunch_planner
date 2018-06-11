@@ -41,7 +41,7 @@ function reduceParticipantsAtTimestamp(participantsAtTimestamp, action) {
       }
       return {
         ...participantsAtTimestamp,
-        [eventTimeId]: [...participants, userId],
+        [eventTimeId]: [userId, ...participants],
       }
     case actionTypes.REMOVE_PARTICIPANT:
       return (() => {
@@ -151,6 +151,25 @@ function reduceIsLoadingLocations(isLoadingLocations = false, action) {
   }
 }
 
+function reduceSelectedEvent(selectedEvent = null, action) {
+  switch (action.type) {
+    case actionTypes.OPEN_EVENT_DIALOG:
+      return {
+        show: true,
+        locationId: action.locationId,
+        eventTimeId: action.eventTimeId,
+        selectedUserId: action.selectedUserId,
+      }
+    case actionTypes.CLOSE_EVENT_DIALOG:
+      return {
+        ...selectedEvent,
+        show: false,
+      }
+    default:
+      return selectedEvent
+  }
+}
+
 const reducer = combineReducers({
   currentDate: reduceCurrentDate,
   lunchspace: reduceLunchspace,
@@ -159,5 +178,6 @@ const reducer = combineReducers({
   locationsInLunchspace: reduceLocationsInLunchspace,
   users: reduceUsers,
   isLoadingLocations: reduceIsLoadingLocations,
+  selectedEvent: reduceSelectedEvent,
 })
 export default reducer

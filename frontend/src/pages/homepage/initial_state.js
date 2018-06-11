@@ -12,6 +12,7 @@ const initialState = {
   locations: {},
   users: {},
   error: null,
+  eventDialog: undefined /* { locationId, eventTimeId, show } */,
 }
 
 export default initialState

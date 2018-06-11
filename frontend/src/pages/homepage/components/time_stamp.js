@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { toEventDate } from 'shared/lib/event'
-import { joinEvent, leaveEvent } from '../actions'
+import { joinEvent, leaveEvent, openEventDialog } from '../actions'
 import Participant from './participant'
 
 function participantFrom(user) {
@@ -41,6 +41,9 @@ const mapDispatchToProps = dispatch => ({
       eventDate,
       participantFrom(user)
     ))
+  },
+  openEventDialogAction: (locationId, eventTimeId, userId) => {
+    dispatch(openEventDialog(locationId, eventTimeId, userId))
   },
 })
 
@@ -90,6 +93,11 @@ const styles = theme => ({
       width: '86px',
       height: '86px',
     },
+    '@media (hover: none)': {
+      '&:hover': {
+        backgroundColor: '#FFF',
+      },
+    },
   },
   timeStampWithUser: {
     borderColor: theme.palette.primary.light,
@@ -102,13 +110,38 @@ const styles = theme => ({
     },
     marginBottom: 0,
   },
+  showMore: {
+    width: '24px',
+    height: '24px',
+    fontSize: '12px',
+    [theme.breakpoints.up('md')]: {
+      width: '30px',
+      height: '30px',
+      fontSize: '14px',
+    },
+    margin: '-50%',
+    display: 'flex',
+    flexShrink: 0,
+    alignItems: 'center',
+    borderRadius: '100%',
+    justifyContent: 'center',
+    backgroundColor: theme.palette.secondary.light,
+  },
 })
+
+const maxCircleCount = 6
 
 function TimeStamp({
   classes, locationId, timeStamp, participants, addUserAction, deleteUserAction, user, currentDate,
+  openEventDialogAction,
 }) {
+  const showMoreParticipantsButton = participants.length > maxCircleCount
+  const participantToDisplay = showMoreParticipantsButton ?
+    participants.slice(0, maxCircleCount - 1) : participants
+  const circleCount = showMoreParticipantsButton ? maxCircleCount : participantToDisplay.length
+
   return (
-    <div className={`${classes.timeStampDiv} time-stamp participant-count-${participants.length}`}>
+    <div className={`${classes.timeStampDiv} time-stamp participant-count-${circleCount}`}>
       <Button
         variant="fab"
         className={getTimeStampClass(classes, participants, user)}
@@ -137,10 +170,26 @@ function TimeStamp({
           {timeStamp.minute.toString().length === 2 ?
             timeStamp.minute : `0${timeStamp.minute}`}
         </Typography>
-        <div className={`participants participant-count-${participants.length}`}>
-          {participants.map(userId => <Participant key={userId} userId={userId} />)}
-        </div>
       </Button>
+      <div className={`participants participant-count-${circleCount}`}>
+        {participantToDisplay.map(userId => (
+          <Participant
+            key={userId}
+            userId={userId}
+            onClick={() => openEventDialogAction(locationId, timeStamp.id, userId)}
+          />
+        ))}
+        {showMoreParticipantsButton &&
+        <div className="avatar-container">
+          <div
+            className={classes.showMore}
+            onClick={() => openEventDialogAction(locationId, timeStamp.id)}
+          >
+            +{participants.length - participantToDisplay.length}
+          </div>
+        </div>
+        }
+      </div>
     </div>
   )
 }
@@ -165,6 +214,7 @@ TimeStamp.propTypes = {
     imageUrl: PropTypes.string,
   }).isRequired,
   currentDate: PropTypes.object.isRequired,
+  openEventDialogAction: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(TimeStamp))
