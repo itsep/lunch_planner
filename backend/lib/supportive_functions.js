@@ -16,11 +16,15 @@ async function isMember(userId, lunchspaceId) {
 
 async function isAdmin(userId, lunchspaceId) {
   const [result] = await pool.execute('SELECT is_admin AS isAdmin FROM member_of WHERE user_id = ? AND lunchspace_id = ?', [userId, lunchspaceId])
-  return result[0].isAdmin
+  return result[0].isAdmin === 1
+}
+async function isName(userId, firstName, lastName) {
+  const [result] = await pool.execute('SELECT first_name AS firstName, last_name AS lastName FROM user WHERE id = ?', [userId])
+  return (result[0].firstName === firstName && result[0].lastName === lastName)
 }
 
 async function lunchspaceExists(lunchspaceId) {
-  const [result] = await pool.execute('SELECT * FROM lunchspace WHERE lunchspace_id = ?', [lunchspaceId])
+  const [result] = await pool.execute('SELECT * FROM lunchspace WHERE id = ?', [lunchspaceId])
   if (result[0]) {
     return true
   }
@@ -32,4 +36,5 @@ module.exports = {
   isMember,
   isAdmin,
   lunchspaceExists,
+  isName,
 }

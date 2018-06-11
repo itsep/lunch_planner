@@ -1,12 +1,11 @@
 const { pool } = require('../../lib/database')
 const { compare } = require('../../lib/password_hash')
-const { stringifyToken } = require('../../lib/authenticate')
+const { stringifyToken, setTokenOnResponse } = require('../../lib/authenticate')
 const { InputValidationError } = require('../../../shared/lib/error')
+const { getLunchspacesForUser } = require('../../middleware/get_lunchspaces')
 
 async function getIdAndHashedPassword(email) {
-  const conn = await pool.getConnection()
-  const [result] = await conn.execute('SELECT user_id as userId, hashed_password as accountHashedPassword FROM account WHERE email = ?', [email])
-  conn.release()
+  const [result] = await pool.execute('SELECT user_id as userId, hashed_password as accountHashedPassword FROM account WHERE email = ?', [email])
   if (result.length > 0) {
     const idAndPassword =
       { id: result[0].userId, hashedPassword: result[0].accountHashedPassword }
@@ -25,18 +24,17 @@ async function authenticate(email, password) {
     return false
   }
   const token = stringifyToken(user.id)
-  return token
+  return { token, userId: user.id }
 }
 
 async function login(req, res) {
   const { email, password } = req.body
-  const token = await authenticate(email, password)
+  const { token, userId } = await authenticate(email, password)
   if (token) {
-    res.cookie(
-      'lunch_planner_token',
-      token,
-    )
-    res.status(200).json({})
+    setTokenOnResponse(res, token)
+    res.status(200).json({
+      lunchspaces: await getLunchspacesForUser(userId),
+    })
   } else {
     throw new InputValidationError(
       'password', `Password does not match with email: ${email}`,

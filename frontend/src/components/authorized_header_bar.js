@@ -10,6 +10,8 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import UserAvatar from './user_avatar'
 import localizedStrings from '../localization'
+import { logout } from '../lib/authentication'
+import { headerBarClassName } from '../lib/ios_native'
 
 const styles = theme => ({
   title: {
@@ -41,14 +43,15 @@ class AuthorizedHeaderBar extends React.Component {
   }
   render() {
     const {
-      classes, user, lunchspace, logout,
+      classes, user, title, logout: onLogout,
     } = this.props
+    document.title = title
     const { anchorEl } = this.state
     return (
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="default" className={headerBarClassName}>
         <Toolbar>
           <Typography variant="title" color="inherit" className={classes.title}>
-            {lunchspace.name}
+            {title}
           </Typography>
 
           <Hidden xsDown implementation="css">
@@ -69,7 +72,7 @@ class AuthorizedHeaderBar extends React.Component {
             open={Boolean(anchorEl)}
             onClose={this.handleMenuClose}
           >
-            <MenuItem onClick={logout}>
+            <MenuItem onClick={onLogout}>
               {localizedStrings.logout}
             </MenuItem>
           </Menu>
@@ -81,8 +84,11 @@ class AuthorizedHeaderBar extends React.Component {
 AuthorizedHeaderBar.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  lunchspace: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  logout: PropTypes.func,
+}
+AuthorizedAppBar.defaultProps = {
+  logout,
 }
 
 export default withStyles(styles)(AuthorizedHeaderBar)

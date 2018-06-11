@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '@material-ui/core/es/Button/Button'
-import { ArrowBack, ArrowForward } from '@material-ui/icons'
+import ArrowBack from '@material-ui/icons/ArrowBack'
+import ArrowForward from '@material-ui/icons/ArrowForward'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import localizedStrings from '../../../localization'
@@ -16,6 +17,7 @@ const styles = () => ({
   },
   button: {
     width: '100%',
+    minWidth: 0,
     borderRadius: 0,
   },
 })

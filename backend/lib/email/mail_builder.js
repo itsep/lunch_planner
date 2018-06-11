@@ -1,9 +1,11 @@
 // import localizedStrings from '../../../localization'
+const config = require('config')
 
 const sender = 'noreply.lunchspace@gmail.com'
+const host = config.get('host')
 
 function makeLink(token) {
-  const link = `localhost:8080/join_lunchspace.html?token=${encodeURIComponent(token)}`
+  const link = `${host}/join_lunchspace.html?token=${encodeURIComponent(token)}`
   return link
 }
 

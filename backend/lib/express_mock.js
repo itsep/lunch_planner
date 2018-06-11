@@ -13,6 +13,7 @@ const mockReq = (options = {}) => {
     flash: jest.fn(),
     get: jest.fn(),
     is: jest.fn(),
+    headers: {},
     params: {},
     query: {},
     session: {},

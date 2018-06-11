@@ -3,7 +3,7 @@ const { validEmail } = require('../../lib/validation')
 const { InputValidationError } = require('../../../shared/lib/error')
 const uuidv4 = require('uuid/v4')
 const { sendEMail } = require('../../lib/email/mailer')
-const { buildInvitation } = require('../../lib/email/mailBuilder')
+const { buildInvitation } = require('../../lib/email/mail_builder')
 const { asyncForEach } = require('../../lib/supportive_functions')
 
 async function getToken(email, lunchspaceId) {

@@ -8,17 +8,15 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Collapse from '@material-ui/core/Collapse'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
-import { toRegistration, toRedirect } from 'lib/redirect'
+import routeLocations from '../../route_locations'
 import localizedStrings from '../../../localization'
 import apiFetch from '../../../lib/api_fetch'
+import { withLunchspaceSubdomain, currentLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
 
 const styles = theme => ({
   form: {
     display: 'flex',
     flexDirection: 'column',
-  },
-  title: {
-    margin: theme.spacing.unit,
   },
   textField: {
     margin: theme.spacing.unit,
@@ -63,20 +61,35 @@ class Login extends React.Component {
   }
   handleSubmit() {
     const { email, password } = this.state
-    const data = { email, password }
     this.setState({
       isLoading: true,
       error: null,
     })
     apiFetch('/api/account/login', {
       method: 'POST',
-      body: data,
+      body: { email, password },
     })
-      .then(() => {
+      .then(({ data }) => {
         this.setState({
           loggedIn: true,
         })
-        window.location = toRedirect()
+        const { lunchspaces } = data
+        const preferedSubdomain =
+          // has already selected a lunchspace
+          currentLunchspaceSubdomain() ||
+          // the user is in exactly one lunchspace, redirect diretly to the homepage
+          ((lunchspaces.length === 1) && lunchspaces[0])
+
+        if (preferedSubdomain) {
+          window.location = withLunchspaceSubdomain(
+            routeLocations.HOMEPAGE,
+            preferedSubdomain,
+            true
+          )
+        } else {
+          // the user has no lunchspaces or more than one, redirect to lunchspaces
+          window.location = routeLocations.LUNCHSPACES
+        }
       })
       .catch((error) => {
         this.setState({ error, lastError: error })
@@ -95,9 +108,6 @@ class Login extends React.Component {
             onSubmit={this.handleSubmit}
             className={classes.form}
           >
-            <Typography className={classes.title} variant="title">
-              Login
-            </Typography>
             <TextValidator
               name="email"
               label="Email"
@@ -107,7 +117,7 @@ class Login extends React.Component {
               onChange={this.handleChange('email')}
               validators={['required', 'isEmail']}
               errorMessages={[localizedStrings.fieldRequired, localizedStrings.invalidEmail]}
-              autoComplete="email"
+              autoComplete="username"
             />
             <TextValidator
               label="Password"
@@ -134,7 +144,7 @@ class Login extends React.Component {
                   color="secondary"
                   className={classes.button}
                   disabled={this.state.isLoading}
-                  href={toRegistration()}
+                  href={routeLocations.REGISTRATION}
                 >
                   {localizedStrings.signUp}
                 </Button>

@@ -8,6 +8,7 @@ async function passAdminRightsAndCheckForDeletion(userId, lunchspaceId, forceDel
       const [member] = await conn.execute('SELECT user_id AS userId From member_of WHERE is_admin = ? AND lunchspace_id = ?', [false, lunchspaceId])
       if (member[0]) {
         await conn.execute('UPDATE member_of SET is_admin = ? WHERE user_id = ? AND lunchspace_id = ?', [true, member[0].userId, lunchspaceId])
+        await conn.execute('UPDATE member_of SET is_admin = ? WHERE user_id = ? AND lunchspace_id = ?', [false, userId, lunchspaceId])
         return false
       }
       if (!forceDelete) {
@@ -34,7 +35,7 @@ async function leaveLunchspace(userId, lunchspaceId) {
 }
 
 async function deleteLunchspace(lunchspaceId) {
-  pool.execute('DELETE FROM lunchspace WHERE id = ?', [lunchspaceId])
+  await pool.execute('DELETE FROM lunchspace WHERE id = ?', [lunchspaceId])
 }
 
 async function leaveLunchspaceRoute(req, res) {
@@ -42,11 +43,13 @@ async function leaveLunchspaceRoute(req, res) {
   const { id } = req.lunchspace
   const { forceDelete } = req.body
   const toDelete = await passAdminRightsAndCheckForDeletion(userId, id, forceDelete)
-  await leaveLunchspace(userId, id)
-  await leaveEvents(userId, id)
+  const promiseArray = [
+    leaveLunchspace(userId, id), leaveEvents(userId, id),
+  ]
   if (toDelete) {
-    deleteLunchspace(id)
+    promiseArray.push(deleteLunchspace(id))
   }
+  await Promise.all(promiseArray)
   return res.status(200).json({})
 }
 

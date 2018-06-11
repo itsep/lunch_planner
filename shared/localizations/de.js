@@ -1,6 +1,7 @@
 const languageKey = 'de'
 const content = {
   productName: 'Lunchspace',
+  myLunchspaces: 'Meine Lunchspaces',
   // Localizable Errors
   authenticationError: 'Nicht authentifiziert. Bitte melde dich an.',
   authorizationError: 'Nicht authorisiert. Du hast nicht genug Rechte für diese Aktion.',
@@ -17,7 +18,7 @@ const content = {
   fieldRequired: 'Eingabe notwendig.',
   invalidEmail: 'Bitte geben sie eine gültige E-Mail-Adresse an.',
   illegalHyphen: '(-) darf weder am Anfang noch am Ende der Sudomain stehen.',
-  inputTooLong24: 'maximal 24 Zeichen',
+  invalidLength: 'Eingabe muss zwischen {minimumLength} und {maximumLength} Zeichen lang sein.',
   invalidToken: 'Die verwendete Einladung ist nicht mehr gültig.',
   lunchspaceDoesNotExist: 'Der angeforderte Lunchspace existiert nicht.',
 
@@ -26,11 +27,13 @@ const content = {
   accept: 'Akzeptieren',
 
   createLunchspace: 'Lunchspace erstellen',
+  lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} erfolgreich erstellt.',
   createLocation: 'Location erstellen',
   login: 'Anmelden',
   logout: 'Abmelden',
   today: 'Heute',
   signUp: 'Registrieren',
+  cancel: 'Abbrechen',
 }
 module.exports = {
   languageKey,

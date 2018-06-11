@@ -9,11 +9,13 @@ import { fetchPageData } from './actions'
 import ChangeDispatcher from './change_dispatcher'
 import HomepageApp from './components/homepage_app'
 import '../../style/main.scss'
+import { shouldUseDevelopmentSubdomainHandling, currentLunchspaceSubdomain } from '../../lib/lunchspace_subdomain'
 
 const lunchspaceSubdomain = 'vsf-experts-ma'
-
+const query = shouldUseDevelopmentSubdomainHandling() && { subdomain: currentLunchspaceSubdomain() }
 const socket = io({
   path: '/subscriber',
+  query,
   // transports: ['websocket'],
   extraHeaders: {
     subdomain: lunchspaceSubdomain,

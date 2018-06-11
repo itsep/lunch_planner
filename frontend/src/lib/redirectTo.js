@@ -1,4 +1,5 @@
-import { routeLocations, isOnWhitelist } from '../pages/route_locations'
+import withQuery from 'with-query'
+import routeLocations, { isOnWhitelist } from '../pages/route_locations'
 
 function getRedirectAndToken() {
   const result = {
@@ -11,26 +12,23 @@ function getRedirectAndToken() {
   return result
 }
 
-export function toLogin() {
+export function toRedirect(url) {
   const { token, redirect } = getRedirectAndToken()
   if (redirect && token && isOnWhitelist(redirect)) {
-    return `${routeLocations.LOGIN}?redirect=${redirect}&token=${token}`
+    return withQuery(url, {
+      redirect,
+      token,
+    })
   }
-  return routeLocations.LOGIN
+  return url
 }
 
-export function toRegistration() {
+export function returnFromRedirect() {
   const { token, redirect } = getRedirectAndToken()
   if (redirect && token && isOnWhitelist(redirect)) {
-    return `${routeLocations.REGISTRATION}?redirect=${redirect}&token=${token}`
-  }
-  return routeLocations.REGISTRATION
-}
-
-export function toRedirect() {
-  const { token, redirect } = getRedirectAndToken()
-  if (redirect && token && isOnWhitelist(redirect)) {
-    return `${redirect}?token=${token}`
+    return withQuery(redirect, {
+      token,
+    })
   }
   return routeLocations.HOMEPAGE
 }

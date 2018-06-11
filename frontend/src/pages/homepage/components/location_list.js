@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 import LocationItem from './location_item'
 import CreateLocation from './create_location'
-import localizedStrings from '../../../../../frontend/src/localization'
+import localizedStrings from '../../../localization'
 
 const mapStateToProps = state => ({
   locationsInLunchspace: state.locationsInLunchspace,

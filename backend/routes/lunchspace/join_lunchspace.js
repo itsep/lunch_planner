@@ -12,10 +12,11 @@ async function joinLunchspace(req, res) {
   const { wantsToJoin } = req.body
   const lunchspaceId = await checkTokenAndGetLunchspaceId(token)
   if (lunchspaceId) {
+    const promiseArray = [invalidateToken(token)]
     if (wantsToJoin) {
-      await connect(userId, lunchspaceId, false)
+      promiseArray.push(connect(userId, lunchspaceId, false))
     }
-    await invalidateToken(token)
+    await Promise.all(promiseArray)
   }
   res.status(200).json({})
 }

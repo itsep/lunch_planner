@@ -7,6 +7,7 @@
     "start-all": "concurrently --kill-others --names rest-api,subscriber \"npm run start-rest-api\" \"npm run start-subscriber\"",
     "start-rest-api": "node services/rest-api.js",
     "start-subscriber": "node services/subscriber.js",
+    "start-notifications": "node services/notifications.js",
     "test": "jest",
     "test-with-coverage": "jest --collectCoverage",
     "lint": "eslint .",
@@ -16,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apn": "^2.2.0",
     "await-to-js": "^2.0.1",
     "bcryptjs": "^2.4.0",
     "body-parser": "^1.18.2",
@@ -30,9 +32,9 @@
     "nodemailer": "^4.6.5",
     "redis": "^2.8.0",
     "redis-mock": "^0.24.0",
-    "uuid": "^3.2.1",
     "socket.io": "^2.1.1",
-    "socket.io-cookie-parser": "^1.0.0"
+    "socket.io-cookie-parser": "^1.0.0",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
