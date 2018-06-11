@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
-import { toEventTimeId } from 'shared/lib/event'
+import { toEventTimeId, nextEventTimeForDate, eventTimeSteps } from 'shared/lib/event'
 import TimeStamp from './time_stamp'
 
 const mapStateToProps = (state, props) => ({
@@ -52,6 +52,11 @@ const styles = theme => ({
   },
 })
 
+
+const firstTimeStamp = {
+  hour: 10,
+  minute: 10,
+}
 /*
 creates array with empty timestamps
  */
@@ -59,7 +64,7 @@ function defaultTimeStamps() {
   const timeStamps = []
   let timeInHours
   let counter = 0
-  for (timeInHours = 10; timeInHours < 18; timeInHours += 0.5) {
+  for (timeInHours = firstTimeStamp.hour; timeInHours < 18; timeInHours += 0.5) {
     const timeStamp = {
       key: counter,
       hour: Math.floor(timeInHours),
@@ -74,22 +79,37 @@ function defaultTimeStamps() {
 
 const timeStamps = defaultTimeStamps()
 
-function LocationItem({
-  id, location, classes,
-}) {
-  return (
-    <div className={classes.wrapper}>
-      <div>
-        <Button className={classes.locationTitle}>{location.name}</Button>
+
+class LocationItem extends React.Component {
+  constructor(props) {
+    super(props)
+    this.containerRef = React.createRef()
+  }
+  componentDidMount() {
+    const currentEventTime = nextEventTimeForDate(new Date())
+    const eventTimeStepsNeeded = eventTimeSteps(firstTimeStamp, currentEventTime)
+    this.containerRef.current.scrollLeft = LocationItem.width * eventTimeStepsNeeded
+  }
+  render() {
+    const {
+      id, location, classes,
+    } = this.props
+    return (
+      <div className={classes.wrapper}>
+        <div>
+          <Button className={classes.locationTitle}>{location.name}</Button>
+        </div>
+        <div className={classes.container} ref={this.containerRef}>
+          {timeStamps.map(timeStamp => (
+            <TimeStamp key={timeStamp.key} locationId={id} timeStamp={timeStamp} />
+          ))}
+        </div>
       </div>
-      <div className={classes.container}>
-        {timeStamps.map(timeStamp => (
-          <TimeStamp key={timeStamp.key} locationId={id} timeStamp={timeStamp} />
-      ))}
-      </div>
-    </div>
-  )
+    )
+  }
 }
+
+LocationItem.width = 86 + (22 * 2)
 
 LocationItem.propTypes = {
   id: PropTypes.number.isRequired,
