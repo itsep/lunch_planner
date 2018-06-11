@@ -38,6 +38,12 @@ function toEventDateFromString(dateString) {
     day: dateParts[2],
   }
 }
+function eventDateEqual(a, b) {
+  return a.day === b.day &&
+    a.month === b.month &&
+    a.year === b.year
+}
+
 
 const minuteSteps = 30
 const minuteStepsPerHour = 60 / minuteSteps
@@ -70,4 +76,5 @@ module.exports = {
   nextEventTimeForDate,
   eventTimeSteps,
   toEventDateFromMoment,
+  eventDateEqual,
 }

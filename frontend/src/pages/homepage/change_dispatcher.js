@@ -1,4 +1,4 @@
-import { toEventDateFromMoment } from 'shared/lib/event'
+import { toEventDateFromMoment, eventDateEqual } from 'shared/lib/event'
 import { addParticipant, removeParticipant, addLocation } from './actions'
 
 export default class ChangeDispatcher {
@@ -46,7 +46,14 @@ export default class ChangeDispatcher {
     }
   }
   onChange(message) {
-    // TODO: check if message is still relevant for currentDate
+
+    if (message.eventDate) {
+      const currentEventDate = toEventDateFromMoment(this.currentDate)
+      if (!eventDateEqual(message.eventDate, currentEventDate)) {
+        // message is from a previous subscription
+        return
+      }
+    }
     const action = ChangeDispatcher.actionForMessage(message)
     if (action) {
       this.store.dispatch(action)
