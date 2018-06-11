@@ -3,14 +3,8 @@ import { parseSubdomainFromHost } from 'shared/lib/subdomain'
 
 const applicationDomain = 'mylunch.space'
 
-function topLevelDomainFromHost(hostname) {
-  const domainParts = hostname.split('.')
-  return domainParts[domainParts.length - 1]
-}
-
 export function shouldUseDevelopmentSubdomainHandling() {
-  return window.location.hostname === 'localhost' ||
-    topLevelDomainFromHost(window.location.hostname) === 'local'
+  return window.location.hostname !== applicationDomain
 }
 
 export function domainForLunchspace(subdomain) {
