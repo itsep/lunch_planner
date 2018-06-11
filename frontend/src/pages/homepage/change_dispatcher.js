@@ -46,7 +46,6 @@ export default class ChangeDispatcher {
     }
   }
   onChange(message) {
-
     if (message.eventDate) {
       const currentEventDate = toEventDateFromMoment(this.currentDate)
       if (!eventDateEqual(message.eventDate, currentEventDate)) {
