@@ -22,6 +22,8 @@ accountRouter.put('/change_name', authenticateRequest, getUser, asyncHandler(cha
 
 accountRouter.put('/change_password', authenticateRequest, getUser, asyncHandler(changePassword))
 
+accountRouter.post('/upload_picture', authenticateRequest, asyncHandler())
+
 module.exports = {
   router: accountRouter,
 }
