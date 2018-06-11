@@ -13,12 +13,12 @@ const types = [
   UnknownError,
   NeedsUserConfirmation,
 ]
-const nameToTypeMap = {}
-types.forEach((errorType) => {
-  nameToTypeMap[errorType.name] = errorType
-})
+
+function getNameForType(name) {
+  return types.find(errorType => errorType.name === name)
+}
 
 module.exports = {
   types,
-  nameToTypeMap,
+  getNameForType,
 }
