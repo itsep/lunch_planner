@@ -21,6 +21,7 @@ const content = {
   invalidLength: 'Eingabe muss zwischen {minimumLength} und {maximumLength} Zeichen lang sein.',
   invalidToken: 'Die verwendete Einladung ist nicht mehr gültig.',
   lunchspaceDoesNotExist: 'Der angeforderte Lunchspace existiert nicht.',
+  emailAlreadyRegistered: 'Ein Account mit der Email {email} existiert bereits.',
 
   createLunchspace: 'Lunchspace erstellen',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} erfolgreich erstellt.',
@@ -30,6 +31,8 @@ const content = {
   today: 'Heute',
   signUp: 'Registrieren',
   cancel: 'Abbrechen',
+  participants: 'Teilnehmer',
+  close: 'Schließen',
 }
 module.exports = {
   languageKey,
