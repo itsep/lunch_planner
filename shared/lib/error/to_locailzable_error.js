@@ -1,6 +1,6 @@
 const { LocalizableError } = require('./localizable_error')
 const { UnknownError } = require('./unknown_error')
-const { getNameForType } = require('./types')
+const { identifierToTypeMap } = require('./types')
 
 
 function toLocalizableError(errorObject) {
@@ -23,7 +23,7 @@ function toLocalizableError(errorObject) {
   }
 
   // can be converted to an localizable error type
-  const localizableType = getNameForType(errorObject.name)
+  const localizableType = identifierToTypeMap[errorObject.identifier]
   if (localizableType) {
     return localizableType.fromErrorObject(errorObject)
   }
