@@ -121,3 +121,4 @@ FROM join_up_at
 JOIN user ON join_up_at.user_id = user.id
 JOIN location ON join_up_at.location_id = location.id
 ORDER BY join_up_at.join_timestamp DESC;
+
