@@ -59,7 +59,7 @@ class HomepageApp extends Component {
   }
   render() {
     const {
-      user, lunchspace, fetchLogoutAction, participantIds, show, closeDialog, classes
+      user, lunchspace, fetchLogoutAction, participantIds, show, closeDialog, classes,
     } = this.props
     if (isDefinitelyNotAuthenticated()) {
       window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
