@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { connect } from 'react-redux'
 import { toEventTimeId, nextEventTimeForDate, eventTimeSteps } from 'shared/lib/event'
 import TimeStamp from './time_stamp'
-import localizedStrings from '../../../localization'
+import localizedStrings from '../../../lib/localization'
 import { fetchDeleteLocation } from '../actions'
 
 const mapStateToProps = (state, props) => ({

@@ -23,9 +23,7 @@ export default class ChangeDispatcher {
           message.locationId
         )
       case 'removeLocation':
-        return removeLocation(
-          message.locationId,
-        )
+        return removeLocation(message.locationId)
       default:
         return null
     }
