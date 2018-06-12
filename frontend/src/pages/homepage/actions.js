@@ -29,6 +29,13 @@ export function addLocation(locationName, locationId) {
   }
 }
 
+export function removeLocation(locationId) {
+  return {
+    type: actionTypes.REMOVE_LOCATION,
+    locationId,
+  }
+}
+
 export function setError(error) {
   return {
     type: actionTypes.SET_ERROR,
@@ -61,6 +68,17 @@ export function fetchCreateLocation(locationName, lunchspace) {
     },
   }).then(({ data }) => dispatch(addLocation(locationName, data.locationId)))
     .catch(error => dispatch(setError(error)))
+}
+
+export function fetchDeleteLocation(locationId) {
+  // TODO: remove force delete and handle delete with care
+  return dispatch => apiFetch('/api/location', {
+    method: 'DELETE',
+    body: {
+      locationId,
+      forceDelete: true,
+    },
+  }).catch(error => dispatch(setError(error)))
 }
 
 export function fetchLogout() {

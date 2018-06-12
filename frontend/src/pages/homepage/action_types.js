@@ -6,6 +6,7 @@ const homepageActionTypes = {
 
   // LOCATION
   ADD_LOCATION: Symbol('homepage/ADD_LOCATION'),
+  REMOVE_LOCATION: Symbol('/homepage/REMOVE_LOCATION'),
 
   // ERROR HANDLING
   SET_ERROR: Symbol('homepage/SET_ERROR'),
