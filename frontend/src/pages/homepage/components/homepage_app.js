@@ -44,20 +44,19 @@ const mapDispatchToProps = dispatch => ({
 
 
 class HomepageApp extends Component {
-  componentDidMount() {
-    if (isDefinitelyNotAuthenticated()) {
-      window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
-    }
-    if (this.props.lunchspace.name === {}) {
-      window.location = routeLocations.LUNCHSPACES
-    }
+  noLunchspaceChoosen() {
+    return JSON.stringify(this.props.lunchspace) === JSON.stringify({})
   }
-
   render() {
     const {
       user, lunchspace, fetchLogoutAction, participantIds, show, closeDialog,
     } = this.props
-
+    if (isDefinitelyNotAuthenticated()) {
+      window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
+    }
+    if (this.noLunchspaceChoosen()) {
+      return <div />
+    }
     return (
       <CommonAppContainer>
         <AuthorizedHeaderBar title={lunchspace.name || ''} user={user} logout={fetchLogoutAction} />

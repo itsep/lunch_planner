@@ -4,6 +4,7 @@ import { currentLunchspaceSubdomain } from '../../lib/lunchspace_subdomain'
 import actionTypes from './action_types'
 import apiFetch from '../../lib/api_fetch'
 import { logout } from '../../lib/authentication'
+import routeLocations from "../route_locations"
 
 export function addParticipant(eventTime, locationId, participant) {
   return {
@@ -122,7 +123,13 @@ export function fetchPageData(date) {
         dispatch(receivePageData(data))
       })
       // TODO: handle error by dispatching an error action
-      .catch(error => console.error(error))
+      .catch((error) => {
+        if (error.status === 409) {
+          window.location = routeLocations.LUNCHSPACES
+        } else {
+          console.error(error)
+        }
+      })
   }
 }
 
