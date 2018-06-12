@@ -14,6 +14,13 @@ export function addParticipant(eventTime, locationId, participant) {
   }
 }
 
+export function setLunchspaces(lunchspaces) {
+  return {
+    type: actionTypes.SET_LUNCHSPACES,
+    lunchspaces,
+  }
+}
+
 function createLocation(name, id) {
   return {
     id,
@@ -110,7 +117,10 @@ export function fetchPageData(date) {
   return (dispatch) => {
     dispatch(requestPageData())
     return apiFetch(withQuery('/api/location/', { date: date.toISOString().substring(0, 10) }))
-      .then(({ data }) => dispatch(receivePageData(data)))
+      .then(({ data }) => {
+        dispatch(setLunchspaces(data.lunchspaces))
+        dispatch(receivePageData(data))
+      })
       // TODO: handle error by dispatching an error action
       .catch(error => console.error(error))
   }
