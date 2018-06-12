@@ -48,6 +48,9 @@ class HomepageApp extends Component {
     if (isDefinitelyNotAuthenticated()) {
       window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
     }
+    if (this.props.lunchspace.name === {}) {
+      window.location = routeLocations.LUNCHSPACES
+    }
   }
 
   render() {

@@ -1,5 +1,8 @@
 const homepageActionTypes = {
 
+  // LUNCHSPACES
+  SET_LUNCHSPACES: Symbol('homepage/SET_LUNCHSPACES'),
+
   // USER
   ADD_PARTICIPANT: Symbol('homepage/ADD_PARTICIPANT'),
   REMOVE_PARTICIPANT: Symbol('homepage/REMOVE_PARTICIPANT'),

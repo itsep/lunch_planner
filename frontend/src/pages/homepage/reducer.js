@@ -24,7 +24,14 @@ function reduceLunchspace(lunchspace = initialState.lunchspace, action) {
       return lunchspace
   }
 }
-
+function reduceLunchspaces(lunchspaces = initialState.lunchspaces, action) {
+  switch (action.type) {
+    case actionTypes.SET_LUNCHSPACES:
+      return action.lunchspaces
+    default:
+      return lunchspaces
+  }
+}
 function reduceUser(user = initialState.user, action) {
   switch (action.type) {
     case actionTypes.RECEIVE_PAGE_DATA:
@@ -187,6 +194,7 @@ const reducer = combineReducers({
   locations: reduceLocations,
   locationsInLunchspace: reduceLocationsInLunchspace,
   users: reduceUsers,
+  lunchspaces: reduceLunchspaces,
   isLoadingLocations: reduceIsLoadingLocations,
   selectedEvent: reduceSelectedEvent,
 })
