@@ -88,7 +88,7 @@ class Registration extends React.Component {
           // has already selected a lunchspace
           currentLunchspaceSubdomain() ||
           // the user is in exactly one lunchspace, redirect diretcly to the homepage
-          ((lunchspaces.length === 1) && lunchspaces[0])
+          (lunchspaces && (lunchspaces.length === 1) && lunchspaces[0])
 
         if (preferedSubdomain) {
           window.location = withLunchspaceSubdomain(
@@ -102,6 +102,7 @@ class Registration extends React.Component {
         }
       })
       .catch((error) => {
+        console.log(error)
         this.setState({ error, lastError: error })
       })
       .finally(() => {

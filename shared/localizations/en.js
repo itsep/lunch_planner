@@ -25,6 +25,7 @@ const content = {
 
   joinLunchspace: 'You got invited to {lunchspaceName}!',
   notYou: 'Not you?',
+  invalidInvitationLink: 'Invitation link is invalid',
   accept: 'Accept',
 
   createLunchspace: 'Create Lunchspace',

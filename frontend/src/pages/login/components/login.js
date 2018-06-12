@@ -145,7 +145,7 @@ class Login extends React.Component {
                   color="secondary"
                   className={classes.button}
                   disabled={this.state.isLoading}
-                  href={routeLocations.REGISTRATION}
+                  href={redirectTo(routeLocations.REGISTRATION)}
                 >
                   {localizedStrings.signUp}
                 </Button>

@@ -73,13 +73,16 @@ class JoinLunchspace extends Component {
     apiFetch(apiUrlString, {
       method: 'GET',
     }).then(({ data }) => {
-      this.setState({
-        user: {
-          firstName: data.firstName,
-          lastName: data.lastName,
-        },
-        lunchspaceName: data.lunchspaceName,
-      })
+      console.log(data)
+      if (data) {
+        this.setState({
+          user: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+          },
+          lunchspaceName: data.lunchspaceName,
+        })
+      }
     }).catch((error) => {
       this.setState({ error, lastError: error })
     }).finally(() => {
@@ -126,6 +129,10 @@ class JoinLunchspace extends Component {
     })
   }
 
+  isTokenInvalid() {
+    return !this.state.user || !this.state.lunchspaceName
+  }
+
   render() {
     const { classes } = this.props
     if (!document.cookie) {
@@ -138,7 +145,16 @@ class JoinLunchspace extends Component {
         </div>
       )
     }
-    if (this.state.error || !this.state.user || this.state.lunchspaceName) {
+    if (this.isTokenInvalid()) {
+      return (
+        <Dialog open>
+          <DialogTitle id="alert-dialog-title">
+            {localizedStrings.invalidInvitationLink}
+          </DialogTitle>
+        </Dialog>
+      )
+    }
+    if (this.state.error) {
       return (
         <Dialog open onClose={this.handleCloseError}>
           <DialogTitle id="alert-dialog-title">
