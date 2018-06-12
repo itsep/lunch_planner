@@ -117,32 +117,28 @@ export function fetchPageData(date) {
 }
 
 export function joinEvent(locationId, eventTime, eventDate, participant) {
-  return (dispatch) => {
-    apiFetch('/api/event', {
-      method: 'PUT',
-      body: {
-        locationId,
-        eventTime,
-        eventDate,
-      },
-    }).then(() => dispatch(addParticipant(eventTime, locationId, participant)))
-      // TODO: handle error by dispatching an error action
-      .catch(error => console.error(error))
-  }
+  return dispatch => apiFetch('/api/event', {
+    method: 'PUT',
+    body: {
+      locationId,
+      eventTime,
+      eventDate,
+    },
+  }).then(() => dispatch(addParticipant(eventTime, locationId, participant)))
+    // TODO: handle error by dispatching an error action
+    .catch(error => console.error(error))
 }
 export function leaveEvent(locationId, eventTime, eventDate, participant) {
-  return (dispatch) => {
-    apiFetch('/api/event', {
-      method: 'DELETE',
-      body: {
-        locationId,
-        eventTime,
-        eventDate,
-      },
-    }).then(() => dispatch(removeParticipant(eventTime, locationId, participant)))
-      // TODO: handle error by dispatching an error action
-      .catch(error => console.error(error))
-  }
+  return dispatch => apiFetch('/api/event', {
+    method: 'DELETE',
+    body: {
+      locationId,
+      eventTime,
+      eventDate,
+    },
+  }).then(() => dispatch(removeParticipant(eventTime, locationId, participant)))
+  // TODO: handle error by dispatching an error action
+    .catch(error => console.error(error))
 }
 
 export function openEventDialog(locationId, eventTimeId, selectedUserId) {
