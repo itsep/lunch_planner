@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withStyles } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
 import LocationList from './location_list'
 import routeLocations from '../../route_locations'
@@ -42,22 +44,33 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
+const styles = () => ({
+  loadingContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '60vh',
+  },
+})
 
 class HomepageApp extends Component {
-  componentDidMount() {
+  noLunchspaceChoosen() {
+    return JSON.stringify(this.props.lunchspace) === JSON.stringify({})
+  }
+  render() {
+    const {
+      user, lunchspace, fetchLogoutAction, participantIds, show, closeDialog, classes,
+    } = this.props
     if (isDefinitelyNotAuthenticated()) {
       window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
     }
-    if (this.props.lunchspace.name === {}) {
-      window.location = routeLocations.LUNCHSPACES
+    if (this.noLunchspaceChoosen()) {
+      return (
+        <div className={classes.loadingContainer}>
+          <CircularProgress size="72px" />
+        </div>
+      )
     }
-  }
-
-  render() {
-    const {
-      user, lunchspace, fetchLogoutAction, participantIds, show, closeDialog,
-    } = this.props
-
     return (
       <CommonAppContainer>
         <AuthorizedHeaderBar title={lunchspace.name || ''} user={user} logout={fetchLogoutAction} />
@@ -70,6 +83,7 @@ class HomepageApp extends Component {
 }
 
 HomepageApp.propTypes = {
+  classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   lunchspace: PropTypes.object.isRequired,
   fetchLogoutAction: PropTypes.func.isRequired,
@@ -78,4 +92,4 @@ HomepageApp.propTypes = {
   closeDialog: PropTypes.func.isRequired,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomepageApp)
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(HomepageApp))
