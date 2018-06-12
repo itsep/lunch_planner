@@ -28,4 +28,5 @@ async function deleteLocation(req, res) {
 
 module.exports = {
   deleteLocation,
+  checkForFutureEvents,
 }
