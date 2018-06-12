@@ -2,8 +2,6 @@
 # exit on error of first command
 set -e
 
-NODE_ENV=production
-
 # update current branch
 git pull
 # install dependencies
@@ -16,4 +14,4 @@ npm run deploy --prefix=frontend
 
 # stop current backend and start new one
 cd ./backend
-pm2 startOrReload ecosystem.config.js --env=producation
+pm2 startOrReload ecosystem.config.js --env=production

@@ -11,15 +11,11 @@ import HomepageApp from './components/homepage_app'
 import '../../style/main.scss'
 import { shouldUseDevelopmentSubdomainHandling, currentLunchspaceSubdomain } from '../../lib/lunchspace_subdomain'
 
-const lunchspaceSubdomain = 'vsf-experts-ma'
 const query = shouldUseDevelopmentSubdomainHandling() && { subdomain: currentLunchspaceSubdomain() }
 const socket = io({
   path: '/subscriber',
   query,
   // transports: ['websocket'],
-  extraHeaders: {
-    subdomain: lunchspaceSubdomain,
-  },
 })
 
 const store = createStore(
@@ -29,7 +25,7 @@ const store = createStore(
 // eslint-disable-next-line no-unused-vars
 const subscriber = new ChangeDispatcher(socket, store)
 
-store.dispatch(fetchPageData(lunchspaceSubdomain, store.getState().currentDate))
+store.dispatch(fetchPageData(store.getState().currentDate))
 
 render(
   <Provider store={store}>

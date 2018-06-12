@@ -8,8 +8,13 @@ reducer should get split to multiple reducer and then with combine(reducerList) 
 so its easier to search for an statechange
  */
 
-function reduceCurrentDate(currentDate = initialState.currentDate) {
-  return currentDate
+function reduceCurrentDate(currentDate = initialState.currentDate, action) {
+  switch (action.type) {
+    case actionTypes.CHANGE_DATE:
+      return action.date
+    default:
+      return currentDate
+  }
 }
 function reduceLunchspace(lunchspace = initialState.lunchspace, action) {
   switch (action.type) {
