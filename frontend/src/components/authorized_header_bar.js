@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import UserAvatar from './user_avatar'
-import localizedStrings from '../localization'
+import localizedStrings from '../lib/localization'
 import { logout } from '../lib/authentication'
 import { headerBarClassName } from '../lib/ios_native'
 

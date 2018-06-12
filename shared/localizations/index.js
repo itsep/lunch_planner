@@ -1,10 +1,10 @@
-const de = require('./de')
 const en = require('./en')
+const de = require('./de')
 
-const localisations = [de, en]
+const localisations = [en, de]
 const languageKeyToLocalisationMap = {}
 localisations.forEach((localisation) => {
-  languageKeyToLocalisationMap[localisation.key] = localisation.content
+  languageKeyToLocalisationMap[localisation.languageKey] = localisation.content
 })
 
 module.exports = {

@@ -32,7 +32,7 @@ async function leaveEventRoute(req, res) {
   await leaveEvent(userId, locationId, eventTimeSQL, eventDateSQL)
 
   const { id: lunchspaceId } = req.lunchspace
-  const { fistName, lastName, imageUrl } = await req.userPromise
+  const { firstName, lastName, imageUrl } = await req.userPromise
   req.publishClient.publish(
     joinUpAt(lunchspaceId, locationId, toEventDateId(eventDate), toEventTimeId(eventTime)),
     {
@@ -42,7 +42,7 @@ async function leaveEventRoute(req, res) {
       eventTime,
       participant: {
         userId,
-        fistName,
+        firstName,
         lastName,
         imageUrl,
       },

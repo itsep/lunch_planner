@@ -5,7 +5,7 @@ import ArrowBack from '@material-ui/icons/ArrowBack'
 import ArrowForward from '@material-ui/icons/ArrowForward'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import { previousDay, nextDay } from '../actions'
+import { previousDay, nextDay, resetDateToToday } from '../actions'
 
 
 const styles = () => ({
@@ -31,10 +31,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   previousDayAction: () => dispatch(previousDay()),
   nextDayAction: () => dispatch(nextDay()),
+  resetDateToTodayAction: () => dispatch(resetDateToToday()),
 })
 
 function DateBar({
-  classes, previousDayAction, nextDayAction, currentDate,
+  classes, previousDayAction, nextDayAction, currentDate, resetDateToTodayAction,
 }) {
   return (
     <div className={classes.flexContainer}>
@@ -50,15 +51,9 @@ function DateBar({
         color="primary"
         size="large"
         className={classes.button}
+        onClick={resetDateToTodayAction}
       >
-        {currentDate.calendar(null, {
-          lastDay: '[Yesterday]',
-          sameDay: '[Today]',
-          nextDay: '[Tomorrow]',
-          lastWeek: '[last] dddd',
-          nextWeek: 'dddd',
-          sameElse: 'L',
-        })}
+        {currentDate.calendar()}
       </Button>
       <Button
         color="default"
@@ -76,6 +71,7 @@ DateBar.propTypes = {
   classes: PropTypes.object.isRequired,
   previousDayAction: PropTypes.func.isRequired,
   nextDayAction: PropTypes.func.isRequired,
+  resetDateToTodayAction: PropTypes.func.isRequired,
   currentDate: PropTypes.object.isRequired,
 }
 

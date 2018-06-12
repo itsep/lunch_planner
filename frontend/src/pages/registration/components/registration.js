@@ -11,8 +11,8 @@ import FormSection from 'components/form_section'
 import redirectTo from 'lib/redirectTo'
 import { currentLunchspaceSubdomain, withLunchspaceSubdomain } from 'lib/lunchspace_subdomain'
 import apiFetch from '../../../lib/api_fetch'
-import localizedStrings from '../../../localization'
 import routeLocations from '../../route_locations'
+import localizedStrings from '../../../lib/localization'
 
 const styles = theme => ({
   form: {

@@ -30,7 +30,7 @@ async function joinEventRoute(req, res) {
   await joinEvent(userId, locationId, eventTimeSQL, eventDateSQL)
 
   const { id: lunchspaceId } = req.lunchspace
-  const { fistName, lastName, imageUrl } = await req.userPromise
+  const { firstName, lastName, imageUrl } = await req.userPromise
   req.publishClient.publish(
     joinUpAt(lunchspaceId, locationId, toEventDateId(eventDate), toEventTimeId(eventTime)),
     {
@@ -40,7 +40,7 @@ async function joinEventRoute(req, res) {
       eventTime,
       participant: {
         userId,
-        fistName,
+        firstName,
         lastName,
         imageUrl,
       },
