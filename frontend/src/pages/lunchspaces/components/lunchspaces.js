@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
 import apiFetch from '../../../lib/api_fetch'
-import localizedStrings from '../../../localization'
+import localizedStrings from '../../../lib/localization'
 import { currentLunchspaceSubdomain, domainForLunchspace, withLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
 import routeLocations from '../../route_locations'
 

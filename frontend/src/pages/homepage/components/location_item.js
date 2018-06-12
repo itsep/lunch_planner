@@ -55,7 +55,7 @@ const styles = theme => ({
 
 const firstTimeStamp = {
   hour: 10,
-  minute: 10,
+  minute: 0,
 }
 /*
 creates array with empty timestamps
@@ -81,6 +81,12 @@ const timeStamps = defaultTimeStamps()
 
 
 class LocationItem extends React.Component {
+  static currentWidth() {
+    if (window.innerWidth >= 960) {
+      return this.normalWidth
+    }
+    return this.smallWidth
+  }
   constructor(props) {
     super(props)
     this.containerRef = React.createRef()
@@ -91,7 +97,7 @@ class LocationItem extends React.Component {
   scrollToCurrentTime() {
     const currentEventTime = nextEventTimeForDate(new Date())
     const eventTimeStepsNeeded = eventTimeSteps(firstTimeStamp, currentEventTime)
-    this.containerRef.current.scrollLeft = LocationItem.width * eventTimeStepsNeeded
+    this.containerRef.current.scrollLeft = LocationItem.currentWidth() * eventTimeStepsNeeded
   }
   render() {
     const {
@@ -112,7 +118,8 @@ class LocationItem extends React.Component {
   }
 }
 
-LocationItem.width = 86 + (22 * 2)
+LocationItem.normalWidth = 86 + (22 * 2)
+LocationItem.smallWidth = 64 + (14 * 2)
 
 LocationItem.propTypes = {
   id: PropTypes.number.isRequired,
