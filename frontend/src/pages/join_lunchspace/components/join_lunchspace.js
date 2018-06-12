@@ -15,6 +15,7 @@ import localizedStrings from '../../../localization'
 import apiFetch from '../../../lib/api_fetch'
 import UnauthorizedHeaderBar from '../../../components/unauthorized_header_bar'
 import routeLocations from '../../route_locations'
+import { withLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
 
 const styles = theme => ({
   loadingWrapper: {
@@ -105,8 +106,12 @@ class JoinLunchspace extends Component {
       body: JSON.stringify({
         wantsToJoin: true,
       }),
-    }).then(() => {
-      window.location = redirectTo(routeLocations.HOMEPAGE)
+    }).then((subdomain) => {
+      window.location = withLunchspaceSubdomain(
+        redirectTo(routeLocations.HOMEPAGE),
+        subdomain,
+        true
+      )
     }).catch((error) => {
       this.setState({ error, lastError: error })
     }).finally(() => {
@@ -129,7 +134,7 @@ class JoinLunchspace extends Component {
   }
 
   isTokenInvalid() {
-    return !this.state.user || !this.state.lunchspaceName
+    return (!this.state.user || !this.state.lunchspaceName)
   }
 
   render() {
