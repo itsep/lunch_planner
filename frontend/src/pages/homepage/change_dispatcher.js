@@ -1,5 +1,5 @@
 import { toEventDateFromMoment, eventDateEqual } from 'shared/lib/event'
-import { addParticipant, removeParticipant, addLocation } from './actions'
+import { addParticipant, removeParticipant, addLocation, removeLocation } from './actions'
 
 export default class ChangeDispatcher {
   static actionForMessage(message) {
@@ -21,6 +21,10 @@ export default class ChangeDispatcher {
         return addLocation(
           message.name,
           message.locationId
+        )
+      case 'removeLocation':
+        return removeLocation(
+          message.locationId,
         )
       default:
         return null

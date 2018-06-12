@@ -66,18 +66,17 @@ class Registration extends React.Component {
     const {
       email, password, firstName, lastName,
     } = this.state
-    const data = {
-      firstName, lastName, email, password,
-    }
     this.setState({
       isLoading: true,
       error: null,
     })
     apiFetch('/api/account', {
       method: 'POST',
-      body: data,
+      body: {
+        firstName, lastName, email, password,
+      },
     })
-      .then(() => {
+      .then(({ data }) => {
         this.setState({
           loggedIn: true,
         })
