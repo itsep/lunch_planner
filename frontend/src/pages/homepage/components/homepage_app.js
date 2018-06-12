@@ -13,6 +13,7 @@ import { isDefinitelyNotAuthenticated } from '../../../lib/authentication'
 import { closeEventDialog, fetchLogout } from '../actions'
 import { withLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
 import EventDetailsDialog from './event_details_dialog'
+import InviteteToCurrentLunchspace from './invite_to_current_lunchspace'
 
 const noParticipants = []
 const noSelectedEvent = {}
@@ -57,13 +58,28 @@ const styles = () => ({
 })
 
 class HomepageApp extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      showInvite: false,
+    }
+    this.openInvite = this.openInvite.bind(this)
+    this.closeInvite = this.closeInvite.bind(this)
+  }
   componentDidMount() {
     if (isDefinitelyNotAuthenticated()) {
       window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
     }
   }
-  onShare() {
-    console.log('share')
+  openInvite() {
+    this.setState({
+      showInvite: true,
+    })
+  }
+  closeInvite() {
+    this.setState({
+      showInvite: false,
+    })
   }
   render() {
     const {
@@ -73,11 +89,15 @@ class HomepageApp extends Component {
     return (
       <CommonAppContainer>
         <AuthorizedHeaderBar title={lunchspace.name || ''} user={user} logout={fetchLogoutAction}>
-          <Share className={classes.sharedButton} onClick={this.onShare} />
+          <Share className={classes.sharedButton} onClick={this.openInvite} />
           <Typography variant="title" color="inherit" className={classes.title}>
             { lunchspace.name }
           </Typography>
         </AuthorizedHeaderBar>
+        <InviteteToCurrentLunchspace
+          show={this.state.showInvite}
+          onClose={this.closeInvite}
+        />
         <DateBar />
         <LocationList />
         <EventDetailsDialog participantIds={participantIds} show={show} onClose={closeDialog} />

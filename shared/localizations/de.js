@@ -25,6 +25,8 @@ const content = {
 
   joinLunchspaceTitle: 'Lunchspace beitreten',
   joinLunchspace: 'Du wurdest zum {lunchspaceName} eingeladen!',
+  inviteToCurrentLunchspace: 'Einladen zum Lunchspace {lunchspaceName}',
+  invitationSent: 'Einladung gesendet.',
   notYou: 'Nicht du?',
   invalidInvitationLink: 'Einladungs Link ist ungültig',
   accept: 'Akzeptieren',
@@ -32,6 +34,7 @@ const content = {
   createLunchspace: 'Lunchspace erstellen',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} erfolgreich erstellt.',
   createLocation: 'Location erstellen',
+  invite: 'Einladen',
   delete: 'Löschen',
   login: 'Anmelden',
   logout: 'Abmelden',

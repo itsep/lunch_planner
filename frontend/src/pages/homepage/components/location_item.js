@@ -112,7 +112,6 @@ class LocationItem extends React.Component {
   openMenu(event) {
     this.setState({ anchorEl: event.currentTarget })
   }
-
   handleMenuClose() {
     this.setState({ anchorEl: null })
   }
