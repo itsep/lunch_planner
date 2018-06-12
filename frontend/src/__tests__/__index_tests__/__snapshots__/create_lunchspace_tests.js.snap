@@ -182,7 +182,7 @@ exports[`Create Lunchspace renders correctly 1`] = `
       >
         Lunchspace 
         <a
-          href="//.mylunch.space/homepage.html"
+          href="/homepage.html?subdomain="
         >
           
         </a>

@@ -21,6 +21,7 @@ const content = {
   invalidLength: 'Input must be between {minimumLength} and {maximumLength} characters long.',
   invalidToken: 'This invitation is no longer valid.',
   lunchspaceDoesNotExist: 'The requested Lunchspace does not exist.',
+  emailAlreadyRegistered: 'An account with the email {email} does already exists.',
 
   joinLunchspace: 'You got invited to {lunchspaceName}!',
   notYou: 'Not you?',
@@ -34,6 +35,8 @@ const content = {
   today: 'Today',
   signUp: 'Sign Up',
   cancel: 'Cancel',
+  participants: 'Participants',
+  close: 'Close',
 }
 module.exports = {
   languageKey,

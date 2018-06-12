@@ -3,7 +3,9 @@ const { AuthorizationError } = require('./authorization_error')
 const { AuthenticationError } = require('./authentication_error')
 const { InputValidationError } = require('./input_validation_error')
 const { UnknownError } = require('./unknown_error')
+const { NeedsUserConfirmation } = require('./needs_user_confirmation')
 const { toLocalizableError } = require('./to_locailzable_error')
+
 
 describe('toLocalizableError', () => {
   it('should transform arguments which are not objects to `UnknownError`s', () => {
@@ -34,6 +36,8 @@ describe('toLocalizableError', () => {
       .toBeInstanceOf(AuthorizationError)
     expect(toLocalizableError(new InputValidationError('password', 'invalid password').toResponse()))
       .toBeInstanceOf(InputValidationError)
+    expect(toLocalizableError(new NeedsUserConfirmation().toResponse()))
+      .toBeInstanceOf(NeedsUserConfirmation)
   })
   it('should transform an Object with an unknown error name to an UnknownError', () => {
     expect(toLocalizableError({ name: 'some error name that will never exists' })).toBeInstanceOf(UnknownError)
