@@ -26,7 +26,7 @@ function returnFromRedirect() {
 export default function redirectTo(url) {
   const { token, redirect } = getRedirectAndToken()
   if (redirect && token && isOnWhitelist(redirect)) {
-    if (url === routeLocations.LOGIN || url === routeLocations.REGISTRATION){
+    if (url === routeLocations.LOGIN || url === routeLocations.REGISTRATION) {
       return withQuery(url, {
         redirect,
         token,

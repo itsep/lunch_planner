@@ -9,10 +9,10 @@ import Typography from '@material-ui/core/Typography'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
 import redirectTo from 'lib/redirectTo'
+import { currentLunchspaceSubdomain, withLunchspaceSubdomain } from 'lib/lunchspace_subdomain'
 import apiFetch from '../../../lib/api_fetch'
 import localizedStrings from '../../../localization'
 import routeLocations from '../../route_locations'
-import {currentLunchspaceSubdomain, withLunchspaceSubdomain} from "lib/lunchspace_subdomain"
 
 const styles = theme => ({
   form: {

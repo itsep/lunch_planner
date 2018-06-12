@@ -7,6 +7,10 @@ const { InputValidationError } = require('../../../shared/lib/error')
 
 const testLunchspaceName = 'testLunchspace'
 const testLunchspaceSubdomain = 'test-lunchspace'
+const testLunchspace = {
+  name: testLunchspaceName,
+  subdomain: testLunchspaceSubdomain,
+}
 const testEmail = 'noreply.lunchspace@gmail.com'
 const testFirstName = 'Max'
 const testLastName = 'Mustermann'
@@ -32,11 +36,13 @@ describe('check_invitation', () => {
     })
   })
   describe('getLunchspaceNameAndSubdomain', () => {
-    it('should return the name of testLunchspace', async () => {
-      await expect(getLunchspaceNameAndSubdomain(lunchspaceId)).resolves.toEqual(testLunchspaceName)
+    it('should return the name and subdomain of testLunchspace', async () => {
+      await expect(getLunchspaceNameAndSubdomain(lunchspaceId))
+        .resolves.toEqual(testLunchspace)
     })
     it('should return undefined', async () => {
-      await expect(getLunchspaceNameAndSubdomain(notALunchspaceId)).rejects.toThrowError(InputValidationError)
+      await expect(getLunchspaceNameAndSubdomain(notALunchspaceId))
+        .rejects.toThrowError(InputValidationError)
     })
   })
   describe('checkInvitation', () => {
@@ -56,7 +62,7 @@ describe('check_invitation', () => {
       expect(result).toMatchObject({
         firstName: testFirstName,
         lastName: testLastName,
-        lunchspaceName: testLunchspaceName,
+        lunchspace: testLunchspace,
       })
     })
     it('should reject to InputValidationError', async () => {
