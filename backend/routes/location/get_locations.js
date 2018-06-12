@@ -2,8 +2,14 @@ const { pool } = require('../../lib/database')
 
 async function getLocationsAndParticipants(lunchspaceId, eventDate) {
   const { locations, participants } = await pool.useConnection(async (conn) => {
+    // selects all locations in a lunchspace and orders them joined user count
+    // only joins are taking into account which are at the given `eventDate`
     // eslint-disable-next-line no-shadow
-    const [locations] = await conn.execute('SELECT id, name, coordinates FROM location WHERE lunchspace_id = ?', [lunchspaceId])
+    const [locations] = await conn.execute(`SELECT id, name, coordinates FROM location
+LEFT JOIN join_up_at ON join_up_at.location_id = location.id AND event_date = ? AND event_time >= NOW()
+WHERE lunchspace_id = ?
+GROUP BY location.id
+ORDER BY COUNT(join_up_at.user_id) DESC`, [eventDate, lunchspaceId])
     // eslint-disable-next-line no-shadow
     const [participants] = await conn.execute(`SELECT user_id as userId, location_id as locationId,
 event_time as eventTime,

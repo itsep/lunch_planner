@@ -81,6 +81,7 @@ CREATE TABLE join_up_at
     location_id BIGINT UNSIGNED NOT NULL,
     event_time TIME NOT NULL,
     event_date DATE NOT NULL,
+    join_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(user_id, location_id, event_time, event_date)
 ) ENGINE = InnoDB;
 
@@ -118,4 +119,6 @@ CREATE VIEW event_participants AS
 SELECT join_up_at.*, user.*, location.lunchspace_id
 FROM join_up_at
 JOIN user ON join_up_at.user_id = user.id
-JOIN location ON join_up_at.location_id = location.id;
+JOIN location ON join_up_at.location_id = location.id
+ORDER BY join_up_at.join_timestamp DESC;
+

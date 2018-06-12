@@ -14,10 +14,13 @@ async function checkTokenAndGetLunchspaceId(token) {
   throw error
 }
 
-async function getLunchspaceName(lunchspaceId) {
-  const [result] = await pool.execute('SELECT name AS lunchspaceName FROM lunchspace WHERE id = ?', [lunchspaceId])
+async function getLunchspaceNameAndSubdomain(lunchspaceId) {
+  const [result] = await pool.execute('SELECT name, subdomain FROM lunchspace WHERE id = ?', [lunchspaceId])
   if (result[0]) {
-    return result[0].lunchspaceName
+    return {
+      name: result[0].name,
+      subdomain: result[0].subdomain,
+    }
   }
   throw new InputValidationError(
     'lunchspaceId', `there is no lunchspace with lunchspaceId ${lunchspaceId}`,
@@ -28,10 +31,10 @@ async function getLunchspaceName(lunchspaceId) {
 async function checkInvitation(req, res) {
   const { token } = req.query
   const lunchspaceId = await checkTokenAndGetLunchspaceId(token)
-  const lunchspaceName = await getLunchspaceName(lunchspaceId)
+  const lunchspace = await getLunchspaceNameAndSubdomain(lunchspaceId)
   const { firstName, lastName } = await req.userPromise
   const result = {
-    lunchspaceName,
+    lunchspace,
     firstName,
     lastName,
   }
@@ -41,5 +44,5 @@ async function checkInvitation(req, res) {
 module.exports = {
   checkTokenAndGetLunchspaceId,
   checkInvitation,
-  getLunchspaceName,
+  getLunchspaceNameAndSubdomain,
 }

@@ -18,7 +18,7 @@ class LocalizableError extends Error {
   constructor(message) {
     super(message)
     this.code = LocalizableError.code.DEFAULT
-    this.name = LocalizableError.name
+    this.identifier = LocalizableError.identifier
     this.status = 500
     this.localizationKey = ''
     this.localizationValues = undefined
@@ -26,7 +26,7 @@ class LocalizableError extends Error {
 
   toResponse(debug) {
     const response = {
-      name: this.name,
+      identifier: this.identifier,
       localizationKey: this.localizationKey,
       localizationValues: this.localizationValues,
     }
@@ -39,7 +39,7 @@ class LocalizableError extends Error {
   }
   toLocalizedString(localizableStrings) {
     if (!this.localizationKey) {
-      return this.message || this.name
+      return this.message || this.identifier
     }
     return localizableStrings.formatString(
       localizableStrings[this.localizationKey],
@@ -48,7 +48,7 @@ class LocalizableError extends Error {
   }
 }
 
-LocalizableError.name = 'LocalizableError'
+LocalizableError.identifier = 'LocalizableError'
 
 LocalizableError.code = {
   DEFAULT: 'LOCALIZABLE_ERROR',

@@ -4,7 +4,11 @@ import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import localizedStrings from '../lib/localization'
+import redirectTo from '../lib/redirectTo'
 import { headerBarClassName } from '../lib/ios_native'
+import routeLocations from '../pages/route_locations'
 
 const styles = {
   title: {
@@ -20,6 +24,18 @@ function UnauthorizedHeaderBar({ classes, title }) {
         <Typography variant="title" color="inherit" className={classes.title}>
           {title}
         </Typography>
+        <Button
+          color="inherit"
+          href={redirectTo(routeLocations.LOGIN)}
+        >
+          {localizedStrings.login}
+        </Button>
+        <Button
+          color="inherit"
+          href={redirectTo(routeLocations.REGISTRATION)}
+        >
+          {localizedStrings.signUp}
+        </Button>
       </Toolbar>
     </AppBar>
   )

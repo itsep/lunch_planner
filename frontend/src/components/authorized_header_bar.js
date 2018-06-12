@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import UserAvatar from './user_avatar'
-import localizedStrings from '../localization'
+import localizedStrings from '../lib/localization'
 import { logout } from '../lib/authentication'
 import { headerBarClassName } from '../lib/ios_native'
 
@@ -27,7 +27,7 @@ const styles = theme => ({
   },
 })
 
-class AuthorizedAppBar extends React.Component {
+class AuthorizedHeaderBar extends React.Component {
   constructor(props) {
     super(props)
     this.openMenu = this.openMenu.bind(this)
@@ -81,14 +81,14 @@ class AuthorizedAppBar extends React.Component {
     )
   }
 }
-AuthorizedAppBar.propTypes = {
+AuthorizedHeaderBar.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   logout: PropTypes.func,
 }
-AuthorizedAppBar.defaultProps = {
+AuthorizedHeaderBar.defaultProps = {
   logout,
 }
 
-export default withStyles(styles)(AuthorizedAppBar)
+export default withStyles(styles)(AuthorizedHeaderBar)

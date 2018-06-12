@@ -26,7 +26,7 @@ class UnknownError extends LocalizableError {
   }
   constructor(message) {
     super(message)
-    this.name = UnknownError.name
+    this.identifier = UnknownError.identifier
     this.status = 500
     this.code = 'UNKNOWN_ERROR'
     if (this.message) {
@@ -40,6 +40,6 @@ class UnknownError extends LocalizableError {
   }
 }
 
-UnknownError.name = 'UnknownError'
+UnknownError.identifier = 'UnknownError'
 
 module.exports = { UnknownError }

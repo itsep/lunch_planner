@@ -1,5 +1,5 @@
-import { toEventDate } from 'shared/lib/event'
-import { addParticipant, removeParticipant, addLocation } from './actions'
+import { toEventDateFromMoment, eventDateEqual } from 'shared/lib/event'
+import { addParticipant, removeParticipant, addLocation, fetchPageData } from './actions'
 
 export default class ChangeDispatcher {
   static actionForMessage(message) {
@@ -31,13 +31,17 @@ export default class ChangeDispatcher {
     this.store = store
 
     this.socket.on('connect', this.onConnect.bind(this))
+    this.socket.on('disconnect', this.onDisconnect.bind(this))
+    this.socket.on('reconnect', this.onReconnect.bind(this))
     this.socket.on('change', this.onChange.bind(this))
     this.store.subscribe(this.onStateChange.bind(this))
   }
 
   subscribeToAllLocationChanges(date) {
-    this.currentDate = date
-    this.socket.emit('subscribeToAllLocationChanges', toEventDate(date))
+    if (!this.lastSendDate || !this.lastSendDate.isSame(date, 'day')) {
+      this.lastSendDate = date
+      this.socket.emit('subscribeToAllLocationChanges', toEventDateFromMoment(date))
+    }
   }
 
   onConnect() {
@@ -45,8 +49,21 @@ export default class ChangeDispatcher {
       this.subscribeToAllLocationChanges(this.currentDate)
     }
   }
+  onDisconnect() {
+    this.lastSendDate = undefined
+  }
+  onReconnect() {
+    const { currentDate } = this.store.getState()
+    this.store.dispatch(fetchPageData(currentDate))
+  }
   onChange(message) {
-    // TODO: check if message is still relevant for currentDate
+    if (message.eventDate) {
+      const currentEventDate = toEventDateFromMoment(this.currentDate)
+      if (!eventDateEqual(message.eventDate, currentEventDate)) {
+        // message is from a previous subscription
+        return
+      }
+    }
     const action = ChangeDispatcher.actionForMessage(message)
     if (action) {
       this.store.dispatch(action)
@@ -56,7 +73,7 @@ export default class ChangeDispatcher {
   }
   onStateChange() {
     const { currentDate } = this.store.getState()
-    if (currentDate !== this.currentDate) {
+    if (!this.currentDate || !this.currentDate.isSame(currentDate, 'day')) {
       this.currentDate = currentDate
       this.subscribeToAllLocationChanges(currentDate)
     }
