@@ -26,6 +26,7 @@ const content = {
   createLunchspace: 'Create Lunchspace',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} successfull created.',
   createLocation: 'Create Location',
+  delete: 'Delete',
   login: 'Login',
   logout: 'Logout',
   today: 'Today',
