@@ -12,7 +12,7 @@ const { checkLunchspacePermissionOfSocket } = require('../middleware/lunchspace_
 const io = socketIO(9200, {
   path: '/subscriber',
 })
-// io.set('transports', ['websocket'])
+io.set('transports', ['websocket'])
 const subscriber = new SubscriberClient(redis.createClient())
 
 function subscribeToAllLocationChanges(lunchspaceId, eventDate, callback) {

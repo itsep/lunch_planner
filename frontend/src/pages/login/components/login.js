@@ -9,7 +9,7 @@ import Collapse from '@material-ui/core/Collapse'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
 import routeLocations from '../../route_locations'
-import localizedStrings from '../../../localization'
+import localizedStrings from '../../../lib/localization'
 import apiFetch from '../../../lib/api_fetch'
 import { withLunchspaceSubdomain, currentLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
 

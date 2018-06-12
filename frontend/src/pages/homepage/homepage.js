@@ -15,7 +15,7 @@ const query = shouldUseDevelopmentSubdomainHandling() && { subdomain: currentLun
 const socket = io({
   path: '/subscriber',
   query,
-  // transports: ['websocket'],
+  transports: ['websocket'],
 })
 
 const store = createStore(
