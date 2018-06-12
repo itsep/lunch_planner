@@ -102,7 +102,6 @@ class Registration extends React.Component {
         }
       })
       .catch((error) => {
-        console.log(error)
         this.setState({ error, lastError: error })
       })
       .finally(() => {
