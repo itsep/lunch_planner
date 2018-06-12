@@ -14,7 +14,6 @@ function getRedirectAndToken() {
 
 function returnFromRedirect() {
   const { token, redirect } = getRedirectAndToken()
-  console.log(redirect)
   if (redirect && token && isOnWhitelist(redirect)) {
     return withQuery(redirect, {
       token,

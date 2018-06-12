@@ -2,7 +2,7 @@ const { createMockDatabase, dropMockDatabase } = require('../../lib/database/moc
 const { mockReq, mockRes } = require('../../lib/express_mock')
 const { create } = require('../../routes/lunchspace/create_lunchspace')
 const { getToken } = require('../../routes/lunchspace/invite_lunchspace')
-const { checkInvitation, getLunchspaceName, checkTokenAndGetLunchspaceId } = require('../../routes/lunchspace/check_invitation')
+const { checkInvitation, getLunchspaceNameAndSubdomain, checkTokenAndGetLunchspaceId } = require('../../routes/lunchspace/check_invitation')
 const { InputValidationError } = require('../../../shared/lib/error')
 
 const testLunchspaceName = 'testLunchspace'
@@ -31,12 +31,12 @@ describe('check_invitation', () => {
         .rejects.toThrowError(InputValidationError)
     })
   })
-  describe('getLunchspaceName', () => {
+  describe('getLunchspaceNameAndSubdomain', () => {
     it('should return the name of testLunchspace', async () => {
-      await expect(getLunchspaceName(lunchspaceId)).resolves.toEqual(testLunchspaceName)
+      await expect(getLunchspaceNameAndSubdomain(lunchspaceId)).resolves.toEqual(testLunchspaceName)
     })
     it('should return undefined', async () => {
-      await expect(getLunchspaceName(notALunchspaceId)).rejects.toThrowError(InputValidationError)
+      await expect(getLunchspaceNameAndSubdomain(notALunchspaceId)).rejects.toThrowError(InputValidationError)
     })
   })
   describe('checkInvitation', () => {

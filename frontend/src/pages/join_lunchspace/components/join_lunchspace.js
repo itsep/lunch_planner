@@ -56,7 +56,7 @@ class JoinLunchspace extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      lunchspaceName: '',
+      lunchspace: null,
       user: null,
       isLoading: false,
       error: null,
@@ -80,7 +80,7 @@ class JoinLunchspace extends Component {
             firstName: data.firstName,
             lastName: data.lastName,
           },
-          lunchspaceName: data.lunchspaceName,
+          lunchspace: data.lunchspace,
         })
       }
     }).catch((error) => {
@@ -103,13 +103,13 @@ class JoinLunchspace extends Component {
     })
     apiFetch(apiUrlString, {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
         wantsToJoin: true,
-      }),
-    }).then((subdomain) => {
+      },
+    }).then(() => {
       window.location = withLunchspaceSubdomain(
-        redirectTo(routeLocations.HOMEPAGE),
-        subdomain,
+        routeLocations.HOMEPAGE,
+        this.state.lunchspace.subdomain,
         true
       )
     }).catch((error) => {
@@ -134,7 +134,7 @@ class JoinLunchspace extends Component {
   }
 
   isTokenInvalid() {
-    return (!this.state.user || !this.state.lunchspaceName)
+    return (!this.state.user || !this.state.lunchspace.name)
   }
 
   render() {
@@ -181,7 +181,7 @@ class JoinLunchspace extends Component {
             <Typography className={classes.title} variant="title">
               {localizedStrings
                 .formatString(localizedStrings
-                  .joinLunchspace, { lunchspaceName: this.state.lunchspaceName })}
+                  .joinLunchspace, { lunchspaceName: this.state.lunchspace.name })}
             </Typography>
             <div className={classes.actionsContainer}>
               <div>
