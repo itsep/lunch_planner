@@ -14,7 +14,7 @@ locationRouter.use(bodyParser.json())
 
 locationRouter.post('/', authenticateRequest, checkLunchspacePermissionOfRequest, asyncHandler(createLocation))
 locationRouter.get('/', authenticateRequest, getUser, getLunchspaces, checkLunchspacePermissionOfRequest, asyncHandler(getLocations))
-locationRouter.delete('/',authenticateRequest,checkLunchspacePermissionOfRequest, asyncHandler(deleteLocation))
+locationRouter.delete('/', authenticateRequest, checkLunchspacePermissionOfRequest, asyncHandler(deleteLocation))
 
 module.exports = {
   router: locationRouter,
