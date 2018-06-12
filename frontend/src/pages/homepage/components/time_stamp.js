@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
-import { toEventDate } from 'shared/lib/event'
+import { toEventDateFromMoment } from 'shared/lib/event'
 import { joinEvent, leaveEvent, openEventDialog } from '../actions'
 import Participant from './participant'
 
@@ -26,7 +26,6 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = dispatch => ({
   addUserAction: (timeStampID, locationId, eventTime, eventDate, user) => {
     dispatch(joinEvent(
-      'vsf-experts-ma',
       locationId,
       eventTime,
       eventDate,
@@ -35,7 +34,6 @@ const mapDispatchToProps = dispatch => ({
   },
   deleteUserAction: (timeStampID, locationId, eventTime, eventDate, user) => {
     dispatch(leaveEvent(
-      'vsf-experts-ma',
       locationId,
       eventTime,
       eventDate,
@@ -151,7 +149,7 @@ function TimeStamp({
               timeStamp.id,
               locationId,
               { hour: timeStamp.hour, minute: timeStamp.minute },
-              toEventDate(currentDate),
+              toEventDateFromMoment(currentDate),
               user
             )
           } else {
@@ -159,7 +157,7 @@ function TimeStamp({
               timeStamp.id,
               locationId,
               { hour: timeStamp.hour, minute: timeStamp.minute },
-              toEventDate(currentDate),
+              toEventDateFromMoment(currentDate),
               user
             )
           }

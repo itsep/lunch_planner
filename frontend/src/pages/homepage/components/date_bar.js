@@ -5,7 +5,7 @@ import ArrowBack from '@material-ui/icons/ArrowBack'
 import ArrowForward from '@material-ui/icons/ArrowForward'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import localizedStrings from '../../../localization'
+import { previousDay, nextDay } from '../actions'
 
 
 const styles = () => ({
@@ -25,15 +25,24 @@ const styles = () => ({
 const mapStateToProps = state => ({
   profile: state.profile,
   lunchspace: state.lunchspace,
+  currentDate: state.currentDate,
 })
 
-function DateBar({ classes }) {
+const mapDispatchToProps = dispatch => ({
+  previousDayAction: () => dispatch(previousDay()),
+  nextDayAction: () => dispatch(nextDay()),
+})
+
+function DateBar({
+  classes, previousDayAction, nextDayAction, currentDate,
+}) {
   return (
     <div className={classes.flexContainer}>
       <Button
         color="default"
         size="large"
         className={classes.button}
+        onClick={previousDayAction}
       >
         <ArrowBack />
       </Button>
@@ -42,12 +51,20 @@ function DateBar({ classes }) {
         size="large"
         className={classes.button}
       >
-        {localizedStrings.today}
+        {currentDate.calendar(null, {
+          lastDay: '[Yesterday]',
+          sameDay: '[Today]',
+          nextDay: '[Tomorrow]',
+          lastWeek: '[last] dddd',
+          nextWeek: 'dddd',
+          sameElse: 'L',
+        })}
       </Button>
       <Button
         color="default"
         size="large"
         className={classes.button}
+        onClick={nextDayAction}
       >
         <ArrowForward />
       </Button>
@@ -57,6 +74,9 @@ function DateBar({ classes }) {
 
 DateBar.propTypes = {
   classes: PropTypes.object.isRequired,
+  previousDayAction: PropTypes.func.isRequired,
+  nextDayAction: PropTypes.func.isRequired,
+  currentDate: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(connect(mapStateToProps)(DateBar))
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(DateBar))

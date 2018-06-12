@@ -1,6 +1,8 @@
+import moment from 'moment'
+
 const initialState = {
   lunchspace: {},
-  currentDate: new Date(),
+  currentDate: moment(),
   user: {
     id: -1,
     email: '',
