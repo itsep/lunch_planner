@@ -1,4 +1,5 @@
 import withQuery from 'with-query'
+import moment from 'moment'
 import { currentLunchspaceSubdomain } from '../../lib/lunchspace_subdomain'
 import actionTypes from './action_types'
 import apiFetch from '../../lib/api_fetch'
@@ -141,21 +142,31 @@ export function closeEventDialog() {
   }
 }
 
-function changeDay(dayOffset) {
-  return (dispatch, getState) => {
-    const newDate = getState().currentDate.clone().add(dayOffset, 'day')
+function changeDate(date) {
+  return (dispatch) => {
     dispatch({
       type: actionTypes.CHANGE_DATE,
-      date: newDate,
+      date,
     })
-    dispatch(fetchPageData(newDate))
+    dispatch(fetchPageData(date))
+  }
+}
+
+function changeDayBy(dayOffset) {
+  return (dispatch, getState) => {
+    const newDate = getState().currentDate.clone().add(dayOffset, 'day')
+    dispatch(changeDate(newDate))
   }
 }
 
 export function nextDay() {
-  return changeDay(+1)
+  return changeDayBy(+1)
 }
 
 export function previousDay() {
-  return changeDay(-1)
+  return changeDayBy(-1)
+}
+
+export function resetDateToToday() {
+  return changeDate(moment())
 }
