@@ -53,14 +53,7 @@ function DateBar({
         className={classes.button}
         onClick={resetDateToTodayAction}
       >
-        {currentDate.calendar(null, {
-          lastDay: '[Yesterday]',
-          sameDay: '[Today]',
-          nextDay: '[Tomorrow]',
-          lastWeek: '[last] dddd',
-          nextWeek: 'dddd',
-          sameElse: 'L',
-        })}
+        {currentDate.calendar()}
       </Button>
       <Button
         color="default"

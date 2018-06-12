@@ -1,5 +1,5 @@
 import withQuery from 'with-query'
-import moment from 'moment'
+import moment from '../../lib/localized_moment'
 import { currentLunchspaceSubdomain } from '../../lib/lunchspace_subdomain'
 import actionTypes from './action_types'
 import apiFetch from '../../lib/api_fetch'
