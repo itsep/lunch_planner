@@ -1,3 +1,4 @@
+
 /* eslint-disable no-plusplus */
 const publicVapidKey = 'sfdvgnbgnhnsdfverv43tbvfd'
 
@@ -16,7 +17,7 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 async function send() {
-  const register = await navigator.serviceWorker.register('/worker.js', {
+  const register = await navigator.serviceWorker.register('/notification-worker.js', {
     scope: '/',
   })
   // register Push
@@ -34,7 +35,7 @@ async function send() {
   })
 }
 
-if ('serviceworker' in navigator) {
+if ('serviceWorker' in navigator) {
   send().catch(err => console.error(err))
 }
 
