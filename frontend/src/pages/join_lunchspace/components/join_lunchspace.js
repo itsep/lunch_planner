@@ -169,7 +169,7 @@ class JoinLunchspace extends Component {
     }
     return (
       <div>
-        <UnauthorizedHeaderBar title="Join Lunchspace" />
+        <UnauthorizedHeaderBar title={localizedStrings.joinLunchspaceTitle} />
         <FormSection className={classes.root}>
           <ValidatorForm
             onSubmit={this.handleSubmit}

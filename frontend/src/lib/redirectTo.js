@@ -2,12 +2,13 @@ import withQuery from 'with-query'
 import routeLocations, { isOnWhitelist } from '../pages/route_locations'
 
 function getRedirectAndToken() {
+  const url = new URL(window.location.href)
   const result = {
-    token: (new URL(window.location.href)).searchParams.get('token'),
-    redirect: (new URL(window.location.href)).searchParams.get('redirect'),
+    token: url.searchParams.get('token'),
+    redirect: url.searchParams.get('redirect'),
   }
   if (result.token && !result.redirect) {
-    result.redirect = (new URL(window.location.href)).pathname
+    result.redirect = url.pathname
   }
   return result
 }
