@@ -1,4 +1,4 @@
-export const routeLocations = {
+const routeLocations = {
   HOMEPAGE: '/homepage.html',
   LOGIN: '/login.html',
   REGISTRATION: '/registration.html',
@@ -11,3 +11,5 @@ export function isOnWhitelist(redirect) {
   const whiteListRoutes = Object.keys(routeLocations).map(key => routeLocations[key])
   return (whiteListRoutes.indexOf(redirect) >= 0)
 }
+
+export default routeLocations

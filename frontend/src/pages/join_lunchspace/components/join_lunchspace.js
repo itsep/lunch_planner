@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
-import { Dialog, DialogTitle, CircularProgress, Button, Typography } from 'material-ui'
-import { ValidatorForm } from 'react-material-ui-form-validator'
+import withQuery from 'with-query'
+import Dialog from '@material-ui/core/Dialog'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import Fade from '@material-ui/core/Fade'
+import { ValidatorForm } from 'react-material-ui-form-validator/'
 import FormSection from 'components/form_section'
-import { withStyles } from 'material-ui/styles'
-import {toLogin, toRedirect} from 'lib/redirect'
-import Fade from 'material-ui/transitions/Fade'
+import withStyles from '@material-ui/core/styles/withStyles'
+import redirectTo from 'lib/redirectTo'
 import PropTypes from 'prop-types'
 import localizedStrings from '../../../localization'
 import apiFetch from '../../../lib/api_fetch'
 import UnauthorizedHeaderBar from '../../../components/unauthorized_header_bar'
+import routeLocations from '../../route_locations'
 
 const styles = theme => ({
   loadingWrapper: {
@@ -24,6 +30,10 @@ const styles = theme => ({
   },
   title: {
     margin: theme.spacing.unit,
+  },
+  name: {
+    margin: theme.spacing.unit,
+    fontWeight: 600,
   },
   errorMessage: {
     margin: theme.spacing.unit,
@@ -45,29 +55,33 @@ class JoinLunchspace extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      lunchspaceName: 'Test',
-      user: {
-        firstname: 'Sebastian',
-        lastname: 'Vogt',
-      },
+      lunchspaceName: '',
+      user: null,
       isLoading: false,
       error: null,
+      lastError: null,
     }
     this.handleCloseError = this.handleCloseError.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.logout = this.logout.bind(this)
   }
 
   componentDidMount() {
-    const urlString = window.location.href
-    const url = new URL(urlString)
-    const apiUrlString = `/api${url.pathname}${url.search}`
+    const url = new URL(window.location.href)
+    const apiUrlString = withQuery('/api/lunchspace/check', { token: url.searchParams.get('token') })
     this.setState({ isLoading: true }) // eslint-disable-line react/no-did-mount-set-state
     apiFetch(apiUrlString, {
       method: 'GET',
     }).then(({ data }) => {
-      this.setState({ lunchspaceName: data.lunchspaceName, user: data.user })
+      this.setState({
+        user: {
+          firstName: data.firstName,
+          lastName: data.lastName,
+        },
+        lunchspaceName: data.lunchspaceName,
+      })
     }).catch((error) => {
-      this.setState({ error })
+      this.setState({ error, lastError: error })
     }).finally(() => {
       this.setState({ isLoading: false })
     })
@@ -78,33 +92,29 @@ class JoinLunchspace extends Component {
   }
 
   handleSubmit() {
-    this.setState({K
+    const url = new URL(window.location.href)
+    const apiUrlString = `/api/lunchspace/join${url.search}`
+    this.setState({
       isLoading: true,
       error: null,
     })
-    apiFetch('/api/account/login', {
+    apiFetch(apiUrlString, {
       method: 'POST',
-      body: {
-
-      }
+      body: JSON.stringify({
+        wantsToJoin: true,
+      }),
     }).then(() => {
-        console.log('submit')
-        window.location = toRedirect()
-      })
-      .catch((error) => {
-        this.setState({ error })
-      })
-      .finally(() => {
-        this.setState({ isLoading: false })
-      })
+      window.location = redirectTo(routeLocations.HOMEPAGE)
+    }).catch((error) => {
+      this.setState({ error, lastError: error })
+    }).finally(() => {
+      this.setState({ isLoading: false })
+    })
   }
 
   logout() {
     this.setState({
-      user: {
-        firstname: null,
-        lastname: null,
-      },
+      user: null,
       isLoading: true,
     })
     apiFetch('/api/account/logout', {
@@ -119,16 +129,7 @@ class JoinLunchspace extends Component {
   render() {
     const { classes } = this.props
     if (!document.cookie) {
-      window.location = toLogin()
-    }
-    if (this.state.error) {
-      return (
-        <Dialog open onClose={this.handleCloseError}>
-          <DialogTitle id="alert-dialog-title">
-            {this.state.error.toString()}
-          </DialogTitle>
-        </Dialog>
-      )
+      window.location = redirectTo(routeLocations.LOGIN)
     }
     if (this.state.isLoading) {
       return (
@@ -137,16 +138,25 @@ class JoinLunchspace extends Component {
         </div>
       )
     }
+    if (this.state.error || !this.state.user || this.state.lunchspaceName) {
+      return (
+        <Dialog open onClose={this.handleCloseError}>
+          <DialogTitle id="alert-dialog-title">
+            {this.state.lastError.toString()}
+          </DialogTitle>
+        </Dialog>
+      )
+    }
     return (
       <div>
-        <UnauthorizedHeaderBar />
+        <UnauthorizedHeaderBar title="Join Lunchspace" />
         <FormSection className={classes.root}>
           <ValidatorForm
             onSubmit={this.handleSubmit}
             className={classes.form}
           >
-            <Typography className={classes.title} variant="title">
-              {this.state.user.firstname} {this.state.user.lastname}
+            <Typography className={classes.name} variant="title">
+              {this.state.user.firstName} {this.state.user.lastName}
             </Typography>
             <Typography className={classes.title} variant="title">
               {localizedStrings

@@ -12,23 +12,28 @@ function getRedirectAndToken() {
   return result
 }
 
-export function toRedirect(url) {
+function returnFromRedirect() {
   const { token, redirect } = getRedirectAndToken()
-  if (redirect && token && isOnWhitelist(redirect)) {
-    return withQuery(url, {
-      redirect,
-      token,
-    })
-  }
-  return url
-}
-
-export function returnFromRedirect() {
-  const { token, redirect } = getRedirectAndToken()
+  console.log(redirect)
   if (redirect && token && isOnWhitelist(redirect)) {
     return withQuery(redirect, {
       token,
     })
   }
   return routeLocations.HOMEPAGE
+}
+
+
+export default function redirectTo(url) {
+  const { token, redirect } = getRedirectAndToken()
+  if (redirect && token && isOnWhitelist(redirect)) {
+    if (url === routeLocations.LOGIN || url === routeLocations.REGISTRATION){
+      return withQuery(url, {
+        redirect,
+        token,
+      })
+    }
+    return returnFromRedirect()
+  }
+  return url
 }

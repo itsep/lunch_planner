@@ -8,9 +8,11 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
-import { toRedirect, toLogin } from 'lib/redirect'
+import redirectTo from 'lib/redirectTo'
 import apiFetch from '../../../lib/api_fetch'
 import localizedStrings from '../../../localization'
+import routeLocations from '../../route_locations'
+import {currentLunchspaceSubdomain, withLunchspaceSubdomain} from "lib/lunchspace_subdomain"
 
 const styles = theme => ({
   form: {
@@ -81,7 +83,23 @@ class Registration extends React.Component {
         this.setState({
           loggedIn: true,
         })
-        window.location = toRedirect()
+        const { lunchspaces } = data
+        const preferedSubdomain =
+          // has already selected a lunchspace
+          currentLunchspaceSubdomain() ||
+          // the user is in exactly one lunchspace, redirect diretcly to the homepage
+          ((lunchspaces.length === 1) && lunchspaces[0])
+
+        if (preferedSubdomain) {
+          window.location = withLunchspaceSubdomain(
+            redirectTo(routeLocations.HOMEPAGE),
+            preferedSubdomain,
+            true
+          )
+        } else {
+          // the user has no lunchspaces or more than one, redirectTo to lunchspaces
+          window.location = redirectTo(routeLocations.LUNCHSPACES)
+        }
       })
       .catch((error) => {
         this.setState({ error, lastError: error })
@@ -158,7 +176,7 @@ class Registration extends React.Component {
                   color="secondary"
                   className={classes.button}
                   disabled={this.state.isLoading}
-                  href={toLogin()}
+                  href={redirectTo(routeLocations.LOGIN)}
                 >
                   {localizedStrings.login}
                 </Button>

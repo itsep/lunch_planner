@@ -51,15 +51,17 @@ export function removeParticipant(eventTime, locationId, participant) {
 }
 
 export function fetchCreateLocation(locationName, lunchspace) {
-  return dispatch => apiFetch('/api/location/', {
-    method: 'POST',
-    body: {
-      name: locationName,
-      coordinates: { lat: 0, long: 0 },
-      lunchspace,
-    },
-  }).then(({ data }) => dispatch(addLocation(locationName, data.locationId)))
-    .catch(error => dispatch(setError(error)))
+  return (dispatch) => {
+    return apiFetch('/api/location/', {
+      method: 'POST',
+      body: {
+        name: locationName,
+        coordinates: { lat: 0, long: 0 },
+        lunchspace,
+      },
+    }).then(({ data }) => dispatch(addLocation(locationName, data.locationId)))
+      .catch(error => dispatch(setError(error)))
+  }
 }
 
 export function fetchLogout() {
@@ -101,7 +103,7 @@ export function fetchPageData(lunchspaceSubdomain, date) {
 
 export function joinEvent(lunchspaceSubdomain, locationId, eventTime, eventDate, participant) {
   return (dispatch) => {
-    apiFetch('/api/event', {
+    return apiFetch('/api/event', {
       method: 'PUT',
       body: {
         locationId,
@@ -109,13 +111,13 @@ export function joinEvent(lunchspaceSubdomain, locationId, eventTime, eventDate,
         eventDate,
       },
     }).then(() => dispatch(addParticipant(eventTime, locationId, participant)))
-      // TODO: handle error by dispatching an error action
+    // TODO: handle error by dispatching an error action
       .catch(error => console.error(error))
   }
 }
 export function leaveEvent(lunchspaceSubdomain, locationId, eventTime, eventDate, participant) {
   return (dispatch) => {
-    apiFetch('/api/event', {
+    return apiFetch('/api/event', {
       method: 'DELETE',
       body: {
         locationId,

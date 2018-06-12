@@ -6,8 +6,9 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import localizedStrings from '../localization'
-import { toLogin, toRegistration } from '../lib/redirect'
+import redirectTo from '../lib/redirectTo'
 import { headerBarClassName } from '../lib/ios_native'
+import routeLocations from '../pages/route_locations'
 
 const styles = {
   title: {
@@ -25,13 +26,13 @@ function UnauthorizedHeaderBar({ classes, title }) {
         </Typography>
         <Button
           color="inherit"
-          href={toLogin()}
+          href={redirectTo(routeLocations.LOGIN)}
         >
           {localizedStrings.login}
         </Button>
         <Button
           color="inherit"
-          href={toRegistration()}
+          href={redirectTo(routeLocations.REGISTRATION)}
         >
           {localizedStrings.signUp}
         </Button>

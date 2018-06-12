@@ -19,7 +19,7 @@ export function isDefinitelyNotAuthenticated() {
 }
 
 export function logout() {
-  apiFetch('/api/account/logout', {
+  return apiFetch('/api/account/logout', {
     method: 'POST',
   }).then(() => {
     window.location = withLunchspaceSubdomain(routeLocations.LOGIN)

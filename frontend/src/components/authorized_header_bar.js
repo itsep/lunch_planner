@@ -87,7 +87,7 @@ AuthorizedHeaderBar.propTypes = {
   title: PropTypes.string.isRequired,
   logout: PropTypes.func,
 }
-AuthorizedAppBar.defaultProps = {
+AuthorizedHeaderBar.defaultProps = {
   logout,
 }
 
