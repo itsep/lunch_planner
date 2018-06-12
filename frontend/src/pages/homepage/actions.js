@@ -4,7 +4,7 @@ import { currentLunchspaceSubdomain } from '../../lib/lunchspace_subdomain'
 import actionTypes from './action_types'
 import apiFetch from '../../lib/api_fetch'
 import { logout } from '../../lib/authentication'
-import routeLocations from "../route_locations"
+import routeLocations from '../route_locations'
 
 export function addParticipant(eventTime, locationId, participant) {
   return {
