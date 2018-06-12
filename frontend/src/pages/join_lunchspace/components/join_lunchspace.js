@@ -73,7 +73,6 @@ class JoinLunchspace extends Component {
     apiFetch(apiUrlString, {
       method: 'GET',
     }).then(({ data }) => {
-      console.log(data)
       if (data) {
         this.setState({
           user: {
