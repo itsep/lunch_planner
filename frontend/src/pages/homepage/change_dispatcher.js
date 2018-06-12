@@ -1,4 +1,4 @@
-import { toEventDate } from 'shared/lib/event'
+import { toEventDateFromMoment, eventDateEqual } from 'shared/lib/event'
 import { addParticipant, removeParticipant, addLocation } from './actions'
 
 export default class ChangeDispatcher {
@@ -37,7 +37,7 @@ export default class ChangeDispatcher {
 
   subscribeToAllLocationChanges(date) {
     this.currentDate = date
-    this.socket.emit('subscribeToAllLocationChanges', toEventDate(date))
+    this.socket.emit('subscribeToAllLocationChanges', toEventDateFromMoment(date))
   }
 
   onConnect() {
@@ -46,7 +46,13 @@ export default class ChangeDispatcher {
     }
   }
   onChange(message) {
-    // TODO: check if message is still relevant for currentDate
+    if (message.eventDate) {
+      const currentEventDate = toEventDateFromMoment(this.currentDate)
+      if (!eventDateEqual(message.eventDate, currentEventDate)) {
+        // message is from a previous subscription
+        return
+      }
+    }
     const action = ChangeDispatcher.actionForMessage(message)
     if (action) {
       this.store.dispatch(action)
@@ -56,7 +62,7 @@ export default class ChangeDispatcher {
   }
   onStateChange() {
     const { currentDate } = this.store.getState()
-    if (currentDate !== this.currentDate) {
+    if (!this.currentDate || !this.currentDate.isSame(currentDate, 'day')) {
       this.currentDate = currentDate
       this.subscribeToAllLocationChanges(currentDate)
     }

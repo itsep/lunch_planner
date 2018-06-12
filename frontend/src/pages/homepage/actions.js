@@ -67,21 +67,19 @@ export function fetchLogout() {
     .catch(error => console.error(error))
 }
 
-export function requestPageData(lunchspaceSubdomain) {
+export function requestPageData() {
   return {
     type: actionTypes.REQUEST_PAGE_DATA,
-    lunchspaceSubdomain,
   }
 }
 
-export function receivePageData(lunchspaceSubdomain, data) {
+export function receivePageData(data) {
   const currentSubdomain = currentLunchspaceSubdomain()
   // eslint-disable-next-line no-param-reassign
   data.lunchspace = data.lunchspaces
     .find(lunchspace => lunchspace.subdomain === currentSubdomain)
   return {
     type: actionTypes.RECEIVE_PAGE_DATA,
-    lunchspaceSubdomain,
     data,
   }
 }
@@ -89,17 +87,17 @@ export function receivePageData(lunchspaceSubdomain, data) {
 /*
 gets data of backend and change state with dispatch
  */
-export function fetchPageData(lunchspaceSubdomain, date) {
+export function fetchPageData(date) {
   return (dispatch) => {
-    dispatch(requestPageData(lunchspaceSubdomain))
+    dispatch(requestPageData())
     return apiFetch(withQuery('/api/location/', { date: date.toISOString().substring(0, 10) }))
-      .then(({ data }) => dispatch(receivePageData(lunchspaceSubdomain, data)))
+      .then(({ data }) => dispatch(receivePageData(data)))
       // TODO: handle error by dispatching an error action
       .catch(error => console.error(error))
   }
 }
 
-export function joinEvent(lunchspaceSubdomain, locationId, eventTime, eventDate, participant) {
+export function joinEvent(locationId, eventTime, eventDate, participant) {
   return (dispatch) => {
     apiFetch('/api/event', {
       method: 'PUT',
@@ -113,7 +111,7 @@ export function joinEvent(lunchspaceSubdomain, locationId, eventTime, eventDate,
       .catch(error => console.error(error))
   }
 }
-export function leaveEvent(lunchspaceSubdomain, locationId, eventTime, eventDate, participant) {
+export function leaveEvent(locationId, eventTime, eventDate, participant) {
   return (dispatch) => {
     apiFetch('/api/event', {
       method: 'DELETE',
@@ -143,3 +141,21 @@ export function closeEventDialog() {
   }
 }
 
+function changeDay(dayOffset) {
+  return (dispatch, getState) => {
+    const newDate = getState().currentDate.clone().add(dayOffset, 'day')
+    dispatch({
+      type: actionTypes.CHANGE_DATE,
+      date: newDate,
+    })
+    dispatch(fetchPageData(newDate))
+  }
+}
+
+export function nextDay() {
+  return changeDay(+1)
+}
+
+export function previousDay() {
+  return changeDay(-1)
+}

@@ -1,5 +1,6 @@
 const {
   toEventDate, toEventTimeId, toEventDateId, nextEventTimeForDate, eventTimeSteps,
+  eventDateEqual,
 } = require('./event')
 
 describe('event', () => {
@@ -58,6 +59,28 @@ describe('event', () => {
       expect(eventTimeSteps({ hour: 14, minute: 0 }, { hour: 13, minute: 30 })).toEqual(-1)
       // eslint-disable-next-line max-len
       expect(eventTimeSteps({ hour: 20, minute: 0 }, { hour: 10, minute: 30 })).toEqual((-10 * 2) + 1)
+    })
+  })
+  describe('eventDateEqual', () => {
+    it('should be equal', () => {
+      expect(eventDateEqual(
+        { year: 2018, month: 1, day: 1 },
+        { year: 2018, month: 1, day: 1 }
+      )).toBe(true)
+    })
+    it('should not be equal', () => {
+      expect(eventDateEqual(
+        { year: 2018, month: 1, day: 0 },
+        { year: 2018, month: 1, day: 1 }
+      )).toBe(false)
+      expect(eventDateEqual(
+        { year: 2018, month: 0, day: 1 },
+        { year: 2018, month: 1, day: 1 }
+      )).toBe(false)
+      expect(eventDateEqual(
+        { year: 0, month: 1, day: 1 },
+        { year: 2018, month: 1, day: 1 }
+      )).toBe(false)
     })
   })
 })

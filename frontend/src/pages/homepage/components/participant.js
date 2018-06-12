@@ -27,7 +27,6 @@ const styles = theme => ({
         transform: 'scale(1.6)',
       },
     },
-
   },
 })
 
