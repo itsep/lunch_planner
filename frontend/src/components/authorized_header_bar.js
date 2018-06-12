@@ -43,17 +43,20 @@ class AuthorizedHeaderBar extends React.Component {
   }
   render() {
     const {
-      classes, user, title, logout: onLogout,
+      classes, user, logout: onLogout, title, children,
     } = this.props
     document.title = title
     const { anchorEl } = this.state
     return (
       <AppBar position="static" color="default" className={headerBarClassName}>
         <Toolbar>
-          <Typography variant="title" color="inherit" className={classes.title}>
-            {title}
-          </Typography>
-
+          {
+            children
+            ||
+            <Typography variant="title" color="inherit" className={classes.title}>
+              { title }
+            </Typography>
+          }
           <Hidden xsDown implementation="css">
             <Typography variant="title" color="inherit" className={classes.userName}>
               {user.firstName} {user.lastName}
@@ -81,7 +84,12 @@ class AuthorizedHeaderBar extends React.Component {
     )
   }
 }
+
+AuthorizedHeaderBar.defaultProps = {
+  children: null,
+}
 AuthorizedHeaderBar.propTypes = {
+  children: PropTypes.array,
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,

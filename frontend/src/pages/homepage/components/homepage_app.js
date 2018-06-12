@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withStyles } from '@material-ui/core/styles'
+import Share from '@material-ui/icons/Share'
+import Typography from '@material-ui/core/Typography'
 import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
 import LocationList from './location_list'
 import routeLocations from '../../route_locations'
@@ -42,6 +45,16 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
+const styles = () => ({
+  title: {
+    flex: 1,
+  },
+  sharedButton: {
+    fontSize: 16,
+    marginRight: 8,
+    cursor: 'pointer',
+  },
+})
 
 class HomepageApp extends Component {
   componentDidMount() {
@@ -49,15 +62,22 @@ class HomepageApp extends Component {
       window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
     }
   }
-
+  onShare() {
+    console.log('share')
+  }
   render() {
     const {
-      user, lunchspace, fetchLogoutAction, participantIds, show, closeDialog,
+      classes, user, lunchspace, fetchLogoutAction, participantIds, show, closeDialog,
     } = this.props
 
     return (
       <CommonAppContainer>
-        <AuthorizedHeaderBar title={lunchspace.name || ''} user={user} logout={fetchLogoutAction} />
+        <AuthorizedHeaderBar title={lunchspace.name || ''} user={user} logout={fetchLogoutAction}>
+          <Share className={classes.sharedButton} onClick={this.onShare} />
+          <Typography variant="title" color="inherit" className={classes.title}>
+            { lunchspace.name }
+          </Typography>
+        </AuthorizedHeaderBar>
         <DateBar />
         <LocationList />
         <EventDetailsDialog participantIds={participantIds} show={show} onClose={closeDialog} />
@@ -68,6 +88,7 @@ class HomepageApp extends Component {
 
 HomepageApp.propTypes = {
   user: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
   lunchspace: PropTypes.object.isRequired,
   fetchLogoutAction: PropTypes.func.isRequired,
   participantIds: PropTypes.arrayOf(PropTypes.number).isRequired,
@@ -75,4 +96,4 @@ HomepageApp.propTypes = {
   closeDialog: PropTypes.func.isRequired,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomepageApp)
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(HomepageApp))
