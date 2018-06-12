@@ -19,10 +19,13 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       width: '30px',
       height: '30px',
+      fontSize: '14px',
     },
-    transition: 'transform 250ms',
-    '&:hover': {
-      transform: 'scale(1.6)',
+    '@media (hover: hover)': {
+      transition: 'transform 250ms',
+      '&:hover': {
+        transform: 'scale(1.6)',
+      },
     },
   },
 })
@@ -33,11 +36,12 @@ const mapStateToProps = (state, props) => ({
 })
 
 function Participant({
-  classes, participant,
+  classes, participant, onClick,
 }) {
   return (
     <div
       className={combineStyleClassses('avatar-container', classes.avatarContainer)}
+      onClick={onClick}
     >
       <UserAvatar
         user={participant}
@@ -55,6 +59,11 @@ Participant.propTypes = {
     imageUrl: PropTypes.string,
   }).isRequired,
   classes: PropTypes.object.isRequired,
+  onClick: PropTypes.func,
+}
+
+Participant.defaultProps = {
+  onClick: undefined,
 }
 
 

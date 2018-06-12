@@ -3,7 +3,7 @@ const { LocalizableError } = require('./localizable_error')
 class InputValidationError extends LocalizableError {
   constructor(property, message, localizationKey, localizationValues) {
     super(message)
-    this.name = InputValidationError.name
+    this.identifier = InputValidationError.identifier
     this.status = 409
     this.property = property
     this.localizationKey = localizationKey
@@ -17,6 +17,6 @@ class InputValidationError extends LocalizableError {
   }
 }
 
-InputValidationError.name = 'InputValidationError'
+InputValidationError.identifier = 'InputValidationError'
 
 module.exports = { InputValidationError }

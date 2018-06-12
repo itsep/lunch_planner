@@ -29,7 +29,8 @@ describe('register accounts', () => {
       })
     })
     it('should throw an error', async () => {
-      await expect(create(testEmail1, testPassword1, testFirstName, testLastName)).rejects.toHaveProperty('code', 'ER_DUP_ENTRY')
+      await expect(create(testEmail1, testPassword1, testFirstName, testLastName))
+        .rejects.toThrowError(InputValidationError)
     })
   })
   describe('registerAccount', () => {
@@ -50,7 +51,7 @@ describe('register accounts', () => {
     it('should reject to register a new account', async () => {
       const req = mockReq(request)
       const res = mockRes()
-      await expect(registerAccount(req, res)).rejects.toHaveProperty('code', 'ER_DUP_ENTRY')
+      await expect(registerAccount(req, res)).rejects.toThrowError(InputValidationError)
     })
     it('should reject to register a new account (first name too short)', async () => {
       const req = mockReq({
