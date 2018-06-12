@@ -207,4 +207,5 @@ InviteteToCurrentLunchspace.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
 }
 
+// eslint-disable-next-line max-len
 export default withStyles(styles)(withMobileDialog()(connect(mapStateToProps)(InviteteToCurrentLunchspace)))
