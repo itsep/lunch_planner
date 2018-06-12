@@ -44,7 +44,7 @@ const mapDispatchToProps = dispatch => ({
 
 
 class HomepageApp extends Component {
-  componentWillMount() {
+  componentDidMount() {
     if (isDefinitelyNotAuthenticated()) {
       window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
     }
