@@ -17,6 +17,9 @@ You need to create a `.env` file in the `backend` folder with the following cont
 DATABASE_USERNAME=*your database username*
 DATABASE_PASSWORD=*your database your password*
 JWT_SECRET=*your jasonwebtoken secret*
+SENDER_EMAIL=*your email address*
+EMAIL_SERVICE=*your email service*
+EMAIL_PASSWORD=*your email password*
 ```
 
 ## Start the application in Development mode
