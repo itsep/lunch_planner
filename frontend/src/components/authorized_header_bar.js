@@ -2,8 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Hidden from '@material-ui/core/Hidden'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
@@ -11,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import UserAvatar from './user_avatar'
 import localizedStrings from '../lib/localization'
 import { logout } from '../lib/authentication'
-import { headerBarClassName } from '../lib/ios_native'
+import HeaderBar from './header_bar'
 
 const styles = theme => ({
   title: {
@@ -45,39 +43,36 @@ class AuthorizedHeaderBar extends React.Component {
     const {
       classes, user, title, logout: onLogout,
     } = this.props
-    document.title = title
     const { anchorEl } = this.state
     return (
-      <AppBar position="static" color="default" className={headerBarClassName}>
-        <Toolbar>
-          <Typography variant="title" color="inherit" className={classes.title}>
-            {title}
+      <HeaderBar title={title}>
+        <Typography variant="title" color="inherit" className={classes.title}>
+          {title}
+        </Typography>
+
+        <Hidden xsDown implementation="css">
+          <Typography variant="title" color="inherit" className={classes.userName}>
+            {user.firstName} {user.lastName}
           </Typography>
+        </Hidden>
 
-          <Hidden xsDown implementation="css">
-            <Typography variant="title" color="inherit" className={classes.userName}>
-              {user.firstName} {user.lastName}
-            </Typography>
-          </Hidden>
-
-          <IconButton onClick={this.openMenu}>
-            <UserAvatar
-              user={user}
-              className={classes.avatar}
-            />
-          </IconButton>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={this.handleMenuClose}
-          >
-            <MenuItem onClick={onLogout}>
-              {localizedStrings.logout}
-            </MenuItem>
-          </Menu>
-        </Toolbar>
-      </AppBar>
+        <IconButton onClick={this.openMenu}>
+          <UserAvatar
+            user={user}
+            className={classes.avatar}
+          />
+        </IconButton>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={this.handleMenuClose}
+        >
+          <MenuItem onClick={onLogout}>
+            {localizedStrings.logout}
+          </MenuItem>
+        </Menu>
+      </HeaderBar>
     )
   }
 }
