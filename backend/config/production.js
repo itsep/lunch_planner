@@ -1,6 +1,6 @@
 module.exports = {
   debug: false,
-  host: 'mylunch.space',
+  host: 'https//mylunch.space',
   token: {
     domain: 'mylunch.space',
     onlyHttps: true,

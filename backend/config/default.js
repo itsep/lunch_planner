@@ -11,7 +11,7 @@ module.exports = {
     // this cookie is accessible from javascript, the token ist not accessable from javascript!
     isProbablyAuthenticatedCookieName: 'authenticated',
   },
-  host: 'localhost:8080',
+  host: 'http//localhost:8080',
   database: {
     name: 'lunch_planner',
   },
