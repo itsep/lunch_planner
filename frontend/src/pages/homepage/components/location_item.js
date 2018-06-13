@@ -71,7 +71,7 @@ function defaultTimeStamps() {
   const timeStamps = []
   let timeInHours
   let counter = 0
-  for (timeInHours = firstTimeStamp.hour; timeInHours < 18; timeInHours += 0.5) {
+  for (timeInHours = firstTimeStamp.hour; timeInHours < 21; timeInHours += 0.5) {
     const timeStamp = {
       key: counter,
       hour: Math.floor(timeInHours),
