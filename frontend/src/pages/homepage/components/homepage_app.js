@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Share from '@material-ui/icons/Share'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import IconButton from '@material-ui/core/IconButton'
 import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
 import LocationList from './location_list'
 import routeLocations from '../../route_locations'
@@ -50,11 +51,11 @@ const mapDispatchToProps = dispatch => ({
 const styles = () => ({
   title: {
     flex: 1,
+    display: 'flex',
+    alignItems: 'center',
   },
   sharedButton: {
-    fontSize: 16,
-    marginRight: 8,
-    cursor: 'pointer',
+    flex: 1,
   },
   loadingContainer: {
     display: 'flex',
@@ -108,9 +109,11 @@ class HomepageApp extends Component {
     return (
       <CommonAppContainer>
         <AuthorizedHeaderBar title={lunchspace.name || ''} user={user} logout={fetchLogoutAction}>
-          <Share className={classes.sharedButton} onClick={this.openInvite} />
           <Typography variant="title" color="inherit" className={classes.title}>
             { lunchspace.name }
+            <IconButton onClick={this.openInvite}>
+              <Share className={classes.sharedButton} />
+            </IconButton>
           </Typography>
         </AuthorizedHeaderBar>
         <InviteteToCurrentLunchspace
