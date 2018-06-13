@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Share from '@material-ui/icons/Share'
 import Typography from '@material-ui/core/Typography'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
 import LocationList from './location_list'
 import routeLocations from '../../route_locations'
@@ -54,6 +55,11 @@ const styles = () => ({
     fontSize: 16,
     marginRight: 8,
     cursor: 'pointer',
+  loadingContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '60vh',
   },
 })
 
@@ -81,11 +87,23 @@ class HomepageApp extends Component {
       showInvite: false,
     })
   }
+  noLunchspaceChoosen() {
+    return JSON.stringify(this.props.lunchspace) === JSON.stringify({})
+  }
   render() {
     const {
       classes, user, lunchspace, fetchLogoutAction, participantIds, show, closeDialog,
     } = this.props
-
+    if (isDefinitelyNotAuthenticated()) {
+      window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
+    }
+    if (this.noLunchspaceChoosen()) {
+      return (
+        <div className={classes.loadingContainer}>
+          <CircularProgress size="72px" />
+        </div>
+      )
+    }
     return (
       <CommonAppContainer>
         <AuthorizedHeaderBar title={lunchspace.name || ''} user={user} logout={fetchLogoutAction}>
@@ -107,6 +125,7 @@ class HomepageApp extends Component {
 }
 
 HomepageApp.propTypes = {
+  classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   lunchspace: PropTypes.object.isRequired,
