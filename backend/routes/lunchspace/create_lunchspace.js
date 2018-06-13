@@ -16,8 +16,17 @@ async function create(lunchspaceName, lunchspaceSubdomain) {
 }
 
 async function connect(userId, lunchspaceId, isAdmin) {
-  await pool.execute('INSERT INTO member_of (user_id, lunchspace_id, is_admin) ' +
+  try {
+    await pool.execute('INSERT INTO member_of (user_id, lunchspace_id, is_admin) ' +
       'VALUES (?,?,?)', [userId, lunchspaceId, isAdmin])
+  } catch (error) {
+    if (error.code === 'ER_DUP_ENTRY') {
+      throw new InputValidationError(
+        'email', `user ${userId} already member of lunchspace ${lunchspaceId}`,
+        'userAlreadyMember', { userId },
+      )
+    }
+  }
 }
 
 async function createLunchspace(userId, lunchspaceName, lunchspaceSubdomain) {
