@@ -24,6 +24,10 @@ function toEventDate(date) {
   }
 }
 
+function toEventDateFromMoment(momentDate) {
+  return toEventDate(momentDate.toDate())
+}
+
 function toEventDateFromString(dateString) {
   const dateParts = dateString
     .split('-')
@@ -34,10 +38,43 @@ function toEventDateFromString(dateString) {
     day: dateParts[2],
   }
 }
+function eventDateEqual(a, b) {
+  return a.day === b.day &&
+    a.month === b.month &&
+    a.year === b.year
+}
+
+
+const minuteSteps = 30
+const minuteStepsPerHour = 60 / minuteSteps
+
+function nextEventTimeForDate(date) {
+  let hour = date.getHours()
+  let minute = Math.ceil(date.getMinutes() / minuteSteps) * minuteSteps
+  if (minute >= 60) {
+    hour += 1
+    minute = 0
+  }
+  return {
+    hour,
+    minute,
+  }
+}
+
+function eventTimeSteps(from, to) {
+  const hourSteps = (to.hour - from.hour) * minuteStepsPerHour
+  const stepsFromMinuteComponent = (to.minute - from.minute) / minuteSteps
+  return hourSteps + stepsFromMinuteComponent
+}
+
 
 module.exports = {
   toEventTimeId,
   toEventDateId,
   toEventDate,
   toEventDateFromString,
+  nextEventTimeForDate,
+  eventTimeSteps,
+  toEventDateFromMoment,
+  eventDateEqual,
 }

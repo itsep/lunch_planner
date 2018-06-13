@@ -36,10 +36,12 @@ class SQLError extends LocalizableError {
   }
   toLocalizedString(localizableStrings) {
     let localizedString = super.toLocalizedString(localizableStrings)
-    localizedString += `
-SQL: ${this.sql}
+    if (this.sql || this.sqlState || this.sqlMessage) {
+      localizedString += `
 SQL State: ${this.sqlState}
-SQLMessage: ${this.sqlMessage}`
+SQLMessage: ${this.sqlMessage}
+SQL: ${this.sql}`
+    }
     return localizedString
   }
 }

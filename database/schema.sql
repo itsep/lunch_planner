@@ -21,8 +21,8 @@ CREATE TABLE user
 
 -- Account to User Foreign Key
 ALTER TABLE account
-	ADD FOREIGN KEY account_to_user_idx (user_id) 
-	REFERENCES user (id) 
+	ADD FOREIGN KEY account_to_user_idx (user_id)
+	REFERENCES user (id)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE;
 
@@ -48,8 +48,8 @@ CREATE TABLE location
 
 -- Location to Lunchspace Foreign Key
 ALTER TABLE location
-	ADD FOREIGN KEY location_to_lunchspace_idx (lunchspace_id) 
-	REFERENCES lunchspace (id) 
+	ADD FOREIGN KEY location_to_lunchspace_idx (lunchspace_id)
+	REFERENCES lunchspace (id)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE;
 
@@ -64,13 +64,13 @@ CREATE TABLE member_of
 
 -- Member of Lunchspace Foreign Key
 ALTER TABLE member_of
-	ADD FOREIGN KEY member_of_lunchspace_idx (lunchspace_id) 
-	REFERENCES lunchspace (id) 
+	ADD FOREIGN KEY member_of_lunchspace_idx (lunchspace_id)
+	REFERENCES lunchspace (id)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE,
 
-	ADD FOREIGN KEY user_to_member_of_idx (user_id) 
-	REFERENCES user (id) 
+	ADD FOREIGN KEY user_to_member_of_idx (user_id)
+	REFERENCES user (id)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE;
 
@@ -81,18 +81,19 @@ CREATE TABLE join_up_at
   location_id BIGINT UNSIGNED NOT NULL,
   event_time TIME NOT NULL,
   event_date DATE NOT NULL,
+  join_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(user_id, location_id, event_time, event_date)
 ) ENGINE = InnoDB;
 
 -- Join up at Location Foreign Key
 ALTER TABLE join_up_at
-	ADD FOREIGN KEY user_join_up_at_idx (user_id) 
-	REFERENCES user (id) 
+	ADD FOREIGN KEY user_join_up_at_idx (user_id)
+	REFERENCES user (id)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE,
-	
-	ADD FOREIGN KEY join_up_at_location_idx (location_id) 
-	REFERENCES location (id) 
+
+	ADD FOREIGN KEY join_up_at_location_idx (location_id)
+	REFERENCES location (id)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE;
 
@@ -127,8 +128,8 @@ CREATE TABLE web_notification_subscription
 
 -- Web Subscription Foreign Key
 ALTER TABLE web_notification_subscription
-  ADD FOREIGN KEY user_subscription_idx (user_id) 
-  REFERENCES user (id) 
+  ADD FOREIGN KEY user_subscription_idx (user_id)
+  REFERENCES user (id)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
@@ -137,4 +138,6 @@ CREATE VIEW event_participants AS
 SELECT join_up_at.*, user.*, location.lunchspace_id
 FROM join_up_at
 JOIN user ON join_up_at.user_id = user.id
-JOIN location ON join_up_at.location_id = location.id;
+JOIN location ON join_up_at.location_id = location.id
+ORDER BY join_up_at.join_timestamp DESC;
+

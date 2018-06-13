@@ -11,6 +11,7 @@ const pages = {
   login: {/* config options */},
   homepage: {/* config options */},
   create_lunchspace: {/* config options */},
+  join_lunchspace: {/* config options */},
   lunchspaces: {/* config options */},
   // *add a new page here*
 }

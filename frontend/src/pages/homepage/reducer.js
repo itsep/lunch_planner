@@ -8,8 +8,13 @@ reducer should get split to multiple reducer and then with combine(reducerList) 
 so its easier to search for an statechange
  */
 
-function reduceCurrentDate(currentDate = initialState.currentDate) {
-  return currentDate
+function reduceCurrentDate(currentDate = initialState.currentDate, action) {
+  switch (action.type) {
+    case actionTypes.CHANGE_DATE:
+      return action.date
+    default:
+      return currentDate
+  }
 }
 function reduceLunchspace(lunchspace = initialState.lunchspace, action) {
   switch (action.type) {
@@ -19,7 +24,14 @@ function reduceLunchspace(lunchspace = initialState.lunchspace, action) {
       return lunchspace
   }
 }
-
+function reduceLunchspaces(lunchspaces = initialState.lunchspaces, action) {
+  switch (action.type) {
+    case actionTypes.SET_LUNCHSPACES:
+      return action.lunchspaces
+    default:
+      return lunchspaces
+  }
+}
 function reduceUser(user = initialState.user, action) {
   switch (action.type) {
     case actionTypes.RECEIVE_PAGE_DATA:
@@ -41,7 +53,7 @@ function reduceParticipantsAtTimestamp(participantsAtTimestamp, action) {
       }
       return {
         ...participantsAtTimestamp,
-        [eventTimeId]: [...participants, userId],
+        [eventTimeId]: [userId, ...participants],
       }
     case actionTypes.REMOVE_PARTICIPANT:
       return (() => {
@@ -114,7 +126,12 @@ function reduceLocationsInLunchspace(
           return locationsInLunchspace
         }
         return [...locationsInLunchspace, id]
-      })()
+      })
+    case actionTypes.REMOVE_LOCATION:
+      return (() => {
+        const { id } = action.locationId
+        return locationsInLunchspace.filter(location => location.id !== id)
+      })
     default:
       return locationsInLunchspace
   }
@@ -151,6 +168,25 @@ function reduceIsLoadingLocations(isLoadingLocations = false, action) {
   }
 }
 
+function reduceSelectedEvent(selectedEvent = null, action) {
+  switch (action.type) {
+    case actionTypes.OPEN_EVENT_DIALOG:
+      return {
+        show: true,
+        locationId: action.locationId,
+        eventTimeId: action.eventTimeId,
+        selectedUserId: action.selectedUserId,
+      }
+    case actionTypes.CLOSE_EVENT_DIALOG:
+      return {
+        ...selectedEvent,
+        show: false,
+      }
+    default:
+      return selectedEvent
+  }
+}
+
 const reducer = combineReducers({
   currentDate: reduceCurrentDate,
   lunchspace: reduceLunchspace,
@@ -158,6 +194,8 @@ const reducer = combineReducers({
   locations: reduceLocations,
   locationsInLunchspace: reduceLocationsInLunchspace,
   users: reduceUsers,
+  lunchspaces: reduceLunchspaces,
   isLoadingLocations: reduceIsLoadingLocations,
+  selectedEvent: reduceSelectedEvent,
 })
 export default reducer

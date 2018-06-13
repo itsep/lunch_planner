@@ -14,7 +14,5 @@ npm run deploy --prefix=frontend
 
 # stop current backend and start new one
 cd ./backend
-pm2 stop rest-api
-pm2 start services/rest-api.js --name rest-api
-pm2 stop subscriber
-pm2 start services/subscriber.js --name subscriber
+pm2 startOrReload ecosystem.config.js --env=production
+pm2 save

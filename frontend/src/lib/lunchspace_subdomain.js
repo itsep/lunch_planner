@@ -3,14 +3,21 @@ import { parseSubdomainFromHost } from 'shared/lib/subdomain'
 /* eslint-disable no-restricted-globals */
 const applicationDomain = 'mylunch.space'
 
-function topLevelDomainFromHost(hostname) {
+/**
+ * return the domain without any subdomain
+ * @param hostname
+ * @returns {domain}
+ */
+function domainFromHost(hostname) {
   const domainParts = hostname.split('.')
-  return domainParts[domainParts.length - 1]
+  if (domainParts <= 2) {
+    return hostname
+  }
+  return `${domainParts[domainParts.length - 1]}.${domainParts[domainParts.length - 1]}`
 }
 
 export function shouldUseDevelopmentSubdomainHandling() {
-  return location.hostname === 'localhost' ||
-    topLevelDomainFromHost(location.hostname) === 'local'
+  return domainFromHost(location.hostname) !== applicationDomain
 }
 
 export function domainForLunchspace(subdomain) {

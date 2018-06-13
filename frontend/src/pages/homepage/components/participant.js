@@ -4,14 +4,28 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import UserAvatar from '../../../components/user_avatar'
 import './participants.scss'
+import combineStyleClassses from '../../../lib/combineStyleClassses'
 
 const styles = theme => ({
+  avatarContainer: {
+    transition: 'zIndex 400ms',
+    '&:hover': {
+      zIndex: 1,
+    },
+  },
   avatar: {
     width: '24px',
     height: '24px',
     [theme.breakpoints.up('md')]: {
       width: '30px',
       height: '30px',
+      fontSize: '14px',
+    },
+    '@media (hover: hover)': {
+      transition: 'transform 250ms',
+      '&:hover': {
+        transform: 'scale(1.6)',
+      },
     },
   },
 })
@@ -22,10 +36,13 @@ const mapStateToProps = (state, props) => ({
 })
 
 function Participant({
-  classes, participant,
+  classes, participant, onClick,
 }) {
   return (
-    <div className="avatar-container">
+    <div
+      className={combineStyleClassses('avatar-container', classes.avatarContainer)}
+      onClick={onClick}
+    >
       <UserAvatar
         user={participant}
         className={classes.avatar}
@@ -42,6 +59,11 @@ Participant.propTypes = {
     imageUrl: PropTypes.string,
   }).isRequired,
   classes: PropTypes.object.isRequired,
+  onClick: PropTypes.func,
+}
+
+Participant.defaultProps = {
+  onClick: undefined,
 }
 
 

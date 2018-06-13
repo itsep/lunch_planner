@@ -10,13 +10,25 @@ const maximumLength = 24
 async function create(email, password, firstName, lastName) {
   const hashedPassword = await hash(password)
   return pool.useConnection(async (conn) => {
-    const [userCreateResult] = await conn.execute('INSERT INTO user (first_name, last_name)' +
-    'VALUES (?,?)', [firstName, lastName])
-    const userId = userCreateResult.insertId
-    const [accountCreateResult] = await conn.execute('INSERT INTO account (email, hashed_password, user_id) ' +
-      'VALUES (?,?,?)', [email, hashedPassword, userId])
-    const accountId = accountCreateResult.insertId
-    return { userId, accountId }
+    try {
+      const [userCreateResult] = await conn.execute('INSERT INTO user (first_name, last_name)' +
+        'VALUES (?,?)', [firstName, lastName])
+      const userId = userCreateResult.insertId
+      const [accountCreateResult] = await conn.execute('INSERT INTO account (email, hashed_password, user_id) ' +
+        'VALUES (?,?,?)', [email, hashedPassword, userId])
+      const accountId = accountCreateResult.insertId
+      return { userId, accountId }
+    } catch (error) {
+      // user with same email adress is already registered
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new InputValidationError(
+          'email', `email already registered: ${email}`,
+          'emailAlreadyRegistered', { email },
+        )
+      } else {
+        throw error
+      }
+    }
   })
 }
 

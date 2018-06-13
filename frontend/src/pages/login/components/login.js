@@ -9,8 +9,9 @@ import Collapse from '@material-ui/core/Collapse'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import FormSection from 'components/form_section'
 import routeLocations from '../../route_locations'
-import localizedStrings from '../../../localization'
+import localizedStrings from '../../../lib/localization'
 import apiFetch from '../../../lib/api_fetch'
+import redirectTo from '../../../lib/redirectTo'
 import { withLunchspaceSubdomain, currentLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
 
 const styles = theme => ({
@@ -47,7 +48,6 @@ class Login extends React.Component {
       password: '',
       isLoading: false,
       error: null,
-      loggedIn: false,
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -78,18 +78,18 @@ class Login extends React.Component {
         const preferedSubdomain =
           // has already selected a lunchspace
           currentLunchspaceSubdomain() ||
-          // the user is in exactly one lunchspace, redirect diretly to the homepage
+          // the user is in exactly one lunchspace, redirect diretcly to the homepage
           ((lunchspaces.length === 1) && lunchspaces[0])
 
         if (preferedSubdomain) {
           window.location = withLunchspaceSubdomain(
-            routeLocations.HOMEPAGE,
+            redirectTo(routeLocations.HOMEPAGE),
             preferedSubdomain,
             true
           )
         } else {
-          // the user has no lunchspaces or more than one, redirect to lunchspaces
-          window.location = routeLocations.LUNCHSPACES
+          // the user has no lunchspaces or more than one, redirectTo to lunchspaces
+          window.location = redirectTo(routeLocations.LUNCHSPACES)
         }
       })
       .catch((error) => {
@@ -145,7 +145,7 @@ class Login extends React.Component {
                   color="secondary"
                   className={classes.button}
                   disabled={this.state.isLoading}
-                  href={routeLocations.REGISTRATION}
+                  href={redirectTo(routeLocations.REGISTRATION)}
                 >
                   {localizedStrings.signUp}
                 </Button>
