@@ -9,7 +9,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import UserAvatar from './user_avatar'
 import localizedStrings from '../lib/localization'
 import { logout } from '../lib/authentication'
-import { headerBarClassName } from '../lib/ios_native'
 import HeaderBar from './header_bar'
 
 const styles = theme => ({
