@@ -30,6 +30,7 @@ const content = {
   notYou: 'Nicht du?',
   invalidInvitationLink: 'Einladungs Link ist ungültig',
   accept: 'Akzeptieren',
+  needToLoginForInvite: 'Melde dich an oder erstelle einen Account um die Einladung an zu nehmen.',
 
   createLunchspace: 'Lunchspace erstellen',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} erfolgreich erstellt.',

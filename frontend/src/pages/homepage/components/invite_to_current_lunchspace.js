@@ -143,12 +143,14 @@ class InviteteToCurrentLunchspace extends React.Component {
               <TextValidator
                 name="email-to-invite"
                 label="Email"
+                type="email"
                 className={classes.textField}
                 value={this.state.emailToInvite}
                 onChange={this.handleEmailToInviteChange}
                 validators={['required', 'isEmail']}
                 errorMessages={[localizedStrings.fieldRequired, localizedStrings.invalidEmail]}
                 margin="normal"
+                autoComplete="email"
                 autoFocus
               />
               <Collapse in={!!this.state.error}>
