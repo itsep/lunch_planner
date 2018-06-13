@@ -42,12 +42,14 @@ const styles = theme => ({
 
 class Login extends React.Component {
   constructor(props) {
+    const url = new URL(window.location.href)
     super(props)
     this.state = {
       email: '',
       password: '',
       isLoading: false,
       error: null,
+      redirectedFromInvite: !!url.searchParams.get('token'),
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -109,6 +111,11 @@ class Login extends React.Component {
             onSubmit={this.handleSubmit}
             className={classes.form}
           >
+            {this.state.redirectedFromInvite &&
+            <Typography variant="headline">
+              {localizedStrings.needToLoginForInvite}
+            </Typography>
+            }
             <TextValidator
               name="email"
               label="Email"
