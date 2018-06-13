@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import UserAvatar from './user_avatar'
 import localizedStrings from '../lib/localization'
 import { logout } from '../lib/authentication'
+import routeLocations from '../pages/route_locations'
 import HeaderBar from './header_bar'
 
 const styles = theme => ({
@@ -55,7 +56,7 @@ class AuthorizedHeaderBar extends React.Component {
         }
 
         <Hidden xsDown implementation="css">
-          <Typography variant="title" color="inherit" className={classes.userName}>
+          <Typography variant="title" color="inherit" className={classes.userName} onClick={this.openMenu}>
             {user.firstName} {user.lastName}
           </Typography>
         </Hidden>
@@ -72,6 +73,9 @@ class AuthorizedHeaderBar extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleMenuClose}
         >
+          <MenuItem component="a" href={routeLocations.LUNCHSPACES}>
+            {localizedStrings.myLunchspaces}
+          </MenuItem>
           <MenuItem onClick={onLogout}>
             {localizedStrings.logout}
           </MenuItem>
