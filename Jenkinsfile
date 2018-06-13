@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Install, Lint and Test') {
             parallel {
-                stage('Shared') {
+                stages {
                     stage('Install Shared') {
                         steps {
                             // `npm install` but especially for continues integration.
@@ -27,7 +27,7 @@ pipeline {
                         }
                     }
                 }
-                stage('Backend') {
+                stages {
                     stage('Install Backend') {
                         steps {
                             // `npm install` but especially for continues integration.
@@ -52,7 +52,7 @@ pipeline {
                         }
                     }
                 }
-                stage('Frontend') {
+                stages {
                     stage('Install Frontend') {
                         steps {
                             // `npm install` but especially for continues integration.
