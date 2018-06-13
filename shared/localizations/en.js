@@ -22,6 +22,7 @@ const content = {
   invalidToken: 'This invitation is no longer valid.',
   lunchspaceDoesNotExist: 'The requested Lunchspace does not exist.',
   emailAlreadyRegistered: 'An account with the email {email} does already exists.',
+  userAlreadyMember: 'You are already a member of this lunchspace.',
 
   joinLunchspaceTitle: 'Join Lunchspace',
   joinLunchspace: 'You got invited to {lunchspaceName}!',
