@@ -58,8 +58,8 @@ sudo mysql_secure_installation
 
 #### Create New User
 ```sql
-CREATE USER 'root'@'localhost' IDENTIFIED BY '\'[/ZI\eXucdqAuV*8m0E';
-GRANT ALL PRIVILEGES ON * . * TO 'root'@'localhost';
+CREATE USER '<enter username here>'@'localhost' IDENTIFIED BY '<enter password here>';
+GRANT ALL PRIVILEGES ON * . * TO '<enter username here>'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
