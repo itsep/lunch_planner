@@ -1,5 +1,5 @@
 import { toEventDateFromMoment, eventDateEqual } from 'shared/lib/event'
-import { addParticipant, removeParticipant, addLocation } from './actions'
+import { addParticipant, removeParticipant, addLocation, fetchPageData, removeLocation } from './actions'
 
 export default class ChangeDispatcher {
   static actionForMessage(message) {
@@ -22,6 +22,8 @@ export default class ChangeDispatcher {
           message.name,
           message.locationId
         )
+      case 'removeLocation':
+        return removeLocation(message.locationId)
       default:
         return null
     }
@@ -31,19 +33,30 @@ export default class ChangeDispatcher {
     this.store = store
 
     this.socket.on('connect', this.onConnect.bind(this))
+    this.socket.on('disconnect', this.onDisconnect.bind(this))
+    this.socket.on('reconnect', this.onReconnect.bind(this))
     this.socket.on('change', this.onChange.bind(this))
     this.store.subscribe(this.onStateChange.bind(this))
   }
 
   subscribeToAllLocationChanges(date) {
-    this.currentDate = date
-    this.socket.emit('subscribeToAllLocationChanges', toEventDateFromMoment(date))
+    if (!this.lastSendDate || !this.lastSendDate.isSame(date, 'day')) {
+      this.lastSendDate = date
+      this.socket.emit('subscribeToAllLocationChanges', toEventDateFromMoment(date))
+    }
   }
 
   onConnect() {
     if (this.currentDate) {
       this.subscribeToAllLocationChanges(this.currentDate)
     }
+  }
+  onDisconnect() {
+    this.lastSendDate = undefined
+  }
+  onReconnect() {
+    const { currentDate } = this.store.getState()
+    this.store.dispatch(fetchPageData(currentDate))
   }
   onChange(message) {
     if (message.eventDate) {

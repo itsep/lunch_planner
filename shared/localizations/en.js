@@ -23,9 +23,16 @@ const content = {
   lunchspaceDoesNotExist: 'The requested Lunchspace does not exist.',
   emailAlreadyRegistered: 'An account with the email {email} does already exists.',
 
+  joinLunchspaceTitle: 'Join Lunchspace',
+  joinLunchspace: 'You got invited to {lunchspaceName}!',
+  notYou: 'Not you?',
+  invalidInvitationLink: 'Invitation link is invalid',
+  accept: 'Accept',
+
   createLunchspace: 'Create Lunchspace',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} successfull created.',
   createLocation: 'Create Location',
+  delete: 'Delete',
   login: 'Login',
   logout: 'Logout',
   today: 'Today',

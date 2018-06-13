@@ -13,7 +13,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import withMobileDialog from '@material-ui/core/withMobileDialog'
 import UserAvatar from '../../../components/user_avatar'
-import localizedStrings from '../../../localization'
+import localizedStrings from '../../../lib/localization'
 
 const mapDispatchToProps = null
 

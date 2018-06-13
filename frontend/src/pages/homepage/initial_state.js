@@ -1,7 +1,8 @@
-import moment from 'moment'
+import moment from '../../lib/localized_moment'
 
 const initialState = {
   lunchspace: {},
+  lunchspaces: [],
   currentDate: moment(),
   user: {
     id: -1,
