@@ -55,6 +55,7 @@ const styles = () => ({
     fontSize: 16,
     marginRight: 8,
     cursor: 'pointer',
+  },
   loadingContainer: {
     display: 'flex',
     justifyContent: 'center',
@@ -127,7 +128,6 @@ class HomepageApp extends Component {
 HomepageApp.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
   lunchspace: PropTypes.object.isRequired,
   fetchLogoutAction: PropTypes.func.isRequired,
   participantIds: PropTypes.arrayOf(PropTypes.number).isRequired,
