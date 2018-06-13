@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import UserAvatar from './user_avatar'
 import localizedStrings from '../lib/localization'
 import { logout } from '../lib/authentication'
+import routeLocations from '../pages/route_locations'
 import HeaderBar from './header_bar'
 
 const styles = theme => ({
@@ -41,17 +42,21 @@ class AuthorizedHeaderBar extends React.Component {
   }
   render() {
     const {
-      classes, user, title, logout: onLogout,
+      classes, user, logout: onLogout, title, children,
     } = this.props
     const { anchorEl } = this.state
     return (
       <HeaderBar title={title}>
-        <Typography variant="title" color="inherit" className={classes.title}>
-          {title}
-        </Typography>
+        {
+          children
+          ||
+          <Typography variant="title" color="inherit" className={classes.title}>
+            { title }
+          </Typography>
+        }
 
         <Hidden xsDown implementation="css">
-          <Typography variant="title" color="inherit" className={classes.userName}>
+          <Typography variant="title" color="inherit" className={classes.userName} onClick={this.openMenu}>
             {user.firstName} {user.lastName}
           </Typography>
         </Hidden>
@@ -68,6 +73,9 @@ class AuthorizedHeaderBar extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleMenuClose}
         >
+          <MenuItem component="a" href={routeLocations.LUNCHSPACES}>
+            {localizedStrings.myLunchspaces}
+          </MenuItem>
           <MenuItem onClick={onLogout}>
             {localizedStrings.logout}
           </MenuItem>
@@ -76,7 +84,12 @@ class AuthorizedHeaderBar extends React.Component {
     )
   }
 }
+
+AuthorizedHeaderBar.defaultProps = {
+  children: null,
+}
 AuthorizedHeaderBar.propTypes = {
+  children: PropTypes.array,
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,

@@ -42,6 +42,7 @@ const styles = theme => ({
 
 class Registration extends React.Component {
   constructor(props) {
+    const url = new URL(window.location.href)
     super(props)
     this.state = {
       firstName: '',
@@ -52,6 +53,7 @@ class Registration extends React.Component {
       error: null,
       lastError: null,
       loggedIn: false,
+      redirectedFromInvite: !!url.searchParams.get('token'),
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -117,6 +119,11 @@ class Registration extends React.Component {
             onSubmit={this.handleSubmit}
             className={classes.form}
           >
+            {this.state.redirectedFromInvite &&
+            <Typography variant="headline">
+              {localizedStrings.needToLoginForInvite}
+            </Typography>
+            }
             <TextValidator
               name="first-name"
               label="First Name"
