@@ -118,6 +118,7 @@ ALTER TABLE invitation
 CREATE TABLE web_notification_subscription
 (
   user_id BIGINT UNSIGNED NOT NULL,
+  lunchspace_id BIGINT UNSIGNED NOT NULL,
   endpoint VARCHAR(1024) NOT NULL,
   -- TODO: What ist a good length for both key properties?
   key_auth VARCHAR(64) NOT NULL,
