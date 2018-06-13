@@ -124,13 +124,18 @@ CREATE TABLE web_notification_subscription
   key_auth VARCHAR(64) NOT NULL,
   key_p256dh VARCHAR(128) NOT NULL,
   user_agent VARCHAR(256),
-  PRIMARY KEY (endpoint)
+  PRIMARY KEY (lunchspace_id, endpoint)
 ) ENGINE = InnoDB;
 
 -- Web Subscription Foreign Key
 ALTER TABLE web_notification_subscription
   ADD FOREIGN KEY user_subscription_idx (user_id)
   REFERENCES user (id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+
+  ADD FOREIGN KEY subscription_lunchspace_idx (lunchspace_id)
+  REFERENCES lunchspace (id)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
