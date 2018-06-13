@@ -1,5 +1,6 @@
 const { pool } = require('../../lib/database')
 const { NeedsUserConfirmation } = require('../../../shared/lib/error')
+const { lunchspaceChannel } = require('../../lib/lunchspace_channels')
 
 async function checkForFutureEvents(locationId) {
   const [futureEvents] = await pool.execute('SELECT * FROM join_up_at WHERE location_id = ? AND event_date >= CURDATE()', [locationId])
@@ -23,6 +24,13 @@ async function deleteLocation(req, res) {
       [locationId, lunchspaceId]
     )
   })
+  req.publishClient.publish(
+    lunchspaceChannel(lunchspaceId),
+    {
+      action: 'removeLocation',
+      locationId,
+    },
+  )
   return res.status(200).json({})
 }
 
