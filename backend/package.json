@@ -35,7 +35,8 @@
     "socket.io": "^2.1.1",
     "socket.io-cookie-parser": "^1.0.0",
     "uuid": "^3.2.1",
-    "web-push": "^3.3.1"
+    "web-push": "^3.3.1",
+    "zip-array": "^1.0.1"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",

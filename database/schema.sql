@@ -77,11 +77,11 @@ ALTER TABLE member_of
 -- Join up at Location Relationship
 CREATE TABLE join_up_at
 (
-    user_id BIGINT UNSIGNED NOT NULL,
-    location_id BIGINT UNSIGNED NOT NULL,
-    event_time TIME NOT NULL,
-    event_date DATE NOT NULL,
-    PRIMARY KEY(user_id, location_id, event_time, event_date)
+  user_id BIGINT UNSIGNED NOT NULL,
+  location_id BIGINT UNSIGNED NOT NULL,
+  event_time TIME NOT NULL,
+  event_date DATE NOT NULL,
+  PRIMARY KEY(user_id, location_id, event_time, event_date)
 ) ENGINE = InnoDB;
 
 -- Join up at Location Foreign Key
@@ -99,19 +99,38 @@ ALTER TABLE join_up_at
 -- Invitation Entity
 CREATE TABLE invitation
 (
-    token VARCHAR(36) NOT NULL,
-    lunchspace_id BIGINT UNSIGNED NOT NULL,
-    email VARCHAR(120) NOT NULL,
-    PRIMARY KEY(token),
-    UNIQUE (lunchspace_id, email)
+  token VARCHAR(36) NOT NULL,
+  lunchspace_id BIGINT UNSIGNED NOT NULL,
+  email VARCHAR(120) NOT NULL,
+  PRIMARY KEY(token),
+  UNIQUE (lunchspace_id, email)
 ) ENGINE = InnoDB;
 
 -- Invitation Foreign Key
 ALTER TABLE invitation
-    ADD FOREIGN KEY invitation_to_lunchspace_idx (lunchspace_id)
-    REFERENCES lunchspace (id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE;
+  ADD FOREIGN KEY invitation_to_lunchspace_idx (lunchspace_id)
+  REFERENCES lunchspace (id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+-- Subscriptions from a user from the web api
+CREATE TABLE web_notification_subscription
+(
+  user_id BIGINT UNSIGNED NOT NULL,
+  endpoint VARCHAR(1024) NOT NULL,
+  -- TODO: What ist a good length for both key properties?
+  key_auth VARCHAR(64) NOT NULL,
+  key_p256dh VARCHAR(128) NOT NULL,
+  user_agent VARCHAR(256),
+  PRIMARY KEY (endpoint)
+) ENGINE = InnoDB;
+
+-- Web Subscription Foreign Key
+ALTER TABLE web_notification_subscription
+  ADD FOREIGN KEY user_subscription_idx (user_id) 
+  REFERENCES user (id) 
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
 
 -- View on the member data of a location
 CREATE VIEW event_participants AS

@@ -1,6 +1,6 @@
 import withQuery from 'with-query'
 import { parseSubdomainFromHost } from 'shared/lib/subdomain'
-
+/* eslint-disable no-restricted-globals */
 const applicationDomain = 'mylunch.space'
 
 function topLevelDomainFromHost(hostname) {
@@ -9,8 +9,8 @@ function topLevelDomainFromHost(hostname) {
 }
 
 export function shouldUseDevelopmentSubdomainHandling() {
-  return window.location.hostname === 'localhost' ||
-    topLevelDomainFromHost(window.location.hostname) === 'local'
+  return location.hostname === 'localhost' ||
+    topLevelDomainFromHost(location.hostname) === 'local'
 }
 
 export function domainForLunchspace(subdomain) {
@@ -18,8 +18,8 @@ export function domainForLunchspace(subdomain) {
 }
 
 export function currentLunchspaceSubdomain() {
-  const parsedSubdomain = parseSubdomainFromHost(window.location.hostname) ||
-    new URLSearchParams(window.location.search).get('subdomain')
+  const parsedSubdomain = parseSubdomainFromHost(location.hostname) ||
+    new URLSearchParams(location.search).get('subdomain')
   // `www` is never a lunchspace subdomain
   if (parsedSubdomain === 'www') {
     return undefined

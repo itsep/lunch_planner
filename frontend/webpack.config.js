@@ -35,6 +35,12 @@ const serviceWorkerWebpackConfig = {
   entry: {
     'notification-worker': './src/service_worker/notification-worker.js',
   },
+  resolve: {
+    alias: {
+      shared: path.resolve(__dirname, '../shared'),
+      lib: path.resolve(__dirname, 'src/lib'),
+    },
+  },
   module: {
     rules: [{
       test: /\.js$/,
