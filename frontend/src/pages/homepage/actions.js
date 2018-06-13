@@ -4,6 +4,7 @@ import { currentLunchspaceSubdomain } from '../../lib/lunchspace_subdomain'
 import actionTypes from './action_types'
 import apiFetch from '../../lib/api_fetch'
 import { logout } from '../../lib/authentication'
+import routeLocations from '../route_locations'
 
 export function addParticipant(eventTime, locationId, participant) {
   return {
@@ -11,6 +12,13 @@ export function addParticipant(eventTime, locationId, participant) {
     eventTime,
     locationId,
     participant,
+  }
+}
+
+export function setLunchspaces(lunchspaces) {
+  return {
+    type: actionTypes.SET_LUNCHSPACES,
+    lunchspaces,
   }
 }
 
@@ -26,6 +34,13 @@ export function addLocation(locationName, locationId) {
   return {
     type: actionTypes.ADD_LOCATION,
     location: createLocation(locationName, locationId),
+  }
+}
+
+export function removeLocation(locationId) {
+  return {
+    type: actionTypes.REMOVE_LOCATION,
+    locationId,
   }
 }
 
@@ -63,6 +78,17 @@ export function fetchCreateLocation(locationName, lunchspace) {
     .catch(error => dispatch(setError(error)))
 }
 
+export function fetchDeleteLocation(locationId) {
+  // TODO: remove force delete and handle delete with care
+  return dispatch => apiFetch('/api/location', {
+    method: 'DELETE',
+    body: {
+      locationId,
+      forceDelete: true,
+    },
+  }).catch(error => dispatch(setError(error)))
+}
+
 export function fetchLogout() {
   return () => logout()
     .catch(error => console.error(error))
@@ -92,39 +118,44 @@ export function fetchPageData(date) {
   return (dispatch) => {
     dispatch(requestPageData())
     return apiFetch(withQuery('/api/location/', { date: date.toISOString().substring(0, 10) }))
-      .then(({ data }) => dispatch(receivePageData(data)))
+      .then(({ data }) => {
+        dispatch(setLunchspaces(data.lunchspaces))
+        dispatch(receivePageData(data))
+      })
       // TODO: handle error by dispatching an error action
-      .catch(error => console.error(error))
+      .catch((error) => {
+        if (error.status === 409) {
+          window.location = routeLocations.LUNCHSPACES
+        } else {
+          console.error(error)
+        }
+      })
   }
 }
 
 export function joinEvent(locationId, eventTime, eventDate, participant) {
-  return (dispatch) => {
-    apiFetch('/api/event', {
-      method: 'PUT',
-      body: {
-        locationId,
-        eventTime,
-        eventDate,
-      },
-    }).then(() => dispatch(addParticipant(eventTime, locationId, participant)))
-      // TODO: handle error by dispatching an error action
-      .catch(error => console.error(error))
-  }
+  return dispatch => apiFetch('/api/event', {
+    method: 'PUT',
+    body: {
+      locationId,
+      eventTime,
+      eventDate,
+    },
+  }).then(() => dispatch(addParticipant(eventTime, locationId, participant)))
+    // TODO: handle error by dispatching an error action
+    .catch(error => console.error(error))
 }
 export function leaveEvent(locationId, eventTime, eventDate, participant) {
-  return (dispatch) => {
-    apiFetch('/api/event', {
-      method: 'DELETE',
-      body: {
-        locationId,
-        eventTime,
-        eventDate,
-      },
-    }).then(() => dispatch(removeParticipant(eventTime, locationId, participant)))
-      // TODO: handle error by dispatching an error action
-      .catch(error => console.error(error))
-  }
+  return dispatch => apiFetch('/api/event', {
+    method: 'DELETE',
+    body: {
+      locationId,
+      eventTime,
+      eventDate,
+    },
+  }).then(() => dispatch(removeParticipant(eventTime, locationId, participant)))
+  // TODO: handle error by dispatching an error action
+    .catch(error => console.error(error))
 }
 
 export function openEventDialog(locationId, eventTimeId, selectedUserId) {

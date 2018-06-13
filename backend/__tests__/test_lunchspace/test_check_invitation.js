@@ -2,11 +2,15 @@ const { createMockDatabase, dropMockDatabase } = require('../../lib/database/moc
 const { mockReq, mockRes } = require('../../lib/express_mock')
 const { create } = require('../../routes/lunchspace/create_lunchspace')
 const { getToken } = require('../../routes/lunchspace/invite_lunchspace')
-const { checkInvitation, getLunchspaceName, checkTokenAndGetLunchspaceId } = require('../../routes/lunchspace/check_invitation')
+const { checkInvitation, getLunchspaceNameAndSubdomain, checkTokenAndGetLunchspaceId } = require('../../routes/lunchspace/check_invitation')
 const { InputValidationError } = require('../../../shared/lib/error')
 
 const testLunchspaceName = 'testLunchspace'
 const testLunchspaceSubdomain = 'test-lunchspace'
+const testLunchspace = {
+  name: testLunchspaceName,
+  subdomain: testLunchspaceSubdomain,
+}
 const testEmail = 'noreply.lunchspace@gmail.com'
 const testFirstName = 'Max'
 const testLastName = 'Mustermann'
@@ -31,12 +35,14 @@ describe('check_invitation', () => {
         .rejects.toThrowError(InputValidationError)
     })
   })
-  describe('getLunchspaceName', () => {
-    it('should return the name of testLunchspace', async () => {
-      await expect(getLunchspaceName(lunchspaceId)).resolves.toEqual(testLunchspaceName)
+  describe('getLunchspaceNameAndSubdomain', () => {
+    it('should return the name and subdomain of testLunchspace', async () => {
+      await expect(getLunchspaceNameAndSubdomain(lunchspaceId))
+        .resolves.toEqual(testLunchspace)
     })
     it('should return undefined', async () => {
-      await expect(getLunchspaceName(notALunchspaceId)).rejects.toThrowError(InputValidationError)
+      await expect(getLunchspaceNameAndSubdomain(notALunchspaceId))
+        .rejects.toThrowError(InputValidationError)
     })
   })
   describe('checkInvitation', () => {
@@ -56,7 +62,7 @@ describe('check_invitation', () => {
       expect(result).toMatchObject({
         firstName: testFirstName,
         lastName: testLastName,
-        lunchspaceName: testLunchspaceName,
+        lunchspace: testLunchspace,
       })
     })
     it('should reject to InputValidationError', async () => {

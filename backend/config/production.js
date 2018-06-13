@@ -1,8 +1,8 @@
 module.exports = {
   debug: false,
-  onlyHttps: true,
-  host: 'mylunch.space',
+  host: 'https://mylunch.space',
   token: {
-    domain: '.mylunch.space',
+    domain: 'mylunch.space',
+    onlyHttps: true,
   },
 }

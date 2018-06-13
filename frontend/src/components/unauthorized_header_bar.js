@@ -1,10 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import { headerBarClassName } from '../lib/ios_native'
+import HeaderBar from './header_bar'
 
 const styles = {
   title: {
@@ -13,15 +11,12 @@ const styles = {
 }
 
 function UnauthorizedHeaderBar({ classes, title }) {
-  document.title = title
   return (
-    <AppBar position="static" color="default" className={headerBarClassName}>
-      <Toolbar>
-        <Typography variant="title" color="inherit" className={classes.title}>
-          {title}
-        </Typography>
-      </Toolbar>
-    </AppBar>
+    <HeaderBar title={title}>
+      <Typography variant="title" color="inherit" className={classes.title}>
+        {title}
+      </Typography>
+    </HeaderBar>
   )
 }
 UnauthorizedHeaderBar.propTypes = {

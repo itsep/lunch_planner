@@ -31,10 +31,19 @@ async function lunchspaceExists(lunchspaceId) {
   return false
 }
 
+async function locationExists(locationId) {
+  const [result] = await pool.execute('SELECT * FROM location WHERE id = ?', [locationId])
+  if (result[0]) {
+    return true
+  }
+  return false
+}
+
 module.exports = {
   asyncForEach,
   isMember,
   isAdmin,
   lunchspaceExists,
   isName,
+  locationExists,
 }

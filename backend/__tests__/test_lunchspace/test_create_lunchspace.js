@@ -43,7 +43,8 @@ describe('create lunchspace', () => {
       await expect(connect(testUserId, testLunchspaceId, testIsAdmin)).resolves.not.toThrow()
     })
     it('should throw an error', async () => {
-      await expect(connect(testUserId, testLunchspaceId, testIsAdmin)).rejects.toHaveProperty('code', 'ER_DUP_ENTRY')
+      await expect(connect(testUserId, testLunchspaceId, testIsAdmin))
+        .rejects.toThrowError(InputValidationError)
     })
   })
   describe('createLunchspaceAndJoin', () => {
