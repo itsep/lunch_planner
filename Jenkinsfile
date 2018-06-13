@@ -6,7 +6,7 @@ pipeline {
         EMAIL_SERVICE = 'gmail'
     }
     stages {
-        stage('Install, Lint and Test (and build)') {
+        stage('Install, Lint and Test') {
             parallel {
                 stage('Shared') {
                     steps {
