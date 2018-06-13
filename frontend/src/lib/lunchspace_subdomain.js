@@ -6,7 +6,7 @@ const applicationDomain = 'mylunch.space'
 /**
  * return the domain without any subdomain
  * @param hostname
- * @returns {domain}
+ * @returns {string} domain
  */
 function domainFromHost(hostname) {
   const domainParts = hostname.split('.')
