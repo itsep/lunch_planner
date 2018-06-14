@@ -53,7 +53,6 @@ WHERE join_up_at.user_id = ? AND location.lunchspace_id = ?
 AND join_up_at.event_date >= CURDATE()`,
     [userId, id]
   )
-  console.log(events)
   events.forEach((event) => {
     req.publishClient.publish(
       joinUpAt(
