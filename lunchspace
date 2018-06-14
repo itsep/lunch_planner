@@ -14,12 +14,6 @@
 # Default server configuration
 #
 server {
-	listen [::]:443 ssl ipv6only=on; 
-    listen 443 ssl; 
-    ssl_certificate /etc/letsencrypt/live/mylunch.space/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/mylunch.space/privkey.pem;
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
 	# SSL configuration
 	#
@@ -39,10 +33,10 @@ server {
 
 	root /var/www/lunchspace.de;
 
-	index index.html;
+	# Add index.php to the list if you are using PHP
+	index index.html index.htm index.nginx-debian.html;
 
-	# server_name mylunch.space www.mylunch.space;
-	server_name _ ;
+	server_name mylunch.space www.mylunch.space;
 
 	location /api/ {
 		proxy_pass http://localhost:9100/;
@@ -71,24 +65,73 @@ server {
 		# as directory, then fall back to displaying a 404.
 		try_files $uri $uri/ =404;
 	}
+
+	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+	#
+	#location ~ \.php$ {
+	#	include snippets/fastcgi-php.conf;
+	#
+	#	# With php7.0-cgi alone:
+	#	fastcgi_pass 127.0.0.1:9000;
+	#	# With php7.0-fpm:
+	#	fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+	#}
+
+	# deny access to .htaccess files, if Apache's document root
+	# concurs with nginx's one
+	#
+	#location ~ /\.ht {
+	#	deny all;
+	#}
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/mylunch.space-0001/fullchain.pem; 
+    ssl_certificate_key /etc/letsencrypt/live/mylunch.space-0001/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
 }
 
 
+# Virtual Host configuration for example.com
+#
+# You can move that to a different file under sites-available/ and symlink that
+# to sites-enabled/ to enable it.
+#
+#server {
+#	listen 80;
+#	listen [::]:80;
+#
+#	server_name example.com;
+#
+#	root /var/www/example.com;
+#	index index.html;
+#
+#	location / {
+#		try_files $uri $uri/ =404;
+#	}
+#}
+
 server {
     if ($host = www.mylunch.space) {
-        return 301 https://mylunch.space$request_uri;
-    }
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
 
 
     if ($host = mylunch.space) {
         return 301 https://$host$request_uri;
-    }
+    } # managed by Certbot
 
 
 	listen 80 default_server;
 	listen [::]:80 default_server;
 
 	server_name mylunch.space www.mylunch.space;
-    return 404;
+    return 404; # managed by Certbot
+
+
+
 
 }

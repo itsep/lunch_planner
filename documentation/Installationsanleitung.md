@@ -102,6 +102,20 @@ nodejs und npm
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
+Process Manager installieren
+
+```
+sudo npm install -g pm2
+pm2 startup
+```
+
+Redis installieren
+
+```shell
+sudo add-apt-repository ppa:chris-lea/redis-server
+sudo apt-get update
+sudo apt-get install redis-server
+```
 MariaDB
 
 ```
@@ -121,7 +135,33 @@ FLUSH PRIVILEGES;
 sudo apt-get update
 sudo apt-get install nginx
 ```
+Gebe deinem User Rechte um auf den Ordner `/var/wwww` zu zugreifen :
 
+```shell
+sudo chown <your user name> /var/www
+```
+Lade die Konfigurationsdateien die im Repository unter `/nginx` liegen auf den Server unter `/etc/nginx` hoch und lade die Konfiguration neu:
+
+```
+sudo /etc/init.d/nginx reload
+```
+
+## HTTPS
+Certbot installieren
+
+```shell
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install python-certbot-nginx 
+```
+
+Erstelle eine neues SSL Zertifikat
+
+```shell
+sudo certbot certonly -d mylunch.space,'*.mylunch.space' --server https://acme-v02.api.letsencrypt.org/directory --manual --preferred-challenges dns 
+``` 
 
 ## [Optional] CI - Jenkins installieren
 Installation
@@ -145,6 +185,26 @@ Im Browser dann die Domain/IP Adresse des Servers eingeben mit dem Port `8080`.
 
 Befolge dieses [Tutorial](https://resources.github.com/articles/practical-guide-to-CI-with-Jenkins-and-GitHub/)
 
+
+## Repository Downloaden und Anwendung Starten
+Repository clonen
+
+```
+git clone https://github.com/itsep/lunch_planner.git
+cd lunch_planner
+```
+
+Datenbank Schema importieren mit Test Daten
+
+```
+npm run clear-database --prefix=backend
+```
+
+Neuste Version Downloaden und starten
+
+```
+sh deploy.sh
+```
 
 
 
