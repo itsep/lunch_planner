@@ -163,6 +163,11 @@ describe('leave_lunchspace', () => {
         body: {
           forceDelete: false,
         },
+        userPromise: {
+          firstName: testFirstName1,
+          lastName: testLastName1,
+          imageUrl: 'url',
+        },
       })
       const res = mockRes()
       await leaveLunchspaceRoute(req, res)
@@ -183,6 +188,11 @@ describe('leave_lunchspace', () => {
         body: {
           forceDelete: false,
         },
+        userPromise: {
+          firstName: testFirstName1,
+          lastName: testLastName1,
+          imageUrl: 'url',
+        },
       })
       const res = mockRes()
       await expect(leaveLunchspaceRoute(req, res)).rejects.toThrowError(NeedsUserConfirmation)
@@ -202,6 +212,11 @@ describe('leave_lunchspace', () => {
         body: {
           forceDelete: true,
         },
+        userPromise: {
+          firstName: testFirstName1,
+          lastName: testLastName1,
+          imageUrl: 'url',
+        },
       })
       const res = mockRes()
       await leaveLunchspaceRoute(req, res)
@@ -220,6 +235,11 @@ describe('leave_lunchspace', () => {
         },
         body: {
           forceDelete: false,
+        },
+        userPromise: {
+          firstName: testFirstName1,
+          lastName: testLastName1,
+          imageUrl: 'url',
         },
       })
       const res = mockRes()
