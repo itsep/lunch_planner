@@ -1,1 +1,1 @@
-mysql -e "show databases" | grep -v Database | grep -v mysql| grep -v information_schema| gawk '{print "drop database `" $1 "`;select sleep(0.1);"}' | mysql
+sudo mysql -u<insert user here> -p<insert password here> -e "show databases" | grep -v Database | grep -v mysql| grep -v information_schema | grep -v lunch_planner| gawk '{print "drop database `" $1 "`;select sleep(0.1);"}' | mysql -u<insert user here> -p<insert password here>
