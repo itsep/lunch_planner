@@ -4,7 +4,7 @@ const socketIO = require('socket.io')
 const cookieParser = require('socket.io-cookie-parser')
 const redis = require('redis')
 const SubscriberClient = require('../lib/redis/subscribe_client')
-const { locationChannel, joinUpAt } = require('../lib/lunchspace_channels')
+const { lunchspaceChannel, locationChannel, joinUpAt } = require('../lib/lunchspace_channels')
 const { toEventDateId } = require('../../shared/lib/event')
 const { authenticateSocket } = require('../middleware/authenticate')
 const { checkLunchspacePermissionOfSocket } = require('../middleware/lunchspace_permission')
@@ -40,6 +40,8 @@ io.on('connection', (socket) => {
     }
     unsubscribe = subscribeToAllLocationChanges(lunchspaceId, eventDate, emitToSocket)
   })
+  // subscribe to location deletions
+  subscriber.subscribe(lunchspaceChannel(lunchspaceId), emitToSocket)
 
   socket.on('disconnect', () => {
     if (unsubscribe) {

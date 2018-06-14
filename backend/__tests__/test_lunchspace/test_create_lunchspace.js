@@ -22,7 +22,7 @@ const testIsAdmin = true
 
 
 describe('create lunchspace', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   // Create a Test User in User to prevent foreign key constraints
   beforeAll(async () => {
@@ -43,7 +43,8 @@ describe('create lunchspace', () => {
       await expect(connect(testUserId, testLunchspaceId, testIsAdmin)).resolves.not.toThrow()
     })
     it('should throw an error', async () => {
-      await expect(connect(testUserId, testLunchspaceId, testIsAdmin)).rejects.toHaveProperty('code', 'ER_DUP_ENTRY')
+      await expect(connect(testUserId, testLunchspaceId, testIsAdmin))
+        .rejects.toThrowError(InputValidationError)
     })
   })
   describe('createLunchspaceAndJoin', () => {

@@ -14,7 +14,7 @@ const testLastName2 = 'von und zu Nahasapeemapetilon'
 const testEmail3 = 'max@mustermann@gmail.com'
 
 describe('register accounts', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   describe('create', async () => {
     it('should create a new account in DB, without error', async () => {

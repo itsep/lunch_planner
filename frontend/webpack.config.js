@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 
@@ -123,6 +124,58 @@ const appWebpackConfig = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].[chunkhash].css',
+    }),
+    new FaviconsWebpackPlugin({
+      title: 'Lunchspace',
+      logo: './src/assets/logo/Burger-512x512.png',
+      // The prefix for all image files (might be a folder or a name)
+      prefix: 'favicon-[hash]/',
+      // Generate a cache file with control hashes and
+      // don't rebuild the favicons until those hashes change
+      persistentCache: true,
+      // Inject the html into the html-webpack-plugin
+      inject: true,
+      // favicon background color (see https://github.com/haydenbleasel/favicons#usage)
+      background: '#fff',
+      // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
+      icons: {
+        android: false,
+        appleIcon: false,
+        appleStartup: false,
+        coast: false,
+        favicons: true,
+        firefox: false,
+        opengraph: false,
+        twitter: false,
+        yandex: false,
+        windows: false,
+      },
+    }),
+    new FaviconsWebpackPlugin({
+      title: 'Lunchspace',
+      logo: './src/assets/logo/Logo-white-background-1536x1536.png',
+      // The prefix for all image files (might be a folder or a name)
+      prefix: 'icons-[hash]/',
+      // Generate a cache file with control hashes and
+      // don't rebuild the favicons until those hashes change
+      persistentCache: true,
+      // Inject the html into the html-webpack-plugin
+      inject: true,
+      // favicon background color (see https://github.com/haydenbleasel/favicons#usage)
+      background: '#fff',
+      // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
+      icons: {
+        android: true,
+        appleIcon: true,
+        appleStartup: false,
+        coast: false,
+        favicons: false,
+        firefox: true,
+        opengraph: false,
+        twitter: true,
+        yandex: false,
+        windows: false,
+      },
     }),
     // new BundleAnalyzerPlugin(),
   ].concat(htmlWebPackPlugins),

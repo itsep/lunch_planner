@@ -11,7 +11,7 @@ const testFirstName = 'Max'
 const testLastName = 'Mustermann'
 
 describe('verify account', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   let testToken
   beforeAll(async () => {
