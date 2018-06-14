@@ -38,6 +38,17 @@ function toEventDateFromString(dateString) {
     day: dateParts[2],
   }
 }
+
+function toEventTimeFromString(timeString) {
+  const timeParts = timeString
+    .split(':')
+    .map(timePart => parseInt(timePart, 10))
+  return {
+    hour: timeParts[0],
+    minute: timeParts[1],
+  }
+}
+
 function eventDateEqual(a, b) {
   return a.day === b.day &&
     a.month === b.month &&
@@ -73,6 +84,7 @@ module.exports = {
   toEventDateId,
   toEventDate,
   toEventDateFromString,
+  toEventTimeFromString,
   nextEventTimeForDate,
   eventTimeSteps,
   toEventDateFromMoment,
