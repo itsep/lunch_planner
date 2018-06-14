@@ -22,7 +22,7 @@ const testIsAdmin = true
 
 
 describe('create lunchspace', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   // Create a Test User in User to prevent foreign key constraints
   beforeAll(async () => {

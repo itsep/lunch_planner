@@ -14,7 +14,7 @@ const testUserId = 1
 const testUserId2 = 2
 
 describe('permission', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
     const req = mockReq({

@@ -5,7 +5,7 @@ const { SQLError } = require('../../../shared/lib/error/sql_error')
 const { addAllLocalizableErrorTestsToCurrentSuite } = require('../../../shared/lib/error/localizable_error_test_suite')
 
 describe('sql error', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   it('should throw a raw sql error and it should be convertible to a SQLError', async () => {
     const [error, result] = await to(pool.execute('SELECT * FROM table_that_does_not_exists'))
