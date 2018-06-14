@@ -116,9 +116,14 @@ GRANT ALL PRIVILEGES ON * . * TO '<enter username here>'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
+## Webserver/Proxy - NGINX installieren
+```shell
+sudo apt-get update
+sudo apt-get install nginx
+```
+
 
 ## [Optional] CI - Jenkins installieren
-
 Installation
 
 ```shell
