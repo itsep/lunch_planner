@@ -28,7 +28,7 @@ let testLocationId
 let testUserPromise
 
 describe('leave_event', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
     const { userId } = await account.create(testEmail, testPassword, testFirstName, testLastName)

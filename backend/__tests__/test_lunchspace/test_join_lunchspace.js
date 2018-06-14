@@ -29,7 +29,7 @@ const invalidToken = 'not a valid token'
 
 
 describe('join_lunchspace', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
     const { userId } = await account.create(testEMail, testPassword, testFirstName, testLastName)

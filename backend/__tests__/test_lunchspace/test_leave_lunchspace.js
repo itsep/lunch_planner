@@ -39,7 +39,7 @@ let locationId2 = 2
 let locationId3 = 3
 
 describe('leave_lunchspace', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
     /*

@@ -4,7 +4,7 @@ const { createMockDatabase, dropMockDatabase } = require('../../lib/database/moc
 const { asyncGetUser } = require('../../middleware/get_user')
 
 describe('verify account', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   const email = 'dnadoba@gmail.com'
   const firstName = 'David'

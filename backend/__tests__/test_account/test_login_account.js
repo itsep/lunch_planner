@@ -10,7 +10,7 @@ const testPassword = 'test-login-password'
 
 
 describe('test login account', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
     const testHashedPassword = await hash(testPassword)
