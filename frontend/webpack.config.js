@@ -10,6 +10,7 @@ const pages = {
   index: {/* config options */},
   registration: {/* config options */},
   login: {/* config options */},
+  profile: {/* config options */},
   homepage: {/* config options */},
   create_lunchspace: {/* config options */},
   join_lunchspace: {/* config options */},

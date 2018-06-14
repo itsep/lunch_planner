@@ -76,6 +76,9 @@ class AuthorizedHeaderBar extends React.Component {
           <MenuItem component="a" href={routeLocations.LUNCHSPACES}>
             {localizedStrings.myLunchspaces}
           </MenuItem>
+          <MenuItem component="a" href={routeLocations.PROFILE}>
+            {localizedStrings.profile}
+          </MenuItem>
           <MenuItem onClick={onLogout}>
             {localizedStrings.logout}
           </MenuItem>
