@@ -40,6 +40,7 @@ const content = {
   email: 'Email',
   name: 'Name',
   change: 'change',
+  changePassword: 'change password',
   delete: 'Delete',
   profile: 'Profile',
   login: 'Login',

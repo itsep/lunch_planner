@@ -44,6 +44,7 @@ const content = {
   login: 'Anmelden',
   logout: 'Abmelden',
   change: 'bearbeiten',
+  changePassword: 'Passwort bearbeiten',
   today: 'Heute',
   signUp: 'Registrieren',
   cancel: 'Abbrechen',

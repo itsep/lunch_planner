@@ -11,8 +11,8 @@ import Collapse from '@material-ui/core/Collapse'
 import Fade from '@material-ui/core/Fade'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import apiFetch from 'lib/api_fetch'
-import localizedStrings from 'lib/localization'
-import { logout } from 'lib/authentication'
+import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
+import localizedStrings from '../../../lib/localization'
 import UserAvatar from '../../../components/user_avatar'
 
 const styles = theme => ({
@@ -63,13 +63,18 @@ class Profile extends React.Component {
     super(props)
     this.state = {
       onNameChange: false,
+      onPasswordChange: false,
       error: null,
       lastError: null,
-      isLoading: false,
       user: {
         firstName: '',
         lastName: '',
       },
+      newUser: {
+        firstName: '',
+        lastName: '',
+      },
+      isLoading: false,
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -80,6 +85,7 @@ class Profile extends React.Component {
       const { user } = response.data
       this.setState({
         user,
+        newUser: user,
       })
     })
   }
@@ -87,8 +93,8 @@ class Profile extends React.Component {
     const that = this
     return (event) => {
       that.setState({
-        user: {
-          ...this.state.user,
+        newUser: {
+          ...this.state.newUser,
           lastName: event.target.value,
         },
       })
@@ -98,8 +104,8 @@ class Profile extends React.Component {
     const that = this
     return (event) => {
       that.setState({
-        user: {
-          ...this.state.user,
+        newUser: {
+          ...this.state.newUser,
           firstName: event.target.value,
         },
       })
@@ -112,13 +118,14 @@ class Profile extends React.Component {
     apiFetch('/api/account/change_name', {
       method: 'PUT',
       body: {
-        firstName: this.state.user.firstName,
-        lastName: this.state.user.lastName,
+        firstName: this.state.newUser.firstName,
+        lastName: this.state.newUser.lastName,
       },
     }).then((data) => {
       if (data.response.ok) {
         this.setState({
           onNameChange: false,
+          user: this.state.newUser,
         })
       }
     }).finally(() => {
@@ -131,123 +138,132 @@ class Profile extends React.Component {
     const { user } = this.state
     const { classes } = this.props
     return (
-      <div className={classes.profile}>
-        <UserAvatar
-          user={user}
-          className={classes.avatar}
-        />
-        <Grid container className={classes.profileGrid}>
-          <Grid container spacing={16} className={classes.profileRow} alignItems="baseline">
-            <Grid item xs={leftColumn} align="right">
-              <Typography variant="title" color="textSecondary">{localizedStrings.name}</Typography>
-            </Grid>
-            <Grid item xs={middleColumn}>
-              {this.state.onNameChange ?
-                (
-                  <ValidatorForm
-                    onSubmit={this.handleSubmit}
-                    className={classes.form}
-                  >
-                    <TextValidator
-                      name="first-name"
-                      label="First Name"
-                      className={classes.textField}
-                      value={this.state.user.firstName}
-                      onChange={this.handleFirstNameChange()}
-                      validators={['required']}
-                      errorMessages={[localizedStrings.fieldRequired]}
-                      autoComplete="given-name"
-                      autoFocus
-                    />
-                    <TextValidator
-                      name="last-name"
-                      label="Last Name"
-                      className={classes.textField}
-                      value={this.state.user.lastName}
-                      onChange={this.handleLastNameChange()}
-                      validators={['required']}
-                      errorMessages={[localizedStrings.fieldRequired]}
-                      autoComplete="family-name"
-                    />
-                    <IconButton
-                      type="submit"
-                      size="large"
-                      variant="raised"
-                      color="primary"
-                      className={classes.button}
-                      disabled={this.state.isLoading}
+      <div>
+        <AuthorizedHeaderBar title={localizedStrings.profile} user={this.state.user} />
+        <div className={classes.profile}>
+          <UserAvatar
+            user={user}
+            className={classes.avatar}
+          />
+          <Grid container className={classes.profileGrid}>
+            <Grid container spacing={16} className={classes.profileRow} alignItems="baseline">
+              <Grid item xs={leftColumn} align="right">
+                <Typography variant="title" color="textSecondary">{localizedStrings.name}</Typography>
+              </Grid>
+              <Grid item xs={middleColumn}>
+                {this.state.onNameChange ?
+                  (
+                    <ValidatorForm
+                      onSubmit={this.handleSubmit}
+                      className={classes.form}
                     >
-                      <Done />
-                    </IconButton>
-                  </ValidatorForm>
+                      <TextValidator
+                        name="first-name"
+                        label="First Name"
+                        className={classes.textField}
+                        value={this.state.newUser.firstName}
+                        onChange={this.handleFirstNameChange()}
+                        validators={['required']}
+                        errorMessages={[localizedStrings.fieldRequired]}
+                        autoComplete="given-name"
+                        autoFocus
+                      />
+                      <TextValidator
+                        name="last-name"
+                        label="Last Name"
+                        className={classes.textField}
+                        value={this.state.newUser.lastName}
+                        onChange={this.handleLastNameChange()}
+                        validators={['required']}
+                        errorMessages={[localizedStrings.fieldRequired]}
+                        autoComplete="family-name"
+                      />
+                      <IconButton
+                        type="submit"
+                        size="large"
+                        variant="raised"
+                        color="primary"
+                        className={classes.button}
+                        disabled={this.state.isLoading}
+                      >
+                        <Done />
+                      </IconButton>
+                    </ValidatorForm>
+                    )
+                  :
+                  (<Typography variant="title">{user.firstName} {user.lastName}</Typography>)
+                }
+              </Grid>
+              <Grid item xs={rightColumn}>
+                {this.state.onNameChange ?
+                  (
+                    <Button
+                      type="button"
+                      size="large"
+                      variant="flat"
+                      color="secondary"
+                      disabled={this.state.isLoading}
+                      onClick={() => {
+                        this.setState({ onNameChange: false, newUser: this.state.user })
+                      }}
+                    >
+                      {localizedStrings.cancel}
+                    </Button>
                   )
-                :
-                (<Typography variant="title">{user.firstName} {user.lastName}</Typography>)
-              }
+                  :
+                  (
+                    <Button
+                      type="button"
+                      size="large"
+                      variant="flat"
+                      color="primary"
+                      disabled={this.state.isLoading}
+                      onClick={() => { this.setState({ onNameChange: true }) }}
+                    >
+                      {localizedStrings.change}
+                    </Button>
+                  )
+                }
+              </Grid>
             </Grid>
-            <Grid item xs={rightColumn}>
-              {this.state.onNameChange ?
-                (
-                  <Button
-                    type="button"
-                    size="large"
-                    variant="flat"
-                    color="secondary"
-                    disabled={this.state.isLoading}
-                    onClick={() => { this.setState({ onNameChange: false }) }}
-                  >
-                    {localizedStrings.cancel}
-                  </Button>
-                )
-                :
-                (
-                  <Button
-                    type="button"
-                    size="large"
-                    variant="flat"
-                    color="primary"
-                    disabled={this.state.isLoading}
-                    onClick={() => { this.setState({ onNameChange: true }) }}
-                  >
-                    {localizedStrings.change}
-                  </Button>
-                )
-              }
+            <Grid container spacing={16} className={classes.profileRow}>
+              <Grid item xs={leftColumn} align="right">
+                <Typography variant="title" color="textSecondary">{localizedStrings.email}</Typography>
+              </Grid>
+              <Grid item xs={middleColumn}>
+                <Typography variant="title">{user.email}</Typography>
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid container spacing={16} className={classes.profileRow}>
-            <Grid item xs={leftColumn} align="right">
-              <Typography variant="title" color="textSecondary">{localizedStrings.email}</Typography>
-            </Grid>
-            <Grid item xs={middleColumn}>
-              <Typography variant="title">{user.email}</Typography>
+            <Grid container spacing={16} className={classes.profileRow}>
+              <Grid item xs={leftColumn} />
+              <Grid item xs={middleColumn}>
+                <Button
+                  type="button"
+                  size="large"
+                  variant="flat"
+                  color="secondary"
+                  disabled={this.state.isLoading}
+                  onClick={() => { this.setState({ onPasswordChange: true }) }}
+                >
+                  {localizedStrings.changePassword}
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
-          <Button
-            type="button"
-            size="large"
-            variant="flat"
-            color="secondary"
-            className={classes.profileRow}
-            disabled={this.state.isLoading}
-            onClick={logout}
-          >
-            {localizedStrings.logout}
-          </Button>
-        </Grid>
-        <Collapse in={!!this.state.error}>
-          <Typography color="error" className={classes.errorMessage}>
-            {this.state.lastError && this.state.lastError.toLocalizedString(localizedStrings)}
-          </Typography>
-        </Collapse>
-        <Collapse in={this.state.isLoading} className={classes.loadingCircleContainer}>
-          <Fade
-            in={this.state.isLoading}
-            unmountOnExit
-          >
-            <CircularProgress size="36px" className={classes.progressIndicator} />
-          </Fade>
-        </Collapse>
+          <Collapse in={!!this.state.error}>
+            <Typography color="error" className={classes.errorMessage}>
+              {this.state.lastError && this.state.lastError.toLocalizedString(localizedStrings)}
+            </Typography>
+          </Collapse>
+          <Collapse in={this.state.isLoading} className={classes.loadingCircleContainer}>
+            <Fade
+              in={this.state.isLoading}
+              unmountOnExit
+            >
+              <CircularProgress size="36px" className={classes.progressIndicator} />
+            </Fade>
+          </Collapse>
+        </div>
       </div>
     )
   }
