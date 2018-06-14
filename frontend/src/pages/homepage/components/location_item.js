@@ -61,7 +61,7 @@ const styles = theme => ({
 
 
 const firstTimeStamp = {
-  hour: 10,
+  hour: 7,
   minute: 0,
 }
 /*
@@ -71,7 +71,7 @@ function defaultTimeStamps() {
   const timeStamps = []
   let timeInHours
   let counter = 0
-  for (timeInHours = firstTimeStamp.hour; timeInHours < 21; timeInHours += 0.5) {
+  for (timeInHours = firstTimeStamp.hour; timeInHours <= 20; timeInHours += 0.25) {
     const timeStamp = {
       key: counter,
       hour: Math.floor(timeInHours),
