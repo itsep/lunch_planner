@@ -6,6 +6,7 @@ const { login } = require('./login_account')
 const { logout } = require('./logout_account')
 const { changeName } = require('./change_name')
 const { changePassword } = require('./change_password')
+const { uploadProfilePicture } = require('./upload_profile_picture')
 const { getUser } = require('../../middleware/get_user')
 const { authenticateRequest } = require('../../middleware/authenticate')
 
@@ -22,7 +23,7 @@ accountRouter.put('/change_name', authenticateRequest, getUser, asyncHandler(cha
 
 accountRouter.put('/change_password', authenticateRequest, getUser, asyncHandler(changePassword))
 
-accountRouter.post('/upload_picture', authenticateRequest, asyncHandler())
+accountRouter.post('/upload_picture', authenticateRequest, asyncHandler(uploadProfilePicture))
 
 module.exports = {
   router: accountRouter,

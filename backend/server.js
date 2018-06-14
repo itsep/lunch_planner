@@ -7,9 +7,6 @@ var app = express();
 
 app.use('/', express.static(path.join(__dirname, 'public')))
 
-app.get('/', function (req, res){
-  res.sendFile('C:\\Users\\marcm\\Desktop\\public\\index.html');
-});
 
 app.post('/', function (req, res){
   var form = new formidable.IncomingForm();
@@ -20,9 +17,6 @@ app.post('/', function (req, res){
     file.path = 'C:\\Users\\marcm\\OneDrive\\Desktop\\data' + uuidv4();
   });
 
-  form.on('file', function (name, file){
-    console.log('Uploaded ' + file.name);
-  });
 
   return res.json(200, {
     result: 'Upload Success'
