@@ -1,4 +1,13 @@
 # HTTPS Certificate creation and renewal 
+Install Certbot
+
+```shell
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install python-certbot-nginx 
+```
 Create or renew the certificate from letsencrypt 
 
 ```shell

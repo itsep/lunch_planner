@@ -102,7 +102,7 @@ module.exports = {
     }),
     new FaviconsWebpackPlugin({
       title: 'Lunchspace',
-      logo: './src/assets/logo/favicon_template.png',
+      logo: './src/assets/logo/Burger-512x512.png',
       // The prefix for all image files (might be a folder or a name)
       prefix: 'favicon-[hash]/',
       // Generate a cache file with control hashes and
@@ -128,7 +128,7 @@ module.exports = {
     }),
     new FaviconsWebpackPlugin({
       title: 'Lunchspace',
-      logo: './src/assets/logo/logo_template.png',
+      logo: './src/assets/logo/Logo-white-background-1536x1536.png',
       // The prefix for all image files (might be a folder or a name)
       prefix: 'icons-[hash]/',
       // Generate a cache file with control hashes and
