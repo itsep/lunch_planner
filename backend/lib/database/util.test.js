@@ -23,7 +23,6 @@ async function getUserCount() {
 }
 
 
-
 describe('clear database and import test dump', () => {
   jest.setTimeout(1000 * 10)
   beforeEach(createMockDatabase)
