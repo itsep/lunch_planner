@@ -16,6 +16,7 @@ import apiFetch from '../../../lib/api_fetch'
 import UnauthorizedHeaderBar from '../../../components/unauthorized_header_bar'
 import routeLocations from '../../route_locations'
 import { withLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
+import { isDefinitelyNotAuthenticated } from '../../../lib/authentication'
 
 const styles = theme => ({
   loadingWrapper: {
@@ -53,6 +54,10 @@ const styles = theme => ({
 
 
 class JoinLunchspace extends Component {
+  static redirectToLogin() {
+    window.location = redirectTo(routeLocations.LOGIN)
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -68,6 +73,9 @@ class JoinLunchspace extends Component {
   }
 
   componentDidMount() {
+    if (isDefinitelyNotAuthenticated()) {
+      JoinLunchspace.redirectToLogin()
+    }
     const url = new URL(window.location.href)
     const apiUrlString = withQuery('/api/lunchspace/check', { token: url.searchParams.get('token') })
     this.setState({ isLoading: true }) // eslint-disable-line react/no-did-mount-set-state
@@ -126,10 +134,8 @@ class JoinLunchspace extends Component {
     })
     apiFetch('/api/account/logout', {
       method: 'POST',
-    }).catch((error) => {
-      this.setState({ error })
     }).finally(() => {
-      this.setState({ isLoading: false })
+      JoinLunchspace.redirectToLogin()
     })
   }
 
@@ -139,9 +145,6 @@ class JoinLunchspace extends Component {
 
   render() {
     const { classes } = this.props
-    if (!document.cookie) {
-      window.location = redirectTo(routeLocations.LOGIN)
-    }
     if (this.state.isLoading) {
       return (
         <div className={classes.loadingWrapper}>

@@ -126,12 +126,12 @@ function reduceLocationsInLunchspace(
           return locationsInLunchspace
         }
         return [...locationsInLunchspace, id]
-      })
+      })()
     case actionTypes.REMOVE_LOCATION:
       return (() => {
         const { id } = action.locationId
         return locationsInLunchspace.filter(location => location.id !== id)
-      })
+      })()
     default:
       return locationsInLunchspace
   }
