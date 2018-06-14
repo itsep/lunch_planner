@@ -12,7 +12,7 @@ const testCoordinates2 = 'test'
 const testLunchspaceId = 1
 
 describe('create location', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
     const req = mockReq({

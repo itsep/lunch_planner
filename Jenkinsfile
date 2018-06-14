@@ -23,10 +23,13 @@ pipeline {
                         // sh 'npm ci --prefix=backend'
                         sh 'npm install --prefix=backend'
                         sh 'npm run lint --prefix=backend'
-                        withCredentials([usernamePassword(credentialsId: 'it-sep-ci-mariadb', usernameVariable: 'DATABASE_USERNAME', passwordVariable: 'DATABASE_PASSWORD')]) {
-                            withCredentials([usernamePassword(credentialsId: 'e-mail-access-data', usernameVariable: 'SENDER_EMAIL', passwordVariable: 'EMAIL_PASSWORD')]) {
-                                // available as an env variable, but will be masked if you try to print it out any which way
-                                sh 'npm run test --prefix=backend -- --runInBand'
+                        // 5 minute timeout
+                        timeout(5) {
+                            withCredentials([usernamePassword(credentialsId: 'it-sep-ci-mariadb', usernameVariable: 'DATABASE_USERNAME', passwordVariable: 'DATABASE_PASSWORD')]) {
+                                withCredentials([usernamePassword(credentialsId: 'e-mail-access-data', usernameVariable: 'SENDER_EMAIL', passwordVariable: 'EMAIL_PASSWORD')]) {
+                                    // available as an env variable, but will be masked if you try to print it out any which way
+                                    sh 'npm run test --prefix=backend -- --runInBand'
+                                }
                             }
                         }
                     }

@@ -20,7 +20,7 @@ const invalidToken = 'invalid token'
 let token = 1
 
 describe('check_invitation', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
     lunchspaceId = await create(testLunchspaceName, testLunchspaceSubdomain)
