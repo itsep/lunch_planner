@@ -14,11 +14,12 @@ const styles = theme => ({
   form: {
     display: 'flex',
     flexDirection: 'column',
+    maxWidth: '600px',
   },
   avatar: {
-    width: '160px',
-    height: '160px',
-    margin: 'auto',
+    width: '128px',
+    height: '128px',
+    margin: '48px auto',
   },
 })
 
@@ -53,32 +54,40 @@ class Profile extends React.Component {
         />
         <Grid container>
           <Grid container spacing={8}>
-            <Grid item xs={4} align="right">
-              <Typography variant="title" color="textSecondary">{localizedStrings.name}:</Typography>
+            <Grid item xs={2} align="right">
+              <Typography variant="title" color="textSecondary">{localizedStrings.name}</Typography>
             </Grid>
-            <Grid item>
+            <Grid item xs={8}>
               <Typography variant="title">{user.firstName} {user.lastName}</Typography>
+            </Grid>
+            <Grid item xs={2} align="right">
+              <Typography variant="title" color="textSecondary">{localizedStrings.change}</Typography>
             </Grid>
           </Grid>
           <Grid container spacing={8}>
-            <Grid item xs={4} align="right">
-              <Typography variant="title" color="textSecondary">{localizedStrings.email}:</Typography>
+            <Grid item xs={2} align="right">
+              <Typography variant="title" color="textSecondary">{localizedStrings.email}</Typography>
             </Grid>
-            <Grid item>
+            <Grid item xs={8}>
               <Typography variant="title">{user.email}</Typography>
             </Grid>
           </Grid>
-          <Button
-            type="button"
-            size="large"
-            variant="flat"
-            color="secondary"
-            className={classes.button}
-            disabled={this.state.isLoading}
-            onClick={logout}
-          >
-            {localizedStrings.logout}
-          </Button>
+          <Grid container>
+            <Grid item xs={10} />
+            <Grid item>
+              <Button
+                type="button"
+                size="large"
+                variant="flat"
+                color="secondary"
+                className={classes.button}
+                disabled={this.state.isLoading}
+                onClick={logout}
+              >
+                {localizedStrings.logout}
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
       </FormSection>
     )

@@ -39,6 +39,7 @@ const content = {
   invite: 'Invite',
   email: 'Email',
   name: 'Name',
+  change: 'change',
   delete: 'Delete',
   profile: 'Profile',
   login: 'Login',

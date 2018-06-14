@@ -43,6 +43,7 @@ const content = {
   name: 'Name',
   login: 'Anmelden',
   logout: 'Abmelden',
+  change: 'bearbeiten',
   today: 'Heute',
   signUp: 'Registrieren',
   cancel: 'Abbrechen',
