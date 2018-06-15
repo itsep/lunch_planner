@@ -19,7 +19,7 @@ let testLunchspaceId = 1
 const testIsAdmin = true
 
 describe('create lunchspace', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
     testUserId = await pool.execute('INSERT INTO user (first_name, last_name)' +

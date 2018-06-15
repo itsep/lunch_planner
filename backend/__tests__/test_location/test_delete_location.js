@@ -32,7 +32,7 @@ let locationId3 = 3
 const today = dateForSQL(toEventDate(new Date()))
 
 describe('delete_location', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
     const { userId } = await account.create(
