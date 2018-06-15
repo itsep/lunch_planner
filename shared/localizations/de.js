@@ -48,6 +48,13 @@ const content = {
   cancel: 'Abbrechen',
   participants: 'Teilnehmer',
   close: 'Schließen',
+
+  // Notifications
+  someoneElseJoinedMyEventTitle: '{joinedUserFirstName} {joinedUserLastName} ist {locationName} um {eventTime} beigetreten',
+  someoneElseJoinedMyEventBody: 'Du und {joinedUserFirstName} {joinedUserLastName} sind um {eventTime} bei {locationName} vom Lunchspace {lunchspaceName} eingetragen.',
+  someoneElseAndOneOtherJoinedMyEventBody: 'Du, {joinedUserFirstName} {joinedUserLastName} und ein weiterer sind um {eventTime} bei {locationName} vom Lunchspace {lunchspaceName} eingetragen.',
+  someoneElseAndMultipleOtherJoinedMyEventBody: 'Du, {joinedUserFirstName} {joinedUserLastName} und {moreUserCount} weitere sind um {eventTime} bei {locationName} vom Lunchspace {lunchspaceName} eingetragen.',
+
 }
 module.exports = {
   languageKey,

@@ -33,7 +33,7 @@ const content = {
   accept: 'Accept',
   needToLoginForInvite: 'Sign In or Sign Up to accept the invitation',
   askForPushNotificatoinSubscription: 'Do you want notifications from this Lunchspace, even when you are not on this page?',
-  yes: 'No',
+  yes: 'Yes',
   notNow: 'Not now',
 
   createLunchspace: 'Create Lunchspace',
@@ -48,6 +48,12 @@ const content = {
   cancel: 'Cancel',
   participants: 'Participants',
   close: 'Close',
+
+  // Notifications
+  someoneElseJoinedMyEventTitle: '{joinedUserFirstName} {joinedUserLastName} joined {locationName} at {eventTime}',
+  someoneElseJoinedMyEventBody: 'You and {joinedUserFirstName} {joinedUserLastName} joined {locationName} at {eventTime} from Lunchspace {lunchspaceName}.',
+  someoneElseAndOneOtherJoinedMyEventBody: 'You, {joinedUserFirstName} {joinedUserLastName} and one more joined {locationName} at {eventTime} from Lunchspace {lunchspaceName}.',
+  someoneElseAndMultipleOtherJoinedMyEventBody: 'You, {joinedUserFirstName} {joinedUserLastName} and {moreUserCount} more joined {locationName} at {eventTime} from Lunchspace {lunchspaceName}.',
 }
 module.exports = {
   languageKey,
