@@ -28,15 +28,13 @@ FROM web_notification_subscription WHERE user_id IN (?)`, [userIds])
   const payload = notification.toWebMessagePayload()
   const requests = subscriptions.map(sub => webPush.sendNotification(sub, payload))
   const results = zip(requests, subscriptions, userIdsForSubscriptions)
-    .map(([request, userSubscription, userId]) => {
-      return request.catch((error) => {
-        // 404 or 410 indicates that the subscription is no longer valid
-        if (error.statusCode === 404 || error.statusCode === 410) {
-          return removeSubscription(userId, userSubscription)
-        }
-        throw error
-      })
-    })
+    .map(([request, userSubscription, userId]) => request.catch((error) => {
+      // 404 or 410 indicates that the subscription is no longer valid
+      if (error.statusCode === 404 || error.statusCode === 410) {
+        return removeSubscription(userId, userSubscription)
+      }
+      throw error
+    }))
   return Promise.all(results)
 }
 

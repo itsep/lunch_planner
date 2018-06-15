@@ -1,4 +1,4 @@
-class Notification{
+class Notification {
   constructor({ title, body, link }) {
     this.title = title
     this.body = body
