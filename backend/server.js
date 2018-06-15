@@ -14,7 +14,7 @@ app.post('/', function (req, res){
   form.parse(req);
 
   form.on('fileBegin', function (name, file){
-    file.path = 'C:\\Users\\marcm\\OneDrive\\Desktop\\data' + uuidv4();
+    file.path = 'C:\\Users\\marcm\\OneDrive\\Desktop\\data' + uuidv4() + file.name;
   });
 
 

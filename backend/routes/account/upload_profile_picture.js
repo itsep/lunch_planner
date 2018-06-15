@@ -1,33 +1,24 @@
-const formidable = require('formidable')
-const path = require('path')
 const { pool } = require('../../lib/database')
-const uuidv4 = require('uuid/v4')
 const config = require('config')
+const fs = require('fs-nextra')
+const sharp = require('sharp')
+const uuidv4 = require('uuid/v4')
 
 async function saveURL(userId, url) {
   await pool.execute('UPDATE user SET image_url = ? WHERE id = ?', [url, userId])
 }
 
 async function uploadProfilePicture(req, res) {
-  const form = new formidable.IncomingForm()
   const { userId } = req.token
-  const picturePath = config.get('picturePath')
-  let url
-
-  form.maxFileSize = 2 * 1024 * 1024
-  form.parse(req)
-
-  form.on('fileBegin', (name, file) => {
-    url = `${picturePath}${uuidv4()}.png`
-    // eslint-disable-next-line no-param-reassign
-    file.path = url
-  })
-
+  const { imageUrl } = await req.userPromise
+  const url = `./uploads/${uuidv4()}.png`
+  await sharp(req.file.path).resize(256, 256).toFile(url)
   await saveURL(userId, url)
-
-  return res.json(200, {
-    result: 'Upload Success',
-  })
+  await fs.unlink(req.file.path)
+  if (fs.exists(imageUrl)) {
+    await fs.unlink(imageUrl)
+  }
+  return res.status(200).json({})
 }
 
 module.exports = {

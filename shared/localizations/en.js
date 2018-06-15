@@ -9,6 +9,7 @@ const content = {
   unknownError: 'Unknown error. Please try again later.',
   unknownErrorWithMessage: 'Unexpected error: {message}',
   needsUserConfirmation: 'Please confirm this action.',
+  invalidFileFormat: 'The format of your file is not supported. Please upload a .jpeg or .png file.',
 
   passwordAndEmailDoesNotMatch: 'Password does not match with email {email}.',
   illegalInput: 'Upps, something went wrong. Please try again.',
