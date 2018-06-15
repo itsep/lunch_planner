@@ -5,15 +5,15 @@ const {
 const { createMockDatabase, dropMockDatabase, getDatabaseName } = require('./mock')
 
 const users = [
-  ['David', 'Nadoba'],
-  ['Sebastian', 'Vogt'],
-  ['Ferhat', 'Ayaydin'],
-  ['Marc', 'Mehrer'],
-  ['Fabian', 'Munzinger'],
+  ['David', 'Nadoba', 'de'],
+  ['Sebastian', 'Vogt', 'de'],
+  ['Ferhat', 'Ayaydin', 'de'],
+  ['Marc', 'Mehrer', 'en'],
+  ['Fabian', 'Munzinger', 'de'],
 ]
 
 async function createUsers() {
-  await pool.query('INSERT INTO user (first_name, last_name) VALUES ?', [users])
+  await pool.query('INSERT INTO user (first_name, last_name, language) VALUES ?', [users])
 }
 
 async function getUserCount() {

@@ -15,6 +15,7 @@ CREATE TABLE user
   id BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
   first_name VARCHAR(100) NOT NULL,
   last_name VARCHAR(100) NOT NULL,
+  language CHAR(8) NOT NULL,
   image_url VARCHAR(2000),
   PRIMARY KEY (id)
 ) ENGINE = InnoDB;

@@ -9,6 +9,7 @@ const testEmail = 'test-verify@email.com'
 const testPassword = 'test-verify-password'
 const testFirstName = 'Max'
 const testLastName = 'Mustermann'
+const testLanguage = 'de'
 
 describe('verify account', () => {
   beforeAll(createMockDatabase, 1000 * 60 * 10)
@@ -18,7 +19,11 @@ describe('verify account', () => {
     // Register
     const request = {
       body: {
-        email: testEmail, password: testPassword, firstName: testFirstName, lastName: testLastName,
+        email: testEmail,
+        password: testPassword,
+        firstName: testFirstName,
+        lastName: testLastName,
+        language: testLanguage,
       },
     }
     const req = mockReq(request)
