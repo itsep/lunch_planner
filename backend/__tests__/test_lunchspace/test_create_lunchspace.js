@@ -2,7 +2,6 @@ const { createLunchspaceAndJoin, create, connect } = require('../../routes/lunch
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
 const account = require('../../routes/account/register_account')
-const { pool } = require('../../lib/database')
 const { InputValidationError } = require('../../../shared/lib/error')
 
 const testEmail = 'noreply.lunchspace@gmail.com'
@@ -21,8 +20,6 @@ const testSubdomain3 = 'way-too-long-name-for-a-subdomain'
 const testLunchspaceName3 = 'Way too long name for a lunchspace'
 
 let testUserId = 1
-const firstName = 'Max'
-const lastName = 'Mustermann'
 
 const testLunchspaceId = 1
 const testIsAdmin = true
@@ -33,7 +30,13 @@ describe('create lunchspace', () => {
   afterAll(dropMockDatabase)
   // Create a Test User in User to prevent foreign key constraints
   beforeAll(async () => {
-    const { userId } = await account.create(testEmail, testPassword, testFirstName, testLastName, testLanguage)
+    const { userId } = await await account.create(
+      testEmail,
+      testPassword,
+      testFirstName,
+      testLastName,
+      testLanguage
+    )
     testUserId = userId
   })
   describe('create', () => {

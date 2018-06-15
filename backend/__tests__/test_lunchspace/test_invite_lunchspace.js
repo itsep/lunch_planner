@@ -3,7 +3,6 @@ const { create, connect } = require('../../routes/lunchspace/create_lunchspace')
 const account = require('../../routes/account/register_account')
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
-const { pool } = require('../../lib/database')
 const { InputValidationError } = require('../../../shared/lib/error')
 
 const testEmail = 'noreply.lunchspace@gmail.com'
@@ -28,7 +27,13 @@ describe('create lunchspace', () => {
   beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    const { userId } = await account.create(testEmail, testPassword, testFirstName, testLastName, testLanguage)
+    const { userId } = await await account.create(
+      testEmail,
+      testPassword,
+      testFirstName,
+      testLastName,
+      testLanguage
+    )
     testUserId = userId
     testLunchspaceId = await create(testLunchspaceName1, testSubdomain1)
     await connect(testUserId, testLunchspaceId, testIsAdmin)

@@ -27,7 +27,13 @@ describe('get locations', () => {
   beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    const { userId } = await account.create(testEmail, testPassword, testFirstName, testLastName, testLanguage)
+    const { userId } = await await account.create(
+      testEmail,
+      testPassword,
+      testFirstName,
+      testLastName,
+      testLanguage
+    )
     testUserId = userId
     testLunchspaceId = await createLunchspace(userId, testSpaceName, testSpaceSubdomain)
     testLocationId = await location

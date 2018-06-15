@@ -12,15 +12,21 @@ const testLanguage = 'de'
 
 const testLunchspaceName = 'Testbude'
 const testSubdomain = 'buden-tester'
-const testUserId = 1
+let testUserId = 1
 const testUserId2 = 2
 
 describe('permission', () => {
   beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    const { userId } = await account.create(testEmail, testPassword, testFirstName, testLastName, testLanguage)
-
+    const { userId } = await await account.create(
+      testEmail,
+      testPassword,
+      testFirstName,
+      testLastName,
+      testLanguage
+    )
+    testUserId = userId
     const req = mockReq({
       body: {
         lunchspaceName: testLunchspaceName,
