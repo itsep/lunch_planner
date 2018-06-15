@@ -3,11 +3,13 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Create from '@material-ui/icons/Create'
+import Cancel from '@material-ui/icons/Cancel'
 import Done from '@material-ui/icons/Done'
 import Grid from '@material-ui/core/Grid'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import IconButton from '@material-ui/core/IconButton'
 import Collapse from '@material-ui/core/Collapse'
+import Snackbar from '@material-ui/core/Snackbar'
 import Fade from '@material-ui/core/Fade'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import apiFetch from 'lib/api_fetch'
@@ -20,7 +22,8 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     margin: 'auto',
-    minWidth: '350px',
+    padding: 2 * theme.spacing.unit,
+    minWidth: '375px',
     maxWidth: '800px',
   },
   form: {
@@ -32,9 +35,11 @@ const styles = theme => ({
     margin: '16px auto',
     fontSize: '4em',
   },
+  errorMessage: {
+    margin: theme.spacing.unit,
+  },
   profileRow: {
     marginTop: '12px',
-    height: '60px',
     alignItems: 'center',
   },
   textField: {
@@ -55,9 +60,17 @@ const styles = theme => ({
   },
 })
 
-const leftColumn = 2
-const middleColumn = 7
-const rightColumn = 3
+const smallSize = {
+  title: 8,
+  actions: 4,
+  content: 12,
+}
+
+const generalSize = {
+  title: 2,
+  actions: 2,
+  content: 8,
+}
 
 class Profile extends React.Component {
   constructor(props) {
@@ -69,6 +82,8 @@ class Profile extends React.Component {
       newPassword: '',
       error: null,
       lastError: null,
+      showSnackbar: false,
+      snackbarMessage: '',
       user: {
         firstName: '',
         lastName: '',
@@ -80,6 +95,8 @@ class Profile extends React.Component {
       isLoading: false,
     }
     this.handleNameChangeSubmit = this.handleNameChangeSubmit.bind(this)
+    this.handleNameChangeClose = this.handleNameChangeClose.bind(this)
+    this.handlePasswordChangeClose = this.handlePasswordChangeClose.bind(this)
     this.handlePasswordChangeSubmit = this.handlePasswordChangeSubmit.bind(this)
   }
   componentDidMount() {
@@ -115,6 +132,18 @@ class Profile extends React.Component {
       })
     }
   }
+  handleNameChangeClose() {
+    this.setState({
+      onNameChange: false,
+    })
+  }
+  handlePasswordChangeClose() {
+    this.setState({
+      onPasswordChange: false,
+      password: '',
+      newPassword: '',
+    })
+  }
   handleChange(name) {
     const that = this
     return (event) => {
@@ -124,7 +153,29 @@ class Profile extends React.Component {
     }
   }
   handlePasswordChangeSubmit() {
-    console.log('password change')
+    this.setState({
+      isLoading: true,
+    })
+    const { password, newPassword } = this.state
+    apiFetch('/api/account/change_password', {
+      method: 'PUT',
+      body: {
+        password,
+        newPassword,
+      },
+    }).then(({ response }) => {
+      if (response.ok) {
+        this.setState({
+          showSnackbar: true,
+          snackbarMessage: localizedStrings.successfullyChangedPassword,
+        })
+      }
+    }).finally(() => {
+      this.setState({
+        onPasswordChange: false,
+        isLoading: false,
+      })
+    }).catch(error => this.setState({ error, lastError: error }))
   }
   handleNameChangeSubmit() {
     this.setState({
@@ -136,10 +187,12 @@ class Profile extends React.Component {
         firstName: this.state.newUser.firstName,
         lastName: this.state.newUser.lastName,
       },
-    }).then((data) => {
-      if (data.response.ok) {
+    }).then(({ response }) => {
+      if (response.ok) {
         this.setState({
           user: this.state.newUser,
+          showSnackbar: true,
+          snackbarMessage: localizedStrings.successfullyChangedName,
         })
       }
     }).finally(() => {
@@ -161,11 +214,54 @@ class Profile extends React.Component {
             className={classes.avatar}
           />
           <Grid container className={classes.profileGrid}>
+            {
+              /*
+                First Row with profile name
+               */
+            }
             <Grid container spacing={16} className={classes.profileRow}>
-              <Grid item xs={leftColumn} align="right">
+              <Grid item xs={smallSize.title} sm={generalSize.title}>
                 <Typography variant="title" color="textSecondary">{localizedStrings.name}</Typography>
               </Grid>
-              <Grid item xs={middleColumn}>
+              <Grid item xs={smallSize.actions} sm={generalSize.actions}>
+                {!this.state.onNameChange ?
+                  <IconButton
+                    type="button"
+                    size="large"
+                    variant="raised"
+                    color="primary"
+                    className={classes.button}
+                    onClick={() => { this.setState({ onNameChange: true }) }}
+                    disabled={this.state.isLoading}
+                  >
+                    <Create />
+                  </IconButton>
+                  :
+                  <div>
+                    <IconButton
+                      size="large"
+                      variant="raised"
+                      color="primary"
+                      className={classes.button}
+                      disabled={this.state.isLoading}
+                      onClick={this.handleNameChangeSubmit}
+                    >
+                      <Done />
+                    </IconButton>
+                    <IconButton
+                      size="large"
+                      variant="raised"
+                      color="secondary"
+                      className={classes.button}
+                      disabled={this.state.isLoading}
+                      onClick={this.handleNameChangeClose}
+                    >
+                      <Cancel />
+                    </IconButton>
+                  </div>
+                }
+              </Grid>
+              <Grid item xs={smallSize.content} sm={generalSize.content}>
                 {this.state.onNameChange ?
                   (
                     <ValidatorForm
@@ -199,46 +295,68 @@ class Profile extends React.Component {
                   (<Typography variant="title">{user.firstName} {user.lastName}</Typography>)
                 }
               </Grid>
-              <Grid item xs={rightColumn}>
-                {!this.state.onNameChange ?
+            </Grid>
+            {
+              /*
+                Second row with email
+               */
+            }
+            <Grid container spacing={16} className={classes.profileRow}>
+              <Grid item xs={smallSize.title} sm={generalSize.title}>
+                <Typography variant="title" color="textSecondary">{localizedStrings.email}</Typography>
+              </Grid>
+              <Grid item xs={smallSize.content} sm={generalSize.content}>
+                <Typography variant="title">{user.email}</Typography>
+              </Grid>
+            </Grid>
+            {
+              /*
+                Third Row with password
+               */
+            }
+            <Grid container spacing={16} className={classes.profileRow}>
+              <Grid item xs={smallSize.title} sm={generalSize.title}>
+                <Typography variant="title" color="textSecondary">{localizedStrings.password}</Typography>
+              </Grid>
+              <Grid item xs={smallSize.actions} sm={generalSize.actions}>
+                {!this.state.onPasswordChange ?
                   <IconButton
                     type="button"
                     size="large"
                     variant="raised"
                     color="primary"
                     className={classes.button}
-                    onClick={() => { this.setState({ onNameChange: true }) }}
+                    onClick={() => { this.setState({ onPasswordChange: true }) }}
                     disabled={this.state.isLoading}
                   >
                     <Create />
                   </IconButton>
                   :
-                  <IconButton
-                    size="large"
-                    variant="raised"
-                    color="primary"
-                    className={classes.button}
-                    disabled={this.state.isLoading}
-                    onClick={this.handleNameChangeSubmit}
-                  >
-                    <Done />
-                  </IconButton>
+                  <div>
+                    <IconButton
+                      size="large"
+                      variant="raised"
+                      color="primary"
+                      className={classes.button}
+                      disabled={this.state.isLoading}
+                      onClick={this.handlePasswordChangeSubmit}
+                    >
+                      <Done />
+                    </IconButton>
+                    <IconButton
+                      size="large"
+                      variant="raised"
+                      color="secondary"
+                      className={classes.button}
+                      disabled={this.state.isLoading}
+                      onClick={this.handlePasswordChangeClose}
+                    >
+                      <Cancel />
+                    </IconButton>
+                  </div>
                 }
               </Grid>
-            </Grid>
-            <Grid container spacing={16} className={classes.profileRow}>
-              <Grid item xs={leftColumn} align="right">
-                <Typography variant="title" color="textSecondary">{localizedStrings.email}</Typography>
-              </Grid>
-              <Grid item xs={middleColumn}>
-                <Typography variant="title">{user.email}</Typography>
-              </Grid>
-            </Grid>
-            <Grid container spacing={16} className={classes.profileRow}>
-              <Grid item xs={leftColumn} align="right">
-                <Typography variant="title" color="textSecondary">{localizedStrings.password}</Typography>
-              </Grid>
-              <Grid item xs={middleColumn}>
+              <Grid item xs={smallSize.content} sm={generalSize.content}>
                 {this.state.onPasswordChange &&
                   (
                     <ValidatorForm
@@ -263,36 +381,9 @@ class Profile extends React.Component {
                         className={classes.textField}
                         validators={['required']}
                         errorMessages={[localizedStrings.fieldRequired]}
-                        autoFocus
                       />
                     </ValidatorForm>
                   )
-                }
-              </Grid>
-              <Grid item xs={rightColumn}>
-                {!this.state.onPasswordChange ?
-                  <IconButton
-                    type="button"
-                    size="large"
-                    variant="raised"
-                    color="primary"
-                    className={classes.button}
-                    onClick={() => { this.setState({ onPasswordChange: true }) }}
-                    disabled={this.state.isLoading}
-                  >
-                    <Create />
-                  </IconButton>
-                  :
-                  <IconButton
-                    size="large"
-                    variant="raised"
-                    color="primary"
-                    className={classes.button}
-                    disabled={this.state.isLoading}
-                    onClick={this.handlePasswordChangeSubmit}
-                  >
-                    <Done />
-                  </IconButton>
                 }
               </Grid>
             </Grid>
@@ -311,6 +402,15 @@ class Profile extends React.Component {
             </Fade>
           </Collapse>
         </div>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          open={this.state.showSnackbar}
+          onClose={() => this.setState({ showSnackbar: false })}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{this.state.snackbarMessage}</span>}
+        />
       </div>
     )
   }

@@ -36,6 +36,10 @@ const content = {
   createLunchspace: 'Create Lunchspace',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} successfull created.',
   createLocation: 'Create Location',
+
+  successfullyChangedName: 'Succesfully changed name.',
+  successfullyChangedPassword: 'Succesfully changed password.',
+
   invite: 'Invite',
   email: 'Email',
   password: 'Password',

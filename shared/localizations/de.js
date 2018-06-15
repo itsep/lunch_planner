@@ -33,9 +33,13 @@ const content = {
   accept: 'Akzeptieren',
   needToLoginForInvite: 'Melde dich an oder erstelle einen Account um die Einladung an zu nehmen.',
 
+  successfullyChangedName: 'Erfolgreich Namen geändert.',
+  successfullyChangedPassword: 'Erfolgreich Password geändert.',
+
   createLunchspace: 'Lunchspace erstellen',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} erfolgreich erstellt.',
   createLocation: 'Location erstellen',
+
   invite: 'Einladen',
   delete: 'Löschen',
   profile: 'Profil',
