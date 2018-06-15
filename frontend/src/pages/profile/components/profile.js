@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+import Create from '@material-ui/icons/Create'
 import Done from '@material-ui/icons/Done'
 import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
 import IconButton from '@material-ui/core/IconButton'
 import Collapse from '@material-ui/core/Collapse'
@@ -20,7 +20,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     margin: 'auto',
-    minWidth: '500px',
+    minWidth: '350px',
     maxWidth: '800px',
   },
   form: {
@@ -29,12 +29,13 @@ const styles = theme => ({
   avatar: {
     width: '128px',
     height: '128px',
-    margin: '48px auto',
+    margin: '16px auto',
     fontSize: '4em',
   },
   profileRow: {
     marginTop: '12px',
     height: '60px',
+    alignItems: 'center',
   },
   textField: {
     marginRight: '1em',
@@ -64,6 +65,8 @@ class Profile extends React.Component {
     this.state = {
       onNameChange: false,
       onPasswordChange: false,
+      password: '',
+      newPassword: '',
       error: null,
       lastError: null,
       user: {
@@ -76,7 +79,8 @@ class Profile extends React.Component {
       },
       isLoading: false,
     }
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleNameChangeSubmit = this.handleNameChangeSubmit.bind(this)
+    this.handlePasswordChangeSubmit = this.handlePasswordChangeSubmit.bind(this)
   }
   componentDidMount() {
     apiFetch('api/account/', {
@@ -111,7 +115,18 @@ class Profile extends React.Component {
       })
     }
   }
-  handleSubmit() {
+  handleChange(name) {
+    const that = this
+    return (event) => {
+      that.setState({
+        [name]: event.target.value,
+      })
+    }
+  }
+  handlePasswordChangeSubmit() {
+    console.log('password change')
+  }
+  handleNameChangeSubmit() {
     this.setState({
       isLoading: true,
     })
@@ -124,12 +139,12 @@ class Profile extends React.Component {
     }).then((data) => {
       if (data.response.ok) {
         this.setState({
-          onNameChange: false,
           user: this.state.newUser,
         })
       }
     }).finally(() => {
       this.setState({
+        onNameChange: false,
         isLoading: false,
       })
     }).catch(error => this.setState({ error, lastError: error }))
@@ -146,7 +161,7 @@ class Profile extends React.Component {
             className={classes.avatar}
           />
           <Grid container className={classes.profileGrid}>
-            <Grid container spacing={16} className={classes.profileRow} alignItems="baseline">
+            <Grid container spacing={16} className={classes.profileRow}>
               <Grid item xs={leftColumn} align="right">
                 <Typography variant="title" color="textSecondary">{localizedStrings.name}</Typography>
               </Grid>
@@ -154,7 +169,7 @@ class Profile extends React.Component {
                 {this.state.onNameChange ?
                   (
                     <ValidatorForm
-                      onSubmit={this.handleSubmit}
+                      onSubmit={this.handleNameChangeSubmit}
                       className={classes.form}
                     >
                       <TextValidator
@@ -178,16 +193,6 @@ class Profile extends React.Component {
                         errorMessages={[localizedStrings.fieldRequired]}
                         autoComplete="family-name"
                       />
-                      <IconButton
-                        type="submit"
-                        size="large"
-                        variant="raised"
-                        color="primary"
-                        className={classes.button}
-                        disabled={this.state.isLoading}
-                      >
-                        <Done />
-                      </IconButton>
                     </ValidatorForm>
                     )
                   :
@@ -195,34 +200,29 @@ class Profile extends React.Component {
                 }
               </Grid>
               <Grid item xs={rightColumn}>
-                {this.state.onNameChange ?
-                  (
-                    <Button
-                      type="button"
-                      size="large"
-                      variant="flat"
-                      color="secondary"
-                      disabled={this.state.isLoading}
-                      onClick={() => {
-                        this.setState({ onNameChange: false, newUser: this.state.user })
-                      }}
-                    >
-                      {localizedStrings.cancel}
-                    </Button>
-                  )
+                {!this.state.onNameChange ?
+                  <IconButton
+                    type="button"
+                    size="large"
+                    variant="raised"
+                    color="primary"
+                    className={classes.button}
+                    onClick={() => { this.setState({ onNameChange: true }) }}
+                    disabled={this.state.isLoading}
+                  >
+                    <Create />
+                  </IconButton>
                   :
-                  (
-                    <Button
-                      type="button"
-                      size="large"
-                      variant="flat"
-                      color="primary"
-                      disabled={this.state.isLoading}
-                      onClick={() => { this.setState({ onNameChange: true }) }}
-                    >
-                      {localizedStrings.change}
-                    </Button>
-                  )
+                  <IconButton
+                    size="large"
+                    variant="raised"
+                    color="primary"
+                    className={classes.button}
+                    disabled={this.state.isLoading}
+                    onClick={this.handleNameChangeSubmit}
+                  >
+                    <Done />
+                  </IconButton>
                 }
               </Grid>
             </Grid>
@@ -235,18 +235,65 @@ class Profile extends React.Component {
               </Grid>
             </Grid>
             <Grid container spacing={16} className={classes.profileRow}>
-              <Grid item xs={leftColumn} />
+              <Grid item xs={leftColumn} align="right">
+                <Typography variant="title" color="textSecondary">{localizedStrings.password}</Typography>
+              </Grid>
               <Grid item xs={middleColumn}>
-                <Button
-                  type="button"
-                  size="large"
-                  variant="flat"
-                  color="secondary"
-                  disabled={this.state.isLoading}
-                  onClick={() => { this.setState({ onPasswordChange: true }) }}
-                >
-                  {localizedStrings.changePassword}
-                </Button>
+                {this.state.onPasswordChange &&
+                  (
+                    <ValidatorForm
+                      onSubmit={this.handlePasswordChangeSubmit}
+                      className={classes.form}
+                    >
+                      <TextValidator
+                        label="Password"
+                        onChange={this.handleChange('password')}
+                        name="password"
+                        type="password"
+                        validators={['required']}
+                        className={classes.textField}
+                        errorMessages={[localizedStrings.fieldRequired]}
+                        autoFocus
+                      />
+                      <TextValidator
+                        label="New password"
+                        onChange={this.handleChange('newPassword')}
+                        name="password"
+                        type="password"
+                        className={classes.textField}
+                        validators={['required']}
+                        errorMessages={[localizedStrings.fieldRequired]}
+                        autoFocus
+                      />
+                    </ValidatorForm>
+                  )
+                }
+              </Grid>
+              <Grid item xs={rightColumn}>
+                {!this.state.onPasswordChange ?
+                  <IconButton
+                    type="button"
+                    size="large"
+                    variant="raised"
+                    color="primary"
+                    className={classes.button}
+                    onClick={() => { this.setState({ onPasswordChange: true }) }}
+                    disabled={this.state.isLoading}
+                  >
+                    <Create />
+                  </IconButton>
+                  :
+                  <IconButton
+                    size="large"
+                    variant="raised"
+                    color="primary"
+                    className={classes.button}
+                    disabled={this.state.isLoading}
+                    onClick={this.handlePasswordChangeSubmit}
+                  >
+                    <Done />
+                  </IconButton>
+                }
               </Grid>
             </Grid>
           </Grid>

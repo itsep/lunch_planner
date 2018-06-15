@@ -38,6 +38,7 @@ const content = {
   createLocation: 'Create Location',
   invite: 'Invite',
   email: 'Email',
+  password: 'Password',
   name: 'Name',
   change: 'change',
   changePassword: 'change password',
