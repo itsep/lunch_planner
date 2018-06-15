@@ -32,6 +32,9 @@ const content = {
   invalidInvitationLink: 'Einladungs Link ist ungültig',
   accept: 'Akzeptieren',
   needToLoginForInvite: 'Melde dich an oder erstelle einen Account um die Einladung an zu nehmen.',
+  askForPushNotificatoinSubscription: 'Bleibe Up to Date selbst wenn du Seite nicht offen hast.',
+  subscribe: 'Abbonieren',
+  notNow: 'Nicht jetzt',
 
   createLunchspace: 'Lunchspace erstellen',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} erfolgreich erstellt.',

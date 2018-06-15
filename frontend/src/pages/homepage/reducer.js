@@ -187,6 +187,18 @@ function reduceSelectedEvent(selectedEvent = null, action) {
   }
 }
 
+function reduceShouldAskNicelyForNotificationPermission(shouldAskNicely = false, action) {
+  switch (action.type) {
+    case actionTypes.ASK_NICELY_FOR_NOTIFICATION_PERMISSION:
+    case actionTypes.REQUEST_NOTIFICATION_PERMISSION:
+    case actionTypes.ASK_LATER_FOR_NOTIFICATION_PERMISSION:
+      console.log(action.shoudlAskNicelyForNotificationPermission)
+      return action.shoudlAskNicelyForNotificationPermission
+    default:
+      return shouldAskNicely
+  }
+}
+
 const reducer = combineReducers({
   currentDate: reduceCurrentDate,
   lunchspace: reduceLunchspace,
@@ -197,5 +209,6 @@ const reducer = combineReducers({
   lunchspaces: reduceLunchspaces,
   isLoadingLocations: reduceIsLoadingLocations,
   selectedEvent: reduceSelectedEvent,
+  shouldAskNicelyForNotificationPermission: reduceShouldAskNicelyForNotificationPermission,
 })
 export default reducer

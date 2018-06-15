@@ -12,10 +12,17 @@ import routeLocations from '../../route_locations'
 import CommonAppContainer from '../../../components/common_app_container'
 import DateBar from './date_bar'
 import { isDefinitelyNotAuthenticated } from '../../../lib/authentication'
-import { closeEventDialog, fetchLogout } from '../actions'
-import { withLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
+import {
+  closeEventDialog,
+  fetchLogout,
+  askLaterForNotificationPermission,
+  requestNotificationPermission
+} from '../actions'
+import { withLunchspaceSubdomain, redirectIfNoLunchspaceSelected } from '../../../lib/lunchspace_subdomain'
 import EventDetailsDialog from './event_details_dialog'
 import InviteteToCurrentLunchspace from './invite_to_current_lunchspace'
+import NotificationPermissionRequester from '../../../lib/serviceworker-registration'
+import PushNotificationRequester from '../../../components/push_notification_requester'
 
 const noParticipants = []
 const noSelectedEvent = {}
@@ -35,6 +42,7 @@ const mapStateToProps = (state) => {
     lunchspace: state.lunchspace,
     show: false,
     participantIds: noParticipants,
+    shouldAskNicelyForNotificationPermission: state.shouldAskNicelyForNotificationPermission,
     ...selectedEvent,
   }
 }
@@ -45,6 +53,12 @@ const mapDispatchToProps = dispatch => ({
   },
   closeDialog: () => {
     dispatch(closeEventDialog())
+  },
+  askLaterForNotificationPermissionAction: () => {
+    dispatch(askLaterForNotificationPermission())
+  },
+  requestNotificationPermissionAction: () => {
+    dispatch(requestNotificationPermission())
   },
 })
 
@@ -77,7 +91,12 @@ class HomepageApp extends Component {
   componentDidMount() {
     if (isDefinitelyNotAuthenticated()) {
       window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
+      return
     }
+    if (redirectIfNoLunchspaceSelected()) {
+      return
+    }
+    NotificationPermissionRequester.shared.start()
   }
   openInvite() {
     this.setState({
@@ -95,6 +114,8 @@ class HomepageApp extends Component {
   render() {
     const {
       classes, user, lunchspace, fetchLogoutAction, participantIds, show, closeDialog,
+      shouldAskNicelyForNotificationPermission,
+      requestNotificationPermissionAction, askLaterForNotificationPermissionAction
     } = this.props
     if (isDefinitelyNotAuthenticated()) {
       window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
@@ -123,6 +144,11 @@ class HomepageApp extends Component {
         <DateBar />
         <LocationList />
         <EventDetailsDialog participantIds={participantIds} show={show} onClose={closeDialog} />
+        <PushNotificationRequester
+          shouldAsk={shouldAskNicelyForNotificationPermission}
+          askLater={askLaterForNotificationPermissionAction}
+          requestPermission={requestNotificationPermissionAction}
+        />
       </CommonAppContainer>
     )
   }
@@ -136,6 +162,9 @@ HomepageApp.propTypes = {
   participantIds: PropTypes.arrayOf(PropTypes.number).isRequired,
   show: PropTypes.bool.isRequired,
   closeDialog: PropTypes.func.isRequired,
+  shouldAskNicelyForNotificationPermission: PropTypes.bool.isRequired,
+  askLaterForNotificationPermissionAction: PropTypes.func.isRequired,
+  requestNotificationPermissionAction: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(HomepageApp))

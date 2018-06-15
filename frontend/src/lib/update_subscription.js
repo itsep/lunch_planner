@@ -1,4 +1,4 @@
-import apiFetch from '../lib/api_fetch'
+import apiFetch from './api_fetch'
 
 /**
  *

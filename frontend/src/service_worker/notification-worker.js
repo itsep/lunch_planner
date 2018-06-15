@@ -1,4 +1,4 @@
-import updateSubscription from './update_subscription'
+import updateSubscription from '../lib/update_subscription'
 /* eslint-disable no-restricted-globals */
 
 self.addEventListener('push', (e) => {
