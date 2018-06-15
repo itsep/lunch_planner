@@ -152,6 +152,11 @@ function reduceUsers(users = initialState.users, action) {
           [userId]: participant,
         }
       })()
+    case actionTypes.UPDATE_USER:
+      return {
+        ...users,
+        [action.user.id]: action.user,
+      }
     default:
       return users
   }
