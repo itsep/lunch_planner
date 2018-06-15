@@ -15,6 +15,7 @@ const email = 'noreply.lunchspace@gmail.com'
 const password = 'password'
 const firstName = 'Max'
 const lastName = 'Mustermann'
+const testLanguage = 'de'
 let testUserId = 1
 
 const testLunchspaceName = 'testLunchspace'
@@ -37,7 +38,8 @@ describe('delete_location', () => {
   beforeAll(async () => {
     const { userId } = await account.create(
       email, password,
-      firstName, lastName
+      firstName, lastName,
+      testLanguage,
     )
     testUserId = userId
 

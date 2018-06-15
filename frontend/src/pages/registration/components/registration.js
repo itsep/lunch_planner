@@ -77,7 +77,11 @@ class Registration extends React.Component {
     apiFetch('/api/account', {
       method: 'POST',
       body: {
-        firstName, lastName, email, password,
+        firstName,
+        lastName,
+        email,
+        password,
+        language: localizedStrings.getInterfaceLanguage(),
       },
     })
       .then(({ data }) => {

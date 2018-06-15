@@ -12,6 +12,7 @@ const testLocationName = 'McBurger'
 const testLocationCoordinates = { lat: 20, long: 10 }
 const testFirstName = 'Max'
 const testLastName = 'Mustermann'
+const testLanguage = 'de'
 const testEmail = 'max.mustermann@gmail.com'
 const testPassword = 'password'
 const eventDate = '2018-05-16'
@@ -26,7 +27,13 @@ describe('get locations', () => {
   beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    const { userId } = await account.create(testEmail, testPassword, testFirstName, testLastName)
+    const { userId } = await await account.create(
+      testEmail,
+      testPassword,
+      testFirstName,
+      testLastName,
+      testLanguage
+    )
     testUserId = userId
     testLunchspaceId = await createLunchspace(userId, testSpaceName, testSpaceSubdomain)
     testLocationId = await location
