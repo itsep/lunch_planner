@@ -13,15 +13,15 @@ describe('subdomain', () => {
     })
   })
   describe('subdomainFromHostOrQuery', () => {
-    it('should return the subdomain defined in the host header over the subdomain defined in the query', () => {
+    it('should return the subdomain defined in the query over the subdomain defined in the host header', () => {
       expect(subdomainFromHostOrQuery(
         { host: 'subdomain-in-host.example.com' },
         { subdomain: 'subdomain-in-query' }
-      )).toEqual('subdomain-in-host')
+      )).toEqual('subdomain-in-query')
       expect(subdomainFromHostOrQuery(
-        { host: 'www.subdomain-in-host.example.com' },
-        {}
-      )).toEqual('subdomain-in-host')
+        { host: '' },
+        { subdomain: 'subdomain-in-query' }
+      )).toEqual('subdomain-in-query')
     })
     it('should return the subdomain defined in the query if no subdomain could be parsed from the host header', () => {
       expect(subdomainFromHostOrQuery(
