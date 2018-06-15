@@ -23,5 +23,5 @@ async function getLunchspaces(req, res) {
 }
 
 module.exports = {
-  getLocations: getLunchspaces,
+  getLunchspaces,
 }
