@@ -26,7 +26,7 @@ function PushNotificationRequester({ shouldAsk, askLater, requestPermission }) {
           color="primary"
           variant="contained"
         >
-          {localizedStrings.subscribe}
+          {localizedStrings.yes}
         </Button>,
       ]}
     />
