@@ -1,5 +1,5 @@
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
-const { registerAccount } = require('../../routes/account/register_account')
+const account = require('../../routes/account/register_account')
 const { createLunchspaceAndJoin } = require('../../routes/lunchspace/create_lunchspace')
 const { mockReq, mockRes } = require('../../lib/express_mock')
 const { asyncCheckLunchspacePermissionOfRequest } = require('../../middleware/lunchspace_permission')
@@ -8,6 +8,8 @@ const testEmail = 'max.mustermann@gmail.com'
 const testPassword = 'passwort'
 const testFirstName = 'Max'
 const testLastName = 'Mustermann'
+const testLanguage = 'de'
+
 const testLunchspaceName = 'Testbude'
 const testSubdomain = 'buden-tester'
 const testUserId = 1
@@ -17,19 +19,17 @@ describe('permission', () => {
   beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
+    const { userId } = await account.create(testEmail, testPassword, testFirstName, testLastName, testLanguage)
+
     const req = mockReq({
       body: {
-        email: testEmail,
-        password: testPassword,
-        firstName: testFirstName,
-        lastName: testLastName,
         lunchspaceName: testLunchspaceName,
         lunchspaceSubdomain: testSubdomain,
       },
       token: { userId: testUserId },
     })
     const res = mockRes()
-    await registerAccount(req, res)
+
     await createLunchspaceAndJoin(req, res)
   })
   it('has permission', async () => {

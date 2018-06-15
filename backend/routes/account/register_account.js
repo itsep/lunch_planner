@@ -7,12 +7,12 @@ const { InputValidationError } = require('../../../shared/lib/error')
 const minimumLength = 1
 const maximumLength = 24
 
-async function create(email, password, firstName, lastName) {
+async function create(email, password, firstName, lastName, language) {
   const hashedPassword = await hash(password)
   return pool.useConnection(async (conn) => {
     try {
-      const [userCreateResult] = await conn.execute('INSERT INTO user (first_name, last_name)' +
-        'VALUES (?,?)', [firstName, lastName])
+      const [userCreateResult] = await conn.execute('INSERT INTO user (first_name, last_name, language)' +
+        'VALUES (?,?,?)', [firstName, lastName, language])
       const userId = userCreateResult.insertId
       const [accountCreateResult] = await conn.execute('INSERT INTO account (email, hashed_password, user_id) ' +
         'VALUES (?,?,?)', [email, hashedPassword, userId])
@@ -32,9 +32,12 @@ async function create(email, password, firstName, lastName) {
   })
 }
 
+const languageMinLength = 2
+const languageMaxLength = 8
+
 async function registerAccount(req, res) {
   let { firstName, lastName } = req.body
-  const { email, password } = req.body
+  const { email, password, language } = req.body
   if (!validLength(firstName, maximumLength, minimumLength)) {
     throw new InputValidationError(
       'firstName', `firstName has invalid length: ${firstName}`,
@@ -47,6 +50,12 @@ async function registerAccount(req, res) {
       'invalidLength', { minimumLength, maximumLength },
     )
   }
+  if (!validLength(language, languageMaxLength, languageMinLength)) {
+    throw new InputValidationError(
+      'language', `language has invalid length: ${language}`,
+      'invalidLength', { minimumLength: languageMinLength, maximumLength: languageMaxLength },
+    )
+  }
   firstName = firstName.trim()
   lastName = lastName.trim()
   if (!validEmail(email)) {
@@ -55,7 +64,7 @@ async function registerAccount(req, res) {
       'invalidEmail', { email },
     )
   }
-  const { userId } = await create(email, password, firstName, lastName)
+  const { userId } = await create(email, password, firstName, lastName, language)
   const token = stringifyToken(userId)
   setTokenOnResponse(res, token)
   return res.status(200).json({})

@@ -9,10 +9,11 @@ describe('verify account', () => {
   const email = 'dnadoba@gmail.com'
   const firstName = 'David'
   const lastName = 'Nadoba'
+  const language = 'de'
   let userId
   beforeAll(async () => {
     // Create account
-    const result = await create(email, 'random password', firstName, lastName)
+    const result = await create(email, 'random password', firstName, lastName, language)
     // eslint-disable-next-line prefer-destructuring
     userId = result.userId
   })
