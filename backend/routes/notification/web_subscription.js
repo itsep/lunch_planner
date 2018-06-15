@@ -10,12 +10,13 @@ async function webSubscription(req, res) {
       'oldSubscription and newSubscription are not defined.'
     )
   }
-  const { userId } = req.token
+  const { userId, sessionId } = req.token
+  const { id: lunchspaceId } = req.lunchspace
   if (oldSubscription) {
     await removeSubscription(userId, oldSubscription)
   }
   if (newSubscription) {
-    await addSubscription(userId, newSubscription, userAgent)
+    await addSubscription(userId, sessionId, lunchspaceId, newSubscription, userAgent)
   }
   res.json({})
 }

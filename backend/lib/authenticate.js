@@ -1,15 +1,17 @@
 const jwt = require('jsonwebtoken')
 const config = require('config')
+const uuidv4 = require('uuid/v4')
 
 const secret = process.env.JWT_SECRET
 const cookieDomain = config.has('token.domain') && config.get('token.domain')
 const tokenLifetime = config.get('token.lifetime')
 const onlyHttps = config.get('token.onlyHttps')
 
-function stringifyToken(userId) {
+function stringifyToken(userId, sessionId = uuidv4()) {
   const token = jwt.sign(
     {
       userId,
+      sessionId,
     },
     secret,
     { expiresIn: tokenLifetime }

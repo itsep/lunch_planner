@@ -16,6 +16,13 @@ function validateSubscription(subscription) {
   }
 }
 
+async function removeSubscriptionsForSession(userId, sessionId) {
+  return pool.execute(`DELETE FROM web_notification_subscription 
+WHERE
+user_id = ? AND
+session_id = ?`, [userId, sessionId])
+}
+
 async function removeSubscription(userId, subscription) {
   validateSubscription(subscription)
   return pool.execute(`DELETE FROM web_notification_subscription 
@@ -26,14 +33,16 @@ key_auth = ? AND
 key_p256dh = ?`, [userId, subscription.endpoint, subscription.keys.auth, subscription.keys.p256dh])
 }
 
-async function addSubscription(userId, subscription, userAgent) {
+async function addSubscription(userId, sessionId, lunchspaceId, subscription, userAgent) {
   validateSubscription(subscription)
   return pool.execute(
     `REPLACE INTO web_notification_subscription
-(user_id, endpoint, key_auth, key_p256dh, user_agent)
-VALUES (?, ?, ?, ?, ?)`,
+(user_id, session_id, lunchspace_id, endpoint, key_auth, key_p256dh, user_agent)
+VALUES (?, ?, ?, ?, ?, ?, ?)`,
     [
       userId,
+      sessionId,
+      lunchspaceId,
       subscription.endpoint,
       subscription.keys.auth,
       subscription.keys.p256dh,
@@ -45,4 +54,5 @@ VALUES (?, ?, ?, ?, ?)`,
 module.exports = {
   removeSubscription,
   addSubscription,
+  removeSubscriptionsForSession,
 }
