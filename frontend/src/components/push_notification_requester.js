@@ -24,7 +24,7 @@ function PushNotificationRequester({ shouldAsk, askLater, requestPermission }) {
         <Button
           onClick={requestPermission}
           color="primary"
-          variant="outlined"
+          variant="contained"
         >
           {localizedStrings.subscribe}
         </Button>,
