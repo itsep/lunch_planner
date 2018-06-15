@@ -7,4 +7,3 @@ import './login.scss'
 
 render(<LoginApp />, document.getElementById('app'))
 
-

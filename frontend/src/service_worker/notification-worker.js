@@ -22,7 +22,7 @@ self.addEventListener('pushsubscriptionchange', (event) => {
   updateSubscription(event).catch((error) => {
     // retry once
     console.error(error)
-    console.log('retry update subscription')
+    console.debug('retry update subscription')
     return updateSubscription(event)
   }).catch(error => console.error(error))
 })

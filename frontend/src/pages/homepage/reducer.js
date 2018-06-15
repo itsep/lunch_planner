@@ -192,7 +192,6 @@ function reduceShouldAskNicelyForNotificationPermission(shouldAskNicely = false,
     case actionTypes.ASK_NICELY_FOR_NOTIFICATION_PERMISSION:
     case actionTypes.REQUEST_NOTIFICATION_PERMISSION:
     case actionTypes.ASK_LATER_FOR_NOTIFICATION_PERMISSION:
-      console.log(action.shoudlAskNicelyForNotificationPermission)
       return action.shoudlAskNicelyForNotificationPermission
     default:
       return shouldAskNicely

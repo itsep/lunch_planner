@@ -16,7 +16,7 @@ import {
   closeEventDialog,
   fetchLogout,
   askLaterForNotificationPermission,
-  requestNotificationPermission
+  requestNotificationPermission,
 } from '../actions'
 import { withLunchspaceSubdomain, redirectIfNoLunchspaceSelected } from '../../../lib/lunchspace_subdomain'
 import EventDetailsDialog from './event_details_dialog'
@@ -115,7 +115,7 @@ class HomepageApp extends Component {
     const {
       classes, user, lunchspace, fetchLogoutAction, participantIds, show, closeDialog,
       shouldAskNicelyForNotificationPermission,
-      requestNotificationPermissionAction, askLaterForNotificationPermissionAction
+      requestNotificationPermissionAction, askLaterForNotificationPermissionAction,
     } = this.props
     if (isDefinitelyNotAuthenticated()) {
       window.location = withLunchspaceSubdomain(routeLocations.LOGIN)

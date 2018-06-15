@@ -26,22 +26,18 @@ async function registerServiceWorker() {
 }
 
 async function subscribe() {
-  return navigator.serviceWorker.ready.then((registration) => {
-    return registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: convertedVapidKey,
-    })
-  })
+  return navigator.serviceWorker.ready.then(registration => registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: convertedVapidKey,
+  }))
 }
 
 async function sendNewSubscriptionToServer(newSubscription) {
-  console.log(JSON.parse(JSON.stringify(newSubscription)))
   return updateSubscription({ newSubscription })
 }
 
 function tryToSubscribeWithoutUserInteraction() {
   if (Notification.permission === 'granted') {
-    console.log("tryToSubscribeWithoutUserInteraction")
     subscribe()
       .then(sendNewSubscriptionToServer)
       .catch(error => console.error(error))
@@ -87,7 +83,6 @@ export default class PushNotificationManager {
     localStorage.setItem(this.localStorageKeyForDenyCountInRow, count)
   }
   start() {
-    console.log("start")
     hasProbablySupportAsync()
       .then(registerServiceWorker)
       .then((registration) => {
@@ -97,6 +92,7 @@ export default class PushNotificationManager {
         if (this.hasPushManager) {
           return tryToSubscribeWithoutUserInteraction()
         }
+        return null
       })
       .catch(error => console.error(error))
   }
@@ -128,13 +124,10 @@ export default class PushNotificationManager {
   }
 
   shouldAskUserNicely() {
-    console.log("this.canAskForPermission()", this.canAskForPermission())
-    console.log("this.shouldWaitBeforeAskingAgain()", this.shouldWaitBeforeAskingAgain())
     return hasProbablySupport() && this.canAskForPermission() && !this.shouldWaitBeforeAskingAgain()
   }
 
   askLaterAgain() {
-    console.log("askLaterAgain")
     this.lastMomentDenied = moment()
     this.denyCountInRow += 1
   }
@@ -150,11 +143,9 @@ export default class PushNotificationManager {
 
   shouldWaitBeforeAskingAgain() {
     const lastMomentAskAndDenied = this.lastMomentDenied
-    console.log("lastMomentAskAndDenied", lastMomentAskAndDenied)
     if (!lastMomentAskAndDenied) {
       return false
     }
-    console.log("this.daysToWaitBeforeAskingAgain",this.daysToWaitBeforeAskingAgain)
     return lastMomentAskAndDenied.add(this.daysToWaitBeforeAskingAgain, 'day').isAfter(moment())
   }
 }
