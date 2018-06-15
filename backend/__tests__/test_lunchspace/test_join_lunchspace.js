@@ -8,10 +8,11 @@ const account = require('../../routes/account/register_account')
 const { checkTokenAndGetLunchspaceId } = require('../../routes/lunchspace/check_invitation')
 const { isMember } = require('../../lib/supportive_functions')
 
-const testEMail = 'noreply.lunchspace@gmail.com'
+const testEmail = 'noreply.lunchspace@gmail.com'
 const testPassword = 'password'
 const testFirstName = 'Max'
 const testLastName = 'Mustermann'
+const testLanguage = 'de'
 let testUserId = 1
 
 const testLunchspaceName = 'testLunchspace'
@@ -29,17 +30,23 @@ const invalidToken = 'not a valid token'
 
 
 describe('join_lunchspace', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    const { userId } = await account.create(testEMail, testPassword, testFirstName, testLastName)
+    const { userId } = await await account.create(
+      testEmail,
+      testPassword,
+      testFirstName,
+      testLastName,
+      testLanguage
+    )
     testUserId = userId
     lunchspaceId1 = await lunchspace.create(testLunchspaceName, testLunchspaceSubdomain1)
     lunchspaceId2 = await lunchspace.create(testLunchspaceName, testLunchspaceSubdomain2)
     lunchspaceId3 = await lunchspace.create(testLunchspaceName, testLunchspaceSubdomain3)
-    token1 = await getToken(testEMail, lunchspaceId1)
-    token2 = await getToken(testEMail, lunchspaceId2)
-    token3 = await getToken(testEMail, lunchspaceId3)
+    token1 = await getToken(testEmail, lunchspaceId1)
+    token2 = await getToken(testEmail, lunchspaceId2)
+    token3 = await getToken(testEmail, lunchspaceId3)
   })
   describe('joinLunchspace', () => {
     it('should add test user to test lunchspace and ivalidatae token', async () => {

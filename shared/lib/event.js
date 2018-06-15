@@ -56,7 +56,7 @@ function eventDateEqual(a, b) {
 }
 
 
-const minuteSteps = 30
+const minuteSteps = 15
 const minuteStepsPerHour = 60 / minuteSteps
 
 function nextEventTimeForDate(date) {

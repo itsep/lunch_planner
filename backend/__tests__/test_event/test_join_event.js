@@ -13,6 +13,7 @@ const testLocationCoordinates = { lat: 20, long: 10 }
 const testFirstName = 'Max'
 const testLastName = 'Mustermann'
 const testEmail = 'max.mustermann@gmail.com'
+const testLanguage = 'de'
 const testPassword = 'password'
 const testTime = '10:30'
 const testDate = '2018-10-12'
@@ -27,10 +28,16 @@ let testLocationId
 let testUserPromise
 
 describe('joinEvent', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    const { userId } = await account.create(testEmail, testPassword, testFirstName, testLastName)
+    const { userId } = await account.create(
+      testEmail,
+      testPassword,
+      testFirstName,
+      testLastName,
+      testLanguage
+    )
     testUserId = userId
     testLunchspaceId = await createLunchspace(testUserId, testSpaceName, testSpaceSubdomain)
     testLocationId = await location

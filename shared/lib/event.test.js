@@ -44,8 +44,8 @@ describe('event', () => {
       expect(nextEventTimeForDate(new Date('2018.01.01 13:00:00'))).toEqual({ hour: 13, minute: 0 })
       expect(nextEventTimeForDate(new Date('2018.01.01 13:30:00'))).toEqual({ hour: 13, minute: 30 })
       expect(nextEventTimeForDate(new Date('2018.01.01 13:29:00'))).toEqual({ hour: 13, minute: 30 })
-      expect(nextEventTimeForDate(new Date('2018.01.01 13:01:00'))).toEqual({ hour: 13, minute: 30 })
-      expect(nextEventTimeForDate(new Date('2018.01.01 13:31:00'))).toEqual({ hour: 14, minute: 0 })
+      expect(nextEventTimeForDate(new Date('2018.01.01 13:01:00'))).toEqual({ hour: 13, minute: 15 })
+      expect(nextEventTimeForDate(new Date('2018.01.01 13:31:00'))).toEqual({ hour: 13, minute: 45 })
       expect(nextEventTimeForDate(new Date('2018.01.01 13:59:00'))).toEqual({ hour: 14, minute: 0 })
       expect(nextEventTimeForDate(new Date('2018.01.01 14:00:00'))).toEqual({ hour: 14, minute: 0 })
     })
@@ -54,11 +54,11 @@ describe('event', () => {
     it('should calculate the correct results', () => {
       expect(eventTimeSteps({ hour: 13, minute: 0 }, { hour: 13, minute: 0 })).toEqual(0)
       // eslint-disable-next-line max-len
-      expect(eventTimeSteps({ hour: 0, minute: 0 }, { hour: 13, minute: 30 })).toEqual((13 * 2) + 1)
-      expect(eventTimeSteps({ hour: 0, minute: 0 }, { hour: 24, minute: 0 })).toEqual(24 * 2)
-      expect(eventTimeSteps({ hour: 14, minute: 0 }, { hour: 13, minute: 30 })).toEqual(-1)
+      expect(eventTimeSteps({ hour: 0, minute: 0 }, { hour: 13, minute: 30 })).toEqual((13 * 4) + 2)
+      expect(eventTimeSteps({ hour: 0, minute: 0 }, { hour: 24, minute: 0 })).toEqual(24 * 4)
+      expect(eventTimeSteps({ hour: 14, minute: 0 }, { hour: 13, minute: 30 })).toEqual(-2)
       // eslint-disable-next-line max-len
-      expect(eventTimeSteps({ hour: 20, minute: 0 }, { hour: 10, minute: 30 })).toEqual((-10 * 2) + 1)
+      expect(eventTimeSteps({ hour: 20, minute: 0 }, { hour: 10, minute: 30 })).toEqual((-10 * 4) + 2)
     })
   })
   describe('eventDateEqual', () => {

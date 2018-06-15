@@ -34,7 +34,32 @@ Object.keys(pages).forEach((pageName) => {
   ]
 }, {})
 
-module.exports = {
+const serviceWorkerWebpackConfig = {
+  entry: {
+    'notification-worker': './src/service_worker/notification-worker.js',
+  },
+  resolve: {
+    alias: {
+      shared: path.resolve(__dirname, '../shared'),
+      lib: path.resolve(__dirname, 'src/lib'),
+    },
+  },
+  module: {
+    rules: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+      },
+    }],
+  },
+  output: {
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+}
+
+const appWebpackConfig = {
   entry: entries,
   resolve: {
     alias: {
@@ -103,7 +128,7 @@ module.exports = {
     }),
     new FaviconsWebpackPlugin({
       title: 'Lunchspace',
-      logo: './src/assets/logo/favicon_template.png',
+      logo: './src/assets/logo/Burger-512x512.png',
       // The prefix for all image files (might be a folder or a name)
       prefix: 'favicon-[hash]/',
       // Generate a cache file with control hashes and
@@ -129,7 +154,7 @@ module.exports = {
     }),
     new FaviconsWebpackPlugin({
       title: 'Lunchspace',
-      logo: './src/assets/logo/logo_template.png',
+      logo: './src/assets/logo/Logo-white-background-1536x1536.png',
       // The prefix for all image files (might be a folder or a name)
       prefix: 'icons-[hash]/',
       // Generate a cache file with control hashes and
@@ -160,3 +185,5 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
 }
+
+module.exports = [appWebpackConfig, serviceWorkerWebpackConfig]

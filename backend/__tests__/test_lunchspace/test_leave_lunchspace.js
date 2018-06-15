@@ -16,6 +16,7 @@ const testEMail1 = 'noreply.lunchspace@gmail.com'
 const testPassword1 = 'password'
 const testFirstName1 = 'Max'
 const testLastName1 = 'Mustermann'
+const testLanguage = 'de'
 let testUserId1 = 1
 
 const testEMail2 = 'noreply.lunchspace2@gmail.com'
@@ -39,7 +40,7 @@ let locationId2 = 2
 let locationId3 = 3
 
 describe('leave_lunchspace', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
     /*
@@ -50,12 +51,14 @@ describe('leave_lunchspace', () => {
      */
     const user1 = await account.create(
       testEMail1, testPassword1,
-      testFirstName1, testLastName1
+      testFirstName1, testLastName1,
+      testLanguage
     )
     testUserId1 = user1.userId
     const user2 = await account.create(
       testEMail2, testPassword2,
-      testFirstName2, testLastName2
+      testFirstName2, testLastName2,
+      testLanguage
     )
     testUserId2 = user2.userId
     lunchspaceId1 = await lunchspace.create(testLunchspaceName, testLunchspaceSubdomain1)

@@ -11,13 +11,14 @@ const wrongEmail = 'noreply.lunchspace@gmail.com'
 const password = 'password'
 const firstName = 'Jack'
 const lastName = 'Napier'
+const testLanguage = 'de'
 const newPassword = 'newPassword'
 
 describe('change_password', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    const { userId } = await create(email, password, firstName, lastName)
+    const { userId } = await create(email, password, firstName, lastName, testLanguage)
     testUserId = userId
   })
   describe('updatePassword', () => {

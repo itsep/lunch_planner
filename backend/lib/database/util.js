@@ -8,7 +8,7 @@ async function consumeConnection(connPromise, consumer) {
 
 async function clearDatabase(conn, dbSchema, dbName) {
   await conn.query('DROP DATABASE IF EXISTS ??', [dbName])
-  await conn.query('CREATE DATABASE ??', [dbName])
+  await conn.query("CREATE DATABASE ?? CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci'", [dbName])
   await conn.query('USE ??', [dbName])
   await conn.query(dbSchema.toString())
 }
@@ -47,3 +47,4 @@ module.exports = {
   readTestDataDump,
   consumeConnection,
 }
+

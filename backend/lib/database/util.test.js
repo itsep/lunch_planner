@@ -5,15 +5,15 @@ const {
 const { createMockDatabase, dropMockDatabase, getDatabaseName } = require('./mock')
 
 const users = [
-  ['David', 'Nadoba'],
-  ['Sebastian', 'Vogt'],
-  ['Ferhat', 'Ayaydin'],
-  ['Marc', 'Mehrer'],
-  ['Fabian', 'Munzinger'],
+  ['David', 'Nadoba', 'de'],
+  ['Sebastian', 'Vogt', 'de'],
+  ['Ferhat', 'Ayaydin', 'de'],
+  ['Marc', 'Mehrer', 'en'],
+  ['Fabian', 'Munzinger', 'de'],
 ]
 
 async function createUsers() {
-  await pool.query('INSERT INTO user (first_name, last_name) VALUES ?', [users])
+  await pool.query('INSERT INTO user (first_name, last_name, language) VALUES ?', [users])
 }
 
 async function getUserCount() {
@@ -22,7 +22,9 @@ async function getUserCount() {
   return result.count
 }
 
+
 describe('clear database and import test dump', () => {
+  jest.setTimeout(1000 * 10)
   beforeEach(createMockDatabase)
   afterEach(dropMockDatabase)
   it('should drop the database and import the schema', async () => {
@@ -45,6 +47,6 @@ describe('clear database and import test dump', () => {
 
     await clearDatabaseAndImportTestDump(getDatabaseName())
 
-    expect(await getUserCount()).toEqual(8)
+    expect(await getUserCount()).toEqual(13)
   })
 })

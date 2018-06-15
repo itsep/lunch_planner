@@ -1,8 +1,14 @@
 const { createLunchspaceAndJoin, create, connect } = require('../../routes/lunchspace/create_lunchspace')
 const { createMockDatabase, dropMockDatabase } = require('../../lib/database/mock')
 const { mockReq, mockRes } = require('../../lib/express_mock')
-const { pool } = require('../../lib/database')
+const account = require('../../routes/account/register_account')
 const { InputValidationError } = require('../../../shared/lib/error')
+
+const testEmail = 'noreply.lunchspace@gmail.com'
+const testPassword = 'password'
+const testFirstName = 'Max'
+const testLastName = 'Mustermann'
+const testLanguage = 'de'
 
 const testSubdomain1 = 'vsf-experts'
 const testLunchspaceName1 = 'vsf-experts'
@@ -14,21 +20,24 @@ const testSubdomain3 = 'way-too-long-name-for-a-subdomain'
 const testLunchspaceName3 = 'Way too long name for a lunchspace'
 
 let testUserId = 1
-const firstName = 'Max'
-const lastName = 'Mustermann'
 
 const testLunchspaceId = 1
 const testIsAdmin = true
 
 
 describe('create lunchspace', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   // Create a Test User in User to prevent foreign key constraints
   beforeAll(async () => {
-    testUserId = await pool.execute('INSERT INTO user (first_name, last_name)' +
-      'VALUES (?, ?)', [firstName, lastName])
-    testUserId = testUserId[0].insertId
+    const { userId } = await await account.create(
+      testEmail,
+      testPassword,
+      testFirstName,
+      testLastName,
+      testLanguage
+    )
+    testUserId = userId
   })
   describe('create', () => {
     it('should create a new lunchspace in DB and giving back its id', async () => {

@@ -5,6 +5,7 @@ const { InputValidationError } = require('../../../shared/lib/error')
 
 const testEmail1 = 'test-register1@gmail.com'
 const testPassword1 = 'test-register-password1'
+const testLanguage = 'de'
 const testEmail2 = 'test-register2@gmail.com'
 const testPassword2 = 'test-register-password2'
 const testFirstName = 'Max'
@@ -14,7 +15,7 @@ const testLastName2 = 'von und zu Nahasapeemapetilon'
 const testEmail3 = 'max@mustermann@gmail.com'
 
 describe('register accounts', () => {
-  beforeAll(createMockDatabase)
+  beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   describe('create', async () => {
     it('should create a new account in DB, without error', async () => {
@@ -22,14 +23,15 @@ describe('register accounts', () => {
         testEmail1,
         testPassword1,
         testFirstName,
-        testLastName
+        testLastName,
+        testLanguage
       )).resolves.toMatchObject({
         userId: expect.any(Number),
         accountId: expect.any(Number),
       })
     })
     it('should throw an error', async () => {
-      await expect(create(testEmail1, testPassword1, testFirstName, testLastName))
+      await expect(create(testEmail1, testPassword1, testFirstName, testLastName, testLanguage))
         .rejects.toThrowError(InputValidationError)
     })
   })
@@ -40,6 +42,7 @@ describe('register accounts', () => {
         password: testPassword2,
         firstName: testFirstName,
         lastName: testLastName,
+        language: testLanguage,
       },
     }
     it('should register a new account', async () => {
@@ -60,6 +63,7 @@ describe('register accounts', () => {
           password: testPassword2,
           firstName: testFirstName2,
           lastName: testLastName,
+          language: testLanguage,
         },
       })
       const res = mockRes()
@@ -72,6 +76,7 @@ describe('register accounts', () => {
           password: testPassword2,
           firstName: testFirstName,
           lastName: testLastName2,
+          language: testLanguage,
         },
       })
       const res = mockRes()
@@ -84,6 +89,7 @@ describe('register accounts', () => {
           password: testPassword2,
           firstName: testFirstName,
           lastName: testLastName,
+          language: testLanguage,
         },
       })
       const res = mockRes()
