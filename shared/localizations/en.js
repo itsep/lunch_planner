@@ -32,8 +32,8 @@ const content = {
   invalidInvitationLink: 'Invitation link is invalid',
   accept: 'Accept',
   needToLoginForInvite: 'Sign In or Sign Up to accept the invitation',
-  askForPushNotificatoinSubscription: 'Stay up to date, even when your not on the Page.',
-  subscribe: 'Subscribe',
+  askForPushNotificatoinSubscription: 'Do you want notifications from this Lunchspace, even when you are not on this page?',
+  yes: 'No',
   notNow: 'Not now',
 
   createLunchspace: 'Create Lunchspace',
