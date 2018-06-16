@@ -10,6 +10,9 @@ webPush.setVapidDetails(
 )
 
 async function sendWebNotifications(lunchspace, userIds, notification) {
+  if (userIds.length === 0) {
+    return 0
+  }
   const [rawUserSubscriptions] = await pool.query(`SELECT 
 user_id as userId,
 language,
@@ -34,7 +37,6 @@ lunchspace_id = ?`, [userIds, lunchspace.id])
 
   const requests = zip(subscriptions, userLanguages).map(([sub, language]) => {
     const payload = notification.toWebMessagePayload(language)
-    console.log(payload)
     return webPush.sendNotification(sub, payload)
   })
   const results = zip(requests, subscriptions, userIdsForSubscriptions)
@@ -45,7 +47,7 @@ lunchspace_id = ?`, [userIds, lunchspace.id])
       }
       throw error
     }))
-  return Promise.all(results)
+  return Promise.all(results).then(() => results.length)
 }
 
 

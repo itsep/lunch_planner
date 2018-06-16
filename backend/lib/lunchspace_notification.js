@@ -2,9 +2,7 @@ const moment = require('moment')
 const { Notification } = require('./notification/notification')
 
 function someoneElseJoinedMyEvent(lunchspace, location, eventTime, joinedUser, totalUserInEvent) {
-  console.log(eventTime)
   const eventTimeMoment = moment(eventTime, 'HH:mm:ss')
-  console.log(eventTimeMoment)
   const moreUserCount = totalUserInEvent - 2
   const body = (() => {
     switch (totalUserInEvent) {
@@ -39,6 +37,20 @@ function someoneElseJoinedMyEvent(lunchspace, location, eventTime, joinedUser, t
   })
 }
 
+function allLeftMyEvent(lunchspace, location, eventTime) {
+  const eventTimeMoment = moment(eventTime, 'HH:mm:ss')
+  return new Notification({
+    title: 'allLeftMyEventTitle',
+    body: 'allLeftMyEventBody',
+    bodyValues: {
+      locationName: location.name,
+      lunchspaceName: lunchspace.name,
+      eventTime: language => eventTimeMoment.locale(language).format('LT'),
+    },
+  })
+}
+
 module.exports = {
   someoneElseJoinedMyEvent,
+  allLeftMyEvent,
 }

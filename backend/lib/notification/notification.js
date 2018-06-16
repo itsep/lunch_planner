@@ -14,7 +14,9 @@ class Notification {
     return newValues
   }
 
-  constructor({ title, titleValues, body, bodyValues, link }) {
+  constructor({
+    title, titleValues, body, bodyValues, link,
+  }) {
     this.title = title
     this.titleValues = titleValues || {}
     this.body = body
