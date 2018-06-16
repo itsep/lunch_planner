@@ -4,6 +4,7 @@ const { timeForSQL, dateForSQL } = require('../../lib/formatation')
 const { toEventTimeId, toEventDateId } = require('../../../shared/lib/event')
 const { InputValidationError } = require('../../../shared/lib/error')
 const { joinUpAt } = require('../../lib/lunchspace_channels')
+const { sendAllLeftMyEventNotificationIfNeeded } = require('../../lib/send_lunchspace_notification')
 
 async function leaveEvent(userId, locationId, eventTime, eventDate) {
   await pool.execute(
@@ -48,6 +49,7 @@ async function leaveEventRoute(req, res) {
       },
     }
   )
+  sendAllLeftMyEventNotificationIfNeeded(req.lunchspace, locationId, eventDateSQL, eventTimeSQL)
   return res.status(200).json({})
 }
 

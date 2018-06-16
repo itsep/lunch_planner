@@ -9,14 +9,23 @@ webPush.setVapidDetails(
   process.env.VAPID_PRIVATE_KEY
 )
 
-async function sendWebNotifications(userIds, notification) {
+async function sendWebNotifications(lunchspace, userIds, notification) {
+  if (userIds.length === 0) {
+    return 0
+  }
   const [rawUserSubscriptions] = await pool.query(`SELECT 
 user_id as userId,
+language,
 endpoint,
 key_auth as auth,
 key_p256dh as p256dh
-FROM web_notification_subscription WHERE user_id IN (?)`, [userIds])
+FROM web_notification_subscription 
+JOIN user ON user.id = user_id
+WHERE 
+user_id IN (?) AND 
+lunchspace_id = ?`, [userIds, lunchspace.id])
   const userIdsForSubscriptions = rawUserSubscriptions.map(sub => sub.userId)
+  const userLanguages = rawUserSubscriptions.map(user => user.language)
   const subscriptions = rawUserSubscriptions.map(sub => ({
     endpoint: sub.endpoint,
     keys: {
@@ -25,8 +34,11 @@ FROM web_notification_subscription WHERE user_id IN (?)`, [userIds])
     },
   }))
 
-  const payload = notification.toWebMessagePayload()
-  const requests = subscriptions.map(sub => webPush.sendNotification(sub, payload))
+
+  const requests = zip(subscriptions, userLanguages).map(([sub, language]) => {
+    const payload = notification.toWebMessagePayload(language)
+    return webPush.sendNotification(sub, payload)
+  })
   const results = zip(requests, subscriptions, userIdsForSubscriptions)
     .map(([request, userSubscription, userId]) => request.catch((error) => {
       // 404 or 410 indicates that the subscription is no longer valid
@@ -35,7 +47,7 @@ FROM web_notification_subscription WHERE user_id IN (?)`, [userIds])
       }
       throw error
     }))
-  return Promise.all(results)
+  return Promise.all(results).then(() => results.length)
 }
 
 
