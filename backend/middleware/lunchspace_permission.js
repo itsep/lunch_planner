@@ -15,7 +15,7 @@ async function checkLunchspacePermission(token, subdomain) {
   }
   const { userId } = token
   const result = await pool.useConnection(async (conn) => {
-    const [lunchspaces] = await conn.execute('SELECT id as id, name as name FROM lunchspace WHERE subdomain = ?', [subdomain])
+    const [lunchspaces] = await conn.execute('SELECT id, name FROM lunchspace WHERE subdomain = ?', [subdomain])
     if (lunchspaces.length === 0) {
       throw new InputValidationError(
         'subdomain', `Could not find a Lunchspace with subdomain: ${subdomain}`,

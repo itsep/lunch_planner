@@ -18,6 +18,8 @@ app.use('/lunchspace', require('../routes/lunchspace/index').router)
 app.use('/location', require('../routes/location/index').router)
 // eslint-disable-next-line import/newline-after-import
 app.use('/event', require('../routes/event/index').router)
+// eslint-disable-next-line import/newline-after-import
+app.use('/notification', require('../routes/notification/index').router)
 
 app.use(convertRawSQLErrorToLocalizableSQLError)
 app.use(handleError)

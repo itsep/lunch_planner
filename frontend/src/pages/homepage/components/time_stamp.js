@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { toEventDateFromMoment } from 'shared/lib/event'
-import { joinEvent, leaveEvent, openEventDialog } from '../actions'
+import { joinEvent, leaveEvent, openEventDialog, askNicelyForNotificationPermission } from '../actions'
 import Participant from './participant'
 
 function participantFrom(user) {
@@ -42,6 +42,9 @@ const mapDispatchToProps = dispatch => ({
   },
   openEventDialogAction: (locationId, eventTimeId, userId) => {
     dispatch(openEventDialog(locationId, eventTimeId, userId))
+  },
+  askNicelyForNotificationPermissionAction: () => {
+    dispatch(askNicelyForNotificationPermission())
   },
 })
 
@@ -131,7 +134,7 @@ const maxCircleCount = 6
 
 function TimeStamp({
   classes, locationId, timeStamp, participants, addUserAction, deleteUserAction, user, currentDate,
-  openEventDialogAction,
+  openEventDialogAction, askNicelyForNotificationPermissionAction,
 }) {
   const showMoreParticipantsButton = participants.length > maxCircleCount
   const participantToDisplay = showMoreParticipantsButton ?
@@ -152,6 +155,7 @@ function TimeStamp({
               toEventDateFromMoment(currentDate),
               user
             )
+            askNicelyForNotificationPermissionAction()
           } else {
             deleteUserAction(
               timeStamp.id,
@@ -213,6 +217,7 @@ TimeStamp.propTypes = {
   }).isRequired,
   currentDate: PropTypes.object.isRequired,
   openEventDialogAction: PropTypes.func.isRequired,
+  askNicelyForNotificationPermissionAction: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(TimeStamp))

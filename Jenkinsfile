@@ -4,6 +4,9 @@ pipeline {
         CI = 'true'
         JWT_SECRET = 'most_secret_key'
         EMAIL_SERVICE = 'gmail'
+        VAPID_SUBJECT = 'mailto:noreply@ci-lunchspace.de'
+        VAPID_PUBLIC_KEY = 'BMnqNRsHoqleB0GL0_ZPAai0orguCHXuz0ED9Df3IwcIT2rdI0gR0DPgKbFZhrnpg-hrX7PMQRF8QY6D4xex98M'
+        VAPID_PRIVATE_KEY = 'lP6qPJVjkBZKFJOMdcmzUzer8oXzHiSKhsYYC79upIo'
     }
     stages {
         stage('Install, Lint and Test') {
@@ -28,7 +31,7 @@ pipeline {
                             withCredentials([usernamePassword(credentialsId: 'it-sep-ci-mariadb', usernameVariable: 'DATABASE_USERNAME', passwordVariable: 'DATABASE_PASSWORD')]) {
                                 withCredentials([usernamePassword(credentialsId: 'e-mail-access-data', usernameVariable: 'SENDER_EMAIL', passwordVariable: 'EMAIL_PASSWORD')]) {
                                     // available as an env variable, but will be masked if you try to print it out any which way
-                                    sh 'npm run test --prefix=backend -- --runInBand'
+                                    sh 'npm run test --prefix=backend -- --maxWorkers=4'
                                 }
                             }
                         }

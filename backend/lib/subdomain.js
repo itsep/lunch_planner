@@ -8,8 +8,7 @@ function parseSubdomainFromQuery(query) {
 }
 
 function subdomainFromHostOrQuery(headers, query) {
-  return parseSubdomainFromHost(headers.Host || headers.host) ||
-    parseSubdomainFromQuery(query)
+  return parseSubdomainFromQuery(query) || parseSubdomainFromHost(headers.Host || headers.host)
 }
 
 module.exports = {

@@ -10,6 +10,7 @@ const email = 'max.mustermann@gmail.com'
 const password = 'password'
 const firstName = 'Jack'
 const lastName = 'Napier'
+const language = 'de'
 const newFirstName1 = 'Oswald'
 const newLastName1 = 'Cobblepott'
 const newFirstName2 = '           '
@@ -20,7 +21,7 @@ describe('change_name', () => {
   beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    const { userId } = await create(email, password, firstName, lastName)
+    const { userId } = await create(email, password, firstName, lastName, language)
     testUserId = userId
   })
   describe('changeName', () => {

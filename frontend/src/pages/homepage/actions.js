@@ -5,6 +5,7 @@ import actionTypes from './action_types'
 import apiFetch from '../../lib/api_fetch'
 import { logout } from '../../lib/authentication'
 import routeLocations from '../route_locations'
+import NotificationPermissionRequester from '../../lib/serviceworker-registration'
 
 export function addParticipant(eventTime, locationId, participant) {
   return {
@@ -207,4 +208,28 @@ export function previousDay() {
 
 export function resetDateToToday() {
   return changeDate(moment())
+}
+
+export function askNicelyForNotificationPermission() {
+  return {
+    type: actionTypes.ASK_NICELY_FOR_NOTIFICATION_PERMISSION,
+    shoudlAskNicelyForNotificationPermission:
+      NotificationPermissionRequester.shared.shouldAskUserNicely(),
+  }
+}
+
+export function requestNotificationPermission() {
+  NotificationPermissionRequester.shared.requestPermissionAndSubscribe()
+  return {
+    type: actionTypes.REQUEST_NOTIFICATION_PERMISSION,
+    shoudlAskNicelyForNotificationPermission: false,
+  }
+}
+
+export function askLaterForNotificationPermission() {
+  NotificationPermissionRequester.shared.askLaterAgain()
+  return {
+    type: actionTypes.ASK_LATER_FOR_NOTIFICATION_PERMISSION,
+    shoudlAskNicelyForNotificationPermission: false,
+  }
 }

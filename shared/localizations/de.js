@@ -34,6 +34,9 @@ const content = {
   invalidInvitationLink: 'Einladungs Link ist ungültig',
   accept: 'Akzeptieren',
   needToLoginForInvite: 'Melde dich an oder erstelle einen Account um die Einladung an zu nehmen.',
+  askForPushNotificatoinSubscription: 'Möchtest du außerhalb der Seite Benachrichtigungen zu diesem Lunchspace erhalten?',
+  yes: 'Ja',
+  notNow: 'Nicht jetzt',
 
   createLunchspace: 'Lunchspace erstellen',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} erfolgreich erstellt.',
@@ -47,6 +50,16 @@ const content = {
   cancel: 'Abbrechen',
   participants: 'Teilnehmer',
   close: 'Schließen',
+
+  // Notifications
+  // Someone else joined my event
+  someoneElseJoinedMyEventTitle: '{joinedUserFirstName} ist {locationName} um {eventTime} beigetreten',
+  someoneElseJoinedMyEventBody: 'Du und {joinedUserFirstName} {joinedUserLastName} sind um {eventTime} bei {locationName} vom Lunchspace {lunchspaceName} eingetragen.',
+  someoneElseAndOneOtherJoinedMyEventBody: 'Du, {joinedUserFirstName} {joinedUserLastName} und ein weiterer sind um {eventTime} bei {locationName} vom Lunchspace {lunchspaceName} eingetragen.',
+  someoneElseAndMultipleOtherJoinedMyEventBody: 'Du, {joinedUserFirstName} {joinedUserLastName} und {moreUserCount} weitere sind um {eventTime} bei {locationName} vom Lunchspace {lunchspaceName} eingetragen.',
+  // all left my event
+  allLeftMyEventTitle: 'Leider haben sich alle abgemeldet 😢',
+  allLeftMyEventBody: 'Bei {locationName} um {eventTime} haben sich alle vom Lunchspace {lunchspaceName} abgemeldet.',
 }
 module.exports = {
   languageKey,

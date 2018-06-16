@@ -1,10 +1,24 @@
 import withQuery from 'with-query'
 import { parseSubdomainFromHost } from 'shared/lib/subdomain'
-
+import routeLocations from '../pages/route_locations'
+/* eslint-disable no-restricted-globals */
 const applicationDomain = 'mylunch.space'
 
+/**
+ * return the domain without any subdomain
+ * @param hostname
+ * @returns {string} domain
+ */
+function domainFromHost(hostname) {
+  const domainParts = hostname.split('.')
+  if (domainParts <= 2) {
+    return hostname
+  }
+  return `${domainParts[domainParts.length - 1]}.${domainParts[domainParts.length - 1]}`
+}
+
 export function shouldUseDevelopmentSubdomainHandling() {
-  return window.location.hostname !== applicationDomain
+  return domainFromHost(location.hostname) !== applicationDomain
 }
 
 export function domainForLunchspace(subdomain) {
@@ -12,8 +26,10 @@ export function domainForLunchspace(subdomain) {
 }
 
 export function currentLunchspaceSubdomain() {
-  const parsedSubdomain = parseSubdomainFromHost(window.location.hostname) ||
-    new URLSearchParams(window.location.search).get('subdomain')
+  const parsedSubdomain = shouldUseDevelopmentSubdomainHandling() ?
+    new URLSearchParams(location.search).get('subdomain') :
+    parseSubdomainFromHost(location.hostname)
+
   // `www` is never a lunchspace subdomain
   if (parsedSubdomain === 'www') {
     return undefined
@@ -33,4 +49,15 @@ export function withLunchspaceSubdomain(
     return `//${subdomain}.${applicationDomain}${url}`
   }
   return url
+}
+
+/**
+ * @returns {boolean} redirected - if redirect is needed it returns true, otherwise false
+ */
+export function redirectIfNoLunchspaceSelected() {
+  if (!currentLunchspaceSubdomain()) {
+    window.location = routeLocations.LUNCHSPACES
+    return true
+  }
+  return false
 }

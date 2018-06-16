@@ -33,7 +33,32 @@ Object.keys(pages).forEach((pageName) => {
   ]
 }, {})
 
-module.exports = {
+const serviceWorkerWebpackConfig = {
+  entry: {
+    'notification-worker': './src/service_worker/notification-worker.js',
+  },
+  resolve: {
+    alias: {
+      shared: path.resolve(__dirname, '../shared'),
+      lib: path.resolve(__dirname, 'src/lib'),
+    },
+  },
+  module: {
+    rules: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+      },
+    }],
+  },
+  output: {
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+}
+
+const appWebpackConfig = {
   entry: entries,
   resolve: {
     alias: {
@@ -159,3 +184,5 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
 }
+
+module.exports = [appWebpackConfig, serviceWorkerWebpackConfig]
