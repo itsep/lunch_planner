@@ -15,10 +15,10 @@ export function addParticipant(eventTime, locationId, participant) {
   }
 }
 
-export function updateUser(userId) {
+export function updateUser(user) {
   return {
     type: actionTypes.UPDATE_USER,
-    userId,
+    user,
   }
 }
 
