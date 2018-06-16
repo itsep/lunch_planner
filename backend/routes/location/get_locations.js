@@ -6,7 +6,7 @@ async function getLocationsAndParticipants(lunchspaceId, eventDate) {
     // only joins are taking into account which are at the given `eventDate`
     // eslint-disable-next-line no-shadow
     const [locations] = await conn.execute(`SELECT id, name, coordinates FROM location
-LEFT JOIN join_up_at ON join_up_at.location_id = location.id AND event_date = ? AND event_time >= NOW()
+LEFT JOIN join_up_at ON join_up_at.location_id = location.id AND event_date = ?
 WHERE lunchspace_id = ?
 GROUP BY location.id
 ORDER BY COUNT(join_up_at.user_id) DESC`, [eventDate, lunchspaceId])

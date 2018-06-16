@@ -4,6 +4,7 @@ const { timeForSQL, dateForSQL } = require('../../lib/formatation')
 const { toEventTimeId, toEventDateId } = require('../../../shared/lib/event')
 const { InputValidationError } = require('../../../shared/lib/error')
 const { joinUpAt } = require('../../lib/lunchspace_channels')
+const { sendSomeoneElseJoinedMyEventNotification } = require('../../lib/send_lunchspace_notification')
 
 async function joinEvent(userId, locationId, eventTime, eventDate) {
   await pool.execute('INSERT INTO join_up_at (user_id, location_id, event_time, event_date) ' +
@@ -30,22 +31,31 @@ async function joinEventRoute(req, res) {
   await joinEvent(userId, locationId, eventTimeSQL, eventDateSQL)
 
   const { id: lunchspaceId } = req.lunchspace
-  const { firstName, lastName, imageUrl } = await req.userPromise
-  req.publishClient.publish(
-    joinUpAt(lunchspaceId, locationId, toEventDateId(eventDate), toEventTimeId(eventTime)),
-    {
-      action: 'joinEvent',
+  req.userPromise.then((user) => {
+    const { firstName, lastName, imageUrl } = user
+    req.publishClient.publish(
+      joinUpAt(lunchspaceId, locationId, toEventDateId(eventDate), toEventTimeId(eventTime)),
+      {
+        action: 'joinEvent',
+        locationId,
+        eventDate,
+        eventTime,
+        participant: {
+          userId,
+          firstName,
+          lastName,
+          imageUrl,
+        },
+      }
+    )
+    sendSomeoneElseJoinedMyEventNotification(
+      req.lunchspace,
       locationId,
-      eventDate,
-      eventTime,
-      participant: {
-        userId,
-        firstName,
-        lastName,
-        imageUrl,
-      },
-    }
-  )
+      eventDateSQL,
+      eventTimeSQL,
+      user
+    )
+  })
   return res.status(200).json({})
 }
 
