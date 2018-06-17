@@ -23,7 +23,7 @@ async function getToken(email, lunchspaceId) {
 }
 
 async function inviteLunchspaceRoute(req, res) {
-  const { firstName, lastName } = await req.userPromise
+  const { firstName, lastName, language } = await req.userPromise
   const { id: lunchspaceId, name: lunchspaceName } = req.lunchspace
   const { receivers } = req.body
   await asyncForEach(receivers, async (receiverMail) => {
@@ -33,8 +33,9 @@ async function inviteLunchspaceRoute(req, res) {
         'invalidEmail', { receiverMail },
       )
     }
-    const token = await getToken(receiverMail, lunchspaceId)
-    const mail = buildInvitation(receiverMail, token, lastName, firstName, lunchspaceName)
+    const token = getToken(receiverMail, lunchspaceId)
+    const mail =
+      await buildInvitation(receiverMail, token, language, lastName, firstName, lunchspaceName)
     sendEMail(mail)
   })
   return res.status(200).json({})
