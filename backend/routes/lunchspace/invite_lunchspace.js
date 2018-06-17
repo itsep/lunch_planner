@@ -33,7 +33,7 @@ async function inviteLunchspaceRoute(req, res) {
         'invalidEmail', { receiverMail },
       )
     }
-    const token = getToken(receiverMail, lunchspaceId)
+    const token = await getToken(receiverMail, lunchspaceId)
     const mail =
       await buildInvitation(receiverMail, token, language, lastName, firstName, lunchspaceName)
     sendEMail(mail)
