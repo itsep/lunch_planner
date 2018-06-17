@@ -3,7 +3,7 @@ Voraussetzung: Ubuntu 16.04 + Zugriff per ssh
 
 ## 1. Ubuntu Konfigurieren
 #### Benutzer erstellen
-Als erstes müssen wir einen neuen Benutzer mit dem Namen `lunchspace` erstellet werden:
+Als Erstes muss ein neuer Benutzer mit dem Namen `lunchspace` erstellet werden:
 
 ```shell
 adduser lunchspace
@@ -25,10 +25,10 @@ mkdir ~/.ssh
 chmod 700 ~/.ssh
 nano ~/.ssh/authorized_keys
 ```
-Kopiere den RSA public key und füge es in den Editor ein.
-Danach mit CTRL-X um den Editor zu verlassen, mit y das Speichern bestätigen und mit Enter den Namen bestätigen.
+Kopiere den RSA public key und füge ihn in den Editor ein.
+Danach mit CTRL-X, um den Editor zu verlassen, mit y das Speichern bestätigen und mit Enter den Namen bestätigen.
 
-Danach die Berechtigungen Beschränken.
+Danach die Berechtigungen beschränken.
 
 ```shell
 chmod 600 ~/.ssh/authorized_keys
@@ -45,14 +45,14 @@ exit
 sudo nano /etc/ssh/sshd_config
 ```
 
-Suche nach folgenden Einträge und änder Sie wie folgt ab:
+Suche nach folgenden Einträgen und änder sie wie folgt ab:
 
 ```shell
 PubkeyAuthentication yes
 ChallengeResponseAuthentication no
 PasswordAuthentication no
 ```
-Danach mit CTRL-X um den Editor zu verlassen, mit y das Speichern bestätigen und mit Enter den Namen bestätigen.
+Danach mit CTRL-X, um den Editor zu verlassen, mit y das Speichern bestätigen und mit Enter den Namen bestätigen.
 
 Lade die Konfiguration neu:
 
@@ -87,7 +87,7 @@ Firewall einschalten
 sudo ufw enable
 ```
 
-## Software Abhängigkeiten installieren
+## Software-Abhängigkeiten installieren
 
 ```shell
 sudo apt update
@@ -122,7 +122,7 @@ MariaDB
 sudo apt-get install mariadb-server mariadb-client
 ```
 
-Neuer User erstellen. Mit `sudo mysql` eine Verbindung zum MariaDB Server herstellen und dann die folgende Query ausführeren, nachdem `<enter username here>` und `<enter password here>` durch die richtigen werden ersetzt wurden.
+Neuen User erstellen. Mit `sudo mysql` eine Verbindung zum MariaDB-Server herstellen und dann die folgende Query ausführeren, nachdem `<enter username here>` und `<enter password here>` durch die richtigen ersetzt wurden.
 
 ```sql
 CREATE USER '<enter username here>'@'localhost' IDENTIFIED BY '<enter password here>';
@@ -135,12 +135,12 @@ FLUSH PRIVILEGES;
 sudo apt-get update
 sudo apt-get install nginx
 ```
-Gebe deinem User Rechte um auf den Ordner `/var/wwww` zu zugreifen :
+Gib deinem User Rechte, um auf den Ordner `/var/wwww` zugreifen:
 
 ```shell
 sudo chown <your user name> /var/www
 ```
-Lade die Konfigurationsdateien die im Repository unter `/nginx` liegen auf den Server unter `/etc/nginx` hoch und lade die Konfiguration neu:
+Lade die Konfigurationsdateien, die im Repository unter `/nginx` liegen, auf den Server unter `/etc/nginx` hoch und lade die Konfiguration neu:
 
 ```
 sudo /etc/init.d/nginx reload
@@ -157,7 +157,7 @@ sudo apt-get update
 sudo apt-get install python-certbot-nginx 
 ```
 
-Erstelle eine neues SSL Zertifikat
+Erstelle ein neues SSL-Zertifikat
 
 ```shell
 sudo certbot certonly -d mylunch.space,'*.mylunch.space' --server https://acme-v02.api.letsencrypt.org/directory --manual --preferred-challenges dns 
@@ -174,7 +174,7 @@ sudo apt-get install openjdk-8-jdk
 sudo apt-get install jenkins
 ```
 
-Um Jenkins zu konfigurieren benötigen wir das Initiale Passwort:
+Um Jenkins zu konfigurieren, benötigen wir das initiale Passwort:
 
 ```shell
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
@@ -194,13 +194,13 @@ git clone https://github.com/itsep/lunch_planner.git
 cd lunch_planner
 ```
 
-Datenbank Schema importieren mit Test Daten
+Datenbank-Schema importieren mit Test-Daten
 
 ```
 npm run clear-database --prefix=backend
 ```
 
-Neuste Version Downloaden und starten
+Neuste Version downloaden und starten
 
 ```
 sh deploy.sh
