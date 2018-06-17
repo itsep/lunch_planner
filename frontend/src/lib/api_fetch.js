@@ -36,5 +36,5 @@ export default function apiFetch(url, config = {}) {
     .catch(errorObject => reject(toLocalizableError(errorObject)))
     // catch authentication errors and redirect to login if needed
     .catch(catchAuthenticationErrorAndRedirect.bind(null, redirectToLoginCallback))
-    .cathc(catchAuthorizationErrorAndRedirect.bind(null, redirectToLoginCallback))
+    .catch(catchAuthorizationErrorAndRedirect.bind(null, redirectToLoginCallback))
 }
