@@ -1,4 +1,5 @@
 import withQuery from 'with-query'
+import { toEventDate, toEventDateId } from 'shared/lib/event'
 import moment from '../../lib/localized_moment'
 import { currentLunchspaceSubdomain } from '../../lib/lunchspace_subdomain'
 import actionTypes from './action_types'
@@ -123,9 +124,11 @@ export function receivePageData(data) {
 gets data of backend and change state with dispatch
  */
 export function fetchPageData(date) {
+  window.d = date
+  console.log(date)
   return (dispatch) => {
     dispatch(requestPageData())
-    return apiFetch(withQuery('/api/location/', { date: date.toISOString().substring(0, 10) }))
+    return apiFetch(withQuery('/api/location/', { date: toEventDateId(toEventDate(date.toDate())) }))
       .then(({ data }) => {
         dispatch(setLunchspaces(data.lunchspaces))
         dispatch(receivePageData(data))
