@@ -9,12 +9,12 @@ const applicationDomain = 'mylunch.space'
  * @param hostname
  * @returns {string} domain
  */
-function domainFromHost(hostname) {
+export function domainFromHost(hostname) {
   const domainParts = hostname.split('.')
-  if (domainParts <= 2) {
+  if (domainParts.length <= 2) {
     return hostname
   }
-  return `${domainParts[domainParts.length - 1]}.${domainParts[domainParts.length - 1]}`
+  return `${domainParts[domainParts.length - 2]}.${domainParts[domainParts.length - 1]}`
 }
 
 export function shouldUseDevelopmentSubdomainHandling() {
