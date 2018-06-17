@@ -9,6 +9,7 @@ const content = {
   unknownError: 'Ein unbekannter Fehler ist aufgetreten. Bitte versuche es später erneut.',
   unknownErrorWithMessage: 'Ein unerwartet Fehler ist aufgetrete: {message}',
   needsUserConfirmation: 'Bitte bestätigen sie diese Aktion.',
+  invalidFileFormat: 'Das Format deiner Datei wird nicht unterstützt. Bitte lade ein .jpeg oder .png Datei hoch.',
 
   passwordAndEmailDoesNotMatch: 'Passwort und Email {email} stimmen nicht überein.',
   illegalInput: 'Upps, es ist ein Fehler aufgetreten. Bitte versuche es erneut.',
@@ -23,6 +24,7 @@ const content = {
   lunchspaceDoesNotExist: 'Der angeforderte Lunchspace existiert nicht.',
   emailAlreadyRegistered: 'Ein Account mit der Email {email} existiert bereits.',
   userAlreadyMember: 'Du bist bereits Mitglied in diesem Lunchspace.',
+
 
   joinLunchspaceTitle: 'Lunchspace beitreten',
   joinLunchspace: 'Du wurdest zum {lunchspaceName} eingeladen!',

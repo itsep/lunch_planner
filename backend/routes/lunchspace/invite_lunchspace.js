@@ -24,9 +24,8 @@ async function getToken(email, lunchspaceId) {
 
 async function inviteLunchspaceRoute(req, res) {
   const { firstName, lastName } = await req.userPromise
-  const { id: lunchspaceId } = req.lunchspace
+  const { id: lunchspaceId, name: lunchspaceName } = req.lunchspace
   const { receivers } = req.body
-  const { name: lunchspaceName } = req.lunchspace
   await asyncForEach(receivers, async (receiverMail) => {
     if (!validEmail(receiverMail)) {
       throw new InputValidationError(

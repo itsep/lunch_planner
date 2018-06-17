@@ -6,6 +6,7 @@ const homepageActionTypes = {
   // USER
   ADD_PARTICIPANT: Symbol('homepage/ADD_PARTICIPANT'),
   REMOVE_PARTICIPANT: Symbol('homepage/REMOVE_PARTICIPANT'),
+  UPDATE_USER: Symbol('homepage/UPDATE_USER'),
 
   // LOCATION
   ADD_LOCATION: Symbol('homepage/ADD_LOCATION'),

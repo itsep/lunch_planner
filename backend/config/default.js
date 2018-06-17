@@ -12,6 +12,7 @@ module.exports = {
     isProbablyAuthenticatedCookieName: 'authenticated',
   },
   host: 'http://localhost:8080',
+  picturePath: 'C:\\Users\\marcm\\OneDrive\\Desktop\\data\\',
   database: {
     name: 'lunch_planner',
   },

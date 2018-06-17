@@ -17,6 +17,13 @@ export function addParticipant(eventTime, locationId, participant) {
   }
 }
 
+export function updateUser(user) {
+  return {
+    type: actionTypes.UPDATE_USER,
+    user,
+  }
+}
+
 export function setLunchspaces(lunchspaces) {
   return {
     type: actionTypes.SET_LUNCHSPACES,
