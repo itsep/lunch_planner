@@ -1,6 +1,5 @@
 const { localizedStrings } = require('../localized_strings')
 const config = require('config')
-const { pool } = require('../database')
 
 const sender = 'noreply.lunchspace@gmail.com'
 const host = config.get('host')
