@@ -7,7 +7,7 @@ async function asyncGetUser(req) {
     throw new AuthenticationError('No token in request. The authentication middleware must be before the getUser middleware.')
   }
   const { userId } = req.token
-  req.userPromise = pool.execute(`SELECT user.id, first_name as firstName, last_name as lastName, image_url as imageUrl, email 
+  req.userPromise = pool.execute(`SELECT user.id, first_name as firstName, last_name as lastName, image_url as imageUrl, email, language 
 FROM user
 LEFT JOIN account ON account.user_id = user.id
 WHERE user.id = ?`, [userId])

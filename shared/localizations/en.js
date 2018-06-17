@@ -36,6 +36,10 @@ const content = {
   askForPushNotificatoinSubscription: 'Do you want notifications from this Lunchspace, even when you are not on this page?',
   yes: 'Yes',
   notNow: 'Not now',
+  InvitationSubject: 'Invitation to Lunchspace',
+  InvitationTitle: 'You have been invited!',
+  InvitationPart1: ' has invited you to join ',
+  InvitationPart2: '. Click on this link to join:',
 
   createLunchspace: 'Create Lunchspace',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} successfull created.',
