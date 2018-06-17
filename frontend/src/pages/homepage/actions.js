@@ -124,8 +124,6 @@ export function receivePageData(data) {
 gets data of backend and change state with dispatch
  */
 export function fetchPageData(date) {
-  window.d = date
-  console.log(date)
   return (dispatch) => {
     dispatch(requestPageData())
     return apiFetch(withQuery('/api/location/', { date: toEventDateId(toEventDate(date.toDate())) }))
