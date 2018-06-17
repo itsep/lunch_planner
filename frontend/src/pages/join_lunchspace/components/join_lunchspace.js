@@ -14,9 +14,9 @@ import PropTypes from 'prop-types'
 import localizedStrings from '../../../lib/localization'
 import apiFetch from '../../../lib/api_fetch'
 import UnauthorizedHeaderBar from '../../../components/unauthorized_header_bar'
-import routeLocations from '../../route_locations'
+import routeLocations, { redirect } from '../../route_locations'
 import { withLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
-import { isDefinitelyNotAuthenticated } from '../../../lib/authentication'
+import { isDefinitelyNotAuthenticated, makeLogout } from '../../../lib/authentication'
 
 const styles = theme => ({
   loadingWrapper: {
@@ -55,7 +55,7 @@ const styles = theme => ({
 
 class JoinLunchspace extends Component {
   static redirectToLogin() {
-    window.location = redirectTo(routeLocations.LOGIN)
+    redirect(redirectTo(routeLocations.LOGIN))
   }
 
   constructor(props) {
@@ -81,6 +81,7 @@ class JoinLunchspace extends Component {
     this.setState({ isLoading: true }) // eslint-disable-line react/no-did-mount-set-state
     apiFetch(apiUrlString, {
       method: 'GET',
+      redirectToLogin: JoinLunchspace.redirectToLogin,
     }).then(({ data }) => {
       if (data) {
         this.setState({
@@ -114,6 +115,7 @@ class JoinLunchspace extends Component {
       body: {
         wantsToJoin: true,
       },
+      redirectToLogin: JoinLunchspace.redirectToLogin,
     }).then(() => {
       window.location = withLunchspaceSubdomain(
         routeLocations.HOMEPAGE,
@@ -132,11 +134,7 @@ class JoinLunchspace extends Component {
       user: null,
       isLoading: true,
     })
-    apiFetch('/api/account/logout', {
-      method: 'POST',
-    }).finally(() => {
-      JoinLunchspace.redirectToLogin()
-    })
+    makeLogout(JoinLunchspace.redirectToLogin)()
   }
 
   isTokenInvalid() {
