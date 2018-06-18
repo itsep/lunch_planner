@@ -11,6 +11,7 @@ import localizedStrings from '../lib/localization'
 import { logout } from '../lib/authentication'
 import routeLocations from '../pages/route_locations'
 import HeaderBar from './header_bar'
+import { leave } from '../lib/leave_lunchspace'
 
 const styles = theme => ({
   title: {
@@ -75,6 +76,9 @@ class AuthorizedHeaderBar extends React.Component {
         >
           <MenuItem component="a" href={routeLocations.LUNCHSPACES}>
             {localizedStrings.myLunchspaces}
+          </MenuItem>
+          <MenuItem onClick={leave}>
+            {localizedStrings.leaveLunchspace}
           </MenuItem>
           <MenuItem onClick={onLogout}>
             {localizedStrings.logout}
