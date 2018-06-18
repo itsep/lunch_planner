@@ -39,7 +39,7 @@ async function uploadProfilePicture(req, res) {
 
   sharp.cache(false)
 
-  await sharp(req.file.path).resize(256, 256).toFile(path)
+  await sharp(req.file.path).rotate().resize(256, 256).toFile(path)
 
   await saveURL(userId, url)
 

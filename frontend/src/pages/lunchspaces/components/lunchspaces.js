@@ -7,7 +7,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import SettingsIcon from '@material-ui/icons/Settings'
+import TripleDot from '@material-ui/icons/MoreVert'
 import Fade from '@material-ui/core/Fade'
 import Collapse from '@material-ui/core/Collapse'
 import Button from '@material-ui/core/Button'
@@ -122,13 +122,11 @@ class Lunchspaces extends React.Component {
                       primary={lunchspace.name}
                       secondary={domainForLunchspace(lunchspace.subdomain)}
                     />
-                    {lunchspace.isAdmin &&
-                      <ListItemSecondaryAction>
-                        <IconButton aria-label="Comments">
-                          <SettingsIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    }
+                    <ListItemSecondaryAction>
+                      <IconButton aria-label="Comments">
+                        <TripleDot />
+                      </IconButton>
+                    </ListItemSecondaryAction>
                   </ListItem>
                 ))}
               </List>

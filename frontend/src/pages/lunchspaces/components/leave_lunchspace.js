@@ -1,5 +1,5 @@
-import apiFetch from './api_fetch'
-import routeLocations, { redirect } from '../pages/route_locations'
+import apiFetch from '../../../lib/api_fetch'
+import routeLocations, { redirect } from '../../route_locations'
 
 export function redirectToLunchspaces() {
   redirect(routeLocations.LUNCHSPACES)

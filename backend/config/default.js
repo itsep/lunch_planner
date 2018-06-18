@@ -12,7 +12,7 @@ module.exports = {
     isProbablyAuthenticatedCookieName: 'authenticated',
   },
   host: 'http://localhost:8080',
-  picturePath: '../images',
+  picturePath: './images',
   database: {
     name: 'lunch_planner',
   },
