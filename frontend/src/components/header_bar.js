@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import { headerBarClassName } from '../lib/ios_native'
 import logo from '../assets/logo/logo-with-burger.svg'
+import routeLocations from '../pages/route_locations'
 
 const styles = theme => ({
   toolbar: {
@@ -33,7 +34,9 @@ function UnauthorizedHeaderBar({ classes, title, children }) {
       className={headerBarClassName}
     >
       <Toolbar className={classes.toolbar}>
-        <img src={logo} className={classes.logo} alt="" />
+        <a href={routeLocations.HOMEPAGE}>
+          <img src={logo} className={classes.logo} alt="" />
+        </a>
         {children}
       </Toolbar>
     </AppBar>
