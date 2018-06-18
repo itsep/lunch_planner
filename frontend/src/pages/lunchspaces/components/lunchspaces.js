@@ -17,8 +17,15 @@ import apiFetch from '../../../lib/api_fetch'
 import localizedStrings from '../../../lib/localization'
 import { currentLunchspaceSubdomain, domainForLunchspace, withLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
 import routeLocations from '../../route_locations'
+import eating from '../../../assets/illustrations/eating.svg'
 
 const styles = theme => ({
+  rootContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100%',
+    flex: 1,
+  },
   root: {
     display: 'flex',
     justifyContent: 'center',
@@ -38,7 +45,7 @@ const styles = theme => ({
   },
   list: {
     // take the addLunchspaceButton into account
-    marginBottom: (theme.spacing.unit * 2) + 56 + (theme.spacing.unit),
+    marginBottom: theme.spacing * 4,
   },
   errorMessage: {
     padding: theme.spacing.unit,
@@ -47,6 +54,15 @@ const styles = theme => ({
     position: 'fixed',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
+  },
+  placeholder: {
+    flex: 1,
+  },
+  eating: {
+    display: 'block',
+    maxWidth: '50vmax',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
 })
 
@@ -92,7 +108,7 @@ class Lunchspaces extends React.Component {
       lastError,
     } = this.state
     return (
-      <div>
+      <div className={classes.rootContainer}>
         <AuthorizedHeaderBar title={localizedStrings.myLunchspaces} user={user} />
         <div className={classes.root}>
           <div className={classes.container}>
@@ -135,6 +151,8 @@ class Lunchspaces extends React.Component {
             </Fade>
           </div>
         </div>
+        <div className={classes.placeholder} />
+        <img src={eating} className={classes.eating} alt="" />
         <Button
           href={routeLocations.CREATE_LUNCHSPACE}
           variant="fab"
