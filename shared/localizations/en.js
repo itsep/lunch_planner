@@ -41,11 +41,25 @@ const content = {
   InvitationPart1: ' has invited you to join ',
   InvitationPart2: '. Click on this link to join:',
 
+  newPicture: 'New picture',
+  noPictureSelected: 'No picture selected',
+
   createLunchspace: 'Create Lunchspace',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} successfull created.',
   createLocation: 'Create Location',
+
+  successfullyChangedName: 'Succesfully changed name.',
+  successfullyChangedPassword: 'Succesfully changed password.',
+  successfullyChangedPicture: 'Succesfully changed picture.',
+
   invite: 'Invite',
+  email: 'Email',
+  password: 'Password',
+  name: 'Name',
+  change: 'change',
+  changePassword: 'change password',
   delete: 'Delete',
+  profile: 'Profile',
   login: 'Login',
   logout: 'Logout',
   today: 'Today',
