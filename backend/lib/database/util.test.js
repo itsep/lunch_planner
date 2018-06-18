@@ -47,6 +47,6 @@ describe('clear database and import test dump', () => {
 
     await clearDatabaseAndImportTestDump(getDatabaseName())
 
-    expect(await getUserCount()).toEqual(13)
+    expect(await getUserCount()).toEqual(12)
   })
 })
