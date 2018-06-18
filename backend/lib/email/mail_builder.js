@@ -1,4 +1,4 @@
-// import localizedStrings from '../../../localization'
+const { localizedStrings } = require('../localized_strings')
 const config = require('config')
 
 const sender = 'noreply.lunchspace@gmail.com'
@@ -9,14 +9,15 @@ function makeLink(token) {
   return link
 }
 
-function buildInvitation(receiver, token, lastName, firstName, lunchspaceName) {
+function buildInvitation(receiver, token, language, lastName, firstName, lunchspaceName) {
   const link = makeLink(token)
   const mail = {
     from: sender,
     to: receiver,
-    subject: 'Invitation to Lunchspace',
-    html: `<h1>You have been invited!</h1>
-<p>${firstName} ${lastName} has invited you to join "${lunchspaceName}". Click on this link to join:</p>
+    subject: localizedStrings.getString('InvitationSubject', language),
+    html: `<h1>${localizedStrings.getString('InvitationTitle', language)}</h1>
+<p>${firstName} ${lastName}${localizedStrings.getString('InvitationPart1', language)}
+"${lunchspaceName}"${localizedStrings.getString('InvitationPart2', language)}</p>
 <a href="${link}">${link}</a>`,
   }
   return mail

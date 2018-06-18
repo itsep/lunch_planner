@@ -4,6 +4,9 @@ pipeline {
         CI = 'true'
         JWT_SECRET = 'most_secret_key'
         EMAIL_SERVICE = 'gmail'
+        VAPID_SUBJECT = 'mailto:noreply@ci-lunchspace.de'
+        VAPID_PUBLIC_KEY = 'BMnqNRsHoqleB0GL0_ZPAai0orguCHXuz0ED9Df3IwcIT2rdI0gR0DPgKbFZhrnpg-hrX7PMQRF8QY6D4xex98M'
+        VAPID_PRIVATE_KEY = 'lP6qPJVjkBZKFJOMdcmzUzer8oXzHiSKhsYYC79upIo'
     }
     stages {
         stage('Install, Lint and Test') {

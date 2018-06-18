@@ -47,6 +47,7 @@ describe('create lunchspace', () => {
         userPromise: Promise.resolve({
           firstName,
           lastName,
+          language: testLanguage,
         }),
         lunchspace: {
           id: testLunchspaceId,
@@ -65,6 +66,7 @@ describe('create lunchspace', () => {
         userPromise: Promise.resolve({
           firstName,
           lastName,
+          language: testLanguage,
         }),
         lunchspace: {
           id: testLunchspaceId,
@@ -83,6 +85,7 @@ describe('create lunchspace', () => {
         userPromise: Promise.resolve({
           firstName,
           lastName,
+          language: testLanguage,
         }),
         lunchspace: {
           id: testLunchspaceId,

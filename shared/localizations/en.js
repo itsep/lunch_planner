@@ -34,8 +34,12 @@ const content = {
   accept: 'Accept',
   needToLoginForInvite: 'Sign In or Sign Up to accept the invitation',
   askForPushNotificatoinSubscription: 'Do you want notifications from this Lunchspace, even when you are not on this page?',
-  yes: 'No',
+  yes: 'Yes',
   notNow: 'Not now',
+  InvitationSubject: 'Invitation to Lunchspace',
+  InvitationTitle: 'You have been invited!',
+  InvitationPart1: ' has invited you to join ',
+  InvitationPart2: '. Click on this link to join:',
 
   newPicture: 'New picture',
 
@@ -62,6 +66,16 @@ const content = {
   cancel: 'Cancel',
   participants: 'Participants',
   close: 'Close',
+
+  // Notifications
+  // Someone else joined my event
+  someoneElseJoinedMyEventTitle: '{joinedUserFirstName} joined {locationName} at {eventTime}',
+  someoneElseJoinedMyEventBody: 'You and {joinedUserFirstName} {joinedUserLastName} joined {locationName} at {eventTime} from Lunchspace {lunchspaceName}.',
+  someoneElseAndOneOtherJoinedMyEventBody: 'You, {joinedUserFirstName} {joinedUserLastName} and one more joined {locationName} at {eventTime} from Lunchspace {lunchspaceName}.',
+  someoneElseAndMultipleOtherJoinedMyEventBody: 'You, {joinedUserFirstName} {joinedUserLastName} and {moreUserCount} more joined {locationName} at {eventTime} from Lunchspace {lunchspaceName}.',
+  // all left my event
+  allLeftMyEventTitle: 'Sorry, but all have left 😢',
+  allLeftMyEventBody: 'All from Lunchspace {lunchspaceName} have left {locationName} at {eventTime}.',
 }
 module.exports = {
   languageKey,

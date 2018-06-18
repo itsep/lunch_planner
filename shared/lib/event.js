@@ -5,7 +5,7 @@ function toTwoDigitString(number) {
 function toEventTimeId(eventTime) {
   const second = '00'
   const minute = toTwoDigitString(eventTime.minute)
-  const hour = toTwoDigitString(eventTime.hour)
+  const { hour } = eventTime
   return `${hour}:${minute}:${second}`
 }
 

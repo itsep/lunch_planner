@@ -1,7 +1,7 @@
 const { sendWebNotifications } = require('./send_web_push')
 
-async function sendNotificationToUsers(userIds, notification) {
-  await sendWebNotifications(userIds, notification)
+async function sendNotificationToUsers(lunchspace, userIds, notification) {
+  await sendWebNotifications(lunchspace, userIds, notification)
 }
 
 module.exports = {
