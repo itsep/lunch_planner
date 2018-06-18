@@ -64,10 +64,10 @@ class LocationList extends Component {
         />
         <div className={classes.locationList}>
           {locationsInLunchspace.map((locationId => (
-              <LocationItem
-                key={locationId}
-                id={locationId}
-              />
+            <LocationItem
+              key={locationId}
+              id={locationId}
+            />
            )))}
           <div>
             <div className={classes.createButtonBox}>
@@ -86,6 +86,7 @@ class LocationList extends Component {
           <div>
             <img
               src={food}
+              alt=""
               className={classes.foodImage}
             />
           </div>
