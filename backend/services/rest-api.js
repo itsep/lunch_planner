@@ -7,7 +7,7 @@ const { convertRawSQLErrorToLocalizableSQLError, handleError } = require('../mid
 
 const app = express()
 
-app.use('/images', express.static('images'))
+app.use('/images', express.static('./images'))
 app.use(cookieParser())
 app.use(createPublishClientMiddleware())
 // eslint-disable-next-line import/newline-after-import
