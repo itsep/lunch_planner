@@ -187,11 +187,11 @@ UNLOCK TABLES;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'David','Nadoba','de','https://pbs.twimg.com/profile_images/845411989589504000/af0aKVig_400x400.jpg');
-INSERT INTO `user` VALUES (2,'Sebastian','Vogt','de','https://avatars2.githubusercontent.com/u/26856272?s=400&v=4');
-INSERT INTO `user` VALUES (3,'Ferhat','Ayaydin','de','https://avatars3.githubusercontent.com/u/24521977?s=400&v=4');
-INSERT INTO `user` VALUES (4,'Marc','Mehrer','de','https://avatars2.githubusercontent.com/u/26874205?s=400&v=4');
-INSERT INTO `user` VALUES (5,'Fabian','Munzinger','de','https://avatars2.githubusercontent.com/u/22883071?s=400&v=4');
+INSERT INTO `user` VALUES (1,'David','Nadoba','de','/api/images/fa49193f-8c80-4163-add4-e7e4b333c7dd.png');
+INSERT INTO `user` VALUES (2,'Sebastian','Vogt','de','/api/images/2230a0c4-a6b6-4ef6-b7b9-57cca6e64464.png');
+INSERT INTO `user` VALUES (3,'Ferhat','Ayaydin','de','/api/images/ce50e50f-78ac-42d4-a907-02cfe5a86e4c.png');
+INSERT INTO `user` VALUES (4,'Marc','Mehrer','de','/api/images/e739492f-6a6d-4798-8fab-35189d41f147.png');
+INSERT INTO `user` VALUES (5,'Fabian','Munzinger','de','/api/images/bc188c6d-3c98-404b-83e8-84b943da03d5.png');
 INSERT INTO `user` VALUES (6,'Jacob','Brewer','en-US','/api/images/599b0a6a-2ae9-4531-946f-c03240a6df7f.png');
 INSERT INTO `user` VALUES (7,'Drew','Grey','en-US','/api/images/c5f839d4-d521-48b5-9489-c586bab25398.png');
 INSERT INTO `user` VALUES (8,'Arnold','Parry','en-US','/api/images/92dc07e6-a6c4-4944-88e4-54c8802ccd40.png');
