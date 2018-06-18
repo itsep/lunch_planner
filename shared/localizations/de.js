@@ -38,8 +38,11 @@ const content = {
   yes: 'Ja',
   notNow: 'Nicht jetzt',
 
-  successfullyChangedName: 'Erfolgreich Namen geändert.',
-  successfullyChangedPassword: 'Erfolgreich Password geändert.',
+  successfullyChangedName: 'Erfolgreich deinen Namen geändert.',
+  successfullyChangedPassword: 'Erfolgreich dein Password geändert.',
+  successfullyChangedPicture: 'Erfolgreich dein Bild geändert.',
+
+  newPicture: 'Neues Bild',
 
   createLunchspace: 'Lunchspace erstellen',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} erfolgreich erstellt.',

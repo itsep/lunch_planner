@@ -37,12 +37,15 @@ const content = {
   yes: 'No',
   notNow: 'Not now',
 
+  newPicture: 'New picture',
+
   createLunchspace: 'Create Lunchspace',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} successfull created.',
   createLocation: 'Create Location',
 
   successfullyChangedName: 'Succesfully changed name.',
   successfullyChangedPassword: 'Succesfully changed password.',
+  successfullyChangedPicture: 'Succesfully changed picture.',
 
   invite: 'Invite',
   email: 'Email',

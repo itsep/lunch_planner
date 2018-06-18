@@ -23,6 +23,7 @@ function getPathFromUrl(url) {
 
 async function uploadProfilePicture(req, res) {
   const { userId } = req.token
+  console.log(req.body)
   const user = await req.userPromise
   const name = uuidv4()
   const path = `./images/${name}.png`

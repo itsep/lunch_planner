@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Create from '@material-ui/icons/Create'
 import Cancel from '@material-ui/icons/Cancel'
+import CloudUpload from '@material-ui/icons/CloudUpload'
 import Done from '@material-ui/icons/Done'
 import Grid from '@material-ui/core/Grid'
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator'
@@ -16,6 +17,7 @@ import apiFetch from 'lib/api_fetch'
 import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
 import localizedStrings from '../../../lib/localization'
 import UserAvatar from '../../../components/user_avatar'
+import routeLocations from '../../route_locations'
 
 const styles = theme => ({
   profile: {
@@ -26,14 +28,39 @@ const styles = theme => ({
     minWidth: '375px',
     maxWidth: '800px',
   },
+  label: {
+    color: theme.palette.primary,
+  },
+  uploadButton: {
+    color: theme.palette.primary,
+  },
   form: {
     display: 'flex',
+  },
+  uploadContainer: {
+    display: 'flex',
+    justifyContent: 'center',
   },
   avatar: {
     width: '128px',
     height: '128px',
     margin: '16px auto',
     fontSize: '4em',
+    '&:hover': {
+      WebkitFilter: 'grayscale(100%)',
+      cursor: 'pointer',
+    },
+    '&:hover .change-foto': {
+      visibility: 'visible',
+      zIndex: '999',
+    },
+    '& .change-foto': {
+      textShadow: '1px 1px #000',
+      color: 'white',
+      fontSize: '0.3em',
+      visibility: 'hidden',
+      position: 'fixed',
+    },
   },
   errorMessage: {
     margin: theme.spacing.unit,
@@ -68,8 +95,8 @@ const smallSize = {
 
 const generalSize = {
   title: 2,
-  actions: 2,
-  content: 8,
+  actions: 3,
+  content: 6,
 }
 
 class Profile extends React.Component {
@@ -78,6 +105,7 @@ class Profile extends React.Component {
     this.state = {
       onNameChange: false,
       onPasswordChange: false,
+      onUpload: false,
       password: '',
       newPassword: '',
       error: null,
@@ -98,7 +126,9 @@ class Profile extends React.Component {
     this.handleNameChangeClose = this.handleNameChangeClose.bind(this)
     this.handlePasswordChangeClose = this.handlePasswordChangeClose.bind(this)
     this.handlePasswordChangeSubmit = this.handlePasswordChangeSubmit.bind(this)
+    this.handlePictureUpload = this.handlePictureUpload.bind(this)
   }
+
   componentDidMount() {
     apiFetch('api/account/', {
       method: 'GET',
@@ -110,6 +140,7 @@ class Profile extends React.Component {
       })
     })
   }
+
   handleLastNameChange() {
     const that = this
     return (event) => {
@@ -121,6 +152,7 @@ class Profile extends React.Component {
       })
     }
   }
+
   handleFirstNameChange() {
     const that = this
     return (event) => {
@@ -132,11 +164,13 @@ class Profile extends React.Component {
       })
     }
   }
+
   handleNameChangeClose() {
     this.setState({
       onNameChange: false,
     })
   }
+
   handlePasswordChangeClose() {
     this.setState({
       onPasswordChange: false,
@@ -144,6 +178,7 @@ class Profile extends React.Component {
       newPassword: '',
     })
   }
+
   handleChange(name) {
     const that = this
     return (event) => {
@@ -152,6 +187,7 @@ class Profile extends React.Component {
       })
     }
   }
+
   handlePasswordChangeSubmit() {
     this.setState({
       isLoading: true,
@@ -177,6 +213,7 @@ class Profile extends React.Component {
       })
     }).catch(error => this.setState({ error, lastError: error }))
   }
+
   handleNameChangeSubmit() {
     this.setState({
       isLoading: true,
@@ -202,6 +239,36 @@ class Profile extends React.Component {
       })
     }).catch(error => this.setState({ error, lastError: error }))
   }
+
+  handlePictureUpload() {
+    this.setState({ isLoading: true })
+    const pictureInput = document.getElementById('pictureInput')
+    console.log(pictureInput.files[0])
+    apiFetch('/api/account/upload_picture', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: pictureInput.files[0],
+    }).then(({ response }) => {
+      if (response.ok) {
+        console.log('wow')
+      }
+    }).finally(() => {
+      this.setState({
+        isLoading: false,
+        showSnackbar: true,
+        snackbarMessage: localizedStrings.successfullyChangedPicture,
+      })
+    }).catch(error => this.setState({ error, lastError: error }))
+  }
+
+  isPictureSelected() {
+    const input = document.querySelector('input')
+    console.log(input && input.files)
+    return input && input.files && input.files.length > 0
+  }
+
   render() {
     const { user } = this.state
     const { classes } = this.props
@@ -209,10 +276,53 @@ class Profile extends React.Component {
       <div>
         <AuthorizedHeaderBar title={localizedStrings.profile} user={this.state.user} />
         <div className={classes.profile}>
-          <UserAvatar
-            user={user}
-            className={classes.avatar}
-          />
+          <a onClick={() => this.setState({ onUpload: true })}>
+            <UserAvatar
+              user={user}
+              className={classes.avatar}
+            >
+              <Typography className="change-foto">
+                {localizedStrings.change}
+              </Typography>
+            </UserAvatar>
+          </a>
+          {
+            /*
+              Upload Picture
+             */
+          }
+          <Collapse in={this.state.onUpload}>
+            <Grid container spacing={16} alignContent="center" alignItems="baseline">
+              <Grid item xs={smallSize.title} sm={generalSize.title}>
+                <Typography variant="title" color="textSecondary">{localizedStrings.newPicture}</Typography>
+              </Grid>
+              <Grid item xs={smallSize.actions} sm={generalSize.actions}>
+                <IconButton
+                  size="large"
+                  variant="raised"
+                  color="secondary"
+                  className={classes.button}
+                  onClick={() => this.setState({ onUpload: false })}
+                >
+                  <Cancel />
+                </IconButton>
+                <IconButton
+                  className={classes.uploadButton}
+                  size="large"
+                  disabled={!this.isPictureSelected()}
+                  onClick={this.handlePictureUpload}
+                  color="primary"
+                >
+                  <CloudUpload />
+                </IconButton>
+              </Grid>
+              <Grid item xs={smallSize.content} sm={generalSize.content}>
+                <label className={classes.label}>
+                  <input type="file" name="profileImage" id="pictureInput"/>
+                </label>
+              </Grid>
+            </Grid>
+          </Collapse>
           <Grid container className={classes.profileGrid}>
             {
               /*
@@ -241,22 +351,22 @@ class Profile extends React.Component {
                     <IconButton
                       size="large"
                       variant="raised"
-                      color="primary"
-                      className={classes.button}
-                      disabled={this.state.isLoading}
-                      onClick={this.handleNameChangeSubmit}
-                    >
-                      <Done />
-                    </IconButton>
-                    <IconButton
-                      size="large"
-                      variant="raised"
                       color="secondary"
                       className={classes.button}
                       disabled={this.state.isLoading}
                       onClick={this.handleNameChangeClose}
                     >
                       <Cancel />
+                    </IconButton>
+                    <IconButton
+                      size="large"
+                      variant="raised"
+                      color="primary"
+                      className={classes.button}
+                      disabled={this.state.isLoading}
+                      onClick={this.handleNameChangeSubmit}
+                    >
+                      <Done />
                     </IconButton>
                   </div>
                 }
@@ -305,6 +415,7 @@ class Profile extends React.Component {
               <Grid item xs={smallSize.title} sm={generalSize.title}>
                 <Typography variant="title" color="textSecondary">{localizedStrings.email}</Typography>
               </Grid>
+              <Grid item xs={smallSize.actions} sm={generalSize.actions} />
               <Grid item xs={smallSize.content} sm={generalSize.content}>
                 <Typography variant="title">{user.email}</Typography>
               </Grid>
@@ -336,22 +447,22 @@ class Profile extends React.Component {
                     <IconButton
                       size="large"
                       variant="raised"
-                      color="primary"
-                      className={classes.button}
-                      disabled={this.state.isLoading}
-                      onClick={this.handlePasswordChangeSubmit}
-                    >
-                      <Done />
-                    </IconButton>
-                    <IconButton
-                      size="large"
-                      variant="raised"
                       color="secondary"
                       className={classes.button}
                       disabled={this.state.isLoading}
                       onClick={this.handlePasswordChangeClose}
                     >
                       <Cancel />
+                    </IconButton>
+                    <IconButton
+                      size="large"
+                      variant="raised"
+                      color="primary"
+                      className={classes.button}
+                      disabled={this.state.isLoading}
+                      onClick={this.handlePasswordChangeSubmit}
+                    >
+                      <Done />
                     </IconButton>
                   </div>
                 }
