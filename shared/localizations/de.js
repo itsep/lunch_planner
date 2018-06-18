@@ -26,7 +26,7 @@ const content = {
   userAlreadyMember: 'Du bist bereits Mitglied in diesem Lunchspace.',
 
 
-  //Imprint
+  // Imprint
   contact: 'Kontakt',
   section5Tmg: 'Angaben gemäß § 5 TMG',
   imprint: 'Impressum',
