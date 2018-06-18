@@ -38,6 +38,19 @@ server {
 
 	# server_name mylunch.space www.mylunch.space;
 	server_name _ ;
+    
+    # caching for static assets
+    # they should have a hash/chunkhash in their filename
+    # this enables aggressive caching
+    location ~* \.(?:css|js|gif|svg)$ {
+	    expires 30d;
+	    add_header Pragma public;
+	    add_header Cache-Control "public";
+	    # HTTP Strict Transport Security (HSTS)
+		add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+		# Cross Origin Resource Policy - Do not allow other pages to include my resources, even images! (New - from WWDC18)
+		add_header "Cross-Origin-Resource-Policy: Same" always;
+	}
 
 	location /api/ {
 		proxy_pass http://localhost:9100/;
@@ -51,19 +64,6 @@ server {
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection $connection_upgrade;
     }
-    
-    # caching for static assets
-    # they should have a hash/chunkhash in their filename
-    # this enables aggressive caching
-    location ~* \.(?:css|js|gif|jpe?g|png)$ {
-	    expires 30d;
-	    add_header Pragma public;
-	    add_header Cache-Control "public";
-	    # HTTP Strict Transport Security (HSTS)
-		add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-		# Cross Origin Resource Policy - Do not allow other pages to include my resources, even images! (New - from WWDC18)
-		add_header "Cross-Origin-Resource-Policy: Same" always;
-	}
 
 	location / {
 		# First attempt to serve request as file, then

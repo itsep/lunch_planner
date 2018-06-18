@@ -15,6 +15,7 @@ const pages = {
   create_lunchspace: {/* config options */},
   join_lunchspace: {/* config options */},
   lunchspaces: {/* config options */},
+  imprint: {/* config options */},
   // *add a new page here*
 }
 
