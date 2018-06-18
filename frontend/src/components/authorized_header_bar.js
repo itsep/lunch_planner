@@ -80,6 +80,9 @@ class AuthorizedHeaderBar extends React.Component {
           <MenuItem onClick={leave}>
             {localizedStrings.leaveLunchspace}
           </MenuItem>
+          <MenuItem component="a" href={routeLocations.PROFILE}>
+            {localizedStrings.profile}
+          </MenuItem>
           <MenuItem onClick={onLogout}>
             {localizedStrings.logout}
           </MenuItem>

@@ -5,7 +5,8 @@ const routeLocations = {
   LOGIN: '/login.html',
   REGISTRATION: '/registration.html',
   CREATE_LUNCHSPACE: '/create_lunchspace.html',
-  LUNCHSPACES: 'lunchspaces.html',
+  LUNCHSPACES: '/lunchspaces.html',
+  PROFILE: '/profile.html',
   JOIN_LUNCHSPACE: '/join_lunchspace.html',
 }
 

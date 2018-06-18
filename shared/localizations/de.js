@@ -27,7 +27,7 @@ const content = {
 
 
   joinLunchspaceTitle: 'Lunchspace beitreten',
-  joinLunchspace: 'Du wurdest zum {lunchspaceName} eingeladen!',
+  joinLunchspace: 'Du wurdest zum Lunchspace {lunchspaceName} eingeladen!',
   inviteToCurrentLunchspace: 'Einladen zum Lunchspace {lunchspaceName}',
   invitationSent: 'Einladung gesendet.',
   notYou: 'Nicht du?',
@@ -43,13 +43,27 @@ const content = {
   InvitationPart2: ' beizutreten. Um die Einladung anzunehmen, klicke auf diesen Link:',
 
 
+  successfullyChangedName: 'Erfolgreich deinen Namen geändert.',
+  successfullyChangedPassword: 'Erfolgreich dein Password geändert.',
+  successfullyChangedPicture: 'Erfolgreich dein Bild geändert.',
+
+  newPicture: 'Neues Bild',
+  noPictureSelected: 'Kein Bild ausgewählt',
+
   createLunchspace: 'Lunchspace erstellen',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} erfolgreich erstellt.',
   createLocation: 'Location erstellen',
+
   invite: 'Einladen',
   delete: 'Löschen',
+  profile: 'Profil',
+  email: 'Email',
+  password: 'Passwort',
+  name: 'Name',
   login: 'Anmelden',
   logout: 'Abmelden',
+  change: 'bearbeiten',
+  changePassword: 'Passwort verändern',
   today: 'Heute',
   signUp: 'Registrieren',
   cancel: 'Abbrechen',

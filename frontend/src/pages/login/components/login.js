@@ -173,7 +173,6 @@ class Login extends React.Component {
               >
                 <CircularProgress size="36px" className={classes.progressIndicator} />
               </Fade>
-
             </div>
           </ValidatorForm>
         </Collapse>
