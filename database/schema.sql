@@ -131,13 +131,28 @@ CREATE TABLE web_notification_subscription
 
 -- Web Subscription Foreign Key
 ALTER TABLE web_notification_subscription
-  ADD FOREIGN KEY user_subscription_idx (user_id)
+  ADD FOREIGN KEY user_web_subscription_idx (user_id)
   REFERENCES user (id)
   ON DELETE CASCADE
   ON UPDATE CASCADE,
 
   ADD FOREIGN KEY subscription_lunchspace_idx (lunchspace_id)
   REFERENCES lunchspace (id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+  -- iOS Notification Device Token
+CREATE TABLE ios_notification_registration
+(
+  user_id BIGINT UNSIGNED NOT NULL,
+  session_id CHAR(36) NOT NULL,
+  token VARCHAR(128) NOT NULL,
+  PRIMARY KEY (token)
+) ENGINE = InnoDB;
+
+ALTER TABLE web_notification_subscription
+  ADD FOREIGN KEY user_ios_token_idx (user_id)
+  REFERENCES user (id)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
