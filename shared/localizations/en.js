@@ -25,6 +25,12 @@ const content = {
   emailAlreadyRegistered: 'An account with the email {email} does already exists.',
   userAlreadyMember: 'You are already a member of this lunchspace.',
 
+  // Imprint
+  contact: 'Contact',
+  section5Tmg: 'Information in accordance with Section 5 TMG',
+  imprint: 'Imprint',
+  legalDisclosure: 'Legal Disclosure',
+
   joinLunchspaceTitle: 'Join Lunchspace',
   joinLunchspace: 'You got invited to {lunchspaceName}!',
   inviteToCurrentLunchspace: 'Invite to lunchspace {lunchspaceName}',
@@ -54,6 +60,8 @@ const content = {
 
   invite: 'Invite',
   email: 'Email',
+  phone: 'Phone',
+  support: 'Support',
   password: 'Password',
   name: 'Name',
   change: 'change',

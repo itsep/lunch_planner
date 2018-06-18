@@ -24,7 +24,7 @@ const styles = theme => ({
     flexDirection: 'column',
     margin: 'auto',
     padding: 2 * theme.spacing.unit,
-    minWidth: '375px',
+    minWidth: '300px',
     maxWidth: '800px',
   },
   label: {
