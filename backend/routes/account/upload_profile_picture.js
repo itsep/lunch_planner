@@ -3,14 +3,10 @@ const fs = require('fs-nextra')
 const sharp = require('sharp')
 const uuidv4 = require('uuid/v4')
 const { lunchspaceChannel } = require('../../lib/lunchspace_channels')
+const { getLunchspaceIdsForUser } = require('../../lib/supportive_functions')
 
 async function saveURL(userId, url) {
   await pool.execute('UPDATE user SET image_url = ? WHERE id = ?', [url, userId])
-}
-
-async function getLunchspaceIdsForUser(userId) {
-  return pool.execute('SELECT lunchspace_id as id FROM member_of WHERE user_id = ?', [userId])
-    .then(([lunchspaces]) => lunchspaces)
 }
 
 function getPathFromUrl(url) {
