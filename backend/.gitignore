@@ -65,3 +65,5 @@ typings/
 # apn certificate
 Lunchspace_APN_GW74B8WT7K.p8
 
+# image folder
+/images
