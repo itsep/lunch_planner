@@ -1,16 +1,6 @@
 /* eslint no-use-before-define: 0 */
 const readline = require('readline')
 
-const apn = require('apn')
-
-const apnProvider = new apn.Provider({
-  token: {
-    key: './Lunchspace_APN_GW74B8WT7K.p8',
-    keyId: 'GW74B8WT7K',
-    teamId: 'XKQRPFVM7Z',
-  },
-})
-
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,

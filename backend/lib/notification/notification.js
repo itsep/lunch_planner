@@ -1,4 +1,5 @@
 const { localizedStrings } = require('../localized_strings')
+const apn = require('apn')
 
 class Notification {
   static localizeValues(values, language) {
@@ -41,6 +42,20 @@ class Notification {
       body: this.localizedBody(language),
       link: this.link,
     })
+  }
+  toIOSNotification(language) {
+    const note = new apn.Notification()
+
+    note.expiry = Math.floor(Date.now() / 1000) + (60 * 60 * 24) // Expires 24 hour from now.
+    note.sound = 'ping.aiff'
+    note.alert = {
+      title: this.localizedTitle(language),
+      body: this.localizedBody(language),
+    }
+    note.payload = { link: this.link }
+    note.topic = 'de.nadoba.lunchspace-ios'
+
+    return note
   }
 }
 
