@@ -25,6 +25,7 @@ const content = {
   emailAlreadyRegistered: 'Ein Account mit der Email {email} existiert bereits.',
   userAlreadyMember: 'Du bist bereits Mitglied in diesem Lunchspace.',
 
+  imprint: 'Impressum',
 
   joinLunchspaceTitle: 'Lunchspace beitreten',
   joinLunchspace: 'Du wurdest zum Lunchspace {lunchspaceName} eingeladen!',

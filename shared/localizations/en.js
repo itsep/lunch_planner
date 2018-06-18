@@ -25,6 +25,8 @@ const content = {
   emailAlreadyRegistered: 'An account with the email {email} does already exists.',
   userAlreadyMember: 'You are already a member of this lunchspace.',
 
+  imprint: 'Imprint',
+
   joinLunchspaceTitle: 'Join Lunchspace',
   joinLunchspace: 'You got invited to {lunchspaceName}!',
   inviteToCurrentLunchspace: 'Invite to lunchspace {lunchspaceName}',
