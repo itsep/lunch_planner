@@ -26,6 +26,12 @@ const content = {
   userAlreadyMember: 'Du bist bereits Mitglied in diesem Lunchspace.',
 
 
+  // Imprint
+  contact: 'Kontakt',
+  section5Tmg: 'Angaben gemäß § 5 TMG',
+  imprint: 'Impressum',
+  legalDisclosure: 'Gesetzliche Offenlegung',
+
   joinLunchspaceTitle: 'Lunchspace beitreten',
   joinLunchspace: 'Du wurdest zum Lunchspace {lunchspaceName} eingeladen!',
   inviteToCurrentLunchspace: 'Einladen zum Lunchspace {lunchspaceName}',
@@ -58,6 +64,8 @@ const content = {
   delete: 'Löschen',
   profile: 'Profil',
   email: 'Email',
+  phone: 'Telefon',
+  support: 'Support',
   password: 'Passwort',
   name: 'Name',
   login: 'Anmelden',
