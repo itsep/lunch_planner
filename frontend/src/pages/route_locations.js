@@ -8,6 +8,7 @@ const routeLocations = {
   LUNCHSPACES: '/lunchspaces.html',
   PROFILE: '/profile.html',
   JOIN_LUNCHSPACE: '/join_lunchspace.html',
+  IMPRINT: '/imprint.html',
 }
 
 export function isOnWhitelist(redirectRoute) {
