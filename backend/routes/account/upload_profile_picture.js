@@ -10,7 +10,7 @@ async function saveURL(userId, url) {
 }
 
 function getPathFromUrl(url) {
-  let path
+  let path = 'invalidPath'
   if (typeof url === 'string') {
     const parts = url.split('/')
     path = `./${parts[2]}/${parts[3]}`
