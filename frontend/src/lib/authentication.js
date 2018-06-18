@@ -1,8 +1,10 @@
 import Cookie from 'js-cookie'
-import { withLunchspaceSubdomain } from './lunchspace_subdomain'
 import apiFetch from './api_fetch'
-import routeLocations from '../pages/route_locations'
+import routeLocations, { redirect } from '../pages/route_locations'
 
+export function redirectToLogin() {
+  redirect(routeLocations.LOGIN)
+}
 
 const isProbablyAuthenticatedCookieName = 'authenticated'
 /**
@@ -18,10 +20,10 @@ export function isDefinitelyNotAuthenticated() {
   return Cookie.get(isProbablyAuthenticatedCookieName) !== '1'
 }
 
-export function logout() {
-  return apiFetch('/api/account/logout', {
+export function makeLogout(redirectCallback) {
+  return () => apiFetch('/api/account/logout', {
     method: 'POST',
-  }).then(() => {
-    window.location = withLunchspaceSubdomain(routeLocations.LOGIN)
-  })
+  }).then(redirectCallback, redirectCallback)
 }
+
+export const logout = makeLogout(redirectToLogin)

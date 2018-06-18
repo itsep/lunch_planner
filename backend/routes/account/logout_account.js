@@ -1,6 +1,7 @@
 const config = require('config')
 const { parseToken } = require('../../lib/authenticate')
 const { removeSubscriptionsForSession } = require('../../lib/notification/web_subscription')
+const { removeRegistrationForSession } = require('../../lib/notification/ios_registration')
 
 const tokenCookieName = config.get('token.cookieName')
 const isProbablyAuthenticatedCookieName = config.get('token.isProbablyAuthenticatedCookieName')
@@ -14,6 +15,7 @@ function logout(req, res) {
     const token = parseToken(tokenString)
     if (token.userId && token.sessionId) {
       removeSubscriptionsForSession(token.userId, token.sessionId)
+      removeRegistrationForSession(token.userId, token.sessionId)
     }
   }
 

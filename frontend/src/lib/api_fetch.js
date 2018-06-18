@@ -1,5 +1,7 @@
 import { toLocalizableError } from 'shared/lib/error'
 import { withLunchspaceSubdomain } from './lunchspace_subdomain'
+import { redirectToLogin } from './authentication'
+import { catchAuthenticationErrorAndRedirect, catchAuthorizationErrorAndRedirect } from './auto_redirect'
 
 const reject = Promise.reject.bind(Promise)
 /**
@@ -9,16 +11,18 @@ const reject = Promise.reject.bind(Promise)
  * @returns {Promise<{data: any, response: Response}, LocalizableError>}
  */
 export default function apiFetch(url, config = {}) {
+  const redirectToLoginCallback = config.redirectToLogin || redirectToLogin
   return Promise.resolve().then(() => {
     const init = Object.assign({}, {
       credentials: 'same-origin',
     }, config)
-    init.headers = Object.assign({}, {
-      'content-type': 'application/json',
-    }, config.headers)
-
-    if (config.body) {
-      init.body = JSON.stringify(config.body)
+    if (!config.formData) {
+      init.headers = Object.assign({}, {
+        'content-type': 'application/json',
+      }, config.headers)
+      if (config.body) {
+        init.body = JSON.stringify(config.body)
+      }
     }
     return fetch(withLunchspaceSubdomain(url), init).then((response) => {
       // everything okay
@@ -31,4 +35,7 @@ export default function apiFetch(url, config = {}) {
   })
     // convert every error to an localizable error
     .catch(errorObject => reject(toLocalizableError(errorObject)))
+    // catch authentication errors and redirect to login if needed
+    .catch(catchAuthenticationErrorAndRedirect.bind(null, redirectToLoginCallback))
+    .catch(catchAuthorizationErrorAndRedirect.bind(null, redirectToLoginCallback))
 }
