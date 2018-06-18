@@ -30,6 +30,7 @@ pipeline {
                         timeout(5) {
                             withCredentials([usernamePassword(credentialsId: 'it-sep-ci-mariadb', usernameVariable: 'DATABASE_USERNAME', passwordVariable: 'DATABASE_PASSWORD')]) {
                                 withCredentials([usernamePassword(credentialsId: 'e-mail-access-data', usernameVariable: 'SENDER_EMAIL', passwordVariable: 'EMAIL_PASSWORD')]) {
+                                    withCredentials([file(credentialsId: 'ios-push-notificatoin', variable: 'IOS_PUSH_NOTIFICATION_KEY_FILENAME')]) {
                                     // available as an env variable, but will be masked if you try to print it out any which way
                                     sh 'npm run test --prefix=backend -- --maxWorkers=4'
                                 }

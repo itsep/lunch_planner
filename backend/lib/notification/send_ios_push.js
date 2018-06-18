@@ -4,7 +4,7 @@ const { pool } = require('../database')
 
 const apnProvider = new apn.Provider({
   token: {
-    key: './Lunchspace_APN_GW74B8WT7K.p8',
+    key: process.env.IOS_PUSH_NOTIFICATION_KEY_FILENAME || './Lunchspace_APN_GW74B8WT7K.p8',
     keyId: 'GW74B8WT7K',
     teamId: 'XKQRPFVM7Z',
   },
