@@ -5,11 +5,16 @@ import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
 import { connect } from 'react-redux'
 import { toEventTimeId, nextEventTimeForDate, eventTimeSteps } from 'shared/lib/event'
 import TimeStamp from './time_stamp'
 import localizedStrings from '../../../lib/localization'
 import { fetchDeleteLocation } from '../actions'
+
 
 const mapStateToProps = (state, props) => ({
   id: props.id,
@@ -115,8 +120,15 @@ class LocationItem extends React.Component {
   handleMenuClose() {
     this.setState({ anchorEl: null })
   }
-  remove(locationId) {
-    this.props.fetchDeleteLocationAction(locationId)
+  handleClickOpen() {
+    this.setState({ open: true })
+  }
+
+  handleClose() {
+    this.setState({ open: false })
+  }
+  remove(locationId, forceDelete) {
+    this.props.fetchDeleteLocationAction(locationId, forceDelete)
   }
   render() {
     const {
@@ -136,9 +148,28 @@ class LocationItem extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleMenuClose}
         >
-          <MenuItem onClick={() => this.remove(id)}>
+          <MenuItem onClick={this.handleClickOpen}>
             {localizedStrings.delete}
           </MenuItem>
+          <Dialog
+            open={this.state.open}
+            onClose={this.handleClose}
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                {localizedStrings.confirmDeleteLocation}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleMenuClose} color="primary">
+                {localizedStrings.yes}
+              </Button>
+              <Button onClick={this.handleMenuClose} color="primary" autoFocus>
+                {localizedStrings.cancel}
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Menu>
         <div className={classes.container} ref={this.containerRef}>
           {timeStamps.map(timeStamp => (

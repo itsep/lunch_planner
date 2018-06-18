@@ -60,6 +60,7 @@ const content = {
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} erfolgreich erstellt.',
   createLocation: 'Location erstellen',
   leaveLunchspace: 'Lunchspace verlassen',
+  confirmDeleteLocation: 'Für diese Location sind noch Events in der Zukunft geplant. Bist du sicher, dass du sie löschen möchtest?',
 
   invite: 'Einladen',
   delete: 'Löschen',
