@@ -17,7 +17,6 @@ import apiFetch from 'lib/api_fetch'
 import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
 import localizedStrings from '../../../lib/localization'
 import UserAvatar from '../../../components/user_avatar'
-import routeLocations from '../../route_locations'
 
 const styles = theme => ({
   profile: {
@@ -253,7 +252,7 @@ class Profile extends React.Component {
           'content-type': 'multipart/form-data',
         },
       */
-      this.setState({isLoading: true})
+      this.setState({ isLoading: true })
       apiFetch('/api/account/upload_picture', {
         method: 'PUT',
         formData: true,
@@ -266,7 +265,7 @@ class Profile extends React.Component {
           })
           apiFetch('api/account/', {
             method: 'GET',
-          }).then(( innerResponse ) => {
+          }).then((innerResponse) => {
             const { user } = innerResponse.data
             this.setState({
               user,
@@ -279,8 +278,7 @@ class Profile extends React.Component {
           isLoading: false,
         })
       }).catch(error => this.setState({ error, lastError: error }))
-    }
-    else {
+    } else {
       this.setState({
         showSnackbar: true,
         snackbarMessage: localizedStrings.noPictureSelected,
@@ -295,6 +293,7 @@ class Profile extends React.Component {
       <div>
         <AuthorizedHeaderBar title={localizedStrings.profile} user={this.state.user} />
         <div className={classes.profile}>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a onClick={() => this.setState({ onUpload: true })}>
             <UserAvatar
               user={user}
@@ -336,6 +335,7 @@ class Profile extends React.Component {
                 </IconButton>
               </Grid>
               <Grid item xs={smallSize.content} sm={generalSize.content}>
+                {/* eslint-disable-next-line jsx-a11y/label-has-for */}
                 <label className={classes.label}>
                   <input type="file" name="profileImage" id="pictureInput" />
                 </label>
