@@ -33,7 +33,7 @@ function Imprint({ classes }) {
         {localizedStrings.contact}
       </Typography>
       <Typography variant="body">
-        {localizedStrings.phone}: 01627657742
+        {localizedStrings.phone}: +491627657742
         <br />
         {localizedStrings.email}: dnadoba@gmail.com
         <br />
