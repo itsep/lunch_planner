@@ -22,7 +22,7 @@ function Imprint({ classes }) {
       <Typography variant="title" gutterBottom>
         {localizedStrings.section5Tmg}
       </Typography>
-      <Typography variant="body" gutterBottom>
+      <Typography variant="body2" gutterBottom>
         David Nadoba
         <br />
         67117 Limburgerhof
@@ -32,7 +32,7 @@ function Imprint({ classes }) {
       <Typography variant="title" gutterBottom>
         {localizedStrings.contact}
       </Typography>
-      <Typography variant="body">
+      <Typography variant="body2">
         {localizedStrings.phone}: 01627657742
         <br />
         {localizedStrings.email}: dnadoba@gmail.com
