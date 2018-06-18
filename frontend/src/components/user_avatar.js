@@ -39,7 +39,7 @@ const styles = theme => ({
 })
 
 function UserAvatar({
-  classes, user, className = '',
+  classes, user, children, className = '',
 }) {
   return (
     <div className={combineStyleClasses(classes.container, className)}>
@@ -51,6 +51,7 @@ function UserAvatar({
           onError={(e) => { e.target.style.display = 'none' }}
         />
       }
+      {children}
       <span className={classes.initials}>{initialsOf(user)}</span>
     </div>
   )
@@ -62,6 +63,7 @@ UserAvatar.propTypes = {
     lastName: PropTypes.string,
     imageUrl: PropTypes.string,
   }).isRequired,
+  children: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
 }

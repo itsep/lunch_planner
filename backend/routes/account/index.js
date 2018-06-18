@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const { registerAccount } = require('./register_account')
 const { login } = require('./login_account')
 const { logout } = require('./logout_account')
+const { user } = require('./user')
 const { changeName } = require('./change_name')
 const { changePassword } = require('./change_password')
 const { uploadProfilePicture } = require('./upload_profile_picture')
@@ -19,6 +20,8 @@ accountRouter.post('/', asyncHandler(registerAccount))
 accountRouter.post('/login', asyncHandler(login))
 
 accountRouter.post('/logout', asyncHandler(logout))
+
+accountRouter.get('/', authenticateRequest, getUser, asyncHandler(user))
 
 accountRouter.put('/change_name', authenticateRequest, getUser, asyncHandler(changeName))
 
