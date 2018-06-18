@@ -45,7 +45,7 @@ const styles = theme => ({
   },
   list: {
     // take the addLunchspaceButton into account
-    marginBottom: (theme.spacing.unit * 2) + 56 + (theme.spacing.unit),
+    marginBottom: theme.spacing * 4,
   },
   errorMessage: {
     padding: theme.spacing.unit,
