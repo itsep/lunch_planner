@@ -33,7 +33,7 @@ describe('join_lunchspace', () => {
   beforeAll(createMockDatabase, 1000 * 60 * 10)
   afterAll(dropMockDatabase)
   beforeAll(async () => {
-    const { userId } = await await account.create(
+    const { userId } = await account.create(
       testEmail,
       testPassword,
       testFirstName,
