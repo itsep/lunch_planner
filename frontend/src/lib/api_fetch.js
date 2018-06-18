@@ -16,12 +16,13 @@ export default function apiFetch(url, config = {}) {
     const init = Object.assign({}, {
       credentials: 'same-origin',
     }, config)
-    init.headers = Object.assign({}, {
-      'content-type': 'application/json',
-    }, config.headers)
-
-    if (config.body) {
-      init.body = JSON.stringify(config.body)
+    if (!config.formData) {
+      init.headers = Object.assign({}, {
+        'content-type': 'application/json',
+      }, config.headers)
+      if (config.body) {
+        init.body = JSON.stringify(config.body)
+      }
     }
     return fetch(withLunchspaceSubdomain(url), init).then((response) => {
       // everything okay

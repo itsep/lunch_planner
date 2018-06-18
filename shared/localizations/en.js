@@ -42,6 +42,7 @@ const content = {
   InvitationPart2: '. Click on this link to join:',
 
   newPicture: 'New picture',
+  noPictureSelected: 'No picture selected',
 
   createLunchspace: 'Create Lunchspace',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} successfull created.',

@@ -241,32 +241,51 @@ class Profile extends React.Component {
   }
 
   handlePictureUpload() {
-    this.setState({ isLoading: true })
     const pictureInput = document.getElementById('pictureInput')
-    console.log(pictureInput.files[0])
-    apiFetch('/api/account/upload_picture', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      body: pictureInput.files[0],
-    }).then(({ response }) => {
-      if (response.ok) {
-        console.log('wow')
-      }
-    }).finally(() => {
-      this.setState({
-        isLoading: false,
-        showSnackbar: true,
-        snackbarMessage: localizedStrings.successfullyChangedPicture,
-      })
-    }).catch(error => this.setState({ error, lastError: error }))
-  }
+    if (pictureInput.files && pictureInput.files.length) {
+      const formData = new FormData()
 
-  isPictureSelected() {
-    const input = document.querySelector('input')
-    console.log(input && input.files)
-    return input && input.files && input.files.length > 0
+      formData.append('profileImage', pictureInput.files[0])
+
+      /*
+        headers: {
+          Accept: 'image/png , image/jpeg',
+          'content-type': 'multipart/form-data',
+        },
+      */
+      this.setState({isLoading: true})
+      apiFetch('/api/account/upload_picture', {
+        method: 'PUT',
+        formData: true,
+        body: formData,
+      }).then(({ response }) => {
+        if (response.ok) {
+          this.setState({
+            showSnackbar: true,
+            snackbarMessage: localizedStrings.successfullyChangedPicture,
+          })
+          apiFetch('api/account/', {
+            method: 'GET',
+          }).then(( innerResponse ) => {
+            const { user } = innerResponse.data
+            this.setState({
+              user,
+              newUser: user,
+            })
+          })
+        }
+      }).finally(() => {
+        this.setState({
+          isLoading: false,
+        })
+      }).catch(error => this.setState({ error, lastError: error }))
+    }
+    else {
+      this.setState({
+        showSnackbar: true,
+        snackbarMessage: localizedStrings.noPictureSelected,
+      })
+    }
   }
 
   render() {
@@ -309,7 +328,7 @@ class Profile extends React.Component {
                 <IconButton
                   className={classes.uploadButton}
                   size="large"
-                  disabled={!this.isPictureSelected()}
+                  disabled={this.state.isLoading}
                   onClick={this.handlePictureUpload}
                   color="primary"
                 >
@@ -318,7 +337,7 @@ class Profile extends React.Component {
               </Grid>
               <Grid item xs={smallSize.content} sm={generalSize.content}>
                 <label className={classes.label}>
-                  <input type="file" name="profileImage" id="pictureInput"/>
+                  <input type="file" name="profileImage" id="pictureInput" />
                 </label>
               </Grid>
             </Grid>

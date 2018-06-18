@@ -27,7 +27,7 @@ const content = {
 
 
   joinLunchspaceTitle: 'Lunchspace beitreten',
-  joinLunchspace: 'Du wurdest zum {lunchspaceName} eingeladen!',
+  joinLunchspace: 'Du wurdest zum Lunchspace {lunchspaceName} eingeladen!',
   inviteToCurrentLunchspace: 'Einladen zum Lunchspace {lunchspaceName}',
   invitationSent: 'Einladung gesendet.',
   notYou: 'Nicht du?',
@@ -48,6 +48,7 @@ const content = {
   successfullyChangedPicture: 'Erfolgreich dein Bild geändert.',
 
   newPicture: 'Neues Bild',
+  noPictureSelected: 'Kein Bild ausgewählt',
 
   createLunchspace: 'Lunchspace erstellen',
   lunchspaceSuccessfulCreated: 'Lunchspace {lunchspaceName} erfolgreich erstellt.',
