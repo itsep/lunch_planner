@@ -88,7 +88,6 @@ export function fetchCreateLocation(locationName, lunchspace) {
 }
 
 export function fetchDeleteLocation(locationId, forceDelete) {
-  // TODO: remove force delete and handle delete with care
   return dispatch => apiFetch('/api/location', {
     method: 'DELETE',
     body: {

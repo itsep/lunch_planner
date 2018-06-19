@@ -120,15 +120,15 @@ class LocationItem extends React.Component {
   handleMenuClose() {
     this.setState({ anchorEl: null })
   }
-  handleClickOpen(event) {
+  openDialog(event) {
     this.setState({ anchorEl: event.currentTarget })
   }
 
-  handleClose() {
+  handleDialogClose() {
     this.setState({ anchorEl: null })
   }
   remove(locationId, forceDelete) {
-    this.props.fetchDeleteLocationAction(locationId, forceDelete)
+    console.log(this.props.fetchDeleteLocationAction(locationId, forceDelete))
   }
   render() {
     const {
@@ -148,13 +148,14 @@ class LocationItem extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleMenuClose}
         >
-          <MenuItem onClick={this.handleClickOpen}>
+          <MenuItem onClick={() => this.remove(id, false)}>
             {localizedStrings.delete}
           </MenuItem>
           <Dialog
             id={id}
-            open={Boolean(anchorEl)}
-            onClose={this.handleClose}
+            anchorEl={anchorEl}
+            open={false}
+            onClose={this.handleDialogClose}
             aria-describedby="alert-dialog-description"
           >
             <DialogContent>
