@@ -182,7 +182,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'David','Nadoba','en-US','/api/images/fa49193f-8c80-4163-add4-e7e4b333c7dd.png');
+INSERT INTO `user` VALUES (1,'David','Nadboa','en-US','/api/images/fa49193f-8c80-4163-add4-e7e4b333c7dd.png');
 INSERT INTO `user` VALUES (2,'Sebastian','Vogt','de','/api/images/2230a0c4-a6b6-4ef6-b7b9-57cca6e64464.png');
 INSERT INTO `user` VALUES (3,'Ferhat','Ayaydin','de','/api/images/ce50e50f-78ac-42d4-a907-02cfe5a86e4c.png');
 INSERT INTO `user` VALUES (4,'Marc','Mehrer','de','/api/images/e739492f-6a6d-4798-8fab-35189d41f147.png');
