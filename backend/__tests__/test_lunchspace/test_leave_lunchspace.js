@@ -160,11 +160,9 @@ describe('leave_lunchspace', () => {
         token: {
           userId: testUserId2,
         },
-        lunchspace: {
-          id: lunchspaceId3,
-        },
         body: {
           forceDelete: false,
+          subdomain: testLunchspaceSubdomain3,
         },
         userPromise: {
           firstName: testFirstName1,
@@ -185,11 +183,9 @@ describe('leave_lunchspace', () => {
         token: {
           userId: testUserId1,
         },
-        lunchspace: {
-          id: lunchspaceId3,
-        },
         body: {
           forceDelete: false,
+          subdomain: testLunchspaceSubdomain3,
         },
         userPromise: {
           firstName: testFirstName1,
@@ -209,11 +205,9 @@ describe('leave_lunchspace', () => {
         token: {
           userId: testUserId1,
         },
-        lunchspace: {
-          id: lunchspaceId3,
-        },
         body: {
           forceDelete: true,
+          subdomain: testLunchspaceSubdomain3,
         },
         userPromise: {
           firstName: testFirstName1,
@@ -233,11 +227,9 @@ describe('leave_lunchspace', () => {
         token: {
           userId: testUserId2,
         },
-        lunchspace: {
-          id: lunchspaceId2,
-        },
         body: {
           forceDelete: false,
+          subdomain: testLunchspaceSubdomain2,
         },
         userPromise: {
           firstName: testFirstName1,
