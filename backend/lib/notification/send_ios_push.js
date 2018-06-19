@@ -1,6 +1,7 @@
 const apn = require('apn')
 const { zip } = require('zip-array')
 const { pool } = require('../database')
+const { getLanguageCodeOrDefault } = require('../i18n')
 
 const apnProvider = new apn.Provider({
   token: {
@@ -23,7 +24,7 @@ JOIN user ON user.id = user_id
 WHERE 
 user_id IN (?)`, [userIds])
   // const userIdsForSubscriptions = rawUserRegistrations.map(sub => sub.userId)
-  const userLanguages = rawUserRegistrations.map(user => user.language)
+  const userLanguages = rawUserRegistrations.map(user => getLanguageCodeOrDefault(user.language))
   const tokens = rawUserRegistrations.map(registration => registration.token)
 
 
