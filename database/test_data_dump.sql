@@ -129,7 +129,6 @@ LOCK TABLES `member_of` WRITE;
 INSERT INTO `member_of` VALUES (1,1,1);
 INSERT INTO `member_of` VALUES (1,2,1);
 INSERT INTO `member_of` VALUES (1,3,1);
-INSERT INTO `member_of` VALUES (1,4,1);
 INSERT INTO `member_of` VALUES (2,1,0);
 INSERT INTO `member_of` VALUES (2,2,0);
 INSERT INTO `member_of` VALUES (2,3,0);
