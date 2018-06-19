@@ -132,6 +132,7 @@ class Lunchspaces extends React.Component {
               <List className={classes.list}>
                 {lunchspaces.map(lunchspace => (
                   <LunchspaceListItem
+                    key={lunchspace.subdomain}
                     lunchspace={lunchspace}
                     classes={classes}
                     leaveLunchspace={this.leaveLunchspace}
