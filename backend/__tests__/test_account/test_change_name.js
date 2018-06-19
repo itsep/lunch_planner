@@ -15,6 +15,7 @@ const newFirstName1 = 'Oswald'
 const newLastName1 = 'Cobblepott'
 const newFirstName2 = '           '
 const newLastName2 = 15
+const imageUrl = 'string'
 
 
 describe('change_name', () => {
@@ -34,6 +35,12 @@ describe('change_name', () => {
           firstName: newFirstName1,
           lastName: newLastName1,
         },
+        userPromise: Promise.resolve({
+          firstName,
+          lastName,
+          imageUrl,
+          id: testUserId,
+        }),
       })
       const res = mockRes()
       await changeName(req, res)
@@ -49,6 +56,12 @@ describe('change_name', () => {
           firstName: newFirstName1,
           lastName: newLastName1,
         },
+        userPromise: Promise.resolve({
+          firstName,
+          lastName,
+          imageUrl,
+          id: testUserId,
+        }),
       })
       const res = mockRes()
       await changeName(req, res)
@@ -64,6 +77,12 @@ describe('change_name', () => {
           firstName: newFirstName2,
           lastName: newLastName1,
         },
+        userPromise: Promise.resolve({
+          firstName,
+          lastName,
+          imageUrl,
+          id: testUserId,
+        }),
       })
       const res = mockRes()
       await expect(changeName(req, res)).rejects.toThrowError(InputValidationError)
@@ -78,6 +97,12 @@ describe('change_name', () => {
           firstName: newFirstName1,
           lastName: newLastName2,
         },
+        userPromise: Promise.resolve({
+          firstName,
+          lastName,
+          imageUrl,
+          id: testUserId,
+        }),
       })
       const res = mockRes()
       await expect(changeName(req, res)).rejects.toThrowError(InputValidationError)

@@ -29,7 +29,7 @@ const mapDispatchToProps = dispatch => ({
 
 const styles = theme => ({
   wrapper: {
-    marginTop: '5px',
+    marginTop: theme.spacing.unit,
   },
   container: {
     display: 'flex',

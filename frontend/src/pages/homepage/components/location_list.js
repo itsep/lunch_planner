@@ -6,16 +6,27 @@ import { withStyles } from '@material-ui/core/styles'
 import LocationItem from './location_item'
 import CreateLocation from './create_location'
 import localizedStrings from '../../../lib/localization'
+import food from '../../../assets/illustrations/food.svg'
 
 const mapStateToProps = state => ({
   locationsInLunchspace: state.locationsInLunchspace,
 })
 
 const styles = () => ({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100%',
+    flex: 1,
+  },
   locationList: {
     margin: 0,
     padding: 0,
     listStyleType: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100%',
+    flex: '1 1',
   },
   createButtonBox: {
     display: 'flex',
@@ -23,7 +34,13 @@ const styles = () => ({
     justifyContent: 'center',
   },
   buttonLocation: {
-    margin: '10px',
+    margin: '16px',
+  },
+  placeholder: {
+    flex: '1 1',
+  },
+  foodImage: {
+    display: 'block',
   },
 })
 
@@ -38,22 +55,21 @@ class LocationList extends Component {
   render() {
     const { locationsInLunchspace, classes } = this.props
     return (
-      <div>
+      <div className={classes.container}>
         <CreateLocation
           show={this.state.showLocation}
           onClose={() => {
             this.setState({ showLocation: false })
           }}
         />
-        <ul className={classes.locationList}>
+        <div className={classes.locationList}>
           {locationsInLunchspace.map((locationId => (
-            <li key={locationId}>
-              <LocationItem
-                id={locationId}
-              />
-            </li>
+            <LocationItem
+              key={locationId}
+              id={locationId}
+            />
            )))}
-          <li>
+          <div>
             <div className={classes.createButtonBox}>
               <Button
                 className={classes.buttonLocation}
@@ -65,8 +81,16 @@ class LocationList extends Component {
                 {localizedStrings.createLocation}
               </Button>
             </div>
-          </li>
-        </ul>
+          </div>
+          <div className={classes.placeholder} />
+          <div>
+            <img
+              src={food}
+              alt=""
+              className={classes.foodImage}
+            />
+          </div>
+        </div>
       </div>
     )
   }

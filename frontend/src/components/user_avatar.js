@@ -63,9 +63,12 @@ UserAvatar.propTypes = {
     lastName: PropTypes.string,
     imageUrl: PropTypes.string,
   }).isRequired,
-  children: PropTypes.array.isRequired,
+  children: PropTypes.object,
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
+}
+UserAvatar.defaultProps = {
+  children: (<div />),
 }
 
 UserAvatar.defaultProps = {

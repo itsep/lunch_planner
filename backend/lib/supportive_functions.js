@@ -39,6 +39,11 @@ async function locationExists(locationId) {
   return false
 }
 
+async function getLunchspaceIdsForUser(userId) {
+  return pool.execute('SELECT lunchspace_id as id FROM member_of WHERE user_id = ?', [userId])
+    .then(([lunchspaces]) => lunchspaces)
+}
+
 module.exports = {
   asyncForEach,
   isMember,
@@ -46,4 +51,5 @@ module.exports = {
   lunchspaceExists,
   isName,
   locationExists,
+  getLunchspaceIdsForUser,
 }
