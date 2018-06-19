@@ -98,9 +98,8 @@ class Lunchspaces extends React.Component {
   leaveLunchspace(subdomain, forceDelete) {
     leaveLunchspace(subdomain, forceDelete).then(() => {
       this.setState((prevState) => {
-        const lunchspaces = prevState.lunchspaces.filter((lunchpsace) => {
-          return lunchpsace.subdomain !== subdomain
-        })
+        const lunchspaces = prevState.lunchspaces.filter(lunchpsace =>
+          lunchpsace.subdomain !== subdomain)
         return {
           lunchspaces,
         }
