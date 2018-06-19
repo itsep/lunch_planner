@@ -19,6 +19,7 @@ import { fetchDeleteLocation } from '../actions'
 const mapStateToProps = (state, props) => ({
   id: props.id,
   location: state.locations[props.id],
+  error: state.error,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -104,7 +105,9 @@ class LocationItem extends React.Component {
     this.openMenu = this.openMenu.bind(this)
     this.handleMenuClose = this.handleMenuClose.bind(this)
     this.containerRef = React.createRef()
-    this.state = {}
+    this.state = {
+      error: null,
+    }
   }
   componentDidMount() {
     this.scrollToCurrentTime()
@@ -128,7 +131,8 @@ class LocationItem extends React.Component {
     this.setState({ anchorEl: null })
   }
   remove(locationId, forceDelete) {
-    console.log(this.props.fetchDeleteLocationAction(locationId, forceDelete))
+    this.props.fetchDeleteLocationAction(locationId, forceDelete)
+    console.log(this.state.error)
   }
   render() {
     const {

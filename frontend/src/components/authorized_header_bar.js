@@ -95,7 +95,7 @@ AuthorizedHeaderBar.defaultProps = {
   children: null,
 }
 AuthorizedHeaderBar.propTypes = {
-  children: PropTypes.array,
+  children: PropTypes.object,
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
