@@ -2,6 +2,7 @@ const webPush = require('web-push')
 const { zip } = require('zip-array')
 const { pool } = require('../database')
 const { removeSubscription } = require('./web_subscription')
+const { getLanguageCodeOrDefault } = require('../i18n')
 
 webPush.setVapidDetails(
   process.env.VAPID_SUBJECT,
@@ -25,7 +26,7 @@ WHERE
 user_id IN (?) AND 
 lunchspace_id = ?`, [userIds, lunchspace.id])
   const userIdsForSubscriptions = rawUserSubscriptions.map(sub => sub.userId)
-  const userLanguages = rawUserSubscriptions.map(user => user.language)
+  const userLanguages = rawUserSubscriptions.map(user => getLanguageCodeOrDefault(user.language))
   const subscriptions = rawUserSubscriptions.map(sub => ({
     endpoint: sub.endpoint,
     keys: {
