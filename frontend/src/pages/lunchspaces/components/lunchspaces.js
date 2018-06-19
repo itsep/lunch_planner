@@ -2,12 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
-import SettingsIcon from '@material-ui/icons/Settings'
 import Fade from '@material-ui/core/Fade'
 import Collapse from '@material-ui/core/Collapse'
 import Button from '@material-ui/core/Button'
@@ -15,9 +10,11 @@ import AddIcon from '@material-ui/icons/Add'
 import AuthorizedHeaderBar from '../../../components/authorized_header_bar'
 import apiFetch from '../../../lib/api_fetch'
 import localizedStrings from '../../../lib/localization'
-import { currentLunchspaceSubdomain, domainForLunchspace, withLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
+import { currentLunchspaceSubdomain } from '../../../lib/lunchspace_subdomain'
 import routeLocations from '../../route_locations'
 import eating from '../../../assets/illustrations/eating.svg'
+import leaveLunchspace from './leave_lunchspace'
+import LunchspaceListItem from '../LunchspaceListItem'
 
 const styles = theme => ({
   rootContainer: {
@@ -75,6 +72,7 @@ class Lunchspaces extends React.Component {
       user: {},
       lunchspaces: [],
     }
+    this.leaveLunchspace = this.leaveLunchspace.bind(this)
   }
   componentWillMount() {
     this.fetchLunchspaces()
@@ -96,6 +94,17 @@ class Lunchspaces extends React.Component {
       .finally(() => {
         this.setState({ isLoading: false })
       })
+  }
+  leaveLunchspace(subdomain, forceDelete) {
+    leaveLunchspace(subdomain, forceDelete).then(() => {
+      this.setState((prevState) => {
+        const lunchspaces = prevState.lunchspaces.filter(lunchpsace =>
+          lunchpsace.subdomain !== subdomain)
+        return {
+          lunchspaces,
+        }
+      })
+    })
   }
 
   render() {
@@ -122,30 +131,12 @@ class Lunchspaces extends React.Component {
             <Fade in={!isLoading && !error}>
               <List className={classes.list}>
                 {lunchspaces.map(lunchspace => (
-                  <ListItem
+                  <LunchspaceListItem
                     key={lunchspace.subdomain}
-                    role={undefined}
-                    button
-                    component="a"
-                    href={withLunchspaceSubdomain(
-                      routeLocations.HOMEPAGE,
-                      lunchspace.subdomain,
-                      true
-                    )}
-                    className={classes.listItem}
-                  >
-                    <ListItemText
-                      primary={lunchspace.name}
-                      secondary={domainForLunchspace(lunchspace.subdomain)}
-                    />
-                    {lunchspace.isAdmin &&
-                      <ListItemSecondaryAction>
-                        <IconButton aria-label="Comments">
-                          <SettingsIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    }
-                  </ListItem>
+                    lunchspace={lunchspace}
+                    classes={classes}
+                    leaveLunchspace={this.leaveLunchspace}
+                  />
                 ))}
               </List>
             </Fade>

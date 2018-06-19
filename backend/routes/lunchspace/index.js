@@ -19,7 +19,7 @@ lunchspaceRouter.get('/', authenticateRequest, getUser, asyncHandler(getLunchspa
 lunchspaceRouter.post('/invite', authenticateRequest, checkLunchspacePermissionOfRequest, getUser, asyncHandler(inviteLunchspaceRoute))
 lunchspaceRouter.post('/join', authenticateRequest, asyncHandler(joinLunchspace))
 lunchspaceRouter.get('/check', authenticateRequest, getUser, asyncHandler(checkInvitation))
-lunchspaceRouter.delete('/leave', authenticateRequest, checkLunchspacePermissionOfRequest, getUser, asyncHandler(leaveLunchspaceRoute))
+lunchspaceRouter.delete('/leave', authenticateRequest, getUser, asyncHandler(leaveLunchspaceRoute))
 
 module.exports = {
   router: lunchspaceRouter,
