@@ -33,7 +33,6 @@ class CreateLunchspaceApp extends React.Component {
       </CommonAppContainer>
     )
   }
-
 }
 
 export default CreateLunchspaceApp
