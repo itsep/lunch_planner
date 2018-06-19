@@ -6,7 +6,7 @@ function getFirstPartOfLanguageCode(languageCode) {
 
 function getLanguageCodeOrDefault(languageCode) {
   const normalizedLanguageCode = getFirstPartOfLanguageCode(languageCode)
-  if (availableLanguages.indexOf() === -1) {
+  if (availableLanguages.indexOf(normalizedLanguageCode) === -1) {
     return defaultLanguageKey
   }
   return normalizedLanguageCode
