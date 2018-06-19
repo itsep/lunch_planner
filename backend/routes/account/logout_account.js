@@ -1,15 +1,10 @@
-const config = require('config')
-const { parseToken } = require('../../lib/authenticate')
+const { parseToken, clearTokenOnResponse } = require('../../lib/authenticate')
 const { removeSubscriptionsForSession } = require('../../lib/notification/web_subscription')
 const { removeRegistrationForSession } = require('../../lib/notification/ios_registration')
 
-const tokenCookieName = config.get('token.cookieName')
-const isProbablyAuthenticatedCookieName = config.get('token.isProbablyAuthenticatedCookieName')
-
 
 function logout(req, res) {
-  res.clearCookie(tokenCookieName)
-  res.clearCookie(isProbablyAuthenticatedCookieName)
+  clearTokenOnResponse(res)
   const tokenString = req.cookies && req.cookies.lunch_planner_token
   if (tokenString) {
     const token = parseToken(tokenString)
