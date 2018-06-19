@@ -87,12 +87,13 @@ export function fetchCreateLocation(locationName, lunchspace) {
     .catch(error => dispatch(setError(error)))
 }
 
-export function fetchDeleteLocation(locationId, forceDelete) {
+export function fetchDeleteLocation(locationId) {
+  // TODO: remove force delete and handle delete with care
   return dispatch => apiFetch('/api/location', {
     method: 'DELETE',
     body: {
       locationId,
-      forceDelete,
+      forceDelete: true,
     },
   }).catch(error => dispatch(setError(error)))
 }

@@ -5,21 +5,15 @@ import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
 import { connect } from 'react-redux'
 import { toEventTimeId, nextEventTimeForDate, eventTimeSteps } from 'shared/lib/event'
 import TimeStamp from './time_stamp'
 import localizedStrings from '../../../lib/localization'
 import { fetchDeleteLocation } from '../actions'
 
-
 const mapStateToProps = (state, props) => ({
   id: props.id,
   location: state.locations[props.id],
-  error: state.error,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -105,9 +99,7 @@ class LocationItem extends React.Component {
     this.openMenu = this.openMenu.bind(this)
     this.handleMenuClose = this.handleMenuClose.bind(this)
     this.containerRef = React.createRef()
-    this.state = {
-      error: null,
-    }
+    this.state = {}
   }
   componentDidMount() {
     this.scrollToCurrentTime()
@@ -123,16 +115,8 @@ class LocationItem extends React.Component {
   handleMenuClose() {
     this.setState({ anchorEl: null })
   }
-  openDialog(event) {
-    this.setState({ anchorEl: event.currentTarget })
-  }
-
-  handleDialogClose() {
-    this.setState({ anchorEl: null })
-  }
-  remove(locationId, forceDelete) {
-    this.props.fetchDeleteLocationAction(locationId, forceDelete)
-    console.log(this.state.error)
+  remove(locationId) {
+    this.props.fetchDeleteLocationAction(locationId)
   }
   render() {
     const {
@@ -152,30 +136,9 @@ class LocationItem extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleMenuClose}
         >
-          <MenuItem onClick={() => this.remove(id, false)}>
+          <MenuItem onClick={() => this.remove(id)}>
             {localizedStrings.delete}
           </MenuItem>
-          <Dialog
-            id={id}
-            anchorEl={anchorEl}
-            open={false}
-            onClose={this.handleDialogClose}
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                {localizedStrings.confirmDeleteLocation}
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleMenuClose} color="primary">
-                {localizedStrings.yes}
-              </Button>
-              <Button onClick={this.handleMenuClose} color="primary" autoFocus>
-                {localizedStrings.cancel}
-              </Button>
-            </DialogActions>
-          </Dialog>
         </Menu>
         <div className={classes.container} ref={this.containerRef}>
           {timeStamps.map(timeStamp => (
