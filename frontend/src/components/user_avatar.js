@@ -48,6 +48,7 @@ function UserAvatar({
           src={user.imageUrl}
           alt={`${user.firstName} ${user.lastName}`}
           className={classes.image}
+          onLoad={(e) => { e.target.style.display = '' }}
           onError={(e) => { e.target.style.display = 'none' }}
         />
       }

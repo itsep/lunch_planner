@@ -2,6 +2,7 @@ const { pool } = require('../../lib/database')
 const { NeedsUserConfirmation } = require('../../../shared/lib/error')
 const { joinUpAt } = require('../../lib/lunchspace_channels')
 const { toEventDate, toEventDateId, toEventTimeFromString } = require('../../../shared/lib/event')
+const { InputValidationError } = require('../../../shared/lib/error')
 
 async function passAdminRightsAndCheckForDeletion(userId, lunchspaceId, forceDelete) {
   const toDelete = await pool.useConnection(async (conn) => {
@@ -40,10 +41,21 @@ async function deleteLunchspace(lunchspaceId) {
   await pool.execute('DELETE FROM lunchspace WHERE id = ?', [lunchspaceId])
 }
 
+async function getLunchspaceId(subdomain) {
+  const [result] = await pool.execute('SELECT id FROM lunchspace WHERE subdomain = ?', [subdomain])
+  if (result[0]) {
+    return result[0].id
+  }
+  throw new InputValidationError(
+    'subdomain', `Could not find a Lunchspace with subdomain: ${subdomain}`,
+    'illegalInput', { subdomain }
+  )
+}
+
 async function leaveLunchspaceRoute(req, res) {
   const { userId } = req.token
-  const { id } = req.lunchspace
-  const { forceDelete } = req.body
+  const { forceDelete, subdomain } = req.body
+  const id = await getLunchspaceId(subdomain)
   const { firstName, lastName, imageUrl } = await req.userPromise
   const toDelete = await passAdminRightsAndCheckForDeletion(userId, id, forceDelete)
   const [events] = await pool.execute(
