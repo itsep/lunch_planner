@@ -156,6 +156,17 @@ ALTER TABLE web_notification_subscription
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
+CREATE TABLE system_user (
+  user_id BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (user_id)
+) ENGINE = InnoDB;
+
+ALTER TABLE system_user
+  ADD FOREIGN KEY system_user_idx (user_id)
+  REFERENCES user (id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
 -- View on the member data of a location
 CREATE VIEW event_participants AS
 SELECT join_up_at.*, user.*, location.lunchspace_id

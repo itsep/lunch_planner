@@ -202,7 +202,22 @@ LOCK TABLES `web_notification_subscription` WRITE;
 /*!40000 ALTER TABLE `web_notification_subscription` DISABLE KEYS */;
 /*!40000 ALTER TABLE `web_notification_subscription` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping data for table `system_user`
+--
+
+LOCK TABLES `system_user` WRITE;
+/*!40000 ALTER TABLE `system_user` DISABLE KEYS */;
+INSERT INTO `system_user` VALUES (1);
+INSERT INTO `system_user` VALUES (2);
+INSERT INTO `system_user` VALUES (3);
+INSERT INTO `system_user` VALUES (4);
+INSERT INTO `system_user` VALUES (5);
+/*!40000 ALTER TABLE `system_user` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
