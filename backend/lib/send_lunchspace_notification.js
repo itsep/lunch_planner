@@ -1,6 +1,6 @@
 const { pool } = require('./database')
-const { someoneElseJoinedMyEvent, allLeftMyEvent } = require('./lunchspace_notification')
-const { sendNotificationToUsers } = require('./notification/send_notification')
+const { someoneElseJoinedMyEvent, allLeftMyEvent, newUserSignedUp } = require('./lunchspace_notification')
+const { sendNotificationToUsersInLunchspace, sendNotificationsToUsers } = require('./notification/send_notification')
 
 async function sendSomeoneElseJoinedMyEventNotification(
   lunchspace,
@@ -30,7 +30,7 @@ user_id != ?
       totalUserInEvent
     )
     const userIds = users.map(user => user.id)
-    await sendNotificationToUsers(lunchspace, userIds, notification)
+    await sendNotificationToUsersInLunchspace(lunchspace, userIds, notification)
   })
 }
 
@@ -56,11 +56,19 @@ event_time = ?
     }
     const userIds = users.map(user => user.id)
     const notification = allLeftMyEvent(lunchspace, location, eventTimeSQL)
-    return sendNotificationToUsers(lunchspace, userIds, notification)
+    return sendNotificationToUsersInLunchspace(lunchspace, userIds, notification)
   })
+}
+
+async function sendNewUserSignedUpNotification(user) {
+  const [systemUser] = await pool.execute('SELECT user_id as id FROM system_user')
+  const userIds = systemUser.map(systermUser => systermUser.id)
+  const notification = newUserSignedUp(user)
+  return sendNotificationsToUsers(userIds, notification)
 }
 
 module.exports = {
   sendSomeoneElseJoinedMyEventNotification,
   sendAllLeftMyEventNotificationIfNeeded,
+  sendNewUserSignedUpNotification,
 }
