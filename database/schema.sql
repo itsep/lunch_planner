@@ -150,8 +150,19 @@ CREATE TABLE ios_notification_registration
   PRIMARY KEY (token)
 ) ENGINE = InnoDB;
 
-ALTER TABLE web_notification_subscription
+ALTER TABLE ios_notification_registration
   ADD FOREIGN KEY user_ios_token_idx (user_id)
+  REFERENCES user (id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+CREATE TABLE system_user (
+  user_id BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (user_id)
+) ENGINE = InnoDB;
+
+ALTER TABLE system_user
+  ADD FOREIGN KEY system_user_idx (user_id)
   REFERENCES user (id)
   ON DELETE CASCADE
   ON UPDATE CASCADE;

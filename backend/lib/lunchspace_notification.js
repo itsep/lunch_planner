@@ -50,7 +50,20 @@ function allLeftMyEvent(lunchspace, location, eventTime) {
   })
 }
 
+function newUserSignedUp(user) {
+  return new Notification({
+    title: 'newUserSignedUpTitle',
+    body: 'newUserSignedUpBody',
+    bodyValues: {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+    },
+  })
+}
+
 module.exports = {
   someoneElseJoinedMyEvent,
   allLeftMyEvent,
+  newUserSignedUp,
 }

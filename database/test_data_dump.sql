@@ -60,13 +60,10 @@ UNLOCK TABLES;
 LOCK TABLES `join_up_at` WRITE;
 /*!40000 ALTER TABLE `join_up_at` DISABLE KEYS */;
 INSERT INTO `join_up_at` VALUES (3,5,'13:45:00','2018-06-19','2018-06-18 09:59:48');
-INSERT INTO `join_up_at` VALUES (3,5,'14:45:00','2018-06-19','2018-06-18 10:04:13');
 INSERT INTO `join_up_at` VALUES (3,7,'14:00:00','2018-06-19','2018-06-18 10:00:53');
-INSERT INTO `join_up_at` VALUES (4,5,'14:45:00','2018-06-19','2018-06-18 10:04:09');
 INSERT INTO `join_up_at` VALUES (4,6,'14:15:00','2018-06-19','2018-06-18 10:02:52');
 INSERT INTO `join_up_at` VALUES (4,7,'14:00:00','2018-06-19','2018-06-18 10:01:00');
 INSERT INTO `join_up_at` VALUES (5,5,'13:45:00','2018-06-19','2018-06-18 09:59:52');
-INSERT INTO `join_up_at` VALUES (5,5,'14:45:00','2018-06-19','2018-06-18 10:04:03');
 INSERT INTO `join_up_at` VALUES (5,7,'14:00:00','2018-06-19','2018-06-18 10:01:02');
 INSERT INTO `join_up_at` VALUES (6,5,'14:45:00','2018-06-19','2018-06-18 10:04:10');
 INSERT INTO `join_up_at` VALUES (6,8,'14:45:00','2018-06-19','2018-06-18 10:02:24');
@@ -83,9 +80,9 @@ INSERT INTO `join_up_at` VALUES (10,5,'14:45:00','2018-06-19','2018-06-18 10:03:
 INSERT INTO `join_up_at` VALUES (11,5,'14:45:00','2018-06-19','2018-06-18 10:03:57');
 INSERT INTO `join_up_at` VALUES (11,7,'14:00:00','2018-06-19','2018-06-18 10:01:10');
 INSERT INTO `join_up_at` VALUES (11,9,'13:45:00','2018-06-19','2018-06-18 10:00:15');
-INSERT INTO `join_up_at` VALUES (13,5,'14:45:00','2018-06-19','2018-06-18 10:03:50');
-INSERT INTO `join_up_at` VALUES (13,7,'14:00:00','2018-06-19','2018-06-18 10:01:06');
-INSERT INTO `join_up_at` VALUES (13,9,'13:45:00','2018-06-19','2018-06-18 10:00:13');
+INSERT INTO `join_up_at` VALUES (12,5,'14:45:00','2018-06-19','2018-06-18 10:03:50');
+INSERT INTO `join_up_at` VALUES (12,7,'14:00:00','2018-06-19','2018-06-18 10:01:06');
+INSERT INTO `join_up_at` VALUES (12,9,'13:45:00','2018-06-19','2018-06-18 10:00:13');
 /*!40000 ALTER TABLE `join_up_at` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,7 +179,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'David','Nadoba','en-US','/api/images/fa49193f-8c80-4163-add4-e7e4b333c7dd.png');
+INSERT INTO `user` VALUES (1,'David','Nadboa','en-US','/api/images/fa49193f-8c80-4163-add4-e7e4b333c7dd.png');
 INSERT INTO `user` VALUES (2,'Sebastian','Vogt','de','/api/images/2230a0c4-a6b6-4ef6-b7b9-57cca6e64464.png');
 INSERT INTO `user` VALUES (3,'Ferhat','Ayaydin','de','/api/images/ce50e50f-78ac-42d4-a907-02cfe5a86e4c.png');
 INSERT INTO `user` VALUES (4,'Marc','Mehrer','de','/api/images/e739492f-6a6d-4798-8fab-35189d41f147.png');
@@ -205,7 +202,22 @@ LOCK TABLES `web_notification_subscription` WRITE;
 /*!40000 ALTER TABLE `web_notification_subscription` DISABLE KEYS */;
 /*!40000 ALTER TABLE `web_notification_subscription` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping data for table `system_user`
+--
+
+LOCK TABLES `system_user` WRITE;
+/*!40000 ALTER TABLE `system_user` DISABLE KEYS */;
+INSERT INTO `system_user` VALUES (1);
+INSERT INTO `system_user` VALUES (2);
+INSERT INTO `system_user` VALUES (3);
+INSERT INTO `system_user` VALUES (4);
+INSERT INTO `system_user` VALUES (5);
+/*!40000 ALTER TABLE `system_user` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -87,6 +87,9 @@ const content = {
   // all left my event
   allLeftMyEventTitle: 'Sorry, but all have left 😢',
   allLeftMyEventBody: 'All from Lunchspace {lunchspaceName} have left {locationName} at {eventTime}.',
+  // new user created
+  newUserSignedUpTitle: 'New User 🎉',
+  newUserSignedUpBody: '{firstName} {lastName} signed up with email {email}.',
 }
 module.exports = {
   languageKey,

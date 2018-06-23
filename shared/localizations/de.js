@@ -89,6 +89,9 @@ const content = {
   // all left my event
   allLeftMyEventTitle: 'Leider haben sich alle abgemeldet 😢',
   allLeftMyEventBody: 'Bei {locationName} um {eventTime} haben sich alle vom Lunchspace {lunchspaceName} abgemeldet.',
+  // new user created
+  newUserSignedUpTitle: 'Neuer Benutzer 🎉',
+  newUserSignedUpBody: '{firstName} {lastName} hat sich mit der Email {email} registriert.',
 }
 module.exports = {
   languageKey,
