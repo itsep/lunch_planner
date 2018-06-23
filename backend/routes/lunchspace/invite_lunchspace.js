@@ -8,7 +8,7 @@ const { asyncForEach } = require('../../lib/supportive_functions')
 const { getInviteToLunchspaceLink } = require('../lunchspace')
 
 async function getToken(lunchspaceId, email) {
-  if email {
+  if (email) {
     const [result] = await pool.execute(
       'SELECT token FROM invitation WHERE email = ? AND lunchspace_id = ?',
       [email, lunchspaceId]
@@ -20,7 +20,7 @@ async function getToken(lunchspaceId, email) {
   const token = uuidv4()
   await pool.execute(
     'INSERT INTO invitation (token, lunchspace_id, email) VALUES (?, ?, ?)',
-    [token, lunchspaceId, email]
+    [token, lunchspaceId, email || null]
   )
   return token
 }

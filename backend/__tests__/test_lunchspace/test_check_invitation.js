@@ -24,7 +24,7 @@ describe('check_invitation', () => {
   afterAll(dropMockDatabase)
   beforeAll(async () => {
     lunchspaceId = await create(testLunchspaceName, testLunchspaceSubdomain)
-    token = await getToken(testEmail, lunchspaceId)
+    token = await getToken(lunchspaceId, testEmail)
   })
   describe('checkToken', () => {
     it('should return the lunchspaceId of testLunchspace', async () => {
