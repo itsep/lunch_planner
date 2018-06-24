@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 
@@ -127,6 +128,10 @@ const appWebpackConfig = {
     new MiniCssExtractPlugin({
       filename: '[name].[chunkhash].css',
     }),
+    new CopyWebpackPlugin([{
+      from: './src/static',
+      to: './',
+    }]),
     new FaviconsWebpackPlugin({
       title: 'Lunchspace',
       logo: './src/assets/logo/Burger-512x512.png',

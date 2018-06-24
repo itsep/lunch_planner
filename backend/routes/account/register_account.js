@@ -3,6 +3,7 @@ const { hash } = require('../../lib/password_hash')
 const { stringifyToken, setTokenOnResponse } = require('../../lib/authenticate')
 const { validLength, validEmail } = require('../../lib/validation')
 const { InputValidationError } = require('../../../shared/lib/error')
+const { sendNewUserSignedUpNotification } = require('../../lib/send_lunchspace_notification')
 
 const minimumLength = 1
 const maximumLength = 24
@@ -67,6 +68,11 @@ async function registerAccount(req, res) {
   const { userId } = await create(email, password, firstName, lastName, language)
   const token = stringifyToken(userId)
   setTokenOnResponse(res, token)
+  sendNewUserSignedUpNotification({
+    email,
+    firstName,
+    lastName,
+  })
   return res.status(200).json({})
 }
 

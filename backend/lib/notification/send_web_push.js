@@ -10,11 +10,11 @@ webPush.setVapidDetails(
   process.env.VAPID_PRIVATE_KEY
 )
 
-async function sendWebNotifications(lunchspace, userIds, notification) {
+async function getSubscriptionsForUsersInLunchspace(lunchspace, userIds) {
   if (userIds.length === 0) {
-    return 0
+    return []
   }
-  const [rawUserSubscriptions] = await pool.query(`SELECT 
+  const [subscriptions] = await pool.query(`SELECT DISTINCT
 user_id as userId,
 language,
 endpoint,
@@ -25,6 +25,27 @@ JOIN user ON user.id = user_id
 WHERE 
 user_id IN (?) AND 
 lunchspace_id = ?`, [userIds, lunchspace.id])
+  return subscriptions
+}
+
+async function getSubscriptionsForUsers(userIds) {
+  if (userIds.length === 0) {
+    return []
+  }
+  const [subscriptions] = await pool.query(`SELECT DISTINCT
+user_id as userId,
+language,
+endpoint,
+key_auth as auth,
+key_p256dh as p256dh
+FROM web_notification_subscription 
+JOIN user ON user.id = user_id
+WHERE 
+user_id IN (?)`, [userIds])
+  return subscriptions
+}
+
+async function sendWebNotificationsToSubscriptions(rawUserSubscriptions, notification) {
   const userIdsForSubscriptions = rawUserSubscriptions.map(sub => sub.userId)
   const userLanguages = rawUserSubscriptions.map(user => getLanguageCodeOrDefault(user.language))
   const subscriptions = rawUserSubscriptions.map(sub => ({
@@ -51,7 +72,22 @@ lunchspace_id = ?`, [userIds, lunchspace.id])
   return Promise.all(results).then(() => results.length)
 }
 
+async function sendWebNotificationsToLunchspace(lunchspace, userIds, notification) {
+  return sendWebNotificationsToSubscriptions(
+    await getSubscriptionsForUsersInLunchspace(lunchspace, userIds),
+    notification
+  )
+}
+
+async function sendWebNotifications(userIds, notification) {
+  return sendWebNotificationsToSubscriptions(
+    await getSubscriptionsForUsers(userIds),
+    notification
+  )
+}
+
 
 module.exports = {
   sendWebNotifications,
+  sendWebNotificationsToLunchspace,
 }

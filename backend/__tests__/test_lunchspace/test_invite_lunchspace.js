@@ -98,11 +98,11 @@ describe('create lunchspace', () => {
   })
   describe('getToken', async () => {
     it('should create a new token', async () => {
-      await expect(getToken(legalTestEmail, testLunchspaceId)).resolves.toEqual(expect.any(String))
+      await expect(getToken(testLunchspaceId, legalTestEmail)).resolves.toEqual(expect.any(String))
     })
     it('should get the same token two times', async () => {
-      const token1 = await getToken(legalTestEmail, testLunchspaceId)
-      const token2 = await getToken(legalTestEmail, testLunchspaceId)
+      const token1 = await getToken(testLunchspaceId, legalTestEmail)
+      const token2 = await getToken(testLunchspaceId, legalTestEmail)
       expect(token1).toEqual(token2)
     })
   })

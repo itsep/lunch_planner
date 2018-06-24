@@ -44,9 +44,9 @@ describe('join_lunchspace', () => {
     lunchspaceId1 = await lunchspace.create(testLunchspaceName, testLunchspaceSubdomain1)
     lunchspaceId2 = await lunchspace.create(testLunchspaceName, testLunchspaceSubdomain2)
     lunchspaceId3 = await lunchspace.create(testLunchspaceName, testLunchspaceSubdomain3)
-    token1 = await getToken(testEmail, lunchspaceId1)
-    token2 = await getToken(testEmail, lunchspaceId2)
-    token3 = await getToken(testEmail, lunchspaceId3)
+    token1 = await getToken(lunchspaceId1, testEmail)
+    token2 = await getToken(lunchspaceId2, testEmail)
+    token3 = await getToken(lunchspaceId3, testEmail)
   })
   describe('joinLunchspace', () => {
     it('should add test user to test lunchspace and ivalidatae token', async () => {
