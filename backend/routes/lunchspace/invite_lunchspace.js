@@ -5,7 +5,7 @@ const uuidv4 = require('uuid/v4')
 const { sendEMail } = require('../../lib/email/mailer')
 const { buildInvitation } = require('../../lib/email/mail_builder')
 const { asyncForEach } = require('../../lib/supportive_functions')
-const { getInviteToLunchspaceLink } = require('../lunchspace')
+const { getInviteToLunchspaceLink } = require('../../lib/lunchspace')
 
 async function getToken(lunchspaceId, email) {
   if (email) {
@@ -44,14 +44,18 @@ async function inviteLunchspaceRoute(req, res) {
   return res.status(200).json({})
 }
 
-async function getInviteLunchspaceLinkRoute(req, res) {
-  const { firstName, lastName, language } = await req.userPromise
+async function inviteLunchspaceLinkRoute(req, res) {
   const { id: lunchspaceId, name: lunchspaceName } = req.lunchspace
   const token = await getToken(lunchspaceId)
   const link = getInviteToLunchspaceLink(token)
+  res.json({
+    lunchspaceName,
+    link,
+  })
 }
 
 module.exports = {
   getToken,
   inviteLunchspaceRoute,
+  inviteLunchspaceLinkRoute,
 }
