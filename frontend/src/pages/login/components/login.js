@@ -81,7 +81,7 @@ class Login extends React.Component {
           // has already selected a lunchspace
           currentLunchspaceSubdomain() ||
           // the user is in exactly one lunchspace, redirect diretcly to the homepage
-          ((lunchspaces.length === 1) && lunchspaces[0])
+          ((lunchspaces.length === 1) && lunchspaces[0].subdomain)
 
         if (preferedSubdomain) {
           window.location = withLunchspaceSubdomain(

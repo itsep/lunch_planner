@@ -103,7 +103,7 @@ CREATE TABLE invitation
 (
   token VARCHAR(36) NOT NULL,
   lunchspace_id BIGINT UNSIGNED NOT NULL,
-  email VARCHAR(120) NOT NULL,
+  email VARCHAR(120),
   PRIMARY KEY(token),
   UNIQUE (lunchspace_id, email)
 ) ENGINE = InnoDB;
