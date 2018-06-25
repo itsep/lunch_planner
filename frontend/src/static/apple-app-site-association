@@ -7,5 +7,8 @@
         "paths": ["*"]
       }
     ]
+  },
+  "webcredentials": {
+    "apps": ["XKQRPFVM7Z.de.nadoba.lunchspace-ios"]
   }
 }
